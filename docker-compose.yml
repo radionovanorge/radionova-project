@@ -1,0 +1,30 @@
+version: '3.8'
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - static_volume:/home/app/web/project/static
+    expose:
+      - 8000
+    depends_on:
+      - database
+    env_file:
+      - ./.env.dev
+  database:
+    image: postgres
+    hostname: database
+    env_file:
+      - ./.env.dev
+  nginx:
+    build: ./nginx
+    volumes:
+      - static_volume:/home/app/web/project/static
+    ports:
+      - 8000:80
+    depends_on:
+      - web
+
+volumes:
+  static_volume:
