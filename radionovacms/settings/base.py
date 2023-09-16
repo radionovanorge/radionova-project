@@ -181,5 +181,5 @@ CORS_ALLOWED_ORIGINS = [
     "https://ashy-ocean-0cf36cb03.2.azurestaticapps.net",
 ]
 
-CSRF_TRUSTED_ORIGINS = ['https://radionovaapi.azurewebsites.net','https://*.127.0.0.1']
+CSRF_TRUSTED_ORIGINS = ['https://radionova.azurewebsites.net','https://*.127.0.0.1']
 
