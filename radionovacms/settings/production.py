@@ -1,7 +1,8 @@
 from .base import *
 
 DEBUG = False
-
+# SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = "django-insecure-z#8!v)s!2ehk@ik_!p2h*u#cl!sa#-g5n65pzby+#mt1%ttt87"
 
 DATABASES = {
     "default": {
