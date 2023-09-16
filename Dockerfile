@@ -1,47 +1,60 @@
-FROM python:3.9-slim as builder
+# Use an official Python runtime based on Debian 10 "buster" as a parent image.
+FROM python:3.8.1-slim-buster
 
-WORKDIR /usr/src/app
+# Add user that will be used in the container.
+RUN useradd wagtail
 
-ENV PYTHONDONTWRITEBYTECODE 1
-ENV PYTHONUNBUFFERED 1
+# Port used by this container to serve HTTP.
+EXPOSE 8000
 
-RUN apt-get -y update && apt-get -y install gcc python3-dev musl-dev postgresql 
+# Set environment variables.
+# 1. Force Python stdout and stderr streams to be unbuffered.
+# 2. Set PORT variable that is used by Gunicorn. This should match "EXPOSE"
+#    command.
+ENV PYTHONUNBUFFERED=1 \
+    PORT=8000
 
-COPY ./Pipfile* ./
+# Install system packages required by Wagtail and Django.
+RUN apt-get update --yes --quiet && apt-get install --yes --quiet --no-install-recommends \
+    build-essential \
+    libpq-dev \
+    libmariadbclient-dev \
+    libjpeg62-turbo-dev \
+    zlib1g-dev \
+    libwebp-dev \
+ && rm -rf /var/lib/apt/lists/*
 
-RUN pip install pipenv
+# Install the application server.
+RUN pip install "gunicorn==20.0.4"
 
-RUN pipenv lock --requirements > ./requirements.txt
+# Install the project requirements.
+COPY requirements.txt /
+RUN pip install -r /requirements.txt
 
-RUN pip wheel --no-cache-dir --wheel-dir /usr/src/app/wheels -r requirements.txt
+# Use /app folder as a directory where the source code is stored.
+WORKDIR /app
 
+# Set this directory to be owned by the "wagtail" user. This Wagtail project
+# uses SQLite, the folder needs to be owned by the user that
+# will be writing to the database file.
+RUN chown wagtail:wagtail /app
 
-# === FINAL IMAGE ===
+# Copy the source code of the project into the container.
+COPY --chown=wagtail:wagtail . .
 
-FROM python:3.9-slim
+# Use user "wagtail" to run the build commands below and the server itself.
+USER wagtail
 
-RUN addgroup --system app && adduser --system app --ingroup app
+# Collect static files.
+RUN python manage.py collectstatic --noinput --clear
 
-# Create directories app_home and static directories
-ENV HOME=/home/app
-ENV APP_HOME=/home/app/web
-RUN mkdir $APP_HOME
-WORKDIR $APP_HOME
-
-# Copy dependencies from builder image
-RUN apt-get -y update && apt-get -y install libpq-dev 
-
-COPY --from=builder /usr/src/app/wheels /wheels
-COPY --from=builder /usr/src/app/requirements.txt .
-
-RUN pip install --no-cache --no-deps /wheels/*
-
-COPY . $APP_HOME
-
-RUN chown -R app:app $APP_HOME
-
-USER app
-
-RUN python manage.py collectstatic --noinput
-
-CMD gunicorn project.wsgi:application --bind 0.0.0.0:8000
+# Runtime command that executes when "docker run" is called, it does the
+# following:
+#   1. Migrate the database.
+#   2. Start the application server.
+# WARNING:
+#   Migrating database at the same time as starting the server IS NOT THE BEST
+#   PRACTICE. The database should be migrated manually or using the release
+#   phase facilities of your hosting platform. This is used only so the
+#   Wagtail instance can be started with a simple "docker run" command.
+CMD set -xe; python manage.py migrate --noinput; gunicorn radionovacms.wsgi:application
