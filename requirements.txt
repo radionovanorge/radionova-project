@@ -33,6 +33,6 @@ six==1.16.0
 soupsieve==2.5
 sqlparse==0.5.0
 telepath==0.3.1
-urllib3==2.2.1
+urllib3==2.2.2
 wagtail==6.1.2
 Willow==1.8.0
