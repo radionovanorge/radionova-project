@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-a=q3myz2bwx9n&0ok)jm!j1lxu+6ji8^(6)@ew2s688vn))_p(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost1', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['localhost1', 'localhost', '127.0.0.1', 'radionova.azurewebsites.net']
 
 
 # Application definition
