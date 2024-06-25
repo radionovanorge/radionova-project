@@ -1,0 +1,10 @@
+{% load i18n %}
+<li class="w-summary__item">
+    <a href="{% url 'wagtailadmin_explore_root' %}">
+        <span class="w-summary__icon">
+            <i class="icon icon-doc"></i>
+        </span>
+        <span class="w-summary__value">{{ value }}</span>
+        <span class="w-summary__label">{{ label }}</span>
+    </a>
+</li>

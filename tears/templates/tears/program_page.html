@@ -1,0 +1,10 @@
+{% extends "tears/base.html" %}
+{% load wagtailcore_tags wagtailimages_tags %}
+{% block content %}
+    <h2>{{ page.title }}</h2>
+    <h6>
+        {{ page.date }}
+    </h2>
+    <h6>{{ page.author }}</h6>
+    {% for block in page.description %}{{ block.value }}{% endfor %}
+{% endblock %}

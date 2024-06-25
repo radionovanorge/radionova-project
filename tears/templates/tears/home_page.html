@@ -1,0 +1,18 @@
+{% extends "tears/base.html" %}
+{% load wagtailcore_tags wagtailimages_tags %}
+{% block content %}
+    <h1>Latest Posts</h1>
+    {% for post in latest_posts %}
+        <a href="{{ post.url }}">
+            <h2>{{ post.title }}</h2>
+            {% for block in post.body %}
+                {% if block.block_type == 'main_image' %}
+                    <div class="main-image">{% image block.value width-1200 height-500 %}</div>
+                </a>
+            {% else %}
+                {{ block.value }}
+            {% endif %}
+        {% endfor %}
+    </a>
+{% endfor %}
+{% endblock %}

@@ -1,0 +1,82 @@
+:root {
+    --primary-color: #ED1C24;
+    --secondary-color: #782323;
+    --accent-color: #abcdef;
+    --background-color: #f0f0f0;
+    --text-color: #333333;
+    --color-primary-hue: 0;
+    --color-primary-saturation: 100%;
+    --color-primary-lightness: 50%;
+    --color-primary-dark-hue: 0;
+    --color-primary-dark-saturation: 100%;
+    --color-primary-dark-lightness: 30%;
+}
+
+form[role="search"] {
+    display: none;
+}
+
+
+.custom-button-wrapper {
+    display: flex;
+    justify-content: center;
+    margin: 10px 0;
+}
+
+.custom-button {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 0px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+    width: calc(100% - 30px);
+    background-color: #fff;
+    border-radius: 8px;
+    color: #000 !important;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 500;
+    border: 1px solid #ddd;
+}
+
+.custom-button:hover,
+.custom-button:focus,
+.custom-button:active {
+    background-color: #fff !important;
+    color: #000 !important;
+}
+
+.sidebar-menu-item--active {
+    text-shadow: none;
+}
+
+.custom-button .icon {
+    font-size: 20px;
+    margin-left: 10px;
+}
+
+
+
+
+
+
+
+
+/* Sidebar */
+/* .sidebar,
+.sidebar__inner,
+.sidebar-footer,
+.sidebar-footer__account,
+.c-page-explorer__header,
+.c-page-explorer__item,
+.c-page-explorer__drawer {
+    background-color: #2A2A2A;
+    color: #FFFFFF;
+}
+
+.content {
+    background-color: #333333 !important;
+    color: #FFFFFF !important;
+}
+ */

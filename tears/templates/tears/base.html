@@ -1,0 +1,80 @@
+{% load static wagtailcore_tags wagtailuserbar compress %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>
+            {% block title %}
+                {% if page.seo_title %}
+                    {{ page.seo_title }}
+                {% else %}
+                    {{ page.title }}
+                {% endif %}
+            {% endblock %}
+            {% block title_suffix %}
+                {% wagtail_site as current_site %}
+                {% if current_site and current_site.site_name %}- {{ current_site.site_name }}{% endif %}
+            {% endblock %}
+        </title>
+        {% if page.search_description %}<meta name="description" content="{{ page.search_description }}" />{% endif %}
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        {# Force all links in the live preview panel to be opened in a new tab #}
+        {% if request.in_preview_panel %}<base target="_blank">{% endif %}
+        <link rel="stylesheet"
+              href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        
+        {% compress css %}
+            <link rel="stylesheet"
+                  type="text/x-scss"
+                  href="{% static 'tears/css/base.scss' %}" />
+        {% endcompress %}
+        {% block extra_css %}{# Override this in templates to add extra stylesheets #}{% endblock %}
+    </head>
+    <body class="{% block body_class %}{% endblock %}">
+        {% wagtailuserbar %}
+        {% wagtail_site as current_site %}
+        {% if not current_site.root_page %}
+            {% pageurl current_site as root_page_url %}
+            <p>
+                Root page not found. <a href="{{ root_page_url }}">Choose a different site</a>.
+            </p>
+        {% endif %}
+        <nav>
+            <ul>
+                <li>
+                    <a href="{% pageurl current_site.root_page %}">
+                        <img src="https://radionova.no/radionova.png"
+                             alt="radionova logo"
+                             style="max-width: 160px">
+                    </a>
+                </li>
+                <!-- Play Radio Button -->
+                <li>
+                    <button id="play-radio-button" onclick="toggleRadio()">
+                        <i id="play-radio-icon" class="fa fa-play fa-xl"></i>
+                    </button>
+                    <audio id="radio-player"
+                           src="https://stream.radionova.no/ogg"
+                           preload="none"></audio>
+                </li>
+                {% for menuitem in current_site.root_page.get_children.live.in_menu %}
+                    <li {% if menuitem.id == page.id %}class="current"{% endif %}>
+                        <a href="{% pageurl menuitem %}">{{ menuitem.title }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </nav>
+        <div class="main-content">
+            {% block content %}{% endblock %}
+        </div>
+
+        <div class="footer">
+            <p>&copy; {{ current_site.site_name }} {{ current_site.root_page.first_published_at|date:"Y" }}</p>
+        </div>
+        {# Global javascript #}
+        {% compress js %}
+            <script type="text/javascript" src="{% static 'tears/js/base.js' %}"></script>
+        {% endcompress %}
+        {% block extra_js %}{# Override this in templates to add extra javascript #}{% endblock %}
+    </body>
+</html>

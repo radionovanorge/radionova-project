@@ -1,0 +1,3 @@
+{% extends "tears/base.html" %}
+{% load wagtailcore_tags wagtailimages_tags %}
+{% block content %}<div class="free-text-block is-clearfix">{{ page.body|richtext }}</div>{% endblock %}
