@@ -26,7 +26,8 @@ SECRET_KEY = 'django-insecure-a=q3myz2bwx9n&0ok)jm!j1lxu+6ji8^(6)@ew2s688vn))_p(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost1', 'localhost', '127.0.0.1', 'radionova.azurewebsites.net']
+ALLOWED_HOSTS = ['localhost1', 'localhost',
+                 '127.0.0.1', 'radionova.azurewebsites.net']
 
 
 # Application definition
@@ -123,6 +124,11 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://radionova.azurewebsites.net'
+]
+
 
 
 # Internationalization
