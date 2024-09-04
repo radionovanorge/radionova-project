@@ -1,0 +1,20 @@
+version: '3.7'
+
+services:
+  postgresql:
+    image: postgres:latest
+    ports:
+      - 5432:5432
+    volumes:
+       - postgres-data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_USER=radionova
+      - POSTGRES_PASSWORD=radionova123
+      - POSTGRES_DB=radionova
+  redis:
+    image: redis:latest
+    ports:
+      - 6379:6379
+
+volumes:
+  postgres-data:

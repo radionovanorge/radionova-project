@@ -35,4 +35,3 @@ function toggleRadio() {
 }
 
 
-document.getElementById('header-title').innerText = 'Tears - Radionova';

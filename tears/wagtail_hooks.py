@@ -17,6 +17,12 @@ from .models import BlogPage
 def global_admin_js():
     return format_html('<script src="{}"></script>', static("tears/js/base.js"))
 
+@hooks.register("disable_password_changing")
+def disable_password_changing(request, menu_items):
+    if request.user.is_superuser:
+        return
+    return format_html('<script src="{}"></script>', static("tears/js/styles_for_normal_user.js"))
+
 
 @hooks.register("construct_main_menu")
 def rename_snippets_menu_item(request, menu_items):
@@ -69,32 +75,3 @@ def global_admin_css():
         '<link rel="stylesheet" href="{}">', static(
             "tears/css/custom_admin.css")
     )
-
-
-# class ReturnedBlogPagesSummaryItem(SummaryItem):
-#     order = 600
-#     template_name = 'wagtailadmin/summary_items/homepage_stats.html'
-
-#     def __init__(self, request):
-#         self.request = request
-#         super().__init__(request)
-
-#     def get_context(self):
-#         returned_blog_pages_count = BlogPage.objects.filter(
-#             author=self.request.user).count()
-
-#         return {
-#             'value': returned_blog_pages_count,
-#             'label': 'Returned Blog Pages',
-#         }
-
-#     def render_html(self, extra_context=None):
-#         context = self.get_context()
-#         if extra_context and isinstance(extra_context, dict):
-#             context.update(extra_context)
-#         return render_to_string(self.template_name, context)
-
-
-# @hooks.register('construct_homepage_summary_items')
-# def add_custom_summary_item(request, items):
-#     items.append(ReturnedBlogPagesSummaryItem(request))
