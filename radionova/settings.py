@@ -30,7 +30,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost1', 'localhost',
+ALLOWED_HOSTS = ['localhost1', 'localhost', 'novafest.radinova.azurewebsites.net',
                  '127.0.0.1', 'radionova.azurewebsites.net']
 
 
