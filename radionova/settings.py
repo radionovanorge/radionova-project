@@ -31,7 +31,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 DEBUG = True
 
 ALLOWED_HOSTS = ['localhost1', 'localhost', 'novafest.radinova.azurewebsites.net',
-                 '127.0.0.1', 'radionova.azurewebsites.net']
+                 '127.0.0.1', 'radionova.azurewebsites.net', 'test.radionova.azurewebsites.net']
 
 
 # Application definition
