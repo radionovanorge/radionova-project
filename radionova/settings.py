@@ -135,6 +135,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 CSRF_TRUSTED_ORIGINS = [
     'https://radionova.azurewebsites.net'
+    'https://novafest.radinova.azurewebsites.net',
 ]
 
 
