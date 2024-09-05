@@ -111,7 +111,9 @@ DATABASES = {
         'USER': os.environ.get('DBUSER'),
         'PASSWORD': os.environ.get('DBPASS'),
         'PORT': os.environ.get('DBPORT'),
-        'OPTIONS': {'sslmode': os.environ.get('SSLMODE')},
+        'OPTIONS': {
+            'sslmode': 'require',
+        },
     }
 }
 
