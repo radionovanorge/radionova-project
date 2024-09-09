@@ -199,7 +199,8 @@ WAGTAIL_SITE_NAME = 'Tears'
 
 # Wagtail email notification format
 # WAGTAILADMIN_NOTIFICATION_USE_HTML = True
-WAGTAIL_WORKFLOW_ENABLED = False
+WAGTAILADMIN_NOTIFICATION_USE_EMAIL = False
+
 
 # Allowed file extensions for documents in the document library.
 # This can be omitted to allow all files, but note that this may present a security risk
