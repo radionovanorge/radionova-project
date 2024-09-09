@@ -199,6 +199,7 @@ WAGTAIL_SITE_NAME = 'Tears'
 
 # Wagtail email notification format
 # WAGTAILADMIN_NOTIFICATION_USE_HTML = True
+EMAIL_BACKEND = 'django.core.mail.backends.dummy.EmailBackend'
 WAGTAILADMIN_NOTIFICATION_USE_EMAIL = False
 
 
