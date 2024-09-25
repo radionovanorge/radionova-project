@@ -8,7 +8,12 @@ from wagtail.images.blocks import ImageChooserBlock
 
 
 class HomePage(Page):
-    # Add custom fields here if needed
+    content = StreamField(
+        [
+            ("content", blocks.RichTextBlock()),
+        ],
+        blank=True,
+    )
     content_panels = Page.content_panels + []
 
     class Meta:
