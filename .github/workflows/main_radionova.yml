@@ -59,6 +59,15 @@ jobs:
       - name: Unzip artifact for deployment
         run: unzip release.zip
 
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run migrations
+        run: python manage.py migrate
+
+      - name: Collect static files
+        run: python manage.py collectstatic --noinput
+
       
       - name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v3
