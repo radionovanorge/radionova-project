@@ -8,9 +8,8 @@ from wagtail.images.blocks import ImageChooserBlock
 
 
 class HomePage(Page):
-    page_description = "This is the homepage of the website "
-    "and has the content at https://radionova.no. Don't edit this page unless you know what you are doing."
-    
+    page_description = "This is the homepage of the website and has the content at https://radionova.no. Don't edit this page unless you know what you are doing."
+
     content = StreamField(
         [
             ("content", blocks.RichTextBlock()),
@@ -31,9 +30,23 @@ class HomePage(Page):
         return context
 
 
+class ProgrammerPage(Page):
+    page_description = "This is the program list page of the website and has the content at https://radionova.no/programmer."
+
+    content = StreamField(
+        [
+            ("content", blocks.RichTextBlock()),
+        ],
+        blank=True,
+    )
+
+    content_panels = Page.content_panels + [
+        FieldPanel("content"),
+    ]
+
+
 class ProgramPage(Page):
-    page_description = "This is the program page of the website "
-    "and has the content at e.g. https://radionova.no/programmer/studentnyhetene."
+    page_description = "This is the program page of the website and has the content at e.g. https://radionova.no/programmer/studentnyhetene."
     subpage_types = ['BlogPage']
     program = models.ForeignKey(Group, on_delete=models.PROTECT)
     description = StreamField(
@@ -50,8 +63,7 @@ class ProgramPage(Page):
 
 
 class BlogPage(Page):
-    page_description = "This is the blog page of the website "
-    "and has the content at e.g. https://radionova.no/blog/2024/10/12/ny-blog."
+    page_description = "This is the blog page of the website and has the content at e.g. https://radionova.no/blog/2024/10/12/ny-blog."
     author = models.ForeignKey(User, on_delete=models.PROTECT)
     date = models.DateTimeField("Post time")
     body = StreamField(
@@ -71,8 +83,7 @@ class BlogPage(Page):
 
 
 class FreeTextPage(Page):
-    page_description = "These are pages with free text, can be used for additional pages like "
-    "/om-oss, /sendeplan, /a-lista etc."
+    page_description = "These are pages with free text, can be used for additional pages like /om-oss, /sendeplan, /a-lista etc."
     body = RichTextField(blank=True)
 
     content_panels = Page.content_panels + [
