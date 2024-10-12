@@ -32,7 +32,7 @@ class HomePage(Page):
 
 class ProgrammerPage(Page):
     page_description = "This is the program list page of the website and has the content at https://radionova.no/programmer."
-
+    subpage_types = ['ProgramPage']
     content = StreamField(
         [
             ("content", blocks.RichTextBlock()),
