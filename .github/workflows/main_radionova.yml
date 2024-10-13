@@ -69,17 +69,6 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Run database migrations
-        env:
-          DBNAME: ${{ secrets.DBNAME }}
-          DBHOST: ${{ secrets.DBHOST }}
-          DBUSER: ${{ secrets.DBUSER }}
-          DBPASS: ${{ secrets.DBPASS }}
-          DBPORT: ${{ secrets.DBPORT }}
-          SECRET_KEY: ${{ secrets.SECRET_KEY }}
-        run: |
-          python manage.py migrate
-
       - name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v3
         id: deploy-to-webapp
@@ -87,3 +76,10 @@ jobs:
           app-name: 'radionova'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_E8FE74A9E7BD44E883BB96DC99377965 }}
+
+      - name: Run database migrations
+        uses: azure/CLI@v2
+        with:
+          azcliversion: latest
+          inlineScript: |
+            az webapp run-command invoke --command "python manage.py migrate" --resource-group ${{ secrets.AZURE_RESOURCE_GROUP }} --name ${{ secrets.AZURE_WEBAPP_NAME }}
