@@ -76,11 +76,3 @@ jobs:
           app-name: 'radionova'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_E8FE74A9E7BD44E883BB96DC99377965 }}
-
-      - name: Run database migrations
-        uses: azure/webapps-deploy@v3
-        with:
-          app-name: 'radionova'
-          slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_E8FE74A9E7BD44E883BB96DC99377965 }}
-          startup-command: 'python manage.py migrate'
