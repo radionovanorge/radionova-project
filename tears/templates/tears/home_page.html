@@ -1,18 +1,275 @@
 {% extends "tears/base.html" %}
 {% load wagtailcore_tags wagtailimages_tags %}
+
 {% block content %}
-    <h1>Latest Posts</h1>
+
     {% for post in latest_posts %}
-        <a href="{{ post.url }}">
-            <h2>{{ post.title }}</h2>
-            {% for block in post.body %}
-                {% if block.block_type == 'main_image' %}
-                    <div class="main-image">{% image block.value width-1200 height-500 %}</div>
-                </a>
-            {% else %}
-                {{ block.value }}
+    {% if forloop.first %}
+    <!-- Feature Post -->
+  
+      <a class="article" href="{{ post.url }}">
+        {% for block in post.body %}
+            {% if block.block_type == 'main_image' %}
+                <figure class="article-image is-3by2">
+            
+                    {% image block.value width-1200 height-500 alt="Main Image" %}
+
+                </figure>
+                    
             {% endif %}
         {% endfor %}
-    </a>
-{% endfor %}
-{% endblock %}
+        <div class="article-body">
+          <h1 class="article-title">{{ post.title }}</h1>
+          <p class="article-content">article-content 1</p>
+          <footer class="article-info">
+            <span>{{ post.forfatter }}</span>
+            <span>{{ post.redaksjon}}</span>
+          </footer>
+        </div>
+      </a>
+      {% endif %}
+      {% endfor %}
+   
+    <main class="main columns">
+     {% for post in latest_posts|slice:"1:" %}
+    {% if forloop.first %}
+    <!-- Feature Post -->
+    <section class="column main-column">
+      <a class="article first-article" href="{{ post.url }}">
+        {% for block in post.body %}
+            {% if block.block_type == 'main_image' %}
+                <figure class="article-image is-4by3">
+            
+                    {% image block.value width-1200 height-500 alt="Main Image" %}
+
+                </figure>
+                    
+            {% endif %}
+        {% endfor %}
+        <div class="article-body">
+          <h2 class="article-title">{{ post.title }}</h2>
+          <p class="article-content">article-content 1</p>
+          <footer class="article-info">
+            <span>{{ post.forfatter }}</span>
+            <span>{{ post.redaksjon }}</span>
+          </footer>
+        </div>
+      </a>
+      {% endif %}
+      {% endfor %}
+
+      
+      {%for post in latest_posts|slice:"2:" %}
+      {% if forloop.first %}
+      <!-- Remaining Posts -->
+      <div class="columns">
+        <div class="column main-column">
+          <a class="article " href="{{post.url}}">
+            {% for block in post.body %}
+            {% if block.block_type == 'main_image' %}
+                <figure class="article-image is-4by3">
+            
+                    {% image block.value width-1200 height-500 alt="Main Image" %}
+
+                </figure>
+                    
+            {% endif %}
+        {% endfor %}
+            <div class="article-body">
+              <h2 class="article-title">{{ post.title }}</h2>
+              <p class="article-content">Hvilken kollone</p>
+              <footer class="article-info">
+                <span> {{ post.forfatter }}</span>
+                <span>{{ post.redaksjon }}</span>
+              </footer>
+            </div>
+          </a>
+        </div>
+        
+        
+        {% endif %}
+        {% endfor %}
+        {%for post in latest_posts|slice:"3:" %}
+        {% if forloop.first %}
+        <div class="column nested-column">
+            <a class="article" href="{{post.url}}">
+                {% for block in post.body %}
+                {% if block.block_type == 'main_image' %}
+                    <figure class="article-image is-4by3">
+                
+                        {% image block.value width-1200 height-500 alt="Main Image" %}
+    
+                    </figure>
+                        
+                {% endif %}
+            {% endfor %}
+                <div class="article-body">
+                  <h2 class="article-title">{{ post.title }}</h2>
+                  <p class="article-content">kollone vha</p>
+                  <footer class="article-info">
+                    <span>{{ post.forfatter }}</span>
+                    <span>{{ post.redaksjon }}</span>
+                  </footer>
+                </div>
+              </a>
+
+              {%for post in latest_posts|slice:"4:" %}
+              {% if forloop.first %}
+          <a class="article" href="#">
+            {% for block in post.body %}
+            {% if block.block_type == 'main_image' %}
+                <figure class="article-image is-4by3">
+            
+                    {% image block.value width-1200 height-500 alt="Main Image" %}
+
+                </figure>
+                    
+            {% endif %}
+            {% endfor %}
+            <div class="article-body">
+              <h2 class="article-title">{{ post.title }}</h2>
+              <p class="article-content">article-content 4</p>
+              <footer class="article-info">
+                <span>{{ post.forfatter }}</span>
+                <span>{{ post.redaksjon }}</span>
+              </footer>
+            </div>
+          </a>
+          {% endif %}
+        {% endfor %}
+
+        {%for post in latest_posts|slice:"5:" %}
+            {% if forloop.first %}
+          <a class="article" href="{{post.url}}">
+            {% for block in post.body %}
+            {% if block.block_type == 'main_image' %}
+                <figure class="article-image is-4by3">
+            
+                    {% image block.value width-1200 height-500 alt="Main Image" %}
+
+                </figure>
+                    
+            {% endif %}
+            {% endfor %}
+            <div class="article-body">
+              <h2 class="article-title">{{ post.title }}</h2>
+              <p class="article-content">article-content 5</p>
+              <footer class="article-info">
+                <span>{{ post.forfatter }}</span>
+                <span>{{ post.redaksjon}}</span>
+              </footer>
+            </div>
+          </a>
+        </div>
+        {% endif %}
+        {% endfor %}
+      </div>
+    </section>
+    {% endif %}
+        {% endfor %}
+    
+    <section class="column">
+        {%for post in latest_posts|slice:"6:" %}
+        {% if forloop.first %}
+      <a class="article" href="{{post.url}}">
+        {% for block in post.body %}
+        {% if block.block_type == 'main_image' %}
+            <figure class="article-image is-4by3">
+        
+                {% image block.value width-1200 height-500 alt="Main Image" %}
+
+            </figure>
+                
+        {% endif %}
+        {% endfor %}
+        <div class="article-body">
+          <h2 class="article-title">{{ post.title }}</h2>
+          <p class="article-content">article-content 6</p>
+          <footer class="article-info">
+            <span>{{ post.forfatter }}</span>
+            <span>{{ post.redaksjon}}</span>
+          </footer>
+        </div>
+      </a>
+      {% endif %}
+        {% endfor %}
+
+        {%for post in latest_posts|slice:"7:" %}
+        {% if forloop.first %}
+      <a class="article" href="{{post.url}}"> 
+        {% for block in post.body %}
+        {% if block.block_type == 'main_image' %}
+            <figure class="article-image is-4by3">
+        
+                {% image block.value width-1200 height-500 alt="Main Image" %}
+
+            </figure>
+                
+        {% endif %}
+        {% endfor %}
+        <div class="article-body">
+          <h2 class="article-title">{{ post.title }}</h2>
+          <p class="article-content">article-content 7</p>
+          <footer class="article-info">
+            <span>{{ post.forfatter }}</span>
+            <span>{{ post.redaksjon}}</span>
+          </footer>
+        </div>
+      </a>
+      {% endif %}
+        {% endfor %}
+
+        {%for post in latest_posts|slice:"8:" %}
+        {% if forloop.first %}
+      <a class="article" href="{{post.url}}">
+        {% for block in post.body %}
+        {% if block.block_type == 'main_image' %}
+            <figure class="article-image is-4by3">
+        
+                {% image block.value width-1200 height-500 alt="Main Image" %}
+
+            </figure>
+                
+        {% endif %}
+        {% endfor %}
+        <div class="article-body">
+          <h2 class="article-title">{{ post.title }}</h2>
+          <p class="article-content">article-content 8</p>
+          <footer class="article-info">
+            <span>{{ post.forfatter }}</span>
+            <span>{{ post.redaksjon}}</span>
+          </footer>
+        </div>
+      </a>
+      {% endif %}
+        {% endfor %}
+        {%for post in latest_posts|slice:"9:" %}
+        {% if forloop.first %}
+      <a class="article" href="{{post.url}}">
+        {% for block in post.body %}
+        {% if block.block_type == 'main_image' %}
+            <figure class="article-image is-4by3">
+        
+                {% image block.value width-1200 height-500 alt="Main Image" %}
+
+            </figure>
+                
+        {% endif %}
+        {% endfor %}
+        <div class="article-body">
+          <h2 class="article-title">{{ post.title }}</h2>
+          <p class="article-content">article-content 9</p>
+          <footer class="article-info">
+            <span>{{ post.forfatter }}</span>
+            <span>{{ post.redaksjon}}</span>
+          </footer>
+        </div>
+      </a>
+      
+    </section>
+    {% endif %}
+    {% endfor %}
+        
+    </main>
+    
+    {% endblock %}

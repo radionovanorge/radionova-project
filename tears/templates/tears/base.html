@@ -29,6 +29,7 @@
                   href="{% static 'tears/css/base.scss' %}" />
         {% endcompress %}
         {% block extra_css %}{# Override this in templates to add extra stylesheets #}{% endblock %}
+        
     </head>
     <body class="{% block body_class %}{% endblock %}">
         {% wagtailuserbar %}
@@ -39,31 +40,7 @@
                 Root page not found. <a href="{{ root_page_url }}">Choose a different site</a>.
             </p>
         {% endif %}
-        <nav>
-            <ul>
-                <li>
-                    <a href="{% pageurl current_site.root_page %}">
-                        <img src="https://radionova.no/radionova.png"
-                             alt="radionova logo"
-                             style="max-width: 160px">
-                    </a>
-                </li>
-                <!-- Play Radio Button -->
-                <li>
-                    <button id="play-radio-button" onclick="toggleRadio()">
-                        <i id="play-radio-icon" class="fa fa-play fa-xl"></i>
-                    </button>
-                    <audio id="radio-player"
-                           src="https://stream.radionova.no/ogg"
-                           preload="none"></audio>
-                </li>
-                {% for menuitem in current_site.root_page.get_children.live.in_menu %}
-                    <li {% if menuitem.id == page.id %}class="current"{% endif %}>
-                        <a href="{% pageurl menuitem %}">{{ menuitem.title }}</a>
-                    </li>
-                {% endfor %}
-            </ul>
-        </nav>
+        {% include "components/navbar.html" %}
         <div class="main-content">
             {% block content %}{% endblock %}
         </div>

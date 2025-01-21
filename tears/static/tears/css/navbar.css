@@ -1,0 +1,134 @@
+.navigation {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.top-level-wrap {
+    background-color: #fff;
+    width: 100%;
+    padding: 14px 62px;
+}
+
+.logo-container {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.main-logo {
+    aspect-ratio: 3.3;
+    object-fit: contain;
+    width: 251px;
+    max-width: 100%;
+}
+
+.secondary-logo-container {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.secondary-logo {
+    aspect-ratio: 1.34;
+    object-fit: contain;
+    width: 63px;
+}
+
+.live-text {
+    font-family: Inter, sans-serif;
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    margin: 0;
+}
+
+.main-menu {
+    background-color: #d62021;
+    width: 100%;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 0.84px;
+    padding: 0 38px;
+    font: 400 15px/1.4 Inter, sans-serif;
+}
+
+.menu-list {
+    display: flex;
+    height: 50px;
+    padding-left: 14px;
+    align-items: flex-start;
+    gap: 10px;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    list-style-type: none;
+    margin: 0;
+}
+
+.menu-item {
+    white-space: nowrap;
+    padding: 14px 19px;
+}
+
+.menu-item a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.menu-item-wide {
+    padding: 19px 47px;
+}
+
+.menu-item-small {
+    font-size: 13px;
+    line-height: 2;
+    padding: 19px 51px;
+}
+
+
+
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+@media (max-width: 991px) {
+    .top-level-wrap {
+        max-width: 100%;
+        padding: 0 20px;
+    }
+
+    .logo-container {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 20px;
+    }
+
+    .main-logo,
+    .secondary-logo-container {
+        margin-top: 20px;
+    }
+
+    .main-menu {
+        max-width: 100%;
+        padding: 0 20px;
+    }
+
+    .menu-list {
+        max-width: 100%;
+    }
+
+    .menu-item,
+    .menu-item-wide,
+    .menu-item-small {
+        padding: 10px 20px;
+        white-space: normal;
+    }
+}

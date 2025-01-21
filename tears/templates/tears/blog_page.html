@@ -1,8 +1,22 @@
 {% extends "tears/base.html" %}
 {% load wagtailcore_tags wagtailimages_tags %}
+
 {% block content %}
     <h1>{{ page.title }}</h1>
-    <h4>{{ page.author }}</h4>
+    <h4>{{ page.forfatter }}</h4>
+    <h4>{{ page.redaksjon }}</h4>
     <h4>{{ page.date }}</h4>
-    {% for block in page.body %}{{ block.value }}{% endfor %}
+
+    {% for block in page.body %}
+        {% if block.block_type == "main_image" %}
+            <div class="main-image">
+                {% image block.value width-1200 height-500 %}
+            </div>
+            <p> {{ page.imageDecription }}</p>
+        {% elif block.block_type == "content" %}
+            <div class="content">
+                {{ block.value }}
+            </div>
+        {% endif %}
+    {% endfor %}
 {% endblock %}

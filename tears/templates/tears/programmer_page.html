@@ -1,0 +1,7 @@
+{% extends "tears/base.html" %}
+{% load wagtailcore_tags %}
+
+{% block content %}
+    <h1> {{ page.title }}</h1>
+    {{ page.body|richtext }}
+    {% endblock %}
