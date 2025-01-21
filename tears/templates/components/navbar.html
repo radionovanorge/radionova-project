@@ -1,47 +1,51 @@
 
-{% block content %}
-<link rel="stylesheet" href="tears/css/navbar.css">
-        <nav class="navigation" aria-label="Main Navigation">
-            <div class="top-level-wrap">
-                <div class="logo-container">
-                    <a href="#">
-                        <img src="https://radionova.no/radionova.png"
-                             alt="radionova logo"
-                             style="max-width: 160px">
-                    </a>                    
-                    <div class="secondary-logo-container">
-                        <!-- Play Radio Button -->
-        
-                        <button id="play-radio-button" onclick="toggleRadio()">
-                            <i id="play-radio-icon" class="fa fa-play fa-xl"></i>
-                        </button>
-                         <audio id="radio-player"
-                          src="https://stream.radionova.no/ogg"
-                            preload="none" class="secondary-logo" ></audio>
-        
-                        
-                        <p class="live-text">Direkte: Radionova /</l>
-                    </div>
-                </div>
-            </div>
-            <div class="main-menu">
-                <ul class="menu-list">
-                    <li class="menu-item"><a href="#" aria-current="page">Programmer</a></li>
-                    <li class="menu-item"><a href="#">Sendeplan</a></li>
-                    <li class="menu-item"><a href="#">A-<span>lista</span></a></li>
-                    <li class="menu-item"><a href="#">Kontakt</a></li>
-                    
-                </ul>
-            </div>
-        </nav>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <a class="navbar-brand" href="#"><img src="static/tears/images/radionova.png" alt="Brand Logo" class="brand-logo"> </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="#">NETTSAKER <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="#">VÅRE PROGRAMMER</a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" href="#">A-LISTA</a>
+          </li>
+            <li class="nav-item">
+                <a class="nav-link disabled" href="#">BOOKING</a>
+            </li> 
+            <li class="nav-item">
+              <a class="nav-link disabled" href="#">TIPS, TRIKS OG MANUALER</a>
+          </li>   
+            <!--   Dropdown if needed-->
+            <!--<li class="nav-item dropdown"> -->
+            <!--    <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a> -->
+            <!--    <div class="dropdown-menu" aria-labelledby="dropdown01"> -->
+            <!--        <a class="dropdown-item" href="#">Action</a> -->
+            <!--        <a class="dropdown-item" href="#">Another action</a> -->
+            <!--        <a class="dropdown-item" href="#">Something else here</a> -->
+            <!--    </div> -->
+            <!--</li> -->
+            <li class="nav-item">
+              <button onclick="toggleRadio()" class="btn btn-link btn-outline-danger nav-link" style="box-shadow: 0 0 5px rgba(220, 53, 69, 0.5);  border-color: rgba(79, 79, 79, 0.8);"> 
+                  <i id="play-radio-icon" class="fa fa-play fa-xl"></i>
+                  <span id="play-text">Play</span>
+              </button>
+              <audio id="radio-player" crossorigin="anonymous" style="display:none"  preload="auto" crossorigin="anonymous">
+                  <source src="https://stream.radionova.no/ogg" type="audio/ogg">
+                  Your browser does not support the audio element.
+              </audio>
+          </li>
+            <li class="nav-item">
+                <div id="visualizer-container" class="nav-link" style="width: 300px; height: 40px; overflow: hidden;"> <canvas style="width: 300px; height: 40px;"></canvas></div>
+            </li>
+        </ul>
+        <!-- Social icons here -->
+    </div>
     
-<nav>
-    <ul>
-        <li>
-            
-        </li>
-        
-        
-    </ul>
 </nav>
-{% endblock %}

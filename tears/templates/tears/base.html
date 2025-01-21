@@ -20,14 +20,12 @@
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         {# Force all links in the live preview panel to be opened in a new tab #}
         {% if request.in_preview_panel %}<base target="_blank">{% endif %}
-        <link rel="stylesheet"
-              href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-        
+       
+
         {% compress css %}
-            <link rel="stylesheet"
-                  type="text/x-scss"
-                  href="{% static 'tears/css/base.scss' %}" />
+        <link rel="stylesheet" href="{% static 'tears/css/base.css' %}">
         {% endcompress %}
+        
         {% block extra_css %}{# Override this in templates to add extra stylesheets #}{% endblock %}
         
     </head>
@@ -41,17 +39,22 @@
             </p>
         {% endif %}
         {% include "components/navbar.html" %}
-        <div class="main-content">
-            {% block content %}{% endblock %}
-        </div>
+        <!-- {% include "components/head.html" %} --> 
+        
+        
+        
+        {% block content %}{% endblock %}
+        
 
-        <div class="footer">
+        <!-- <div class="footer">
             <p>&copy; {{ current_site.site_name }} {{ current_site.root_page.first_published_at|date:"Y" }}</p>
-        </div>
+        </div>  -->
         {# Global javascript #}
         {% compress js %}
-            <script type="text/javascript" src="{% static 'tears/js/base.js' %}"></script>
+        <script type="text/javascript" src="{% static 'tears/js/radiospiller.js' %}"></script>
         {% endcompress %}
-        {% block extra_js %}{# Override this in templates to add extra javascript #}{% endblock %}
-    </body>
+        
+        {% block extra_js %}
+            
+        {% endblock %}
 </html>

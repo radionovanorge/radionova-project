@@ -19,19 +19,6 @@ document.querySelectorAll(".walkthrough .item").forEach(function (item) {
 })
 
 
-function toggleRadio() {
-    const radioPlayer = document.getElementById('radio-player');
-    const playIcon = document.getElementById('play-radio-icon');
 
-    if (radioPlayer.paused) {
-        radioPlayer.play();
-        playIcon.className = 'fa fa-pause fa-xl';
-        playIcon.innerHTML = ' Playing...';
-    } else {
-        radioPlayer.pause();
-        playIcon.className = 'fa fa-play fa-xl';
-        playIcon.innerHTML = ' Play';
-    }
-}
 
 
