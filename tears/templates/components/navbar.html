@@ -1,6 +1,6 @@
-
+{% load static %}
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-    <a class="navbar-brand" href="#"><img src="static/tears/images/radionova.png" alt="Brand Logo" class="brand-logo"> </a>
+    <a class="navbar-brand" href="#"><img src="{% static 'tears/images/radionova.png' %}" alt="Brand Logo" class="brand-logo"> </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -11,16 +11,16 @@
                 <a class="nav-link" href="#">NETTSAKER <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item active">
-                <a class="nav-link" href="#">VÅRE PROGRAMMER</a>
+                <a class="nav-link" href="/våre-redaksjoner">VÅRE PROGRAMMER</a>
             </li>
             <li class="nav-item active">
               <a class="nav-link" href="#">A-LISTA</a>
           </li>
             <li class="nav-item">
-                <a class="nav-link disabled" href="#">BOOKING</a>
+                <a class="nav-link disabled" href="#">SENDEPLAN</a>
             </li> 
             <li class="nav-item">
-              <a class="nav-link disabled" href="#">TIPS, TRIKS OG MANUALER</a>
+              <a class="nav-link disabled" href="#">DAGTID</a>
           </li>   
             <!--   Dropdown if needed-->
             <!--<li class="nav-item dropdown"> -->

@@ -24,9 +24,16 @@
 
         {% compress css %}
         <link rel="stylesheet" href="{% static 'tears/css/base.css' %}">
+        <!-- Bootstrap 4 CSS -->
+        
         {% endcompress %}
         
-        {% block extra_css %}{# Override this in templates to add extra stylesheets #}{% endblock %}
+        {% block extra_css %}{# Override this in templates to add extra stylesheets #}
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <!-- Your custom CSS -->
+        {% endblock %}
         
     </head>
     <body class="{% block body_class %}{% endblock %}">
@@ -52,9 +59,18 @@
         {# Global javascript #}
         {% compress js %}
         <script type="text/javascript" src="{% static 'tears/js/radiospiller.js' %}"></script>
+
+        
+        
+
+        
+       
         {% endcompress %}
         
         {% block extra_js %}
-            
+             <!-- jQuery -->
+        <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+        <!-- Bootstrap 4 JS -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
         {% endblock %}
 </html>
