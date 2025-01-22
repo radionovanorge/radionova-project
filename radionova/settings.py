@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'tears',
 
     'compressor',
+    'wagtail.contrib.routable_page',
 
     'wagtail.contrib.forms',
     'wagtail.contrib.redirects',
