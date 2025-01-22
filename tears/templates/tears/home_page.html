@@ -13,6 +13,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Document</title>
+        <link href="{% static 'tears/css/footer.css' %}">
         
         <script src="{% static 'tears/js/base.js' %}"></script>
         <script src="{% static 'tears/js/programmerSlider.js' %}"></script>
@@ -368,10 +369,28 @@
     <hr class="featurette-divider">
   
     <!-- FOOTER -->
-    <footer>
-      <p class="float-right"><a href="#">Back to top</a></p>
-      <p>&copy; 2025 Radio Nova &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
-    </footer>
+    
+<footer class="footer">
+  <div class="footer-container">
+      <div class="footer-content">
+          <div class="footer-logos">
+              <img src="path-to-logo1.svg" alt="VT Logo" class="footer-logo">
+              <img src="path-to-logo2.svg" alt="Pen Logo" class="footer-logo">
+          </div>
+          <div class="footer-info">
+              <p>Radio Nova er Oslo-studentenes helt egne radiokanal og en av Norges største lokalradioer.</p>
+              <p>Adresse: Radio Nova Pb. 1162 Blindern 0317 Oslo<br>
+              Telefonnummer: +4747456020<br>
+              E-postadresse: post@radionova.no<br>
+              Organisasjonsnummer: 975 425 096</p>
+          </div>
+      </div>
+      <div class="footer-bottom">
+          <p>&copy; 2025 Radio Nova <a href="#" class="back-to-top float-right">Back to top</a></p>
+          <p></p>
+      </div>
+  </div>
+</footer>
   
   </div>
   

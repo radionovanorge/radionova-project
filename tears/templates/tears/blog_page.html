@@ -51,11 +51,11 @@
 
         .post-title {
             grid-column: 2 / span 2;
-            font-size: calc(2rem + .25vw);
+            font-size: calc(3rem + .25vw);
             font-weight: 300;
-            line-height: 1.3;
+            line-height: 0.3;
             color: hsl(7, 81%, 45%);
-            margin: 2rem 0 1rem;
+            margin: 1rem 0 1rem;
         }
 
         .ingress {
@@ -72,11 +72,11 @@
             font-size: calc(0.7rem + 0.25vw);
             font-style: italic;
             padding: 1rem;
-            background-color: hsl(347, 12%, 98%);
+            background-color: hsl(0, 0%, 100%);
         }
 
         .content {
-            grid-column: 2 / span 2;
+            grid-column: 2 / span 4;
             line-height: 1.6;
             color: #333;
         }
@@ -110,9 +110,9 @@
         </div>
         
         <div class="meta-info">
-            <p>Written by: {{ page.forfatter }}</p>
-            <p>Editorial: {{ page.redaksjon }}</p>
-            <p>Published: {{ page.date }}</p>
+            <p>Skrevet av: {{ page.forfatter }}</p>
+            <p> {{ page.redaksjon }}</p>
+            <p> {{ page.date }}</p>
         </div>
         
         <div class="content">
