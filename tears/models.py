@@ -82,6 +82,10 @@ class ProgrammerPage(Page, RoutablePageMixin):
     @route(r'^nettsaker/$', name='nettsaker')
     def nettsaker_page(self, request):
         return self.render(request, template='tears/nettsaker.html')
+    
+    @route(r'^alista/$', name='alista') 
+    def alista_page(self, request):
+        return self.render(request, template='tears/alista.html')
 
 
 
@@ -137,6 +141,10 @@ class BlogPage(Page, RoutablePageMixin):
     @route(r'^programmer/$', name='programmer') 
     def programmer_page(self, request):
         return self.render(request, template='tears/programmer_page.html')
+    
+    @route(r'^alista/$', name='alista') 
+    def alista_page(self, request):
+        return self.render(request, template='tears/alista.html')
 
 
 class FreeTextPage(Page, RoutablePageMixin):
@@ -158,6 +166,9 @@ class FreeTextPage(Page, RoutablePageMixin):
     @route(r'^programmer/$', name='programmer') 
     def programmer_page(self, request):
         return self.render(request, template='tears/programmer_page.html')
+    @route(r'^alista/$', name='alista') 
+    def alista_page(self, request):
+        return self.render(request, template='tears/alista.html')
 
 class DagTidPage(Page, RoutablePageMixin):
     page_description = "This are page is for configuring Dagtid names, roles etc."
@@ -195,6 +206,9 @@ class DagTidPage(Page, RoutablePageMixin):
     @route(r'^programmer/$', name='programmer') 
     def programmer_page(self, request):
         return self.render(request, template='tears/programmer_page.html')
+    @route(r'^alista/$', name='alista') 
+    def alista_page(self, request):
+        return self.render(request, template='tears/alista.html')
     
 
 
@@ -212,6 +226,7 @@ class AListPage(Page, RoutablePageMixin):
         FieldPanel("AListeUke"),
         FieldPanel("date"),
         FieldPanel("Tittel"),
+        FieldPanel("body"),
     ]
 
     body = StreamField(
