@@ -1,0 +1,145 @@
+{% extends "tears/base.html" %}
+{% load wagtailcore_tags wagtailimages_tags %}
+{% block content %}<div class="free-text-block is-clearfix">{{ page.body|richtext }}</div>
+
+    <!-- NETTSAKER -->
+    <main class="main columns articles-section">
+
+        <section class="column main-column">
+          {% for post in latest_posts %}
+          {% if forloop.first %}
+          <a class="article first-article" href="{{ post.url }}">
+            {% for block in post.body %}
+            {% if block.block_type == 'main_image' %}
+            <figure class="article-image is-4by3">
+              {% image block.value width-1200 height-500 alt="Main Image" %}
+            </figure>
+            {% endif %}
+            {% endfor %}
+            <div class="article-body">
+              <h2 class="article-title">{{ post.title }}</h2>
+            <!-- Only showing title for now -->
+            <!--  <p class="article-content">article-content 1</p> -->
+            <!-- <footer class="article-info"> -->
+            <!--   <span>auth</span> -->
+            <!--   <span>redaksjon/dato</span> -->
+            <!-- </footer> -->
+            </div>
+          </a>
+          {% endif %}
+          {% endfor %}
+          
+          {% for post in latest_posts|slice:"1:" %}
+          {% if forloop.first %}
+          <div class="columns">
+            <div class="column nested-column">
+              <a class="article" href="{{ post.url }}">
+                
+                 {% for block in post.body %}
+                  {% if block.block_type == 'main_image' %}
+                <figure class="article-image is-16by9">
+                  {% image block.value width-1200 height-500 alt="Main Image" %}
+                </figure>
+                {% endif %}
+                {% endfor %}
+                <div class="article-body">
+                  <h2 class="article-title">{{ post.title }}</h2>
+                  <!-- <p class="article-content">article-content 6</p>
+              <footer class="article-info">
+                <span>auth</span>
+                <span>redaksjon/dato</span>
+              </footer>-->
+                </div>
+              </a>
+              {% endif %}
+             {% endfor %}
+
+
+            </div>
+            {%for post in latest_posts|slice:"2:" %}
+            {% if forloop.first %}
+            <div class="column">
+              <a class="article" href="{{ post.url }}">
+                {% for block in post.body %}
+                     {% if block.block_type == 'main_image' %}
+                <figure class="article-image is-16by9">
+                   
+                  {% image block.value width-1200 height-500 alt="Main Image" %}
+
+
+                </figure>
+                {% endif %}
+                {% endfor %}
+                <div class="article-body">
+                  <h2 class="article-title">{{ post.title }}</h2>
+                  <!-- <p class="article-content">article-content 6</p>
+              <footer class="article-info">
+                <span>auth</span>
+                <span>redaksjon/dato</span>
+              </footer>-->
+                </div>
+              </a>
+
+              {% endif %}
+              {% endfor %}
+
+            {%for post in latest_posts|slice:"3:" %}
+            {% if forloop.first %}
+              <a class="article" href="{{ post.url }}">
+                {% for block in post.body %}
+                     {% if block.block_type == 'main_image' %}
+                <figure class="article-image is-16by9">
+                   
+                  {% image block.value width-1200 height-500 alt="Main Image" %}
+
+
+                </figure>
+                {% endif %}
+                {% endfor %}
+                <div class="article-body">
+                  
+                  <h2 class="article-title">{{ post.title }}</h2>
+                  <!-- <p class="article-content">article-content 6</p>
+              <footer class="article-info">
+                <span>auth</span>
+                <span>redaksjon/dato</span>
+              </footer>-->
+                </div>
+              </a>
+
+              {% endif %}
+              {% endfor %}
+
+            
+          </div>
+
+        </section>
+        
+        <section class="column">
+          {%for post in latest_posts|slice:"5:" %}
+            {% if forloop.first %}
+          <a class="article" href="{{ post.url }}">
+            {% for block in post.body %}
+            {% if block.block_type == 'main_image' %}
+            <figure class="article-image is-3by2">
+              
+                {% image block.value width-1200 height-500 alt="Main Image" %}
+            </figure>
+            {% endif %}
+            {% endfor %}
+            <div class="article-body">
+              <h2 class="article-title">{{ post.title }}</h2>
+             <!-- <p class="article-content">article-content 6</p>
+              <footer class="article-info">
+                <span>auth</span>
+                <span>redaksjon/dato</span>
+              </footer>-->
+            </div>
+          </a>
+          
+          {% endif %}
+          {% endfor %}   
+        </section>
+    
+
+{% endblock %}

@@ -32,18 +32,28 @@ class HomePage(RoutablePageMixin, Page):
         ).public().order_by("-date")[:9]
         return context
     
- #   @route(r'^$')
- #   def home_page(self, request, *args, **kwargs):
- #       context = self.get_context(request, *args, **kwargs)
-#
- #       return render(request, "tears/home_page.html", context)
+    @route(r'^$', name='home') 
+    def home_page(self, request):
+        return self.render(request, template='tears/home_page.html')
 
+    
+    @route(r'^nettsaker/$', name='nettsaker')
+    def nettsaker_page(self, request):
+        return self.render(request, template='tears/nettsaker.html')
+    
+    @route(r'^programmer/$', name='programmer') 
+    def programmer_page(self, request):
+        return self.render(request, template='tears/programmer_page.html')
+
+  
+    
+    
         
     
 
 
 
-class ProgrammerPage(RoutablePageMixin, Page):
+class ProgrammerPage(Page, RoutablePageMixin):
     page_description = "This is the program list page of the website and has the content at https://radionova.no/programmer."
     subpage_types = ['ProgramPage']
     body  = RichTextField(blank=True)
@@ -56,10 +66,22 @@ class ProgrammerPage(RoutablePageMixin, Page):
     content_panels = Page.content_panels + [
         FieldPanel('body', classname="full"),
     ]
+    @route(r'^programmer/$', name='programmer') 
+    def programmer_page(self, request):
+        return self.render(request, template='tears/programmer_page.html')
+
+    @route(r'^$', name='home') 
+    def home_page(self, request):
+        return self.render(request, template='tears/home_page.html')
+
+    
+    @route(r'^nettsaker/$', name='nettsaker')
+    def nettsaker_page(self, request):
+        return self.render(request, template='tears/nettsaker.html')
 
 
 
-class ProgramPage(Page):
+class ProgramPage(Page , RoutablePageMixin):
     page_description = "This is the program page of the website and has the content at e.g. https://radionova.no/programmer/frokost."
     subpage_types = ['BlogPage']
     program = models.ForeignKey(Group, on_delete=models.PROTECT)
@@ -74,9 +96,10 @@ class ProgramPage(Page):
         FieldPanel("program"),
         FieldPanel("description"),
     ]
+  
 
 
-class BlogPage(Page):
+class BlogPage(Page, RoutablePageMixin):
     page_description = "This is the blog page of the website and has the content at e.g. https://radionova.no/blog/2024/10/12/ny-blog."
     redaksjon = models.ForeignKey(User, on_delete=models.PROTECT)
     date = models.DateTimeField("Post time")
@@ -98,12 +121,37 @@ class BlogPage(Page):
         FieldPanel("body"),
         FieldPanel("imageDecription")
     ]
+    @route(r'^$', name='home') 
+    def home_page(self, request):
+        return self.render(request, template='tears/home_page.html')
+
+    
+    @route(r'^nettsaker/$', name='nettsaker')
+    def nettsaker_page(self, request):
+        self.render(request, template='tears/nettsaker.html')
+    
+    @route(r'^programmer/$', name='programmer') 
+    def programmer_page(self, request):
+        return self.render(request, template='tears/programmer_page.html')
 
 
-class FreeTextPage(Page):
+class FreeTextPage(Page, RoutablePageMixin):
     page_description = "These are pages with free text, can be used for additional pages like /om-oss, /sendeplan, /a-lista etc."
     body = RichTextField(blank=True)
 
     content_panels = Page.content_panels + [
         FieldPanel("body"),
     ]
+    @route(r'^$', name='home') 
+    def home_page(self, request):
+        return self.render(request, template='tears/home_page.html')
+
+    
+    @route(r'^nettsaker/$', name='nettsaker')
+    def nettsaker_page(self, request):
+        self.render(request, template='tears/nettsaker.html')
+    
+    @route(r'^programmer/$', name='programmer') 
+    def programmer_page(self, request):
+        return self.render(request, template='tears/programmer_page.html')
+

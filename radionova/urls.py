@@ -46,5 +46,5 @@ if settings.DEBUG:
                           document_root=os.path.join(settings.MEDIA_ROOT, 'images'))
     urlpatterns += [
         path('favicon.ico', RedirectView.as_view(
-            url=settings.STATIC_URL + 'myapp/images/favicon.ico'))
+            url=settings.STATIC_URL + 'myapp/images/favicon.ico'))      
     ]

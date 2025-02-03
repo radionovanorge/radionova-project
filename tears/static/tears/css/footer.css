@@ -1,5 +1,5 @@
 .footer {
-    background-color: #f8f9fa;
+    background-color: inherit;
     padding: 2rem 0;
     margin-top: 3rem;
     border-top: 1px solid #dee2e6;
@@ -47,6 +47,7 @@
 .back-to-top {
     color: #6c757d;
     text-decoration: none;
+    margin-left:100px;
 }
 
 .back-to-top:hover {
