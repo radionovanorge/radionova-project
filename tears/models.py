@@ -136,7 +136,7 @@ class BlogPage(Page, RoutablePageMixin):
 
 
 class FreeTextPage(Page, RoutablePageMixin):
-    page_description = "These are pages with free text, can be used for additional pages like /om-oss, /sendeplan, /a-lista etc."
+    page_description = "These are pages with free text, can be used for additional pages like  /sendeplan, /a-lista etc."
     body = RichTextField(blank=True)
 
     content_panels = Page.content_panels + [
@@ -154,4 +154,45 @@ class FreeTextPage(Page, RoutablePageMixin):
     @route(r'^programmer/$', name='programmer') 
     def programmer_page(self, request):
         return self.render(request, template='tears/programmer_page.html')
+
+class DagTidPage(Page, RoutablePageMixin):
+    page_description = "This are page is for configuring Dagtid names, roles etc."
+
+    
+    DagTidNavn = models.CharField("DagTidNavn", max_length=255, blank=True)
+    Rolle = models.CharField("Rolle:", max_length=255, blank=True)
+    beskrivelse = models.CharField("beskrivelse:", max_length=255, blank=True)
+
+    subpage_types = []
+
+    content_panels = Page.content_panels + [
+        FieldPanel("DagTidNavn"),
+        FieldPanel("Rolle"),
+        FieldPanel("beskrivelse"),
+    ]
+
+    body = StreamField(
+        [
+            ("main_image", ImageChooserBlock()),
+            ("content", blocks.RichTextBlock()),
+        ],
+        blank=True,
+    )
+
+    @route(r'^$', name='home') 
+    def home_page(self, request):
+        return self.render(request, template='tears/home_page.html')
+
+    
+    @route(r'^nettsaker/$', name='nettsaker')
+    def nettsaker_page(self, request):
+        self.render(request, template='tears/nettsaker.html')
+    
+    @route(r'^programmer/$', name='programmer') 
+    def programmer_page(self, request):
+        return self.render(request, template='tears/programmer_page.html')
+    
+
+
+
 
