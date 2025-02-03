@@ -44,6 +44,10 @@ class HomePage(RoutablePageMixin, Page):
     @route(r'^programmer/$', name='programmer') 
     def programmer_page(self, request):
         return self.render(request, template='tears/programmer_page.html')
+    
+    @route(r'^alista/$', name='alista') 
+    def alista_page(self, request):
+        return self.render(request, template='tears/alista.html')
 
   
     
@@ -192,6 +196,46 @@ class DagTidPage(Page, RoutablePageMixin):
     def programmer_page(self, request):
         return self.render(request, template='tears/programmer_page.html')
     
+
+
+class AListPage(Page, RoutablePageMixin):
+    page_description = "This are page is for configuring a-lista for every week"
+
+    
+    AListeUke = models.CharField("AListeUke", max_length=255, blank=True)
+    date = models.DateTimeField("Post time")
+    Tittel = models.CharField("Tittel:", max_length=255, blank=True)
+
+    subpage_types = []
+
+    content_panels = Page.content_panels + [
+        FieldPanel("AListeUke"),
+        FieldPanel("date"),
+        FieldPanel("Tittel"),
+    ]
+
+    body = StreamField(
+        [
+            ("main_image", ImageChooserBlock()),
+            ("content", blocks.RichTextBlock()),
+        ],
+        blank=True,
+    )
+
+    @route(r'^$', name='home') 
+    def home_page(self, request):
+        return self.render(request, template='tears/home_page.html')
+
+    
+    @route(r'^nettsaker/$', name='nettsaker')
+    def nettsaker_page(self, request):
+        self.render(request, template='tears/nettsaker.html')
+    
+    @route(r'^programmer/$', name='programmer') 
+    def programmer_page(self, request):
+        return self.render(request, template='tears/programmer_page.html')
+    
+
 
 
 
