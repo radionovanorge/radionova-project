@@ -70,23 +70,7 @@ class ProgrammerPage(Page, RoutablePageMixin):
     content_panels = Page.content_panels + [
         FieldPanel('body', classname="full"),
     ]
-    @route(r'^programmer/$', name='programmer') 
-    def programmer_page(self, request):
-        return self.render(request, template='tears/programmer_page.html')
-
-    @route(r'^$', name='home') 
-    def home_page(self, request):
-        return self.render(request, template='tears/home_page.html')
-
-    
-    @route(r'^nettsaker/$', name='nettsaker')
-    def nettsaker_page(self, request):
-        return self.render(request, template='tears/nettsaker.html')
-    
-    @route(r'^alista/$', name='alista') 
-    def alista_page(self, request):
-        return self.render(request, template='tears/alista.html')
-
+  
 
 
 class ProgramPage(Page , RoutablePageMixin):
@@ -129,22 +113,7 @@ class BlogPage(Page, RoutablePageMixin):
         FieldPanel("body"),
         FieldPanel("imageDecription")
     ]
-    @route(r'^$', name='home') 
-    def home_page(self, request):
-        return self.render(request, template='tears/home_page.html')
-
-    
-    @route(r'^nettsaker/$', name='nettsaker')
-    def nettsaker_page(self, request):
-        self.render(request, template='tears/nettsaker.html')
-    
-    @route(r'^programmer/$', name='programmer') 
-    def programmer_page(self, request):
-        return self.render(request, template='tears/programmer_page.html')
-    
-    @route(r'^alista/$', name='alista') 
-    def alista_page(self, request):
-        return self.render(request, template='tears/alista.html')
+  
 
 
 class FreeTextPage(Page, RoutablePageMixin):
@@ -154,21 +123,9 @@ class FreeTextPage(Page, RoutablePageMixin):
     content_panels = Page.content_panels + [
         FieldPanel("body"),
     ]
-    @route(r'^$', name='home') 
-    def home_page(self, request):
-        return self.render(request, template='tears/home_page.html')
+   
 
-    
-    @route(r'^nettsaker/$', name='nettsaker')
-    def nettsaker_page(self, request):
-        self.render(request, template='tears/nettsaker.html')
-    
-    @route(r'^programmer/$', name='programmer') 
-    def programmer_page(self, request):
-        return self.render(request, template='tears/programmer_page.html')
-    @route(r'^alista/$', name='alista') 
-    def alista_page(self, request):
-        return self.render(request, template='tears/alista.html')
+   
 
 class DagTidPage(Page, RoutablePageMixin):
     page_description = "This are page is for configuring Dagtid names, roles etc."
@@ -194,23 +151,7 @@ class DagTidPage(Page, RoutablePageMixin):
         blank=True,
     )
 
-    @route(r'^$', name='home') 
-    def home_page(self, request):
-        return self.render(request, template='tears/home_page.html')
-
     
-    @route(r'^nettsaker/$', name='nettsaker')
-    def nettsaker_page(self, request):
-        self.render(request, template='tears/nettsaker.html')
-    
-    @route(r'^programmer/$', name='programmer') 
-    def programmer_page(self, request):
-        return self.render(request, template='tears/programmer_page.html')
-    @route(r'^alista/$', name='alista') 
-    def alista_page(self, request):
-        return self.render(request, template='tears/alista.html')
-    
-
 
 class AListPage(Page, RoutablePageMixin):
     page_description = "This are page is for configuring a-lista for every week"
@@ -237,21 +178,7 @@ class AListPage(Page, RoutablePageMixin):
         blank=True,
     )
 
-    @route(r'^$', name='home') 
-    def home_page(self, request):
-        return self.render(request, template='tears/home_page.html')
-
-    
-    @route(r'^nettsaker/$', name='nettsaker')
-    def nettsaker_page(self, request):
-        self.render(request, template='tears/nettsaker.html')
-    
-    @route(r'^programmer/$', name='programmer') 
-    def programmer_page(self, request):
-        return self.render(request, template='tears/programmer_page.html')
-    
-
-
+  
 
 
 
