@@ -1,243 +1,49 @@
 {% extends "tears/base.html" %}
 {% load wagtailcore_tags %}
-
+{% load wagtailimages_tags %} 
 {% block content %}
 {% load static %}
 <head>
   <link href="{% static 'tears/css/programmer_page.css' %}" rel="stylesheet">
 </head>
 <body>
-    <h1> Humor & underholdning </h1>
+    {% for category_name, programs in grouped_programs.items %}
+    <h1>{{ category_name }}</h1>
+
+    {% for program in programs %}
+        {% if forloop.first or forloop.counter0|divisibleby:3 %}
+        <div class="wrap">
+        {% endif %}
+
+        <div class="tile">
+          {% if program.main_image %}
+          {% image program.main_image width-800 class="program-image" %}
+      {% else %}
+      <img src="https://via.placeholder.com/800x400?text=No+Image" alt="No image available">
+      {% endif %}
+
+            <div class="text">
+                <h2 class="animate-text">{{ program.title }}</h2>
+                <p class="animate-text">{{ program.intro }}</p>
+                
+                    
+                    <a class="btn btn-link btn-block btn-outline-dark nav-link animate-text" href="{{ program.url }}">
+                        GÅ TIL PROGRAMMET
+                    </a>
+                
+            </div>
+        </div>
+
+        {% if forloop.counter|divisibleby:3 or forloop.last %}
+        </div> <!-- Close wrap after every 3 tiles or at the end -->
+        {% endif %}
+    {% endfor %}
+{% endfor %}
 
    
    
-<!-- Add more tiles of new redaksjons is overflowing the tiles-->
-    <div class="wrap">
-        <div class="tile"> 
-          <img src='https://images.unsplash.com/photo-1464054313797-e27fb58e90a9?dpr=1&auto=format&crop=entropy&fit=crop&w=1500&h=996&q=80'/>
-          <div class="text">
-          <h1></h1>
-          <h2 class="animate-text">More bacon ipsum.</h2>
-          <p class="animate-text">Bacon ipsum dolor amet pork belly tri-tip turducken, pancetta bresaola pork chicken meatloaf. Flank sirloin strip steak prosciutto kevin turducken. </p>
-         <div class="placement">
-        <div class="dots">
-            <span></span>
-            <span></span>
-            <span></span>
-            
-          </div>
-          <a class="btn btn-link btn-outline-dark nav-link animate-text">
-              GÅ TIL PROGRAMMET
-          </a>
 
-          </div>
-        </div> 
-        </div>
-        
-        
-        <div class="tile"> 
-          <img src='https://images.unsplash.com/photo-1458668383970-8ddd3927deed?dpr=1&auto=format&crop=entropy&fit=crop&w=1500&h=1004&q=80'/>
-          <div class="text">
-          <h1></h1>
-          <h2 class="animate-text">More lorem ipsum bacon ipsum.</h2>
-          <p class="animate-text">Bacon ipsum dolor amet pork belly tri-tip turducken, pancetta bresaola pork chicken meatloaf. Flank sirloin strip steak prosciutto kevin turducken. </p>
-        <div class="dots">
-            <span></span>
-            <span></span>
-            <span></span>
-          </div>
-          <button class="btn btn-link btn-outline-light nav-link animate-text">
-            Nettsiden
-        </button>
-
-          </div>
-        </div>
-          
-          <div class="tile"> 
-          <img src='https://images.unsplash.com/photo-1422393462206-207b0fbd8d6b?dpr=1&auto=format&crop=entropy&fit=crop&w=1500&h=1000&q=80'/>
-          <div class="text">
-          <h1></h1>
-          <h2 class="animate-text">More lorem ipsum bacon ipsum.</h2>
-          <p class="animate-text">Bacon ipsum dolor amet pork belly tri-tip turducken, pancetta bresaola pork chicken meatloaf. Flank sirloin strip steak prosciutto kevin turducken. </p>
-        <div class="dots">
-            <span></span>
-            <span></span>
-            <span></span>
-          </div>
-          <button class="btn btn-link btn-outline-light nav-link animate-text">
-            Nettsiden
-        </button>
-
-          </div>
-        </div>
-         
-        </div>
-        
-          
-        <hr class="featurette-divider">
-        <h1> Kultur </h1>
-          
-          
-        
     
-
-        <div class="wrap">
-            <div class="tile"> 
-              <img src='https://images.unsplash.com/photo-1464054313797-e27fb58e90a9?dpr=1&auto=format&crop=entropy&fit=crop&w=1500&h=996&q=80'/>
-              <div class="text">
-              <h1></h1>
-              <h2 class="animate-text">More lorem ipsum bacon ipsum.</h2>
-              <p class="animate-text">Bacon ipsum dolor amet pork belly tri-tip turducken, pancetta bresaola pork chicken meatloaf. Flank sirloin strip steak prosciutto kevin turducken. </p>
-            <div class="dots">
-                <span></span>
-                <span></span>
-                <span></span>
-              </div>
-              <button class="btn btn-link btn-outline-light nav-link animate-text">
-                Nettsiden
-            </button>
-  
-              </div>
-            </div>
-            
-            
-            <div class="tile"> 
-              <img src='https://images.unsplash.com/photo-1458668383970-8ddd3927deed?dpr=1&auto=format&crop=entropy&fit=crop&w=1500&h=1004&q=80'/>
-              <div class="text">
-              <h1></h1>
-              <h2 class="animate-text">More bacon ipsum.</h2>
-              <p class="animate-text">Bacon ipsum dolor amet pork belly tri-tip turducken, pancetta bresaola pork chicken meatloaf. Flank sirloin strip steak prosciutto kevin turducken. </p>
-            <div class="dots">
-                <span></span>
-                <span></span>
-                <span></span>
-              </div>
-              <button class="btn btn-link btn-outline-light nav-link animate-text">
-                Nettsiden
-            </button>
-  
-              </div>
-            </div>
-              
-              <div class="tile"> 
-              <img src='https://images.unsplash.com/photo-1422393462206-207b0fbd8d6b?dpr=1&auto=format&crop=entropy&fit=crop&w=1500&h=1000&q=80'/>
-              <div class="text">
-              <h1></h1>
-              <h2 class="animate-text">More bacon ipsum.</h2>
-              <p class="animate-text">Bacon ipsum dolor amet pork belly tri-tip turducken, pancetta bresaola pork chicken meatloaf. Flank sirloin strip steak prosciutto kevin turducken. </p>
-              <button class="btn btn-link btn-outline-danger nav-link" style="box-shadow: 0 0 5px rgba(220, 53, 69, 0.5);  border-color: rgba(79, 79, 79, 0.8);"> Klikk her</button>
-            <div class="dots">
-                <span></span>
-                <span></span>
-                <span></span>
-              </div>
-              <button class="btn btn-link btn-outline-light nav-link animate-text">
-                Nettsiden
-            </button>
-  
-              </div>
-            </div>
-            </div>
-              
-              
-            <hr class="featurette-divider">
-            <h1> Musikk </h1>
-
-        <div class="wrap">
-        <div class="tile"> 
-          <img src='https://images.unsplash.com/photo-1464054313797-e27fb58e90a9?dpr=1&auto=format&crop=entropy&fit=crop&w=1500&h=996&q=80'/>
-          <div class="text">
-          <h1></h1>
-          <h2 class="animate-text">More bacon ipsum.</h2>
-          <p class="animate-text">Bacon ipsum dolor amet pork belly tri-tip turducken, pancetta bresaola pork chicken meatloaf. Flank sirloin strip steak prosciutto kevin turducken. </p>
-        <div class="dots">
-            <span></span>
-            <span></span>
-            <span></span>
-          </div>
-          </div>
-         </div>
-        
-        
-        <div class="tile"> 
-          <img src='https://images.unsplash.com/photo-1458668383970-8ddd3927deed?dpr=1&auto=format&crop=entropy&fit=crop&w=1500&h=1004&q=80'/>
-          <div class="text">
-          <h1></h1>
-          <h2 class="animate-text">More bacon ipsum.</h2>
-          <p class="animate-text">Bacon ipsum dolor amet pork belly tri-tip turducken, pancetta bresaola pork chicken meatloaf. Flank sirloin strip steak prosciutto kevin turducken. </p>
-        <div class="dots">
-            <span></span>
-            <span></span>
-            <span></span>
-          </div>
-          </div>
-        </div>
-          
-          <div class="tile"> 
-          <img src='https://images.unsplash.com/photo-1422393462206-207b0fbd8d6b?dpr=1&auto=format&crop=entropy&fit=crop&w=1500&h=1000&q=80'/>
-          <div class="text">
-          <h1></h1>
-          <h2 class="animate-text">More bacon ipsum.</h2>
-          <p class="animate-text">Bacon ipsum dolor amet pork belly tri-tip turducken, pancetta bresaola pork chicken meatloaf. Flank sirloin strip steak prosciutto kevin turducken. </p>
-        <div class="dots">
-            <span></span>
-            <span></span>
-            <span></span>
-          </div>
-          </div>
-        </div>
-        </div>
-          
-          
-        </div>
-        <div class="wrap">
-            <div class="tile"> 
-              <img src='https://images.unsplash.com/photo-1464054313797-e27fb58e90a9?dpr=1&auto=format&crop=entropy&fit=crop&w=1500&h=996&q=80'/>
-              <div class="text">
-              <h1></h1>
-              <h2 class="animate-text">More bacon ipsum.</h2>
-              <p class="animate-text">Bacon ipsum dolor amet pork belly tri-tip turducken, pancetta bresaola pork chicken meatloaf. Flank sirloin strip steak prosciutto kevin turducken. </p>
-            <div class="dots">
-                <span></span>
-                <span></span>
-                <span></span>
-              </div>
-              </div>
-            </div>
-            
-            
-            <div class="tile"> 
-              <img src='https://images.unsplash.com/photo-1458668383970-8ddd3927deed?dpr=1&auto=format&crop=entropy&fit=crop&w=1500&h=1004&q=80'/>
-              <div class="text">
-              <h1></h1>
-              <h2 class="animate-text">More bacon ipsum.</h2>
-              <p class="animate-text">Bacon ipsum dolor amet pork belly tri-tip turducken, pancetta bresaola pork chicken meatloaf. Flank sirloin strip steak prosciutto kevin turducken. </p>
-            <div class="dots">
-                <span></span>
-                <span></span>
-                <span></span>
-              </div>
-              </div>
-            </div>
-              
-              <div class="tile"> 
-              <img src='https://images.unsplash.com/photo-1422393462206-207b0fbd8d6b?dpr=1&auto=format&crop=entropy&fit=crop&w=1500&h=1000&q=80'/>
-              <div class="text">
-              <h1></h1>
-              <h2 class="animate-text">More bacon ipsum.</h2>
-              <p class="animate-text">Bacon ipsum dolor amet pork belly tri-tip turducken, pancetta bresaola pork chicken meatloaf. Flank sirloin strip steak prosciutto kevin turducken. </p>
-            <div class="dots">
-                <span></span>
-                <span></span>
-                <span></span>
-              </div>
-              </div>
-            </div>
-            </div>
-              
-              
-            </div>
-
     {% endblock %}
 </body>
 

@@ -1,6 +1,6 @@
 {% extends "tears/base.html" %}
 {% load wagtailcore_tags wagtailimages_tags %}
-
+{% load wagtailimages_tags %}
 
 
 
@@ -224,40 +224,27 @@
     <div class="programmer-slider-wrapper">
         <button id="prev-slide" class="slide-button"><i class="carousel-control-prev-icon"></i></button>
         <div class="image-list">
+          {% for program in programs %}
+        <div class="image-container">
+            <a href="{{ program.url }}" class="image-link">
+                {% if program.main_image %}
+                    {% image program.main_image width-600 class="image-item" %}
+                {% else %}
+                    <img src="https://via.placeholder.com/600x400?text=No+Image" class="image-item">
+                {% endif %}
+            </a>
+           
+        </div> {% endfor %}
         
-            <div class="image-container"> <a href="https://example.com" class="image-link" target="_blank">
-                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/210284/image-03-lo.jpg" alt="img" class="image-item">
-            </a> </div>
-            <div class="image-container"> <a href="https://example.com" class="image-link" target="_blank">
-                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/210284/image-02-lo.jpg" alt="img" class="image-item">
-            </a> </div>
-            <div class="image-container"> <a href="https://example.com" class="image-link" target="_blank">
-                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/210284/image-01-lo.jpg" alt="img" class="image-item">
-            </a> </div>
-            <div class="image-container"> <a href="https://example.com" class="image-link" target="_blank">
-                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/210284/image-04-lo.jpg" alt="img" class="image-item">
-            </a> </div>
-            <div class="image-container"> <a href="https://example.com" class="image-link" target="_blank">
-                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/210284/image-05-lo.jpg" alt="img" class="image-item">
-            </a> </div>
-            <div class="image-container"> <a href="https://example.com" class="image-link" target="_blank">
-                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/210284/image-06-lo.jpg" alt="img" class="image-item">
-            </a> </div>
-            <div class="image-container"> <a href="https://example.com" class="image-link" target="_blank">
-                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/210284/image-07-lo.jpg" alt="img" class="image-item">
-            </a> </div>
-            <div class="image-container"> <a href="https://example.com" class="image-link" target="_blank">
-                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/210284/image-04-lo.jpg" alt="img" class="image-item">
-            </a> </div>
-        </div>
         <button id="next-slide" class="slide-button">
             <i class="carousel-control-next-icon"></i></button>
-        <div class="slider-scrollBar">
+          </div>
+        <div class="slider-scrollBar" style="margin:100px;">
             <div class="scrollBar-track">
                 <div class="scrollBar-thumb"></div>
             </div>
         </div>
-    </div>
+    
 </div>
 
     <!--  HEadlines-->

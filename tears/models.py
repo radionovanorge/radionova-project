@@ -31,6 +31,7 @@ class HomePage( Page):
         context = super().get_context(request)
         context["latest_posts"] = BlogPage.objects.live(
         ).public().order_by("-date")[:9]
+        context["programs"] = ProgramPage.objects.live().order_by("?")
         return context
   
     
@@ -41,14 +42,34 @@ class ProgrammerPage(Page):
     subpage_types = ['ProgramPage']
     body  = RichTextField(blank=True)
 
-    def get_context(self, request):
-        context = super().get_context(request)
-        return context
-    
+  
 
     content_panels = Page.content_panels + [
         FieldPanel('body', classname="full"),
     ]
+    subpage_types = ['ProgramPage']
+
+    def get_context(self, request):
+        context = super().get_context(request)
+
+        # Predefined categories to group by
+        categories = [
+            ("Aktualitet", "aktualitet"),
+            ("Humor & underholdning", "humor_underholdning"),
+            ("Kultur", "kultur"),
+            ("Musikk", "musikk"),
+            ("Tema", "tema"),
+            ("Tidligere programmer", "tidligere_programmer"),
+        ]
+
+        # Group programs by category
+        grouped_programs = {
+            display_name: ProgramPage.objects.live().filter(category=category)
+            for display_name, category in categories
+        }
+
+        context["grouped_programs"] = grouped_programs
+        return context
   
 
 
@@ -68,6 +89,15 @@ class ProgramPage(Page):
     )
     program = models.ForeignKey(Group, on_delete=models.PROTECT) 
 
+    main_image = models.ForeignKey(
+        Image,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="+",
+        verbose_name="Hovedbilde",
+    )
+
     intro = models.CharField("Introduksjon", max_length=255, blank=True) 
 
 
@@ -82,6 +112,7 @@ class ProgramPage(Page):
     content_panels = Page.content_panels + [
         FieldPanel("category"),
         FieldPanel("program"),
+        FieldPanel("main_image"),
         FieldPanel("intro"),
         FieldPanel("description"),
         

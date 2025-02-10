@@ -2,11 +2,74 @@
 {% load wagtailcore_tags wagtailimages_tags %}
 {% block content %}
 
-    <h2>{{ page.title }}</h2>
-    <h6>
-        
-        {{ page.date }}
-    </h2>
-    <h6>{{ page.author }}</h6>
-    {% for block in page.description %}{{ block.value }}{% endfor %}
+<style>
+    .program-container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        text-align: center;
+    }
+
+    .program-title {
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: #222;
+        margin-bottom: 10px;
+    }
+
+    .program-meta {
+        font-size: 0.9rem;
+        color: #777;
+        margin-bottom: 20px;
+    }
+
+    .program-image {
+        width: 100%;
+        max-height: 400px;
+        object-fit: cover;
+        border-radius: 10px;
+        margin-bottom: 20px;
+    }
+
+    .program-intro {
+        font-size: 1.2rem;
+        font-weight: 300;
+        color: #444;
+        margin-bottom: 20px;
+    }
+
+    .program-content {
+        text-align: left;
+        font-size: 1rem;
+        color: #333;
+        line-height: 1.6;
+    }
+</style>
+
+<div class="program-container">
+    <!-- Title -->
+    <h1 class="program-title">{{ page.title }}</h1>
+
+    <!-- Meta Info -->
+    <h6 class="program-meta">{{ page.date }}</h6>
+    <h6 class="program-meta">Forfatter: {{ page.author }}</h6>
+
+    <!-- Main Image -->
+    {% if page.main_image %}
+        {% image page.main_image width-800 class="program-image" %}
+    {% endif %}
+
+    <!-- Introduction -->
+    {% if page.intro %}
+        <p class="program-intro">{{ page.intro }}</p>
+    {% endif %}
+
+    <!-- Full Description -->
+    <div class="program-content">
+        {% for block in page.description %}
+            {{ block.value }}
+        {% endfor %}
+    </div>
+</div>
+
 {% endblock %}
