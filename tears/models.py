@@ -7,9 +7,10 @@ from wagtail.admin.panels import FieldPanel
 from wagtail import blocks
 from wagtail.images.blocks import ImageChooserBlock
 from wagtail.images.models import Image
-from wagtail.contrib.routable_page.models import RoutablePageMixin, route
 
-class HomePage(RoutablePageMixin, Page):
+
+
+class HomePage( Page):
     page_description = "This is the homepage of the website and has the content at https://radionova.no. Don't edit this page unless you know what you are doing."
     
     content = StreamField(
@@ -31,33 +32,11 @@ class HomePage(RoutablePageMixin, Page):
         context["latest_posts"] = BlogPage.objects.live(
         ).public().order_by("-date")[:9]
         return context
-    
-    @route(r'^$', name='home') 
-    def home_page(self, request):
-        return self.render(request, template='tears/home_page.html')
-
-    
-    @route(r'^nettsaker/$', name='nettsaker')
-    def nettsaker_page(self, request):
-        return self.render(request, template='tears/nettsaker.html')
-    
-    @route(r'^programmer/$', name='programmer') 
-    def programmer_page(self, request):
-        return self.render(request, template='tears/programmer_page.html')
-    
-    @route(r'^alista/$', name='alista') 
-    def alista_page(self, request):
-        return self.render(request, template='tears/alista.html')
-
   
     
     
-        
-    
 
-
-
-class ProgrammerPage(Page, RoutablePageMixin):
+class ProgrammerPage(Page):
     page_description = "This is the program list page of the website and has the content at https://radionova.no/programmer."
     subpage_types = ['ProgramPage']
     body  = RichTextField(blank=True)
@@ -73,25 +52,45 @@ class ProgrammerPage(Page, RoutablePageMixin):
   
 
 
-class ProgramPage(Page , RoutablePageMixin):
+class ProgramPage(Page):
     page_description = "This is the program page of the website and has the content at e.g. https://radionova.no/programmer/frokost."
     subpage_types = ['BlogPage']
-    program = models.ForeignKey(Group, on_delete=models.PROTECT)
+    CATEGORY_CHOICES = [
+        ("aktualitet", "Aktualitet"),
+        ("humor_underholdning", "Humor & underholdning"),
+        ("kultur", "Kultur"),
+        ("musikk", "Musikk"),
+        ("tema", "Tema"),
+        ("tidligere_programmer", "Tidligere programmer"),
+    ]
+    category = models.CharField(
+        max_length=50, choices=CATEGORY_CHOICES, default="aktualitet"
+    )
+    program = models.ForeignKey(Group, on_delete=models.PROTECT) 
+
+    intro = models.CharField("Introduksjon", max_length=255, blank=True) 
+
+
     description = StreamField(
         [
+            ("main_image", ImageChooserBlock()),
             ("content", blocks.RichTextBlock()),
         ],
         blank=True,
     )
 
     content_panels = Page.content_panels + [
+        FieldPanel("category"),
         FieldPanel("program"),
+        FieldPanel("intro"),
         FieldPanel("description"),
+        
     ]
-  
+
+    
 
 
-class BlogPage(Page, RoutablePageMixin):
+class BlogPage(Page):
     page_description = "This is the blog page of the website and has the content at e.g. https://radionova.no/blog/2024/10/12/ny-blog."
     redaksjon = models.ForeignKey(User, on_delete=models.PROTECT)
     date = models.DateTimeField("Post time")
@@ -116,7 +115,7 @@ class BlogPage(Page, RoutablePageMixin):
   
 
 
-class FreeTextPage(Page, RoutablePageMixin):
+class FreeTextPage(Page):
     page_description = "These are pages with free text, can be used for additional pages like  /sendeplan, /a-lista etc."
     body = RichTextField(blank=True)
 
@@ -127,7 +126,7 @@ class FreeTextPage(Page, RoutablePageMixin):
 
    
 
-class DagTidPage(Page, RoutablePageMixin):
+class DagTidPage(Page):
     page_description = "This are page is for configuring Dagtid names, roles etc."
 
     
@@ -153,7 +152,7 @@ class DagTidPage(Page, RoutablePageMixin):
 
     
 
-class AListPage(Page, RoutablePageMixin):
+class AListPage(Page):
     page_description = "This are page is for configuring a-lista for every week"
 
     
