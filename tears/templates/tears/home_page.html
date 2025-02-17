@@ -247,26 +247,54 @@
     
 </div>
 
-    <!--  HEadlines-->
-  
-    
-    <hr class="featurette-divider">
-    <div class="title middle">
-      <h1 id="a-lista">A-LISTA</h1>
-  </div>
-    <div class="row featurette">
-      <div class="col-md-7">
-        <h2 class="featurette-heading">First featurette heading. <span class="text-muted">It'll blow your mind.</span></h2>
-        <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
-        <p><a class="btn btn-secondary" href="#" role="button">Les mer &raquo;</a></p>
-      </div>
-      <div class="col-md-5">
-        <img class="featurette-image img-fluid mx-auto" src="{% static 'tears/images/radionova.png' %}" alt="Generic placeholder image">
-      </div>
+
+<!-- A-LISTA Section on Homepage -->
+<div class="title middle">
+    <h1>A-LISTA</h1>
+</div>
+
+<!-- Featurette Section -->
+<div class="row featurette">
+    <div class="col-md-7">
+        {% with latest_alista=page.get_latest_alista %}
+            {% if latest_alista %}
+                <h2 class="featurette-heading">
+                    {{ latest_alista.uke }} <span class="text-muted">Våre favoritter</span>
+                </h2>
+                <p class="lead">
+                    {{ latest_alista.post_message }}
+                </p>
+                <p>
+                    <a class="btn btn-secondary" href="{{ latest_alista.url }}" role="button">Les mer &raquo;</a>
+                </p>
+            {% else %}
+                <h2 class="featurette-heading">Ingen A-Lista publisert</h2>
+            {% endif %}
+        {% endwith %}
     </div>
-  
-    <hr class="featurette-divider">
-  
+
+    <!-- Image Grid Section -->
+    <div class="col-md-5">
+        <div class="image-grid">
+            {% with latest_alista=page.get_latest_alista %}
+                {% if latest_alista %}
+                    {% for block in latest_alista.images %}
+                            <div class="image-box">
+                                {% image block.value fill-300x300 %}
+                            </div>
+                        </a>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<hr class="featurette-divider">
 
     
   

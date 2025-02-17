@@ -27,6 +27,9 @@ class HomePage(RoutablePageMixin, Page):
 
     class Meta:
         verbose_name = "Home Page"
+        
+    def get_latest_alista(self):
+        return AListaPage.objects.live().order_by('-first_published_at').first()
 
     def get_context(self, request):
         context = super().get_context(request)
@@ -39,7 +42,9 @@ class HomePage(RoutablePageMixin, Page):
     def nettsaker_page(self, request):
         return self.render(request, template='tears/nettsaker.html')
     
-   
+
+    
+
   
     
     
