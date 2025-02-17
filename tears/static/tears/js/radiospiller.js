@@ -596,7 +596,7 @@
 					})
 					.catch(error => {
 						console.error("Primary stream failed. Switching to fallback.", error);
-						// Try fallback stream if primary fails
+						// Try fallback stream if primary fails NOTE that this only play if radio is down. If it radio is just silent, nothing will be played 
 						if (radioPlayer.src !== fallbackStream) {
 							radioPlayer.src = fallbackStream;
 							radioPlayer.load();
