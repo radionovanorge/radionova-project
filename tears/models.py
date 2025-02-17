@@ -38,6 +38,8 @@ class HomePage(RoutablePageMixin, Page):
     @route(r'^nettsaker/$', name='nettsaker')
     def nettsaker_page(self, request):
         return self.render(request, template='tears/nettsaker.html')
+    
+   
   
     
     
@@ -188,32 +190,21 @@ class DagTidPage(Page):
 
     
 
-class AListPage(Page):
-    page_description = "This are page is for configuring a-lista for every week"
+class AListaPage(Page):
+    page_description = "This page is for configuring A-lista for every week"
 
-    
-    AListeUke = models.CharField("AListeUke", max_length=255, blank=True)
-    date = models.DateTimeField("Post time")
-    Tittel = models.CharField("Tittel:", max_length=255, blank=True)
+    uke = models.CharField(max_length=255, blank=True, help_text="Which week it is")
+    post_message = models.TextField(blank=True, help_text="Post message from Facebook")
 
-    subpage_types = []
+    images = StreamField([
+        ("image", ImageChooserBlock()),  # Allows multiple image uploads
+    ], blank=True, use_json_field=True)
 
     content_panels = Page.content_panels + [
-        FieldPanel("AListeUke"),
-        FieldPanel("date"),
-        FieldPanel("Tittel"),
-        FieldPanel("body"),
+        FieldPanel("uke"),
+        FieldPanel("post_message"),
+        FieldPanel("images"),
     ]
-
-    body = StreamField(
-        [
-            ("main_image", ImageChooserBlock()),
-            ("content", blocks.RichTextBlock()),
-        ],
-        blank=True,
-    )
-
-  
 
 
 
