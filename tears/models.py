@@ -7,10 +7,11 @@ from wagtail.admin.panels import FieldPanel
 from wagtail import blocks
 from wagtail.images.blocks import ImageChooserBlock
 from wagtail.images.models import Image
+from wagtail.contrib.routable_page.models import RoutablePageMixin, route
 
 
 
-class HomePage( Page):
+class HomePage(RoutablePageMixin, Page):
     page_description = "This is the homepage of the website and has the content at https://radionova.no. Don't edit this page unless you know what you are doing."
     
     content = StreamField(
@@ -33,6 +34,10 @@ class HomePage( Page):
         ).public().order_by("-date")[:9]
         context["programs"] = ProgramPage.objects.live().order_by("?")
         return context
+    
+    @route(r'^nettsaker/$', name='nettsaker')
+    def nettsaker_page(self, request):
+        return self.render(request, template='tears/nettsaker.html')
   
     
     

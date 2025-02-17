@@ -196,7 +196,7 @@ body {
 
 .articles-section .article:hover,
 .articles-section .article:focus {
-    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+    box-shadow: 0 14px 28px rgba(101, 101, 101, 0.25), 0 10px 10px rgba(125, 125, 125, 0.22);
     color: #444;
     text-decoration: none;
 }
