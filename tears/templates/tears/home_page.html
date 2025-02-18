@@ -275,19 +275,38 @@
 
     <!-- Image Grid Section -->
     <div class="col-md-5">
-        <div class="image-grid">
-            {% with latest_alista=page.get_latest_alista %}
-                {% if latest_alista %}
-                    {% for block in latest_alista.images %}
-                            <div class="image-box">
-                                {% image block.value fill-300x300 %}
-                            </div>
-                        </a>
-                    {% endfor %}
-                {% endif %}
-            {% endwith %}
-        </div>
-    </div>
+      {% with latest_alista=page.get_latest_alista %}
+          {% if latest_alista and latest_alista.images %}
+              <div id="latestImageCarousel" class="carousel slide" data-ride="carousel">
+                  <ol class="carousel-indicators">
+                      {% for block in latest_alista.images %}
+                          <li data-target="#latestImageCarousel" data-slide-to="{{ forloop.counter0 }}" {% if forloop.first %}class="active"{% endif %}></li>
+                      {% endfor %}
+                  </ol>
+  
+                  <div class="carousel-inner">
+                      {% for block in latest_alista.images %}
+                          <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                              {% image block.value fill-300x300 class="d-block w-100" %}
+                          </div>
+                      {% endfor %}
+                  </div>
+  
+                  <a class="carousel-control-prev" href="#latestImageCarousel" role="button" data-slide="prev">
+                      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                      <span class="sr-only">Previous</span>
+                  </a>
+                  <a class="carousel-control-next" href="#latestImageCarousel" role="button" data-slide="next">
+                      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                      <span class="sr-only">Next</span>
+                  </a>
+              </div>
+          {% else %}
+              <p>No images available for A-Lista.</p>
+          {% endif %}
+      {% endwith %}
+  </div>
+  
 </div>
 
 
