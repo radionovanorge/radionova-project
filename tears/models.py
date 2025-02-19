@@ -27,16 +27,22 @@ class HomePage(RoutablePageMixin, Page):
 
     class Meta:
         verbose_name = "Home Page"
-        
+
     def get_latest_alista(self):
         return AListaPage.objects.live().order_by('-first_published_at').first()
+    
+    def get_dagtid(self):
+        """Fetch all Dagtid members"""
+        return DagTidPage.objects.live().order_by('-first_published_at')
 
     def get_context(self, request):
         context = super().get_context(request)
         context["latest_posts"] = BlogPage.objects.live(
         ).public().order_by("-date")[:9]
         context["programs"] = ProgramPage.objects.live().order_by("?")
+        context["dagtid_list"] = self.get_dagtid()
         return context
+    
     
     @route(r'^nettsaker/$', name='nettsaker')
     def nettsaker_page(self, request):
@@ -178,20 +184,22 @@ class DagTidPage(Page):
     beskrivelse = models.CharField("beskrivelse:", max_length=255, blank=True)
 
     subpage_types = []
-
-    content_panels = Page.content_panels + [
-        FieldPanel("DagTidNavn"),
-        FieldPanel("Rolle"),
-        FieldPanel("beskrivelse"),
-    ]
-
-    body = StreamField(
+    portrett_bilde = StreamField(
         [
             ("main_image", ImageChooserBlock()),
             ("content", blocks.RichTextBlock()),
         ],
         blank=True,
     )
+
+    content_panels = Page.content_panels + [
+        FieldPanel("DagTidNavn"),
+        FieldPanel("Rolle"),
+        FieldPanel("beskrivelse"),
+        FieldPanel("portrett_bilde")
+    ]
+
+    
 
     
 
