@@ -43,7 +43,7 @@ class HomePage(RoutablePageMixin, Page):
         context["dagtid_list"] = self.get_dagtid()
         return context
     
-    
+    """No need to routeablepages but we dont have model for nettsaker.html yet"""
     @route(r'^nettsaker/$', name='nettsaker')
     def nettsaker_page(self, request):
         return self.render(request, template='tears/nettsaker.html')
