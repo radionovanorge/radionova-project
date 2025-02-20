@@ -17,8 +17,3 @@ document.querySelectorAll(".walkthrough .item").forEach(function (item) {
         item.classList.add("active")
     })
 })
-
-
-
-
-

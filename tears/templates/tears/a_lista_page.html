@@ -1,0 +1,78 @@
+{% extends "tears/base.html" %}
+{% load wagtailcore_tags %}
+{% load wagtailimages_tags %}
+
+{% load static %}
+{% block content %}
+    
+ <!-- @Todo margins  Maybe we dont want this website. Odd inistialy said we can make it simpler by just adding a spotify embed 
+  thats it. 
+  Make sure to add more content model right here and remove past template-->
+  <head>
+    <style>
+      body {
+        
+        margin-left:200px;
+        margin-right: 200px;
+        margin-top: 50px;
+      }
+    
+
+    </style>
+  </head>
+  <body>
+
+<!-- Title Section -->
+<div class="title middle">
+    <h1>A-LISTA</h1>
+</div>
+
+<!-- Featurette Section -->
+<div class="row featurette">
+    <div class="col-md-7">
+        <h2 class="featurette-heading">
+            {{ page.uke }} <span class="text-muted">Våre favoritter</span>
+        </h2>
+        <p class="lead">
+            {{ page.post_message }}
+        </p>
+        <p>
+            <a class="btn btn-secondary" href="#" role="button">Les mer &raquo;</a>
+        </p>
+    </div>
+
+    <!-- Image Grid Section -->
+    <div class="col-md-5">
+        <div id="imageCarousel" class="carousel slide" data-ride="carousel">
+            <ol class="carousel-indicators">
+                {% for block in page.images %}
+                    <li data-target="#imageCarousel" data-slide-to="{{ forloop.counter0 }}" {% if forloop.first %}class="active"{% endif %}></li>
+                {% endfor %}
+            </ol>
+
+            <div class="carousel-inner">
+                {% for block in page.images %}
+                    <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                        {% image block.value fill-300x300 class="d-block w-100" %}
+                    </div>
+                {% endfor %}
+            </div>
+
+            <a class="carousel-control-prev" href="#imageCarousel" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#imageCarousel" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+    </div>
+</div>
+</div>
+</body>
+
+{% endblock %}
+
+
+    

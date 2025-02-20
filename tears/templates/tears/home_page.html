@@ -1,6 +1,6 @@
 {% extends "tears/base.html" %}
 {% load wagtailcore_tags wagtailimages_tags %}
-
+{% load wagtailimages_tags %}
 
 
 
@@ -224,146 +224,127 @@
     <div class="programmer-slider-wrapper">
         <button id="prev-slide" class="slide-button"><i class="carousel-control-prev-icon"></i></button>
         <div class="image-list">
+          {% for program in programs %}
+        <div class="image-container">
+            <a href="{{ program.url }}" class="image-link">
+                {% if program.main_image %}
+                    {% image program.main_image width-600 class="image-item" %}
+                {% else %}
+                    <img src="https://via.placeholder.com/600x400?text=No+Image" class="image-item">
+                {% endif %}
+            </a>
+           
+        </div> {% endfor %}
         
-            <div class="image-container"> <a href="https://example.com" class="image-link" target="_blank">
-                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/210284/image-03-lo.jpg" alt="img" class="image-item">
-            </a> </div>
-            <div class="image-container"> <a href="https://example.com" class="image-link" target="_blank">
-                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/210284/image-02-lo.jpg" alt="img" class="image-item">
-            </a> </div>
-            <div class="image-container"> <a href="https://example.com" class="image-link" target="_blank">
-                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/210284/image-01-lo.jpg" alt="img" class="image-item">
-            </a> </div>
-            <div class="image-container"> <a href="https://example.com" class="image-link" target="_blank">
-                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/210284/image-04-lo.jpg" alt="img" class="image-item">
-            </a> </div>
-            <div class="image-container"> <a href="https://example.com" class="image-link" target="_blank">
-                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/210284/image-05-lo.jpg" alt="img" class="image-item">
-            </a> </div>
-            <div class="image-container"> <a href="https://example.com" class="image-link" target="_blank">
-                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/210284/image-06-lo.jpg" alt="img" class="image-item">
-            </a> </div>
-            <div class="image-container"> <a href="https://example.com" class="image-link" target="_blank">
-                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/210284/image-07-lo.jpg" alt="img" class="image-item">
-            </a> </div>
-            <div class="image-container"> <a href="https://example.com" class="image-link" target="_blank">
-                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/210284/image-04-lo.jpg" alt="img" class="image-item">
-            </a> </div>
-        </div>
         <button id="next-slide" class="slide-button">
             <i class="carousel-control-next-icon"></i></button>
-        <div class="slider-scrollBar">
+          </div>
+        <div class="slider-scrollBar" style="margin:100px;">
             <div class="scrollBar-track">
                 <div class="scrollBar-thumb"></div>
             </div>
         </div>
-    </div>
+    
 </div>
 
-    <!--  HEadlines-->
+
+<!-- A-LISTA Section on Homepage -->
+<div class="title middle">
+    <h1>A-LISTA</h1>
+</div>
+
+<!-- Featurette Section -->
+<div class="row featurette">
+    <div class="col-md-7">
+        {% with latest_alista=page.get_latest_alista %}
+            {% if latest_alista %}
+                <h2 class="featurette-heading">
+                    {{ latest_alista.uke }} <span class="text-muted">Våre favoritter</span>
+                </h2>
+                <p class="lead">
+                    {{ latest_alista.post_message }}
+                </p>
+                <p>
+                    <a class="btn btn-secondary" href="{{ latest_alista.url }}" role="button">Les mer &raquo;</a>
+                </p>
+            {% else %}
+                <h2 class="featurette-heading">Ingen A-Lista publisert</h2>
+            {% endif %}
+        {% endwith %}
+    </div>
+
+    <!-- Image Slider Section -->
+    <div class="col-md-5">
+      {% with latest_alista=page.get_latest_alista %}
+          {% if latest_alista and latest_alista.images %}
+              <div id="latestImageCarousel" class="carousel slide" data-ride="carousel">
+                  <ol class="carousel-indicators">
+                      {% for block in latest_alista.images %}
+                          <li data-target="#latestImageCarousel" data-slide-to="{{ forloop.counter0 }}" {% if forloop.first %}class="active"{% endif %}></li>
+                      {% endfor %}
+                  </ol>
   
-    
-    <hr class="featurette-divider">
-    <div class="title middle">
-      <h1>A-LISTA</h1>
+                  <div class="carousel-inner">
+                      {% for block in latest_alista.images %}
+                          <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                              {% image block.value fill-300x300 class="d-block w-100" %}
+                          </div>
+                      {% endfor %}
+                  </div>
+  
+                  <a class="carousel-control-prev" href="#latestImageCarousel" role="button" data-slide="prev">
+                      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                      <span class="sr-only">Previous</span>
+                  </a>
+                  <a class="carousel-control-next" href="#latestImageCarousel" role="button" data-slide="next">
+                      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                      <span class="sr-only">Next</span>
+                  </a>
+              </div>
+          {% else %}
+              <p>No images available for A-Lista.</p>
+          {% endif %}
+      {% endwith %}
   </div>
-    <div class="row featurette">
-      <div class="col-md-7">
-        <h2 class="featurette-heading">First featurette heading. <span class="text-muted">It'll blow your mind.</span></h2>
-        <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
-        <p><a class="btn btn-secondary" href="#" role="button">Les mer &raquo;</a></p>
-      </div>
-      <div class="col-md-5">
-        <img class="featurette-image img-fluid mx-auto" src="{% static 'tears/images/radionova.png' %}" alt="Generic placeholder image">
-      </div>
-    </div>
   
-    <hr class="featurette-divider">
-  
-    <div class="row featurette">
-      <div class="col-md-7 push-md-5">
-        <h2 class="featurette-heading">Oh yeah, it's that good. <span class="text-muted">See for yourself.</span></h2>
-        <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
-        <p><a class="btn btn-secondary" href="#" role="button">Les mer &raquo;</a></p>
-      </div>
-      <div class="col-md-5 pull-md-7">
-        <img class="featurette-image img-fluid mx-auto" src="https://static.pexels.com/photos/27403/pexels-photo-27403.jpg" alt="Generic placeholder image">
-      </div>
-    </div>
-  
-    <hr class="featurette-divider">
-  
-    <div class="row featurette">
-      <div class="col-md-7">
-        <h2 class="featurette-heading">And lastly, this one. <span class="text-muted">Checkmate.</span></h2>
-        <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
-        <p><a class="btn btn-secondary" href="#" role="button">Les mer &raquo;</a></p>
-      </div>
-      <div class="col-md-5">
-        <img class="featurette-image img-fluid mx-auto" src="https://static.pexels.com/photos/27403/pexels-photo-27403.jpg" alt="Generic placeholder image">
-      </div>
-    </div>
-    
-    
-    <hr class="featurette-divider">
+</div>
+
+
+
+
+
+<hr class="featurette-divider">
 
     
   
   <!-- PErsons and radionova employes
       ================================================== -->
-  <!-- Wrap the rest of the page in another container to center all the content. -->
-  
-  <div class="container marketing">
+<div class="container marketing">
     <div class="title middle">
-      <h1>DAGTID</h1>
-  </div>
-    <!-- Three columns of text below the carousel -->
-    <div class="row">
-      <div class="col-lg-4">
-        <img class="rounded-circle" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image" width="140" height="140">
-        <h2>Heading</h2>
-        <p>Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. Nullam id dolor id nibh ultricies vehicula ut id elit. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo cursus magna.</p>
-        <p><a class="btn btn-secondary" href="#" role="button">Ta kontakt &raquo;</a></p>
-      </div>
-      <!-- /.col-lg-4 -->
-      <div class="col-lg-4">
-        <img class="rounded-circle" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image" width="140" height="140">
-        <h2>Heading</h2>
-        <p>Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras mattis consectetur purus sit amet fermentum. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh.</p>
-        <p><a class="btn btn-secondary" href="#" role="button">Ta kontakt &raquo;</a></p>
-      </div>
-      <!-- /.col-lg-4 -->
-      <div class="col-lg-4">
-        <img class="rounded-circle" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image" width="140" height="140">
-        <h2>Heading</h2>
-        <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-        <p><a class="btn btn-secondary" href="#" role="button">Ta kontakt &raquo;</a></p>
-      </div>
-      <!-- /.col-lg-4 -->
+        <h1 id="dagtid">DAGTID</h1>
     </div>
+
     <div class="row">
-      <div class="col-lg-4">
-        <img class="rounded-circle" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image" width="140" height="140">
-        <h2>Heading</h2>
-        <p>Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. Nullam id dolor id nibh ultricies vehicula ut id elit. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo cursus magna.</p>
-        <p><a class="btn btn-secondary" href="#" role="button">Ta kontakt &raquo;</a></p>
-      </div>
-      <!-- /.col-lg-4 -->
-      <div class="col-lg-4">
-        <img class="rounded-circle" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image" width="140" height="140">
-        <h2>Heading</h2>
-        <p>Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras mattis consectetur purus sit amet fermentum. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh.</p>
-        <p><a class="btn btn-secondary" href="#" role="button">Ta kontakt &raquo;</a></p>
-      </div>
-      <!-- /.col-lg-4 -->
-      <div class="col-lg-4">
-        <img class="rounded-circle" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image" width="140" height="140">
-        <h2>Heading</h2>
-        <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-        <p><a class="btn btn-secondary" href="#" role="button">Ta kontakt &raquo;</a></p>
-      </div>
-      <!-- /.col-lg-4 -->
+        {% for person in dagtid_list %}
+            <div class="col-lg-4">
+              {% for block in person.portrett_bilde %}
+                {% image block.value fill-140x140 class="rounded-circle" %}
+              
+          {% endfor %}
+                        
+                   
+                <h2>{{ person.DagTidNavn }}</h2>
+                <h4>{{ person.Rolle }}</h4>
+                <p>{{ person.beskrivelse }}</p>
+                <p><a class="btn btn-secondary" href="" role="button">Ta kontakt &raquo;</a></p>
+            </div>
+            {% if forloop.counter|divisibleby:3 %}
+                </div><div class="row"> <!-- Create a new row every 3 items -->
+            {% endif %}
+        {% endfor %}
     </div>
+</div>
+
     <!-- /.row -->
     <!-- /END THE FEATURETTES -->
  

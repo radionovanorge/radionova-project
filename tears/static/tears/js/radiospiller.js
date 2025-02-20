@@ -574,33 +574,53 @@
     window.musicVisualizer = null; // Store single instance
 
     window.toggleRadio = function() {
-		const radioPlayer = document.getElementById('radio-player');
-		const playIcon = document.getElementById('play-radio-icon');
-		const playText = document.getElementById('play-text');
-	
-		if (!window.audioAnalyzer) {
-			window.audioAnalyzer = new AudioAnalyzer();
-		}
-	
-		if (radioPlayer.paused) {
-			// Check if already attempting to play
-			if (radioPlayer.readyState >= 2) { // Ensure the audio is ready to play
+		window.toggleRadio = function() {
+			const radioPlayer = document.getElementById('radio-player');
+			const playIcon = document.getElementById('play-radio-icon');
+			const playText = document.getElementById('play-text');
+			
+			// Primary and fallback stream URLs
+			const primaryStream = "https://stream.radionova.no/ogg";
+			const fallbackStream = "https://stream.radionova.no/mp3"; // Fallback if primary fails
+		
+			if (!window.audioAnalyzer) {
+				window.audioAnalyzer = new AudioAnalyzer();
+			}
+		
+			// 
+			function playAudio() {
 				radioPlayer.play()
 					.then(() => {
 						playIcon.className = 'fa fa-pause fa-xl';
 						playText.textContent = 'Pause';
 					})
 					.catch(error => {
-						console.error('Error playing audio:', error);
+						console.error("Primary stream failed. Switching to fallback.", error);
+						// Try fallback stream if primary fails NOTE that this only play if radio is down. If it radio is just silent, nothing will be played 
+						if (radioPlayer.src !== fallbackStream) {
+							radioPlayer.src = fallbackStream;
+							radioPlayer.load();
+							radioPlayer.play()
+								.then(() => {
+									console.log("Fallback stream is playing.");
+								})
+								.catch(err => console.error("Fallback stream also failed.", err));
+						}
 					});
-			} else {
-				console.warn('Audio not ready to play.');
 			}
-		} else {
-			radioPlayer.pause();
-			playIcon.className = 'fa fa-play fa-xl';
-			playText.textContent = 'Play';
-		}
+		
+			if (radioPlayer.paused) {
+				if (radioPlayer.readyState >= 2) { // Ensure the audio is ready to play
+					playAudio();
+				} else {
+					console.warn("Audio not ready to play.");
+				}
+			} else {
+				radioPlayer.pause();
+				playIcon.className = 'fa fa-play fa-xl';
+				playText.textContent = 'Play';
+			}
+		};
 	};
 
 }).call(this);
