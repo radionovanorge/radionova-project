@@ -51,7 +51,7 @@ class HomePage(RoutablePageMixin, Page):
 
     
 
-  
+
     
     
 
@@ -218,6 +218,14 @@ class AListaPage(Page):
         FieldPanel("post_message"),
         FieldPanel("images"),
     ]
+"""
+class Sendeplan(Page):
+    
+    def get_context(self, request):
+        context = super().get_context(request)
+        context["programs"] = sendplan.objects.live().order_by("?")
+        return context
+"""
 
 
 
