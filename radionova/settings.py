@@ -64,6 +64,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_extensions',
+    'storages',
 ]
 
 MIDDLEWARE = [
@@ -115,9 +116,6 @@ DATABASES = {
         'OPTIONS': {
              'sslmode': 'require',
         },
-
-        
-       
     }
 }
 
@@ -163,6 +161,30 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = 'static'
 
+
+# Azure Storage for media files in production
+# Check if running on Azure App Service
+USE_AZURE_STORAGE = os.environ.get('WEBSITE_HOSTNAME') is not None
+
+if USE_AZURE_STORAGE:
+    # Azure Storage Settings
+    AZURE_ACCOUNT_NAME = os.environ.get('AZURE_STORAGE_ACCOUNT_NAME')
+    AZURE_ACCOUNT_KEY = os.environ.get('AZURE_STORAGE_ACCOUNT_KEY')
+    AZURE_CONTAINER = os.environ.get('AZURE_STORAGE_CONTAINER', 'media')
+    AZURE_CUSTOM_DOMAIN = f'{AZURE_ACCOUNT_NAME}.blob.core.windows.net'
+    
+    # Media files settings
+    DEFAULT_FILE_STORAGE = 'storages.backends.azure_storage.AzureStorage'
+    MEDIA_URL = f'https://{AZURE_CUSTOM_DOMAIN}/{AZURE_CONTAINER}/'
+else:
+    # Local media settings
+    MEDIA_ROOT = os.path.join(BASE_DIR.parent, 'images')
+    MEDIA_URL = '/images/'
+
+# Wagtail media settings
+WAGTAIL_USAGE_URL_PREFIX = MEDIA_URL
+WAGTAIL_CONTENT_LANGUAGES = LANGUAGE_CODE
+WAGTAILIMAGES_FEATURE_DETECTION_ENABLED = False
 
 
 STATICFILES_FINDERS = (

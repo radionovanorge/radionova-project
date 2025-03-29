@@ -69,6 +69,21 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
+      - name: Run database migrations
+        run: |
+          python manage.py migrate
+        env:
+          DBNAME: ${{ secrets.DBNAME }}
+          DBHOST: ${{ secrets.DBHOST }}
+          DBUSER: ${{ secrets.DBUSER }}
+          DBPASS: ${{ secrets.DBPASS }}
+          DBPORT: ${{ secrets.DBPORT }}
+          SECRET_KEY: ${{ secrets.SECRET_KEY }}
+          WEBSITE_HOSTNAME: radionova.azurewebsites.net
+          AZURE_STORAGE_ACCOUNT_NAME: ${{ secrets.AZURE_STORAGE_ACCOUNT_NAME }}
+          AZURE_STORAGE_ACCOUNT_KEY: ${{ secrets.AZURE_STORAGE_ACCOUNT_KEY }}
+          AZURE_STORAGE_CONTAINER: ${{ secrets.AZURE_STORAGE_CONTAINER }}
+
       - name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v3
         id: deploy-to-webapp
