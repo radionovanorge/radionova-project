@@ -183,7 +183,10 @@ else:
 
 # Wagtail media settings
 WAGTAIL_USAGE_URL_PREFIX = MEDIA_URL
-WAGTAIL_CONTENT_LANGUAGES = LANGUAGE_CODE
+WAGTAIL_CONTENT_LANGUAGES = [
+    ('en', 'English'),
+    ('nb', 'Norwegian Bokmål'),
+]
 WAGTAILIMAGES_FEATURE_DETECTION_ENABLED = False
 
 
