@@ -205,9 +205,9 @@ class DagTidPage(Page):
 
 class AListaPage(Page):
     page_description = "This page is for configuring A-lista for every week"
-
-    uke = models.CharField(max_length=255, blank=True, help_text="Which week it is")
-    post_message = models.TextField(blank=True, help_text="Post message from Facebook")
+    body = RichTextField(blank=True)
+    uke = models.CharField(max_length=255, blank=True, help_text="Hvilken uke er det?")
+    post_message = models.TextField(blank=True, help_text="Underovskrift")
 
     images = StreamField([
         ("image", ImageChooserBlock()),  # Allows multiple image uploads
@@ -217,15 +217,18 @@ class AListaPage(Page):
         FieldPanel("uke"),
         FieldPanel("post_message"),
         FieldPanel("images"),
+        FieldPanel("body"),
     ]
-"""
+
 class Sendeplan(Page):
+     page_description = "This page is for configuring sendeplan for the semester"
     
-    def get_context(self, request):
-        context = super().get_context(request)
-        context["programs"] = sendplan.objects.live().order_by("?")
-        return context
-"""
+    #def get_context(self, request):
+     #   context = super().get_context(request)
+      #  return context
+      # context["programs"] = sendplan.objects.live().order_by("?")
+      #  return context
+
 
 
 
