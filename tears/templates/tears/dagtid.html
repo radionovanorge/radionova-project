@@ -5,57 +5,34 @@
 <!--THIS FILE IS NOT IN USE--> 
 
 
-<div class="container marketing">
-    <div class="title middle">
-      <h1>DAGTID</h1>
-  </div>
-    <!-- Three columns of text below the carousel -->
-    <div class="row">
-      <div class="col-lg-4">
-        <img class="rounded-circle" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image" width="140" height="140">
-        <h2>Heading</h2>
-        <p>Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. Nullam id dolor id nibh ultricies vehicula ut id elit. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo cursus magna.</p>
-        <p><a class="btn btn-secondary" href="#" role="button">Ta kontakt &raquo;</a></p>
+      <!-- PErsons and radionova employes
+      ================================================== -->
+      <div class="container marketing">
+        <div class="title middle">
+          <h1 id="dagtid">DAGTID</h1>
+        </div>
+
+        <div class="row">
+          {% for person in dagtid_list %}
+          <div class="col-lg-4">
+            {% for block in person.portrett_bilde %}
+            {% image block.value fill-140x140 class="rounded-circle" %}
+
+            {% endfor %}
+
+
+            <h2>{{ person.DagTidNavn }}</h2>
+            <h4>{{ person.Rolle }}</h4>
+            <p>{{ person.beskrivelse }}</p>
+            <!-- <p><a class="btn btn-secondary" href="#" role="button">Ta kontakt &raquo;</a></p>-->
+          </div>
+          {% if forloop.counter|divisibleby:3 %}
+        </div>
+        <div class="row">
+          <!-- Create a new row every 3 items -->
+          {% endif %}
+          {% endfor %}
+        </div>
       </div>
-      <!-- /.col-lg-4 -->
-      <div class="col-lg-4">
-        <img class="rounded-circle" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image" width="140" height="140">
-        <h2>Heading</h2>
-        <p>Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras mattis consectetur purus sit amet fermentum. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh.</p>
-       <!-- <p><a class="btn btn-secondary" href="#" role="button">Ta kontakt &raquo;</a></p>-->
-      </div>
-      <!-- /.col-lg-4 -->
-      <div class="col-lg-4">
-        <img class="rounded-circle" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image" width="140" height="140">
-        <h2>Heading</h2>
-        <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-        <!-- <p><a class="btn btn-secondary" href="#" role="button">Ta kontakt &raquo;</a></p>-->
-      </div>
-      <!-- /.col-lg-4 -->
-    </div>
-    <div class="row">
-      <div class="col-lg-4">
-        <img class="rounded-circle" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image" width="140" height="140">
-        <h2>Heading</h2>
-        <p>Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. Nullam id dolor id nibh ultricies vehicula ut id elit. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo cursus magna.</p>
-        <!-- <p><a class="btn btn-secondary" href="#" role="button">Ta kontakt &raquo;</a></p>-->
-      </div>
-      <!-- /.col-lg-4 -->
-      <div class="col-lg-4">
-        <img class="rounded-circle" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image" width="140" height="140">
-        <h2>Heading</h2>
-        <p>Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras mattis consectetur purus sit amet fermentum. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh.</p>
-        <!-- <p><a class="btn btn-secondary" href="#" role="button">Ta kontakt &raquo;</a></p>-->
-      </div>
-      <!-- /.col-lg-4 -->
-      <div class="col-lg-4">
-        <img class="rounded-circle" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image" width="140" height="140">
-        <h2>Heading</h2>
-        <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-        <!-- <p><a class="btn btn-secondary" href="#" role="button">Ta kontakt &raquo;</a></p>-->
-      </div>
-      <!-- /.col-lg-4 -->
-    </div>
-    <!-- /.row -->
-    <!-- /END THE FEATURETTES -->
+
 {% endblock %}
