@@ -86,7 +86,7 @@ jobs:
 
       - name: Collect static files
         run: |
-          python manage.py collectstatic --noinput
+          python manage.py collectstatic --noinput --verbose 2
         env:
           DBNAME: ${{ secrets.DBNAME }}
           DBHOST: ${{ secrets.DBHOST }}
