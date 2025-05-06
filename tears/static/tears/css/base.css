@@ -292,6 +292,27 @@ a:hover, a:focus, a:active {
     border: 1px solid #ddd;
 }
 
+.interview-parallelogram {
+  background: #511120;
+  transform: skewX(-20deg); /* ← makes it parallelogram */
+  border: 2px solid white; /* Full white border */
+  display: inline-block;
+}
+
+/* Inside text correction: */
+.interview-parallelogram > * {
+  transform: skewX(20deg); /* ← Reverses skew inside so text stays straight */
+}
+.interview-parallelogram-small {
+  background: #511120;
+  transform: skewX(-20deg);
+ 
+  display: inline-block;
+}
+
+.interview-parallelogram-small > * {
+  transform: skewX(20deg); /* optional if you wrap text inside a span */
+}
 /*Programmer image slider*/
 
 .slider-container {

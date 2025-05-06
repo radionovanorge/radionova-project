@@ -2,74 +2,189 @@
 {% load wagtailcore_tags wagtailimages_tags %}
 {% block content %}
 
-<style>
-    .program-container {
-        max-width: 800px;
-        margin: 0 auto;
-        padding: 20px;
-        text-align: center;
-    }
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Programoversikt</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 
-    .program-title {
-        font-size: 2.5rem;
-        font-weight: bold;
-        color: #222;
-        margin-bottom: 10px;
-    }
+</head>
+<header class="w-full bg-[#f7f4f4] p-10 mb-8">
+    <div class="program-container px-4 py-8 max-w-4xl mx-auto">
+        <!-- Breadcrumb -->
+        <div class="breadcrumb-content text-sm text-gray-500 mb-4 mt-1">
+            {% if self.get_ancestors|length > 1 %}
+            <nav aria-label="Breadcrumb">
+                <ul class="flex items-center space-x-2">
+                    {% for p in self.get_ancestors %}
+                    {% if not p.is_root %}
+                    <li>
+                        <a href="{{ p.url }}" class="hover:text-purple-600">{{ p.title }}</a>
+                        <span class="mx-2 text-gray-400">></span>
+                    </li>
+                    {% endif %}
+                    {% endfor %}
+                    <!-- Current Page -->
+                    <li class="text-red-600 font-semibold">{{ self.title }}</li>
+                </ul>
+            </nav>
+            {% endif %}
+        </div>
 
-    .program-meta {
-        font-size: 0.9rem;
-        color: #777;
-        margin-bottom: 20px;
-    }
+        <!-- Flex Layout for Header Content -->
+        <div class="flex flex-col-reverse lg:flex-row lg:justify-between lg:items-start gap-6">
+            <!-- Left Column: Text and Info -->
+            <div class="flex-1">
+                <!-- Title -->
+                <h1 class="program-title text-3xl font-bold text-gray-900 mb-2">{{ page.title }}</h1>
 
-    .program-image {
-        width: 100%;
-        max-height: 400px;
-        object-fit: cover;
-        border-radius: 10px;
-        margin-bottom: 20px;
-    }
+                <!-- Meta Info TID-->
+                <!-- Tags -->
+                <div class="flex flex-wrap items-center justify-start gap-2 text-sm text-gray-700 mb-3">
+                    {% if page.schedule_info %}
+                    <span>{{ page.schedule_info }}</span>
+                    {% endif %}
+                    {% if page.category %}
+                    {% with category_name=page.get_category_display %}
+                    {% if category_name == 'Aktualitet' %}
+                    <span class="text-base px-2 py-1 bg-blue-100 text-blue-700 rounded-full">{{ category_name }}</span>
+                    {% elif category_name == 'Humor & underholdning' %}
+                    <span class="text-base px-2 py-1 bg-pink-100 text-pink-700 rounded-full">{{ category_name }}</span>
+                    {% elif category_name == 'Kultur' %}
+                    <span class="text-base px-2 py-1 bg-green-100 text-green-700 rounded-full">{{ category_name }}</span>
+                    {% elif category_name == 'Musikk' %}
+                    <span
+                        class="text-base px-2 py-1 bg-yellow-100 text-yellow-700 rounded-full">{{ category_name }}</span>
+                    {% elif category_name == 'Tema' %}
+                    <span
+                        class="text-base px-2 py-1 bg-purple-100 text-purple-700 rounded-full">{{ category_name }}</span>
+                    {% elif category_name == 'Tidligere programmer' %}
+                    <span class="text-base px-2 py-1 bg-gray-100 text-gray-700 rounded-full">{{ category_name }}</span>
+                    {% else %}
+                    <span
+                        class="text-base px-2 py-1 bg-neutral-100 text-neutral-700 rounded-full">{{ category_name }}</span>
+                    {% endif %}
+                    {% endwith %}
+                    {% endif %}
+                </div>
 
-    .program-intro {
-        font-size: 1.2rem;
-        font-weight: 300;
-        color: #444;
-        margin-bottom: 20px;
-    }
 
-    .program-content {
-        text-align: left;
-        font-size: 1rem;
-        color: #333;
-        line-height: 1.6;
-    }
-</style>
 
-<div class="program-container">
-    <!-- Title -->
-    <h1 class="program-title">{{ page.title }}</h1>
+                <!-- Intro Text -->
+                {% if page.intro %}
+                <p class="program-intro text-base text-gray-800 leading-relaxed mb-4">
+                    {{ page.intro }}
+                </p>
+                {% endif %}
 
-    <!-- Meta Info -->
-    <h6 class="program-meta">{{ page.date }}</h6>
-    <h6 class="program-meta">Forfatter: {{ page.author }}</h6>
 
-    <!-- Main Image -->
-    {% if page.main_image %}
-        {% image page.main_image width-800 class="program-image" %}
-    {% endif %}
+                <!-- Social Media Links -->
+                <div class="flex flex-wrap gap-6 text-sm text-gray-700 mt-4">
+                    {% if page.facebook_link %}
+                    <a href="{{ page.facebook_link }}" class="flex items-center space-x-2 hover:underline">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 320 512"
+                            class="w-5 h-5">
+                            <path
+                                d="M80 299.3V512H196V299.3h86.5l18-97.8H196V166.9c0-51.7 20.3-71.5 72.7-71.5c16.3 0 29.4 .4 37 1.2V7.9C291.4 4 256.4 0 236.2 0C129.3 0 80 50.5 80 159.4v42.1H14v97.8H80z" />
+                        </svg>
+                        <span>Facebook</span>
+                    </a>
+                    {% endif %}
 
-    <!-- Introduction -->
-    {% if page.intro %}
-        <p class="program-intro">{{ page.intro }}</p>
-    {% endif %}
+                    {% if page.instagram_link %}
+                    <a href="{{ page.instagram_link }}" class="flex items-center space-x-2 hover:underline">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 448 512"
+                            class="w-5 h-5">
+                            <path
+                                d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8z" />
+                        </svg>
+                        <span>Instagram</span>
+                    </a>
+                    {% endif %}
 
-    <!-- Full Description -->
+                    {% if page.tiktok_link %}
+                    <a href="{{ page.tiktok_link }}" class="flex items-center space-x-2 hover:underline">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 448 512"
+                            class="w-5 h-5">
+                            <path
+                                d="M448 209.9a210.1 210.1 0 0 1 -122.8-39.3V349.4A162.6 162.6 0 1 1 185 188.3V278.2a74.6 74.6 0 1 0 52.2 71.2V0l88 0a121.2 121.2 0 0 0 1.9 22.2A122.2 122.2 0 0 0 381 102.4a121.4 121.4 0 0 0 67 20.1z" />
+                        </svg>
+                        <span>TikTok</span>
+                    </a>
+                    {% endif %}
+
+                    {% if page.email_link %}
+                    <a href="mailto:{{ page.email_link }}" class="flex items-center space-x-2 hover:underline">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor" class="w-5 h-5">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" />
+                        </svg>
+                        <span>E-post</span>
+                    </a>
+                    {% endif %}
+                </div>
+
+            </div>
+
+
+            <!-- Right Column: Main Image -->
+            {% if page.main_image %}
+            <div class="flex-shrink-0 w-full max-w-xs mx-auto lg:mx-0">
+                {% image page.main_image width-800 class="program-image w-full h-auto object-cover" %}
+            </div>
+            {% endif %}
+        </div>
+</header>
+
+<!-- Spotifywidgets more info and nettsaker -->
+
+<section class="px-2 py-12 max-w-4xl mx-auto">
     <div class="program-content">
         {% for block in page.description %}
-            {{ block.value }}
+        {{ block.value }}
         {% endfor %}
     </div>
+     <!-- Nettsaker only the program has written-->
+     {% with blog_posts=page.blog_posts.live %}
+     {% if blog_posts %}
+       <h2 class="text-4xl font-semibold text-gray-900 mb-8 mt-10">Nettsaker fra {{ page.title }}</h2>
+   
+       <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
+         {% for post in blog_posts %}
+           <article class="space-y-2">
+             
+             {# Loop through StreamField to find first main_image block #}
+             {% for block in post.body %}
+               {% if block.block_type == 'main_image' %}
+                 {% image block.value fill-600x400 as img %}
+                 <div class="thumb" style="
+                   background-image: url('{{ img.url }}');
+                   width: 100%;
+                   height: 350px;
+                   background-size: cover;
+                   background-position: center;
+                   background-repeat: no-repeat;"></div>
+                
+               {% endif %}
+             {% empty %}
+               <div class="w-full h-48 bg-gray-100 rounded-md"></div>
+             {% endfor %}
+   
+             <h3 class="text-2xl font-medium text-gray-900">
+               <a href="{{ post.url }}" class="hover:underline">{{ post.title }}</a>
+             </h3>
+             <p class="text-sm text-gray-700">
+               {{ post.date|date:"d. F Y" }} &bull; Artikkel
+             </p>
+           </article>
+         {% endfor %}
+       </div>
+     {% endif %}
+   {% endwith %}
+   
+    </div>
+</section>
 </div>
 
 {% endblock %}

@@ -1,50 +1,277 @@
 {% extends "tears/base.html" %}
 {% load wagtailcore_tags %}
-{% load wagtailimages_tags %} 
-{% block content %}
+{% load wagtailimages_tags %}
 {% load static %}
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+
 <head>
-  <link href="{% static 'tears/css/programmer_page.css' %}" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Programoversikt</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+
 </head>
-<body>
-    {% for category_name, programs in grouped_programs.items %}
-    <h1>{{ category_name }}</h1>
 
-    {% for program in programs %}
-        {% if forloop.first or forloop.counter0|divisibleby:3 %}
-        <div class="wrap">
-        {% endif %}
+<body class="bg-gray-100 font-sans antialiased">
 
-        <div class="tile">
-          {% if program.main_image %}
-          {% image program.main_image width-800 class="program-image" %}
-      {% else %}
-      <img src="https://via.placeholder.com/800x400?text=No+Image" alt="No image available">
-      {% endif %}
 
-            <div class="text">
-                <h2 class="animate-text">{{ program.title }}</h2>
-                <p class="animate-text">{{ program.intro }}</p>
-                
-                    
-                    <a class="btn btn-link btn-block btn-outline-dark nav-link animate-text" href="{{ program.url }}">
-                        GÅ TIL PROGRAMMET
-                    </a>
-                
+    <!-- Header Section -->
+
+    <header class="w-full bg-[#f7f4f4] p-10 mb-8">
+        <div class="max-w-6xl mx-auto px-20">
+            <!-- Breadcrumb Navigation -->
+            <div class="text-sm text-gray-500 mb-4 mt-1">
+
+                <div class="breadcrumb-content text-sm text-gray-500 mb-4 mt-1">
+                    {% if self.get_ancestors|length > 1 %}
+                    <nav aria-label="Breadcrumb">
+                        <ul class="flex items-center space-x-2">
+                            {% for p in self.get_ancestors %}
+                            {% if not p.is_root %}
+                            <li>
+                                <a href="{{ p.url }}" class="hover:text-purple-600">{{ p.title }}</a>
+                                <span class="mx-2 text-gray-400">></span>
+                            </li>
+                            {% endif %}
+                            {% endfor %}
+                            <!-- Current Page -->
+                            <li class="text-red-600 font-semibold">{{ self.title }}</li>
+                        </ul>
+                    </nav>
+                    {% endif %}
+                </div>
             </div>
+
+            <!-- Title Section -->
+            <h1 class="text-4xl font-bold text-black-800">Programoversikt</h1>
         </div>
+    </header>
 
-        {% if forloop.counter|divisibleby:3 or forloop.last %}
-        </div> <!-- Close wrap after every 3 tiles or at the end -->
-        {% endif %}
-    {% endfor %}
-{% endfor %}
+    <!-- Main Content Wrapper -->
+    <div class="flex flex-col lg:flex-row gap-8">
 
-   
-   
+        <!-- Filter Sidebar (No borders) -->
+        <aside class="w-full lg:w-1/4 bg-white p-4">
+            <h2 class="font-semibold text-lg mb-4">Filtrering</h2>
+            <div>
+                <h3 class="font-semibold mb-2 cursor-pointer">Tema</h3>
+                <ul class="space-y-2">
+                    <li>
+                        <div class="inline-flex items-center">
+                            <label class="flex items-center cursor-pointer relative">
+                                <input type="checkbox" value="Aktualitet"
+                                    class="peer filter-checkbox h-6 w-6 cursor-pointer transition-all appearance-none rounded border border-slate-300 checked:bg-slate-800 checked:border-slate-800" />
+                                <span
+                                    class="absolute text-white opacity-0 peer-checked:opacity-100 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"
+                                        class="w-4 h-4">
+                                        <path d="M18 6 L6 18 M6 6 L18 18" stroke="white" stroke-width="2" />
+                                    </svg>
+                                </span>
+                            </label>
+                            <span class="ml-2 pb-2">Aktualitet</span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="inline-flex items-center">
+                            <label class="flex items-center cursor-pointer relative">
+                                <input type="checkbox" value="Diverse"
+                                    class="peer filter-checkbox h-6 w-6 cursor-pointer transition-all appearance-none rounded border border-slate-300 checked:bg-slate-800 checked:border-slate-800" />
+                                <span
+                                    class="absolute text-white opacity-0 peer-checked:opacity-100 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"
+                                        class="w-4 h-4">
+                                        <path d="M18 6 L6 18 M6 6 L18 18" stroke="white" stroke-width="2" />
+                                    </svg>
+                                </span>
+                            </label>
+                            <span class="ml-2 pb-2">Diverse</span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="inline-flex items-center">
+                            <label class="flex items-center cursor-pointer relative">
+                                <input type="checkbox" value="Humor & underholdning"
+                                    class="peer filter-checkbox h-6 w-6 cursor-pointer transition-all appearance-none rounded border border-slate-300 checked:bg-slate-800 checked:border-slate-800" />
+                                <span
+                                    class="absolute text-white opacity-0 peer-checked:opacity-100 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"
+                                        class="w-4 h-4">
+                                        <path d="M18 6 L6 18 M6 6 L18 18" stroke="white" stroke-width="2" />
+                                    </svg>
+                                </span>
+                            </label>
+                            <span class="ml-2 pb-2">Humor & underholdning</span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="inline-flex items-center">
+                            <label class="flex items-center cursor-pointer relative">
+                                <input type="checkbox" value="Kultur"
+                                    class="peer filter-checkbox h-6 w-6 cursor-pointer transition-all appearance-none rounded border border-slate-300 checked:bg-slate-800 checked:border-slate-800" />
+                                <span
+                                    class="absolute text-white opacity-0 peer-checked:opacity-100 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"
+                                        class="w-4 h-4">
+                                        <path d="M18 6 L6 18 M6 6 L18 18" stroke="white" stroke-width="2" />
+                                    </svg>
+                                </span>
+                            </label>
+                            <span class="ml-2 pb-2">Kultur</span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="inline-flex items-center">
+                            <label class="flex items-center cursor-pointer relative">
+                                <input type="checkbox" value="Tema"
+                                    class="peer filter-checkbox h-6 w-6 cursor-pointer transition-all appearance-none rounded border border-slate-300 checked:bg-slate-800 checked:border-slate-800" />
+                                <span
+                                    class="absolute text-white opacity-0 peer-checked:opacity-100 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"
+                                        class="w-4 h-4">
+                                        <path d="M18 6 L6 18 M6 6 L18 18" stroke="white" stroke-width="2" />
+                                    </svg>
+                                </span>
+                            </label>
+                            <span class="ml-2 pb-2">Tema</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </aside>
 
-    
-    {% endblock %}
+        <!-- Programs Grid -->
+        <div class="flex-1">
+
+            <!-- Sorting Controls -->
+            <div class="flex justify-between items-center mb-6">
+                <p id="resultCount">Viser {{ total_program_count }} treff</p>
+                <div class="flex gap-2 mr-5">
+                    <button id="toggleViewBtn" class="flex items-center px-4 py-2 border border-gray-300 rounded">
+                        <span class="mr-2">Vis som liste</span>
+
+                    </button>
+                    <select class="border border-gray-300 rounded px-3 py-2">
+                        <option>A til Å</option>
+                        <option>Å til A</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Programs Grid Layout 1 -->
+            <div id="programGrid" class="program-rutenett grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-10 mr-6" >
+
+                {% for category_name, programs in grouped_programs.items %}
+                {% for program in programs %}
+
+                <div class="bg-white p-4" data-category="{{ category_name }}">
+                    <a href="{{ program.url }}" class="image-link">
+                        {% if program.main_image %}
+                        {% image program.main_image fill-150x150 as img %}
+                        <img src="{{ img.url }}" alt="{{ program.title }}" class="w-full mb-2">
+                        {% endif %}
+                        <h3 class="font-semibold mb-1">{{ program.title }}</h3>
+
+                        <!-- Assign category colors based on the category_name -->
+                        {% if category_name == 'Aktualitet' %}
+                        <span
+                            class="text-xs px-2 py-1 bg-blue-100 text-blue-700 rounded-full">{{ category_name }}</span>
+                        {% elif category_name == 'Humor & underholdning' %}
+                        <span
+                            class="text-xs px-2 py-1 bg-pink-100 text-pink-700 rounded-full">{{ category_name }}</span>
+                        {% elif category_name == 'Kultur' %}
+                        <span
+                            class="text-xs px-2 py-1 bg-green-100 text-green-700 rounded-full">{{ category_name }}</span>
+                        {% elif category_name == 'Musikk' %}
+                        <span
+                            class="text-xs px-2 py-1 bg-yellow-100 text-yellow-700 rounded-full">{{ category_name }}</span>
+                        {% elif category_name == 'Tema' %}
+                        <span
+                            class="text-xs px-2 py-1 bg-purple-100 text-purple-700 rounded-full">{{ category_name }}</span>
+                        {% elif category_name == 'Tidligere_programmer' %}
+                        <span
+                            class="text-xs px-2 py-1 bg-gray-100 text-gray-700 rounded-full">{{ category_name }}</span>
+                        {% endif %}
+                    </a>
+                </div>
+
+                {% endfor %}
+                {% endfor %}
+
+            </div>
+
+            <!-- Hero cards on programs, does not show until you click the vis som liste button-->
+            <!-- Programs List Layout 2 -->
+            <div id="programGrid" class="space-y-8 program-list" style="display:none;">
+
+                {% for category_name, programs in grouped_programs.items %}
+                {% for program in programs %}
+                <div class="flex flex-col md:flex-row bg-white p-4 rounded gap-4"
+                    data-category="{{ category_name }}">
+
+                    <!-- Image -->
+                    {% if program.main_image %}
+                    <div class="md:w-1/4">
+                        {% image program.main_image fill-300x300 as img %}
+                        <img src="{{ img.url }}" alt="{{ program.title }}" class="w-full h-auto rounded">
+                    </div>
+                    {% endif %}
+
+                    <!-- Content -->
+                    <div class="flex-1 flex flex-col justify-between">
+                        <!-- Schedule -->
+                        {% if program.schedule_info %}
+                        <p class="text-sm text-gray-700 font-medium mb-1">{{ program.schedule_info }}</p>
+                        {% endif %}
+
+                        <!-- Title + Tag -->
+                        <div class="flex flex-wrap items-center gap-2 mb-1">
+                            <a href="{{ program.url }}">
+                                <h3 class="text-xl font-semibold text-[#4b0c1b]">{{ program.title }}</h3>
+                            </a>
+
+                            <!-- Category Tag -->
+                            {% if category_name == 'Aktualitet' %}
+                            <span
+                                class="text-xs px-2 py-1 bg-blue-100 text-blue-700 rounded-full">{{ category_name }}</span>
+                            {% elif category_name == 'Humor & underholdning' %}
+                            <span
+                                class="text-xs px-2 py-1 bg-pink-100 text-pink-700 rounded-full">{{ category_name }}</span>
+                            {% elif category_name == 'Kultur' %}
+                            <span
+                                class="text-xs px-2 py-1 bg-green-100 text-green-700 rounded-full">{{ category_name }}</span>
+                            {% elif category_name == 'Musikk' %}
+                            <span
+                                class="text-xs px-2 py-1 bg-yellow-100 text-yellow-700 rounded-full">{{ category_name }}</span>
+                            {% elif category_name == 'Tema' %}
+                            <span
+                                class="text-xs px-2 py-1 bg-purple-100 text-purple-700 rounded-full">{{ category_name }}</span>
+                            {% elif category_name == 'Tidligere programmer' %}
+                            <span
+                                class="text-xs px-2 py-1 bg-gray-100 text-gray-700 rounded-full">{{ category_name }}</span>
+                            {% endif %}
+                        </div>
+
+                        <!-- Intro -->
+                        {% if program.intro %}
+                        <p class="text-sm text-gray-700">{{ program.intro }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+                {% endfor %}
+
+            </div>
+
+
+        </div>
+    </div>
+    </div>
+    <script src="{% static 'tears/js/programmer_page.js' %}"></script>
 </body>
 
 
+{% endblock %}

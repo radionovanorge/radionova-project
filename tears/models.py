@@ -85,8 +85,9 @@ class ProgrammerPage(Page):
             display_name: ProgramPage.objects.live().filter(category=category)
             for display_name, category in categories
         }
-
+        total_program_count = sum(len(programs) for programs in grouped_programs.values())
         context["grouped_programs"] = grouped_programs
+        context["total_program_count"] = total_program_count 
         return context
   
 
@@ -94,6 +95,7 @@ class ProgrammerPage(Page):
 class ProgramPage(Page):
     page_description = "This is the program page of the website and has the content at e.g. https://radionova.no/programmer/frokost."
     subpage_types = ['BlogPage']
+
     CATEGORY_CHOICES = [
         ("aktualitet", "Aktualitet"),
         ("humor_underholdning", "Humor & underholdning"),
@@ -102,10 +104,15 @@ class ProgramPage(Page):
         ("tema", "Tema"),
         ("tidligere_programmer", "Tidligere programmer"),
     ]
+
     category = models.CharField(
         max_length=50, choices=CATEGORY_CHOICES, default="aktualitet"
     )
-    program = models.ForeignKey(Group, on_delete=models.PROTECT) 
+
+    program = models.ForeignKey(
+        Group,
+        on_delete=models.PROTECT
+    )
 
     main_image = models.ForeignKey(
         Image,
@@ -116,8 +123,16 @@ class ProgramPage(Page):
         verbose_name="Hovedbilde",
     )
 
-    intro = models.CharField("Introduksjon", max_length=255, blank=True) 
+    intro = models.CharField("Introduksjon", max_length=255, blank=True)
 
+    # 🕒 New field: Day and Time string
+    schedule_info = models.CharField("Sendetid", max_length=100, blank=True, help_text="F.eks: Mandager · 19:00 - 20:30")
+
+    # 🔗 Social Media Links
+    instagram_link = models.URLField("Instagram-link", blank=True)
+    facebook_link = models.URLField("Facebook-link", blank=True)
+    tiktok_link = models.URLField("TikTok-link", blank=True)
+    email_link = models.URLField("E-post-link", blank=True)
 
     description = StreamField(
         [
@@ -125,6 +140,7 @@ class ProgramPage(Page):
             ("content", blocks.RichTextBlock()),
         ],
         blank=True,
+        use_json_field=True,
     )
 
     content_panels = Page.content_panels + [
@@ -132,22 +148,50 @@ class ProgramPage(Page):
         FieldPanel("program"),
         FieldPanel("main_image"),
         FieldPanel("intro"),
+        FieldPanel("schedule_info"),
+        FieldPanel("instagram_link"),
+        FieldPanel("facebook_link"),
+        FieldPanel("tiktok_link"),
+        FieldPanel("email_link"),
         FieldPanel("description"),
-        
     ]
+
 
     
 
 
-class BlogPage(Page):
+class BlogPage(Page): #TODO add an article|anmeldelse|intervju field
     page_description = "This is the blog page of the website and has the content at e.g. https://radionova.no/blog/2024/10/12/ny-blog."
-    redaksjon = models.ForeignKey(User, on_delete=models.PROTECT)
+    user = models.ForeignKey(User, on_delete=models.PROTECT)
     date = models.DateTimeField("Post time")
     forfatter = models.CharField("Forfatter", max_length=255, blank=True)
     imageDecription = models.CharField("BildeTekst:", max_length=255, blank=True)
+    ingress = models.CharField("Ingress", max_length=500, blank=True, help_text="Kort ingress/underoverskrift under tittelen")
+
+    #this is for having nettsaker in programpages. makes it possible to show programs each nettsak they have made only
+
+    program = models.ForeignKey(
+        'tears.ProgramPage',  
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='blog_posts',
+        verbose_name="Redaksjon"
+    )
+    typeArticle = models.CharField(
+        max_length=50,
+        choices=[
+            ("article", "Artikkel"),
+            ("anmeldelse", "Anmeldelse"),
+            ("intervju", "Intervju"),
+        ],
+        default="article",
+        verbose_name="Type of Article"
+    )
     body = StreamField(
         [
             ("main_image", ImageChooserBlock()),
+            ("more_images", ImageChooserBlock()),
             ("content", blocks.RichTextBlock()),
         ],
         blank=True,
@@ -155,7 +199,9 @@ class BlogPage(Page):
 
     subpage_types = []
     content_panels = Page.content_panels + [
-        FieldPanel("redaksjon"),
+        FieldPanel("user"),
+        FieldPanel("typeArticle"),
+        FieldPanel("program"),
         FieldPanel("forfatter"),
         FieldPanel("date"),
         FieldPanel("body"),
@@ -176,29 +222,54 @@ class FreeTextPage(Page):
    
 
 class DagTidPage(Page):
-    page_description = "This are page is for configuring Dagtid names, roles etc."
+    page_description = "This page is for configuring DagTid, About Radio Nova, and Omtaler i medier."
 
-    
-    DagTidNavn = models.CharField("DagTidNavn", max_length=255, blank=True)
-    Rolle = models.CharField("Rolle:", max_length=255, blank=True)
-    beskrivelse = models.CharField("beskrivelse:", max_length=255, blank=True)
-
-    subpage_types = []
-    portrett_bilde = StreamField(
+    # Free text for 'About Radio Nova' (top part)
+    about_radio_nova = StreamField(
         [
-            ("main_image", ImageChooserBlock()),
             ("content", blocks.RichTextBlock()),
+            ("main_image", ImageChooserBlock()),
         ],
         blank=True,
+        verbose_name="About Radio Nova"
+    )
+
+    # Repeating Employees
+    ansatte = StreamField(
+        [
+            ("ansatt", blocks.StructBlock([
+                ("name", blocks.CharBlock(required=True, help_text="Employee full name")),
+                ("role", blocks.CharBlock(required=True, help_text="Their role/title")),
+                ("email", blocks.CharBlock(required=False, help_text="Their email address")),
+                ("image", ImageChooserBlock(required=False)),
+            ])),
+        ],
+        blank=True,
+        verbose_name="Ansatte (Employees)"
+    )
+
+    # Repeating Media Mentions
+    omtaler_i_medier = StreamField(
+        [
+            ("omtale", blocks.StructBlock([
+                ("title", blocks.CharBlock(required=True)),
+                ("date", blocks.DateBlock(required=True)),
+                ("description", blocks.TextBlock(required=True)),
+                ("link", blocks.URLBlock(required=True)),
+                ("image", ImageChooserBlock(required=True)),
+            ])),
+        ],
+        blank=True,
+        verbose_name="Omtaler i andre medier"
     )
 
     content_panels = Page.content_panels + [
-        FieldPanel("DagTidNavn"),
-        FieldPanel("Rolle"),
-        FieldPanel("beskrivelse"),
-        FieldPanel("portrett_bilde")
-    ]
+    FieldPanel("about_radio_nova"),
+    FieldPanel("ansatte"),
+    FieldPanel("omtaler_i_medier"),
+]
 
+    subpage_types = []
     
 
     
