@@ -182,7 +182,7 @@ if USE_AZURE_STORAGE:
     MEDIA_URL = f'https://{AZURE_CUSTOM_DOMAIN}/{AZURE_CONTAINER}/'
     
     # Static files configuration for Azure
-    STATICFILES_STORAGE = 'storages.backends.azure_storage.AzureStorage'
+    STATICFILES_STORAGE = 'radionova.custom_storage.AzureStaticStorage'
     AZURE_STATIC_CONTAINER = os.environ.get('AZURE_STATIC_CONTAINER', 'static')
     STATIC_URL = f'https://{AZURE_CUSTOM_DOMAIN}/{AZURE_STATIC_CONTAINER}/'
     
