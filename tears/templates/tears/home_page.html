@@ -3,16 +3,7 @@
 
 {% block content %}
 <!-- Main content -->
-<div id="hovedinnhold" class="min-h-screen bg-white">
-  <!-- Content will be added here -->
-</div>
-{% endblock %}
-
-{% block extra_js %}
-{{ block.super }}
-<script>
-  // Any additional JavaScript for the home page
-</script>
+{% load tailwind_tags %}
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
@@ -32,7 +23,9 @@
 
 
 
-  <!-- START THE FEATURETTES -->
+  <div id="hovedinnhold" class="min-h-screen bg-white">
+    <!-- Content will be added here -->
+ 
 
   <!-- NETTSAKER -->
   <main class="max-w-6xl mx-auto px-4 py-8 ">
@@ -239,6 +232,7 @@
     </div>
 
   </main>
+</div>
 
 
 </body>
@@ -246,4 +240,6 @@
 </html>
 
 
+
 {% endblock %}
+
