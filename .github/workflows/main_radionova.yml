@@ -83,10 +83,11 @@ jobs:
           AZURE_STORAGE_ACCOUNT_NAME: ${{ secrets.AZURE_STORAGE_ACCOUNT_NAME }}
           AZURE_STORAGE_ACCOUNT_KEY: ${{ secrets.AZURE_STORAGE_ACCOUNT_KEY }}
           AZURE_STORAGE_CONTAINER: ${{ secrets.AZURE_STORAGE_CONTAINER }}
+          AZURE_STATIC_CONTAINER: ${{ secrets.AZURE_STATIC_CONTAINER }}
 
       - name: Collect static files
         run: |
-          python manage.py collectstatic --noinput
+          python manage.py collectstatic --noinput -v 2
         env:
           DBNAME: ${{ secrets.DBNAME }}
           DBHOST: ${{ secrets.DBHOST }}
@@ -98,6 +99,7 @@ jobs:
           AZURE_STORAGE_ACCOUNT_NAME: ${{ secrets.AZURE_STORAGE_ACCOUNT_NAME }}
           AZURE_STORAGE_ACCOUNT_KEY: ${{ secrets.AZURE_STORAGE_ACCOUNT_KEY }}
           AZURE_STORAGE_CONTAINER: ${{ secrets.AZURE_STORAGE_CONTAINER }}
+          AZURE_STATIC_CONTAINER: ${{ secrets.AZURE_STATIC_CONTAINER }}
 
       - name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v3

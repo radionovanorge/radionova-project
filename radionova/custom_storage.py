@@ -14,6 +14,7 @@ class CustomAzureStorage(AzureStorage):
         if filename:
             content_type, encoding = mimetypes.guess_type(filename)
             if content_type:
+                logger.info(f"Content type for {filename}: {content_type}")
                 return content_type
         
         # Default to the standard behavior if we can't determine the content type
@@ -28,22 +29,16 @@ class AzureStaticStorage(CustomAzureStorage):
     """
     Storage class specifically for static files.
     """
-    azure_container = 'static'  # Use the static container that already exists
-    
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        # You could override this with an environment variable if needed
-        # but we'll use 'static' by default since the container exists
+    azure_container = 'static'
 
 class AzureMediaStorage(CustomAzureStorage):
     """
     Storage class specifically for media files.
     """
-    azure_container = 'media'  # Use the media container that already exists
+    azure_container = 'media'
     
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        # You could override this with AZURE_STORAGE_CONTAINER env var if needed
         custom_container = os.environ.get('AZURE_STORAGE_CONTAINER')
         if custom_container:
             self.azure_container = custom_container 
