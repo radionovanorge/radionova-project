@@ -12,13 +12,8 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 import os
 from pathlib import Path
-import mimetypes  # Add mimetype import
 
 from dotenv import load_dotenv
-
-# Register additional MIME types
-mimetypes.add_type("text/css", ".css")
-mimetypes.add_type("application/javascript", ".js")
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent
@@ -77,7 +72,6 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -180,46 +174,23 @@ if USE_AZURE_STORAGE:
     # Azure Storage Settings
     AZURE_ACCOUNT_NAME = os.environ.get('AZURE_STORAGE_ACCOUNT_NAME')
     AZURE_ACCOUNT_KEY = os.environ.get('AZURE_STORAGE_ACCOUNT_KEY')
-    AZURE_CUSTOM_DOMAIN = f'radionovastatic.blob.core.windows.net'
+    AZURE_CONTAINER = os.environ.get('AZURE_STORAGE_CONTAINER', 'media')
+    AZURE_CUSTOM_DOMAIN = f'{AZURE_ACCOUNT_NAME}.blob.core.windows.net'
     
     # Media files settings
-    DEFAULT_FILE_STORAGE = 'radionova.custom_storage.AzureMediaStorage'
-    MEDIA_URL = f'https://{AZURE_CUSTOM_DOMAIN}/media/'
+    DEFAULT_FILE_STORAGE = 'storages.backends.azure_storage.AzureStorage'
+    MEDIA_URL = f'https://{AZURE_CUSTOM_DOMAIN}/{AZURE_CONTAINER}/'
     
     # Static files configuration for Azure
-    STATICFILES_STORAGE = 'radionova.custom_storage.AzureStaticStorage'
-    STATIC_URL = f'https://{AZURE_CUSTOM_DOMAIN}/static/'
+    STATICFILES_STORAGE = 'storages.backends.azure_storage.AzureStorage'
+    AZURE_STATIC_CONTAINER = os.environ.get('AZURE_STATIC_CONTAINER', 'static')
+    STATIC_URL = f'https://{AZURE_CUSTOM_DOMAIN}/{AZURE_STATIC_CONTAINER}/'
     
-    # Set up logging
-    LOGGING = {
-        'version': 1,
-        'disable_existing_loggers': False,
-        'handlers': {
-            'console': {
-                'class': 'logging.StreamHandler',
-            },
-        },
-        'loggers': {
-            'django': {
-                'handlers': ['console'],
-                'level': 'INFO',
-            },
-            'radionova': {
-                'handlers': ['console'],
-                'level': 'DEBUG',
-            },
-        },
-    }
 else:
     MEDIA_URL = '/media/'
     MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
     STATIC_URL = '/static/'
     STATIC_ROOT = 'static'
-    
-    # WhiteNoise configuration for static files in development
-    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-    WHITENOISE_USE_FINDERS = True
-    WHITENOISE_MANIFEST_STRICT = False
 
 # Wagtail media settings
 WAGTAIL_USAGE_URL_PREFIX = MEDIA_URL
