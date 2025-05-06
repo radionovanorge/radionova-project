@@ -83,23 +83,6 @@ jobs:
           AZURE_STORAGE_ACCOUNT_NAME: ${{ secrets.AZURE_STORAGE_ACCOUNT_NAME }}
           AZURE_STORAGE_ACCOUNT_KEY: ${{ secrets.AZURE_STORAGE_ACCOUNT_KEY }}
           AZURE_STORAGE_CONTAINER: ${{ secrets.AZURE_STORAGE_CONTAINER }}
-          AZURE_STATIC_CONTAINER: ${{ secrets.AZURE_STATIC_CONTAINER }}
-
-      - name: Collect static files
-        run: |
-          python manage.py collectstatic --noinput -v 2
-        env:
-          DBNAME: ${{ secrets.DBNAME }}
-          DBHOST: ${{ secrets.DBHOST }}
-          DBUSER: ${{ secrets.DBUSER }}
-          DBPASS: ${{ secrets.DBPASS }}
-          DBPORT: ${{ secrets.DBPORT }}
-          SECRET_KEY: ${{ secrets.SECRET_KEY }}
-          WEBSITE_HOSTNAME: radionova.azurewebsites.net
-          AZURE_STORAGE_ACCOUNT_NAME: ${{ secrets.AZURE_STORAGE_ACCOUNT_NAME }}
-          AZURE_STORAGE_ACCOUNT_KEY: ${{ secrets.AZURE_STORAGE_ACCOUNT_KEY }}
-          AZURE_STORAGE_CONTAINER: ${{ secrets.AZURE_STORAGE_CONTAINER }}
-          AZURE_STATIC_CONTAINER: ${{ secrets.AZURE_STATIC_CONTAINER }}
 
       - name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v3
