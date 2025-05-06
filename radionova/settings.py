@@ -180,10 +180,17 @@ if USE_AZURE_STORAGE:
     # Media files settings
     DEFAULT_FILE_STORAGE = 'storages.backends.azure_storage.AzureStorage'
     MEDIA_URL = f'https://{AZURE_CUSTOM_DOMAIN}/{AZURE_CONTAINER}/'
+    
+    # Static files configuration for Azure
+    STATICFILES_STORAGE = 'storages.backends.azure_storage.AzureStorage'
+    AZURE_STATIC_CONTAINER = os.environ.get('AZURE_STATIC_CONTAINER', 'static')
+    STATIC_URL = f'https://{AZURE_CUSTOM_DOMAIN}/{AZURE_STATIC_CONTAINER}/'
+    
 else:
-    # Local media settings
-    MEDIA_ROOT = os.path.join(BASE_DIR.parent, 'images')
-    MEDIA_URL = '/images/'
+    MEDIA_URL = '/media/'
+    MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+    STATIC_URL = '/static/'
+    STATIC_ROOT = 'static'
 
 # Wagtail media settings
 WAGTAIL_USAGE_URL_PREFIX = MEDIA_URL
