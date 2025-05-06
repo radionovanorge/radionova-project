@@ -1,0 +1,94 @@
+{% extends "tears/base.html" %}
+{% load wagtailcore_tags wagtailimages_tags %}
+{% block content %}
+{% load static %}
+<head>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
+    <link href="{% static 'tears/css/about.css' %}" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<header class="w-full bg-[#f7f4f4] p-10 mb-8">
+    <div class="program-container px-4 py-8 max-w-4xl mx-auto">
+  
+      <!-- Breadcrumb -->
+      <div class="breadcrumb-content text-sm text-gray-500 mb-4 mt-1">
+        {% if self.get_ancestors|length > 1 %}
+        <nav aria-label="Breadcrumb">
+          <ul class="flex items-center space-x-2">
+            {% for p in self.get_ancestors %}
+              {% if not p.is_root %}
+              <li>
+                <a href="{{ p.url }}" class="hover:text-red-600">{{ p.title }}</a>
+                <span class="mx-2 text-gray-400">></span>
+              </li>
+              {% endif %}
+            {% endfor %}
+            <li class="text-red-600 font-semibold">{{ self.title }}</li>
+          </ul>
+        </nav>
+        {% endif %}
+      </div>
+  
+      <!-- PAGE TITLE (MISSING PART) -->
+      <h1 class="text-4xl font-bold text-[#511120] mb-6">{{ self.title }}</h1>
+  
+    </div>
+  </header>
+  
+        
+<!-- About Radio Nova -->
+<div class="max-w-4xl mx-auto px-4 py-12">
+  {% for block in page.about_radio_nova %}
+    {{ block }}
+  {% endfor %}
+</div>
+
+<!-- Ansatte Section -->
+<div class="max-w-6xl mx-auto px-4 py-12">
+    <h2 class="text-2xl font-bold mb-8">Ansatte</h2>
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10">
+      {% for block in page.ansatte %}
+        <div class="bg-white p-4 rounded-lg text-center flex flex-col items-center">
+          {% if block.value.image %}
+            <div class="w-full h-auto aspect-square overflow-hidden mb-4">
+              {% image block.value.image fill-400x400 class="object-cover w-full h-full" alt=block.value.name %}
+            </div>
+          {% endif %}
+          <h3 class="text-lg font-semibold mb-1">{{ block.value.name }}</h3>
+  
+          <!-- Role as green tag -->
+          <span class="inline-block text-sm text-[#511120] border border-[#511120] bg-green-100 px-4 py-1 rounded-full">
+            {{ block.value.role }}
+          </span>
+  <!-- 
+          {# Commented out email for now #}
+          {# {% if block.value.email %}
+           <p class="text-sm text-blue-600 mt-1">{{ block.value.email }}</p>
+          {% endif %} #}-->
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+
+<!-- Omtaler i andre medier Section -->
+<div class="bg-[#f7f4f4] py-16">
+  <div class="max-w-7xl mx-auto px-4">
+    <h2 class="text-2xl font-bold mb-8">Omtaler i andre medier</h2>
+    <div class="grid grid-cols-2 md:grid-cols-3 gap-8">
+      {% for block in page.omtaler_i_medier %}
+        <a href="{{ block.value.link }}" target="_blank" class="bg-transparent rounded-lg overflow-hidden group transition hover:shadow-lg">
+          <div class="h-48 overflow-hidden">
+            {% image block.value.image fill-400x400 class="object-cover w-full h-full" alt=block.value.name %}
+          </div>
+          <div class="p-4">
+            <h3 class="text-lg font-semibold group-hover:text-[#511120]">{{ block.value.title }}</h3>
+            <p class="text-xs text-gray-400">{{ block.value.date }}</p>
+            <p class="text-sm mt-2">{{ block.value.description }}</p>
+          </div>
+        </a>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+{% endblock %}
