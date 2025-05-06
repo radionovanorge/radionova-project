@@ -12,8 +12,13 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 import os
 from pathlib import Path
+import mimetypes  # Add mimetype import
 
 from dotenv import load_dotenv
+
+# Register additional MIME types
+mimetypes.add_type("text/css", ".css")
+mimetypes.add_type("application/javascript", ".js")
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent
@@ -72,6 +77,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -175,15 +181,16 @@ if USE_AZURE_STORAGE:
     AZURE_ACCOUNT_NAME = os.environ.get('AZURE_STORAGE_ACCOUNT_NAME')
     AZURE_ACCOUNT_KEY = os.environ.get('AZURE_STORAGE_ACCOUNT_KEY')
     AZURE_CONTAINER = os.environ.get('AZURE_STORAGE_CONTAINER', 'media')
+    AZURE_STATIC_CONTAINER = os.environ.get('AZURE_STATIC_CONTAINER', 'static')
     AZURE_CUSTOM_DOMAIN = f'{AZURE_ACCOUNT_NAME}.blob.core.windows.net'
+    AZURE_BLOB_MAX_MEMORY_SIZE = 20 * 1024 * 1024  # 20MB
     
     # Media files settings
-    DEFAULT_FILE_STORAGE = 'storages.backends.azure_storage.AzureStorage'
+    DEFAULT_FILE_STORAGE = 'radionova.custom_storage.AzureMediaStorage'
     MEDIA_URL = f'https://{AZURE_CUSTOM_DOMAIN}/{AZURE_CONTAINER}/'
     
     # Static files configuration for Azure
-    STATICFILES_STORAGE = 'storages.backends.azure_storage.AzureStorage'
-    AZURE_STATIC_CONTAINER = os.environ.get('AZURE_STATIC_CONTAINER', 'static')
+    STATICFILES_STORAGE = 'radionova.custom_storage.AzureStaticStorage'
     STATIC_URL = f'https://{AZURE_CUSTOM_DOMAIN}/{AZURE_STATIC_CONTAINER}/'
     
 else:
@@ -191,6 +198,11 @@ else:
     MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
     STATIC_URL = '/static/'
     STATIC_ROOT = 'static'
+    
+    # WhiteNoise configuration for static files in development
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+    WHITENOISE_USE_FINDERS = True
+    WHITENOISE_MANIFEST_STRICT = False
 
 # Wagtail media settings
 WAGTAIL_USAGE_URL_PREFIX = MEDIA_URL
