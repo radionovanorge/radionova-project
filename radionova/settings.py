@@ -13,8 +13,12 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 import os
 from pathlib import Path
 import mimetypes  # Add mimetype import
+import logging
 
 from dotenv import load_dotenv
+
+# Configure logging
+logging.basicConfig(level=logging.INFO)
 
 # Register additional MIME types
 mimetypes.add_type("text/css", ".css")
@@ -180,7 +184,7 @@ if USE_AZURE_STORAGE:
     # Azure Storage Settings
     AZURE_ACCOUNT_NAME = os.environ.get('AZURE_STORAGE_ACCOUNT_NAME')
     AZURE_ACCOUNT_KEY = os.environ.get('AZURE_STORAGE_ACCOUNT_KEY')
-    AZURE_CUSTOM_DOMAIN = f'{AZURE_ACCOUNT_NAME}.blob.core.windows.net'
+    AZURE_CUSTOM_DOMAIN = f'radionovastatic.blob.core.windows.net'  # Hardcoded to match actual domain
     AZURE_BLOB_MAX_MEMORY_SIZE = 20 * 1024 * 1024  # 20MB
     
     # Media files settings

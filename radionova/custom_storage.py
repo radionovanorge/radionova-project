@@ -1,6 +1,9 @@
 from storages.backends.azure_storage import AzureStorage
 import mimetypes
 import os
+import logging
+
+logger = logging.getLogger(__name__)
 
 class CustomAzureStorage(AzureStorage):
     def get_content_type(self, content=None, filename=None):
@@ -15,6 +18,11 @@ class CustomAzureStorage(AzureStorage):
         
         # Default to the standard behavior if we can't determine the content type
         return super().get_content_type(content, filename)
+    
+    def url(self, name):
+        url = super().url(name)
+        logger.info(f"Generated URL for {name}: {url}")
+        return url
 
 class AzureStaticStorage(CustomAzureStorage):
     """
