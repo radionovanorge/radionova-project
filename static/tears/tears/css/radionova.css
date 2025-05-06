@@ -1,0 +1,253 @@
+/* Radio Nova Custom Styling */
+
+:root {
+  --radionova-burgundy: #4D0F1E;
+  --radionova-dark-burgundy: #3A0D17;
+  --radionova-light: #f5f5f5;
+  --site-width: 950px;
+  --site-padding: 1rem;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  width: 100%;
+  max-width: var(--site-width);
+  margin: 0 auto;
+  padding: 0 var(--site-padding);
+}
+
+/* Header and Navigation */
+.bg-radionova {
+  background-color: var(--radionova-burgundy);
+}
+
+.bg-radionova-dark {
+  background-color: var(--radionova-dark-burgundy);
+}
+
+.text-radionova {
+  color: var(--radionova-burgundy);
+}
+
+.border-radionova {
+  border-color: var(--radionova-burgundy);
+}
+
+/* Skip Links Container */
+.skip-links-container {
+  display: flex;
+  justify-content: flex-start;
+  margin: 0 auto;
+  max-width: var(--site-width);
+  padding: 0 var(--site-padding);
+  gap: 2rem;
+}
+
+/* Skip Links - No underline or border by default */
+.skip-link {
+  border: 2px solid transparent;
+  background-color: transparent;
+  color: #FCCFD1;
+  padding: 0.5rem 1.25rem;
+  text-decoration: none;
+  display: inline-block;
+  transition: all 0.2s;
+  padding-left: 0;
+}
+
+/* Hover state - underline */
+.skip-link:hover {
+  text-decoration: underline;
+  background-color: transparent;
+  border-color: transparent;
+  color: white;
+}
+
+/* Focus state - boxed outline */
+.skip-link:focus {
+  background-color: transparent;
+  color: white;
+  outline: none;
+  border: 2px solid white;
+  text-decoration: none;
+}
+
+/* Focus-visible state for browsers supporting it */
+.skip-link:focus-visible {
+  border: 2px solid white;
+  text-decoration: none;
+}
+
+.skip-link:active {
+  background-color: white;
+  color: var(--radionova-burgundy);
+}
+
+/* Radio Player */
+.radio-player-btn {
+  border: 2px solid white;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 1.25rem;
+  background-color: transparent;
+  color: white;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.radio-player-btn:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+.radio-player-btn:focus {
+  outline: 2px solid white;
+  outline-offset: 2px;
+}
+
+/* Navigation Container */
+.nav-container {
+  width: 100%;
+  max-width: var(--site-width);
+  margin: 0 auto;
+  padding: 0 var(--site-padding);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem; /* Adds space between logo and nav links */
+}
+
+/* Top navigation links */
+.top-nav-link {
+  color: black;
+  text-decoration: none;
+  position: relative;
+  padding: 0.5rem 1rem;
+  border: 1px solid transparent;
+}
+
+/* Hover state - underline */
+.top-nav-link:hover {
+  text-decoration: underline;
+}
+
+/* Focus state - border box */
+.top-nav-link:focus {
+  outline: none;
+  border: 1px solid black;
+  border-radius: 2px;
+  text-decoration: none;
+}
+
+/* Active state for navigation items */
+.top-nav-link.active {
+  border: 1px solid black;
+  border-radius: 2px;
+}
+
+/* Mobile Menu */
+.mobile-menu {
+  background-color: white;
+  border-top: 1px solid #eee;
+}
+
+.mobile-menu a {
+  display: block;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #f5f5f5;
+  color: #333;
+  text-decoration: none;
+}
+
+.mobile-menu a:hover {
+  background-color: #f9f9f9;
+  text-decoration: underline;
+}
+
+.mobile-menu a:focus {
+  outline: none;
+  border: 1px solid black;
+  background-color: transparent;
+  text-decoration: none;
+}
+
+/* Radio player container */
+.radio-player-container {
+  width: 100%;
+  max-width: var(--site-width);
+  margin: 0 auto;
+  padding: 0 var(--site-padding);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* Footer */
+.footer-section {
+  background-color: var(--radionova-burgundy);
+  color: white;
+  padding: 2rem 0;
+  margin-top: 2rem;
+}
+
+.footer-container {
+  width: 100%;
+  max-width: var(--site-width);
+  margin: 0 auto;
+  padding: 0 var(--site-padding);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+@media (min-width: 768px) {
+  .footer-container {
+    flex-direction: row;
+    align-items: center;
+  }
+}
+
+.social-link {
+  color: white;
+  margin: 0 0.75rem;
+  transition: opacity 0.2s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.social-link:hover {
+  opacity: 0.8;
+}
+
+.social-link:focus {
+  outline: 2px solid white;
+  outline-offset: 2px;
+  opacity: 1;
+}
+
+.social-icons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+/* Space between radiospiller and content */
+.content-spacer {
+  height: 2rem;
+}
+
+/* Main content container */
+.main-container {
+  width: 100%;
+  max-width: var(--site-width);
+  margin: 0 auto;
+  padding: 0 var(--site-padding);
+} 
