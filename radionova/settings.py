@@ -180,18 +180,16 @@ if USE_AZURE_STORAGE:
     # Azure Storage Settings
     AZURE_ACCOUNT_NAME = os.environ.get('AZURE_STORAGE_ACCOUNT_NAME')
     AZURE_ACCOUNT_KEY = os.environ.get('AZURE_STORAGE_ACCOUNT_KEY')
-    AZURE_CONTAINER = os.environ.get('AZURE_STORAGE_CONTAINER', 'media')
-    AZURE_STATIC_CONTAINER = os.environ.get('AZURE_STATIC_CONTAINER', 'static')
     AZURE_CUSTOM_DOMAIN = f'{AZURE_ACCOUNT_NAME}.blob.core.windows.net'
     AZURE_BLOB_MAX_MEMORY_SIZE = 20 * 1024 * 1024  # 20MB
     
     # Media files settings
     DEFAULT_FILE_STORAGE = 'radionova.custom_storage.AzureMediaStorage'
-    MEDIA_URL = f'https://{AZURE_CUSTOM_DOMAIN}/{AZURE_CONTAINER}/'
+    MEDIA_URL = f'https://{AZURE_CUSTOM_DOMAIN}/media/'
     
     # Static files configuration for Azure
     STATICFILES_STORAGE = 'radionova.custom_storage.AzureStaticStorage'
-    STATIC_URL = f'https://{AZURE_CUSTOM_DOMAIN}/{AZURE_STATIC_CONTAINER}/'
+    STATIC_URL = f'https://{AZURE_CUSTOM_DOMAIN}/static/'
     
 else:
     MEDIA_URL = '/media/'

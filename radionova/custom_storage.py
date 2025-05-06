@@ -20,10 +20,22 @@ class AzureStaticStorage(CustomAzureStorage):
     """
     Storage class specifically for static files.
     """
-    azure_container = os.environ.get('AZURE_STATIC_CONTAINER', 'static')
+    azure_container = 'static'  # Use the static container that already exists
     
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # You could override this with an environment variable if needed
+        # but we'll use 'static' by default since the container exists
+
 class AzureMediaStorage(CustomAzureStorage):
     """
     Storage class specifically for media files.
     """
-    azure_container = os.environ.get('AZURE_STORAGE_CONTAINER', 'media') 
+    azure_container = 'media'  # Use the media container that already exists
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # You could override this with AZURE_STORAGE_CONTAINER env var if needed
+        custom_container = os.environ.get('AZURE_STORAGE_CONTAINER')
+        if custom_container:
+            self.azure_container = custom_container 
