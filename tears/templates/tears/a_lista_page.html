@@ -1,282 +1,91 @@
 {% extends "tears/base.html" %}
-{% load wagtailcore_tags %}
-{% load wagtailimages_tags %}
+{% load wagtailcore_tags wagtailimages_tags %}
 
-{% load static %}
 {% block content %}
+<div class="bg-gray-50 py-8">
+  <div class="container mx-auto px-4">
+    <!-- Page Header -->
+    <div class="mb-8 text-center">
+      <h1 class="text-3xl md:text-4xl font-bold mb-2">A-LISTA</h1>
+      <p class="text-gray-600">Våre favoritter fra musikkverdenen</p>
+    </div>
 
-<!-- @Todo margins  Maybe we dont want this website. Odd inistialy said we can make it simpler by just adding a spotify embed 
-  thats it. 
-  Make sure to add more content model right here and remove past template-->
-
-<head>
-    <style>
-        .text-section {
-            display: flex;
-            padding: 0px;
-            flex-direction: column;
-            justify-content: flex-end;
-            align-items: center;
-            gap: 10px;
-            background-color: #fbf9fa;
-        }
-
-        .content-wrapper {
-            display: flex;
-            width: 100%;
-            max-width: 1312px;
-            padding: 0px;
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 10px;
-        }
-
-        .description {
-            width: 100%;
-            max-width: 864px;
-            color: #511120;
-            font-family:
-                Noto Sans,
-                -apple-system,
-                Roboto,
-                Helvetica,
-                sans-serif;
-            font-size: 24px;
-            font-weight: 400;
-            line-height: 150%;
-            gap: 16px;
-            margin: 0;
-        }
-
-        @media (max-width: 991px) {
-            .text-section {
-                padding: 24px 32px;
-            }
-
-            .content-wrapper {
-                padding: 16px 64px;
-            }
-
-            .description {
-                font-size: 22px;
-            }
-        }
-
-        @media (max-width: 640px) {
-            .text-section {
-                padding: 16px;
-            }
-
-            .content-wrapper {
-                padding: 16px;
-            }
-
-            .description {
-                font-size: 20px;
-            }
-        }
-
-
-        .a-list-section {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 10px;
-            background-color: #fbf9fa;
-            padding-left: 64px;
-            padding-right: 64px;
-        }
-
-        .a-list-container {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 24px;
-            padding: 24px 224px;
-        }
-
-        .a-list-heading {
-            color: #511120;
-            font-family: "Noto Sans", sans-serif;
-            font-size: 24px;
-            font-weight: 700;
-            line-height: 26px;
-            margin: 0;
-        }
-
-        .a-list-grid {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: flex-start;
-            gap: 40px;
-        }
-
-        .a-list-item {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 4px;
-        }
-
-        .a-list-images {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-        }
-
-        .a-list-image {
-            width: 250px;
-            height: auto;
-        }
-
-        .a-list-image:nth-child(1) {
-            height: 21px;
-        }
-
-        .a-list-image:nth-child(2) {
-            height: 96px;
-        }
-
-        .a-list-image:nth-child(3),
-        .a-list-image:nth-child(4) {
-            height: 22px;
-        }
-
-        .a-list-title {
-            color: #511120;
-            font-family: "Noto Sans", sans-serif;
-            font-size: 20px;
-            font-weight: 400;
-            line-height: 26px;
-            margin: 0;
-        }
-
-        .a-list-footer {
-            color: #511120;
-            font-family: "Inter", sans-serif;
-            font-size: 24px;
-            font-weight: 400;
-            line-height: 26px;
-            text-decoration-line: underline;
-            width: 100%;
-            max-width: 830px;
-        }
-
-        @media (max-width: 991px) {
-            .a-list-section {
-                padding-left: 32px;
-                padding-right: 32px;
-            }
-
-            .a-list-container {
-                padding-left: 64px;
-                padding-right: 64px;
-            }
-
-            .a-list-grid {
-                gap: 20px;
-            }
-
-            .a-list-image {
-                width: 200px;
-            }
-        }
-
-        @media (max-width: 640px) {
-            .a-list-section {
-                padding-left: 16px;
-                padding-right: 16px;
-            }
-
-            .a-list-container {
-                padding-left: 16px;
-                padding-right: 16px;
-            }
-
-            .a-list-grid {
-                gap: 16px;
-            }
-
-            .a-list-image {
-                width: 150px;
-            }
-        }
-    </style>
-</head>
-
-<body>
-    <main class="a-list-section">
-        {% for block in page.images|slice:"1" %}
-        <image> {% image block.value fill-800x350 class="d-block w-100" %}</image>
-        {% endfor %}
-        <!-- HEADER TEXT-->
-        <section class="text-section">
-            <article class="content-wrapper">
-                <p class="description">
-                    Afterski, jazzballade og psykadelisk danseband - Med deilige ferske tunes
-                    skal Radio Nova lose både deg og skoene dine gjennom de kommende to
-                    smelteukene.
-                </p>
-            </article>
-        </section>
-        <section class="a-list-container">
-
-
-            {{ page.body|richtext }}
-
-            <h1 class="a-list-heading">Nåværende og tidligere A-lister finner du i sin helhet på Spotify </h1>
-            <div style="left: 0; width: 100%; height: 352px; position: relative;"><iframe
-                    src="https://open.spotify.com/embed/playlist/468KBxCxKpWO34HSospe77?utm_source=oembed"
-                    style="top: 0; left: 0; width: 100%; height: 100%; position: absolute; border: 0;" allowfullscreen
-                    allow="clipboard-write; encrypted-media; fullscreen; picture-in-picture;"></iframe></div>
-            <h1 class="a-list-heading">Tidligere A-lister</h1>
-            <div class="a-list-grid">
-                <article class="a-list-item">
-                    <div class="a-list-images">
-                        <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/5ff2e678fa42c6449657113dd26d8d0d668cbb10"
-                            alt="A-list image 1" class="a-list-image" />
-                        <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/c50df837b7facd6be5b0ee0881436ed9a6bcef52"
-                            alt="A-list image 2" class="a-list-image" />
-                        <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/6b93fd891a20aa9639512ffb135bcf4779a0a8fb"
-                            alt="A-list image 3" class="a-list-image" />
-                        <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/6b93fd891a20aa9639512ffb135bcf4779a0a8fb"
-                            alt="A-list image 4" class="a-list-image" />
-                    </div>
-                    <h2 class="a-list-title">A-lista uke 10-11</h2>
-                </article>
-                <article class="a-list-item">
-                    <div class="a-list-images">
-                        <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/5ff2e678fa42c6449657113dd26d8d0d668cbb10"
-                            alt="A-list image 1" class="a-list-image" />
-                        <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/c50df837b7facd6be5b0ee0881436ed9a6bcef52"
-                            alt="A-list image 2" class="a-list-image" />
-                        <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/6b93fd891a20aa9639512ffb135bcf4779a0a8fb"
-                            alt="A-list image 3" class="a-list-image" />
-                        <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/6b93fd891a20aa9639512ffb135bcf4779a0a8fb"
-                            alt="A-list image 4" class="a-list-image" />
-                    </div>
-                    <h2 class="a-list-title">A-lista uke 8-9</h2>
-                </article>
-                <article class="a-list-item">
-                    <div class="a-list-images">
-                        <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/5ff2e678fa42c6449657113dd26d8d0d668cbb10"
-                            alt="A-list image 1" class="a-list-image" />
-                        <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/c50df837b7facd6be5b0ee0881436ed9a6bcef52"
-                            alt="A-list image 2" class="a-list-image" />
-                        <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/6b93fd891a20aa9639512ffb135bcf4779a0a8fb"
-                            alt="A-list image 3" class="a-list-image" />
-                        <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/6b93fd891a20aa9639512ffb135bcf4779a0a8fb"
-                            alt="A-list image 4" class="a-list-image" />
-                    </div>
-                    <h2 class="a-list-title">A-lista uke 6-7</h2>
-                </article>
+    <!-- Main Content -->
+    <div class="bg-white rounded-lg shadow-sm overflow-hidden">
+      <div class="p-6">
+        <div class="flex flex-col md:flex-row md:space-x-8">
+          <!-- Left Column - Details -->
+          <div class="md:w-1/2 mb-6 md:mb-0">
+            <h2 class="text-2xl font-bold mb-4">
+              {{ page.uke }} <span class="text-radionova-maroon">Våre favoritter</span>
+            </h2>
+            <div class="prose max-w-none mb-6">
+              <p class="text-lg">
+                {{ page.post_message }}
+              </p>
             </div>
-            <a href="#" class="a-list-footer">Alle A-lister -&gt;</a>
-        </section>
-    </main>
+            
+            <!-- Spotify Embed if available -->
+            {% if page.spotify_embed_url %}
+              <div class="mb-6">
+                <h3 class="text-lg font-semibold mb-3">Lytt på Spotify</h3>
+                <iframe src="{{ page.spotify_embed_url }}" width="100%" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+              </div>
+            {% endif %}
+          </div>
 
-    <!-- Featurette Section -->
+          <!-- Right Column - Images -->
+          <div class="md:w-1/2">
+            <!-- Image Gallery -->
+            <div class="relative" x-data="{ activeSlide: 0 }">
+              <div class="overflow-hidden rounded-lg">
+                {% for block in page.images %}
+                  <div x-show="activeSlide === {{ forloop.counter0 }}" class="transition-opacity duration-300 ease-in-out">
+                    {% image block.value fill-600x600 class="w-full h-auto object-cover rounded-lg" %}
+                  </div>
+                {% endfor %}
+              </div>
 
-</body>
+              <!-- Navigation dots -->
+              {% if page.images|length > 1 %}
+                <div class="flex justify-center mt-4 space-x-2">
+                  {% for block in page.images %}
+                    <button @click="activeSlide = {{ forloop.counter0 }}" class="w-3 h-3 rounded-full" :class="{ 'bg-radionova-maroon': activeSlide === {{ forloop.counter0 }}, 'bg-gray-300': activeSlide !== {{ forloop.counter0 }} }"></button>
+                  {% endfor %}
+                </div>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
+    <!-- A-Lista Songs Grid -->
+    <div class="mt-12">
+      <h2 class="text-2xl font-bold mb-6 border-b border-gray-200 pb-2">A-Lista låter</h2>
+      
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        {% for image_block in page.images %}
+          <div class="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition duration-200">
+            <div class="aspect-w-1 aspect-h-1 bg-gray-100">
+              {% image image_block.value fill-300x300 class="w-full h-full object-cover" %}
+            </div>
+            <div class="p-4">
+              <h3 class="font-semibold text-lg">Song Title</h3>
+              <p class="text-gray-600">Artist Name</p>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}
+
+{% block extra_js %}
+{{ block.super }}
+<script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+{% endblock %}
+
+
+    

@@ -1,0 +1,38 @@
+{% load static %}
+
+<!-- Navigation component -->
+<header class="bg-white py-4">
+    <div class="nav-container">
+        <!-- Logo -->
+        <a href="/" class="block">
+            <img src="{% static 'tears/images/radionova.png' %}" alt="Radio Nova" class="h-10">
+        </a>
+        
+        <!-- Desktop Navigation -->
+        <nav class="hidden md:flex space-x-3">
+            <a href="/sendeplan" class="top-nav-link {% if request.path == '/sendeplan' %}active{% endif %}">Sendeplan</a>
+            <a href="/a-lista" class="top-nav-link {% if request.path == '/a-lista' %}active{% endif %}">A-lista</a>
+            <a href="/programmer" class="top-nav-link {% if request.path == '/programmer' %}active{% endif %}">Programmer</a>
+            <a href="/artikler" class="top-nav-link {% if request.path == '/artikler' %}active{% endif %}">Artikler</a>
+            <a href="/om-oss" class="top-nav-link {% if request.path == '/om-oss' %}active{% endif %}">Om oss</a>
+        </nav>
+        
+        <!-- Mobile menu button -->
+        <button id="menu-toggle" class="md:hidden" aria-label="Åpne meny">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+        </button>
+    </div>
+    
+    <!-- Mobile menu (hidden by default) -->
+    <div id="mobile-menu" class="hidden md:hidden border-t mt-4">
+        <nav class="container mx-auto px-4 py-4 flex flex-col">
+            <a href="/sendeplan" class="text-black py-3 {% if request.path == '/sendeplan' %}font-bold{% endif %}">Sendeplan</a>
+            <a href="/a-lista" class="text-black py-3 {% if request.path == '/a-lista' %}font-bold{% endif %}">A-lista</a>
+            <a href="/programmer" class="text-black py-3 {% if request.path == '/programmer' %}font-bold{% endif %}">Programmer</a>
+            <a href="/artikler" class="text-black py-3 {% if request.path == '/artikler' %}font-bold{% endif %}">Artikler</a>
+            <a href="/om-oss" class="text-black py-3 {% if request.path == '/om-oss' %}font-bold{% endif %}">Om oss</a>
+        </nav>
+    </div>
+</header> 

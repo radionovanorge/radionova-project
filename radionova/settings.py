@@ -38,6 +38,9 @@ ALLOWED_HOSTS = ['radionova.azurewebsites.net',
 
 INSTALLED_APPS = [
     'tears',
+    
+    'tailwind',
+    'theme',
 
     'compressor',
     'wagtail.contrib.routable_page',
@@ -86,6 +89,7 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
             os.path.join(BASE_DIR, "templates"),
+            os.path.join(BASE_DIR.parent, "theme", "templates"),
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -242,3 +246,6 @@ WAGTAILDOCS_EXTENSIONS = ['csv', 'docx', 'key',
 
 # Reverse the default case-sensitive handling of tags
 TAGGIT_CASE_INSENSITIVE = True
+
+# Tailwind CSS Configuration
+TAILWIND_APP_NAME = 'theme'

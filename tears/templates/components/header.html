@@ -1,0 +1,30 @@
+{% load static %}
+
+<!-- Skip links section -->
+<div class="bg-radionova-maroon text-white py-3">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-center space-x-8">
+    <a href="#hovedinnhold" class="text-white hover:underline">Hopp til hovedinnhold</a>
+    <a href="#radiospiller" class="text-white hover:underline">Hopp til radiospiller</a>
+  </div>
+</div>
+
+<!-- Logo and navigation in one row -->
+<div class="bg-white py-6">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex flex-col md:flex-row items-center justify-center md:justify-start space-y-4 md:space-y-0">
+      <!-- Logo -->
+      <a href="/" class="block mr-8">
+        <img src="{% static 'tears/images/radionova.png' %}" alt="Radio Nova" class="h-8">
+      </a>
+      
+      <!-- Navigation menu -->
+      <nav class="flex space-x-8 nav-links">
+        <a href="/sendeplan" class="text-sm font-medium text-gray-900 hover:text-radionova-maroon">Sendeplan</a>
+        <a href="/a-lista" class="text-sm font-medium text-gray-900 hover:text-radionova-maroon">A-lista</a>
+        <a href="/programmer" class="text-sm font-medium text-gray-900 hover:text-radionova-maroon">Programmer</a>
+        <a href="/artikler" class="text-sm font-medium text-gray-900 hover:text-radionova-maroon">Artikler</a>
+        <a href="/om-oss" class="text-sm font-medium text-gray-900 hover:text-radionova-maroon">Om oss</a>
+      </nav>
+    </div>
+  </div>
+</div>

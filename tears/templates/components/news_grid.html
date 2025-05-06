@@ -1,0 +1,47 @@
+{% load static %}
+
+<section class="w-full py-8">
+  <div class="container mx-auto px-4">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <!-- Featured news item -->
+      <div class="col-span-1 md:col-span-2 bg-white shadow-lg rounded overflow-hidden">
+        <div class="relative aspect-w-16 aspect-h-9">
+          <img src="{% static 'images/placeholder-news-large.jpg' %}" alt="Featured news" class="object-cover w-full h-full">
+        </div>
+        <div class="p-4">
+          <span class="inline-block bg-radionova-maroon text-white text-xs font-semibold px-2 py-1 rounded mb-2">Nyheter</span>
+          <h3 class="text-xl font-bold mb-2">Ny musikk fra Karpe slippes denne uken</h3>
+          <p class="text-gray-600 mb-3">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin quis scelerisque lectus.</p>
+          <div class="flex items-center justify-between">
+            <span class="text-sm text-gray-500">12. mai 2023</span>
+            <a href="#" class="text-radionova-maroon font-medium hover:underline">Les mer</a>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Regular news items -->
+      {% for i in '12345'|make_list %}
+      <div class="bg-white shadow-lg rounded overflow-hidden">
+        <div class="relative aspect-w-16 aspect-h-9">
+          <img src="{% static 'images/placeholder-news.jpg' %}" alt="News thumbnail" class="object-cover w-full h-full">
+        </div>
+        <div class="p-4">
+          <span class="inline-block bg-radionova-maroon text-white text-xs font-semibold px-2 py-1 rounded mb-2">Musikk</span>
+          <h3 class="text-lg font-bold mb-2">Konsertanmeldelse: Taylor Swift på Ullevaal</h3>
+          <p class="text-gray-600 mb-3 line-clamp-2">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin quis scelerisque lectus.</p>
+          <div class="flex items-center justify-between">
+            <span class="text-sm text-gray-500">10. mai 2023</span>
+            <a href="#" class="text-radionova-maroon font-medium hover:underline">Les mer</a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    
+    <div class="mt-8 text-center">
+      <a href="#" class="inline-block bg-radionova-maroon hover:bg-radionova-maroon-dark text-white font-medium py-2 px-6 rounded-full transition duration-300">
+        Se alle nyheter
+      </a>
+    </div>
+  </div>
+</section> 

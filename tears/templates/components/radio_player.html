@@ -1,0 +1,41 @@
+{% load static %}
+
+<!-- Radio player component -->
+<div id="radiospiller" class="bg-radionova-dark text-white py-4">
+    <div class="radio-player-container">
+        <!-- Play/Pause toggle button -->
+        <button id="play-toggle" class="radio-player-btn" aria-label="Spill eller pause radio">
+            <!-- Play icon (shown by default) -->
+            <span id="play-icon" class="flex items-center">
+                <svg class="h-5 w-5 mr-2" viewBox="0 0 24 24" fill="currentColor">
+                    <polygon points="5,3 19,12 5,21" />
+                </svg>
+                <span>Spill</span>
+            </span>
+            
+            <!-- Pause icon (hidden by default) -->
+            <span id="pause-icon" class="hidden flex items-center">
+                <svg class="h-5 w-5 mr-2" viewBox="0 0 24 24" fill="currentColor">
+                    <rect x="6" y="4" width="4" height="16" />
+                    <rect x="14" y="4" width="4" height="16" />
+                </svg>
+                <span>Pause</span>
+            </span>
+        </button>
+        
+        <!-- Station info -->
+        <div class="text-sm">
+            <p>Direkte: Radio Nova / 00:00-05:59: Novanatt</p>
+        </div>
+    </div>
+    
+    <!-- Hidden audio element -->
+    <audio id="radio-player" preload="none" style="display:none">
+        <source src="https://stream.radionova.no/mp3" type="audio/mpeg">
+        <source src="https://stream.radionova.no/ogg" type="audio/ogg">
+        Your browser does not support the audio element.
+    </audio>
+</div>
+
+<!-- Space between radio player and content -->
+<div class="content-spacer"></div> 

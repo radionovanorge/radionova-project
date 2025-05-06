@@ -1,0 +1,27 @@
+{% load static %}
+<!-- A-lista grid component -->
+<div class="bg-gray-50 py-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="text-2xl font-bold mb-6">A-lista</h2>
+        
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+            {% for i in '123456'|make_list %}
+                <div class="aspect-w-1 aspect-h-1 bg-gray-200 rounded-md overflow-hidden group">
+                    <img src="https://via.placeholder.com/300" alt="Album Cover" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end">
+                        <div class="p-3 text-white">
+                            <p class="font-semibold text-sm">Song Title</p>
+                            <p class="text-xs opacity-80">Artist Name</p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        
+        <div class="text-center mt-8">
+            <a href="/a-lista" class="inline-block px-6 py-2 border border-radionova-maroon text-radionova-maroon rounded-md font-medium hover:bg-radionova-maroon hover:text-white transition">
+                Se hele A-lista
+            </a>
+        </div>
+    </div>
+</div> 

@@ -1,6 +1,6 @@
-{% load static wagtailcore_tags wagtailuserbar compress %}
+{% load static wagtailcore_tags wagtailuserbar compress tailwind_tags %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="no">
     <head>
         <meta charset="utf-8" />
         <title>
@@ -21,60 +21,73 @@
         {# Force all links in the live preview panel to be opened in a new tab #}
         {% if request.in_preview_panel %}<base target="_blank">{% endif %}
        
-
-        {% compress css %}
-        <link rel="stylesheet" href="{% static 'tears/css/base.css' %}">
-        <!-- Bootstrap 4 CSS -->
+        {% tailwind_css %}
+        <link rel="stylesheet" href="{% static 'tears/css/radionova.css' %}">
         
-        {% endcompress %}
-        
-        {% block extra_css %}{# Override this in templates to add extra stylesheets #}
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
-        <!-- Font Awesome -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        <!-- Your custom CSS -->
-        <link rel="stylesheet" href="{% static 'tears/css/footer.css' %}">
+        {% block extra_css %}
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
         {% endblock %}
         
     </head>
-    <body class="{% block body_class %}{% endblock %}">
+    <body class="min-h-screen flex flex-col">
         {% wagtailuserbar %}
-        {% wagtail_site as current_site %}
-        {% if not current_site.root_page %}
-            {% pageurl current_site as root_page_url %}
-            <p>
-                Root page not found. <a href="{{ root_page_url }}">Choose a different site</a>.
-            </p>
-        {% endif %}
-        {% include "components/navbar.html" %}
-        <!-- {% include "components/head.html" %} --> 
         
+        <!-- Skip links -->
+        {% include "components/skip_links.html" %}
         
+        <!-- Navigation header -->
+        {% include "components/navigation.html" %}
         
-        {% block content %}{% endblock %}
+        <main id="hovedinnhold" class="flex-grow">
+            {% block content %}{% endblock %}
+        </main>
         
-
-        <!-- <div class="footer">
-            <p>&copy; {{ current_site.site_name }} {{ current_site.root_page.first_published_at|date:"Y" }}</p>
-        </div>  -->
-        {# Global javascript #}
-        {% compress js %}
-        <script type="text/javascript" src="{% static 'tears/js/radiospiller.js' %}"></script>
-
+        <!-- Radio player -->
+        {% include "components/radio_player.html" %}
         
-        
-
-        
-       
-        {% endcompress %}
+        <!-- Footer -->
+        {% include "components/footer.html" %}
         
         {% block extra_js %}
-             <!-- jQuery -->
-        <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-        <!-- Bootstrap 4 JS -->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+        <script>
+            // Mobile menu toggle
+            document.getElementById('menu-toggle').addEventListener('click', function() {
+                const mobileMenu = document.getElementById('mobile-menu');
+                mobileMenu.classList.toggle('hidden');
+                
+                // Change menu icon
+                const menuToggle = this;
+                if (mobileMenu.classList.contains('hidden')) {
+                    menuToggle.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>';
+                } else {
+                    menuToggle.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>';
+                }
+            });
 
+            // Radio player functionality
+            document.addEventListener('DOMContentLoaded', function() {
+                const player = document.getElementById('radio-player');
+                const playToggle = document.getElementById('play-toggle');
+                const playIcon = document.getElementById('play-icon');
+                const pauseIcon = document.getElementById('pause-icon');
 
-        {% include "components/footer.html" %}
+                if (playToggle) {
+                    playToggle.addEventListener('click', function() {
+                        if (player.paused) {
+                            player.play();
+                            playIcon.classList.add('hidden');
+                            pauseIcon.classList.remove('hidden');
+                        } else {
+                            player.pause();
+                            pauseIcon.classList.add('hidden');
+                            playIcon.classList.remove('hidden');
+                        }
+                    });
+                }
+            });
+        </script>
         {% endblock %}
+    </body>
 </html>

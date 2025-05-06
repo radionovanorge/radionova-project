@@ -1,0 +1,17 @@
+{
+  "name": "radionova-theme",
+  "version": "1.0.0",
+  "description": "Radio Nova theme with Tailwind CSS",
+  "scripts": {
+    "dev": "tailwindcss -i ./src/input.css -o ./static/css/tailwind.css --watch",
+    "build": "tailwindcss -i ./src/input.css -o ./static/css/tailwind.css --minify"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.3.3",
+    "autoprefixer": "^10.4.14",
+    "postcss": "^8.4.24",
+    "@tailwindcss/aspect-ratio": "^0.4.2",
+    "@tailwindcss/line-clamp": "^0.4.4",
+    "@tailwindcss/typography": "^0.5.9"
+  }
+} 

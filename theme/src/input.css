@@ -1,0 +1,44 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom base styles */
+@layer base {
+  body {
+    @apply font-sans text-gray-800;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-bold;
+  }
+  a {
+    @apply transition-colors duration-200;
+  }
+}
+
+/* Custom components */
+@layer components {
+  .btn {
+    @apply px-4 py-2 rounded-md font-medium transition-colors;
+  }
+  .btn-primary {
+    @apply bg-radionova-maroon text-white hover:bg-radionova-maroon-dark;
+  }
+  .btn-outline {
+    @apply border border-radionova-maroon text-radionova-maroon hover:bg-radionova-maroon hover:text-white;
+  }
+  
+  /* Radio player styles */
+  .radio-player {
+    @apply bg-radionova-maroon text-white;
+  }
+  .radio-player-button {
+    @apply bg-radionova-maroon-light hover:bg-radionova-maroon-dark p-2 rounded-md transition;
+  }
+}
+
+/* Custom utilities */
+@layer utilities {
+  .container-narrow {
+    @apply container mx-auto px-4 max-w-5xl;
+  }
+} 

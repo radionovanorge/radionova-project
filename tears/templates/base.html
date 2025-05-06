@@ -1,0 +1,37 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Radio Nova - {% block title %}Studentradioen i Oslo og Akershus{% endblock %}</title>
+    <link href="{% static 'tears/css/radionova.css' %}" rel="stylesheet">
+    <link href="{% static 'tears/css/tailwind.css' %}" rel="stylesheet">
+    <link rel="icon" href="{% static 'tears/images/favicon.ico' %}">
+    {% block extra_css %}{% endblock %}
+</head>
+<body class="bg-white text-gray-900">
+    
+    <!-- Skip links -->
+    {% include "components/skip_links.html" %}
+    
+    <!-- Navigation -->
+    {% include "components/navigation.html" %}
+    
+    <!-- Radio Player -->
+    {% include "components/radio_player.html" %}
+    
+    <!-- Main content -->
+    <main id="main-content">
+        <div class="main-container">
+            {% block content %}{% endblock %}
+        </div>
+    </main>
+    
+    <!-- Footer -->
+    {% include "components/footer.html" %}
+    
+    <script src="{% static 'tears/js/app.js' %}"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html> 

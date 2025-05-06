@@ -1,0 +1,58 @@
+{% load static %}
+
+<section id="about-us" class="w-full py-16 bg-gray-50">
+  <div class="container mx-auto px-4">
+    <div class="flex flex-col md:flex-row items-center gap-12">
+      <!-- Image Column -->
+      <div class="w-full md:w-1/2">
+        <div class="relative">
+          <img src="{% static 'images/radio-studio.jpg' %}" alt="Radio Nova Studio" class="w-full h-auto rounded-lg shadow-xl">
+          <div class="absolute -bottom-6 -right-6 bg-radionova-maroon text-white px-6 py-4 rounded-lg hidden md:block">
+            <p class="text-xl font-bold">På lufta siden 1982</p>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Text Column -->
+      <div class="w-full md:w-1/2">
+        <div class="md:pl-8">
+          <h2 class="text-3xl font-bold mb-6">Om Radio Nova</h2>
+          
+          <p class="text-gray-700 mb-4">
+            Radio Nova er Oslos eldste studentradio, drevet av frivillige studenter fra Universitetet i Oslo siden 1982. 
+            Vi sender direkte fra vårt studio på Chateau Neuf og er en viktig del av studentkulturen i Oslo.
+          </p>
+          
+          <p class="text-gray-700 mb-6">
+            Vår misjon er å være en alternativ stemme i medielandskapet, hvor vi utfordrer konvensjonelle 
+            formater og gir nye talenter muligheten til å utvikle seg. Vi fokuserer på musikk, kultur og samfunn 
+            med en vinkling som er relevant for studenter og unge voksne.
+          </p>
+          
+          <div class="grid grid-cols-2 gap-6 mb-8">
+            <div>
+              <p class="text-3xl font-bold text-radionova-maroon">100+</p>
+              <p class="text-gray-600">Frivillige medarbeidere</p>
+            </div>
+            <div>
+              <p class="text-3xl font-bold text-radionova-maroon">24/7</p>
+              <p class="text-gray-600">Radiosendinger</p>
+            </div>
+            <div>
+              <p class="text-3xl font-bold text-radionova-maroon">40+</p>
+              <p class="text-gray-600">Unike programmer</p>
+            </div>
+            <div>
+              <p class="text-3xl font-bold text-radionova-maroon">20k+</p>
+              <p class="text-gray-600">Månedlige lyttere</p>
+            </div>
+          </div>
+          
+          <a href="#" class="inline-block bg-radionova-maroon text-white hover:bg-radionova-red font-medium py-3 px-8 rounded-full transition duration-300">
+            Bli frivillig
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section> 

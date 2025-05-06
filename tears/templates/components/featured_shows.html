@@ -1,0 +1,81 @@
+{% load static %}
+
+<section class="w-full py-16 bg-white">
+  <div class="container mx-auto px-4">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl font-bold mb-2">Populære programmer</h2>
+      <p class="text-gray-600 max-w-2xl mx-auto">Utforsk våre mest populære radioprogrammer og podkaster på Radio Nova.</p>
+    </div>
+    
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <!-- Show 1 -->
+      <div class="bg-white rounded-lg shadow-lg overflow-hidden transition-transform duration-300 hover:scale-105">
+        <div class="relative h-48">
+          <img src="{% static 'images/show-1.jpg' %}" alt="Morgenshowet" class="w-full h-full object-cover">
+          <div class="absolute bottom-0 left-0 bg-radionova-maroon text-white px-3 py-1">
+            Man-Fre 08:00-10:00
+          </div>
+        </div>
+        <div class="p-6">
+          <h3 class="font-bold text-xl mb-2">Morgenshowet</h3>
+          <p class="text-gray-600 mb-4">Start dagen med gode samtaler, ny musikk og de siste nyhetene fra studentmiljøet.</p>
+          <div class="flex items-center">
+            <div class="w-10 h-10 rounded-full overflow-hidden mr-3">
+              <img src="{% static 'images/host-1.jpg' %}" alt="Programleder" class="w-full h-full object-cover">
+            </div>
+            <span class="text-sm font-medium">Med Jonas & Maria</span>
+          </div>
+          <a href="#" class="mt-5 inline-block text-radionova-maroon font-medium hover:underline">Hør episoder →</a>
+        </div>
+      </div>
+      
+      <!-- Show 2 -->
+      <div class="bg-white rounded-lg shadow-lg overflow-hidden transition-transform duration-300 hover:scale-105">
+        <div class="relative h-48">
+          <img src="{% static 'images/show-2.jpg' %}" alt="Musikkmisjonen" class="w-full h-full object-cover">
+          <div class="absolute bottom-0 left-0 bg-radionova-maroon text-white px-3 py-1">
+            Tirs 16:00-18:00
+          </div>
+        </div>
+        <div class="p-6">
+          <h3 class="font-bold text-xl mb-2">Musikkmisjonen</h3>
+          <p class="text-gray-600 mb-4">Dykk ned i nye og spennende musikkutgivelser med dyptgående analyser og intervjuer.</p>
+          <div class="flex items-center">
+            <div class="w-10 h-10 rounded-full overflow-hidden mr-3">
+              <img src="{% static 'images/host-2.jpg' %}" alt="Programleder" class="w-full h-full object-cover">
+            </div>
+            <span class="text-sm font-medium">Med Sofie</span>
+          </div>
+          <a href="#" class="mt-5 inline-block text-radionova-maroon font-medium hover:underline">Hør episoder →</a>
+        </div>
+      </div>
+      
+      <!-- Show 3 -->
+      <div class="bg-white rounded-lg shadow-lg overflow-hidden transition-transform duration-300 hover:scale-105">
+        <div class="relative h-48">
+          <img src="{% static 'images/show-3.jpg' %}" alt="Kulturkompasset" class="w-full h-full object-cover">
+          <div class="absolute bottom-0 left-0 bg-radionova-maroon text-white px-3 py-1">
+            Ons 18:00-20:00
+          </div>
+        </div>
+        <div class="p-6">
+          <h3 class="font-bold text-xl mb-2">Kulturkompasset</h3>
+          <p class="text-gray-600 mb-4">Hold deg oppdatert på kulturtilbud i Oslo med anmeldelser av konserter, filmer og utstillinger.</p>
+          <div class="flex items-center">
+            <div class="w-10 h-10 rounded-full overflow-hidden mr-3">
+              <img src="{% static 'images/host-3.jpg' %}" alt="Programleder" class="w-full h-full object-cover">
+            </div>
+            <span class="text-sm font-medium">Med Erik & Lisa</span>
+          </div>
+          <a href="#" class="mt-5 inline-block text-radionova-maroon font-medium hover:underline">Hør episoder →</a>
+        </div>
+      </div>
+    </div>
+    
+    <div class="mt-12 text-center">
+      <a href="#" class="inline-block bg-radionova-maroon text-white hover:bg-radionova-red font-medium py-3 px-8 rounded-full transition duration-300">
+        Se alle programmer
+      </a>
+    </div>
+  </div>
+</section> 
