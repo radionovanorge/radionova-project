@@ -1,0 +1,1072 @@
+.desktop-sendeplan {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+    gap: 8px;
+    position: relative;
+    background-color: #f6f3f4;
+    cursor: default;
+    user-select: none;
+  }
+  .desktop-sendeplan .header {
+    display: flex;
+    flex-direction: row; /* Change to row for normal header layout */
+    justify-content: space-between; /* Align items to the left and right */
+    align-items: center; /* Center vertically */
+    padding: 0 20px; /* Add padding for spacing */
+    width: 100%;
+    height: 100px; /* Adjusted height for better visibility */
+    background-color: #f7f4f4;
+    border-bottom: 1px solid #ddd; /* Optional: Add a border line for separation */
+}
+.desktop-sendeplan .sendeplan-heading{
+    color: #511120;
+    font-family: "Noto Sans", sans-serif;
+    font-size: 50px;
+    font-weight: 700;
+    line-height: 26px;
+    
+}
+
+  
+  .desktop-sendeplan .container {
+    display: flex;
+    max-width: var(--02-semantic-IMDI-grid-desktop-max-width);
+    align-items: flex-start;
+    gap: var(--02-semantic-IMDI-grid-desktop-gutter);
+    position: relative;
+    flex: 1;
+    width: 100%;
+    flex-grow: 1;
+  }
+  
+  .desktop-sendeplan .column {
+    display: inline-flex;
+    align-items: flex-start;
+    flex: 0 0 auto;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    align-self: stretch;
+  }
+  
+  
+  .desktop-sendeplan .frame-wrapper {
+    display: flex;
+    align-items: flex-start;
+    padding: 0px 200px 0px 80px;
+    flex: 1;
+    flex-grow: 1;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    align-self: stretch;
+  }
+  
+  .desktop-sendeplan .frame {
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+    gap: 48px;
+    position: relative;
+    flex: 0 0 auto;
+  }
+  
+  .desktop-sendeplan .component {
+    display: inline-flex;
+    height: 23px;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 10px;
+    position: relative;
+    flex: 0 0 auto;
+  }
+  
+  .desktop-sendeplan .text-wrapper {
+    position: relative;
+    width: fit-content;
+    margin-top: -1.00px;
+    font-family: "Inter-Regular", Helvetica;
+    font-weight: 400;
+    color: #2d0e1f;
+    font-size: 18px;
+    letter-spacing: 0;
+    line-height: normal;
+    
+  }
+  
+  .desktop-sendeplan .menu-wrapper {
+    display: inline-flex;
+    align-items: flex-end;
+    flex: 0 0 auto;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    align-self: stretch;
+  }
+  
+  .desktop-sendeplan .menu {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--01-primitive-IMDI-spacing-2xl);
+    position: relative;
+    flex: 0 0 auto;
+  }
+  
+  .desktop-sendeplan .div {
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+    gap: 10px;
+    position: relative;
+    flex: 0 0 auto;
+  }
+  
+
+  
+  .desktop-sendeplan .div-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 0px 64px;
+    position: relative;
+    align-self: stretch;
+    width: 100%;
+    flex: 0 0 auto;
+    background-color: #f7f4f4;
+  }
+  
+  .desktop-sendeplan .frame-2 {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 24px 245px 24px 224px;
+    position: relative;
+    align-self: stretch;
+    width: 100%;
+    flex: 0 0 auto;
+  }
+  
+  .desktop-sendeplan .frame-3 {
+    display: inline-flex;
+    align-items: flex-start;
+    gap: 16px;
+    position: relative;
+    flex: 0 0 auto;
+  }
+  
+  .desktop-sendeplan .text-wrapper-2 {
+    position: relative;
+    width: fit-content;
+    margin-top: -1.00px;
+    font-family: "Noto Sans-DisplayRegular", Helvetica;
+    font-weight: 400;
+    color: #511120;
+    font-size: 16px;
+    letter-spacing: 0;
+    line-height: 25.7px;
+    text-decoration: underline;
+    white-space: nowrap;
+  }
+  
+  .desktop-sendeplan .text-wrapper-3 {
+    font-family: "Inter-Regular", Helvetica;
+    position: relative;
+    width: fit-content;
+    margin-top: -1.00px;
+    font-weight: 400;
+    color: #511120;
+    font-size: 16px;
+    letter-spacing: 0;
+    line-height: 25.7px;
+    white-space: nowrap;
+  }
+  
+  .desktop-sendeplan .text-wrapper-4 {
+    position: relative;
+    width: fit-content;
+    margin-top: -1.00px;
+    font-family: "Noto Sans-DisplayRegular", Helvetica;
+    font-weight: 400;
+    color: #511120;
+    font-size: 16px;
+    letter-spacing: 0;
+    line-height: 25.7px;
+    white-space: nowrap;
+  }
+  
+  .desktop-sendeplan .frame-4 {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+    padding: 0px 64px;
+    position: relative;
+    flex: 0 0 auto;
+    background-color: #f7f4f4;
+  }
+  
+  .desktop-sendeplan .frame-5 {
+    display: flex;
+    flex-direction: column;
+    width: 1312px;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 16px 112px 16px 224px;
+    position: relative;
+    flex: 0 0 auto;
+  }
+  
+  .desktop-sendeplan .article-wrapper {
+    display: flex;
+    width: 864px;
+    align-items: center;
+    gap: 10px;
+    position: relative;
+    flex: 0 0 auto;
+  }
+  
+  .desktop-sendeplan .article {
+    display: flex;
+    flex-direction: column;
+    width: 394px;
+    align-items: flex-start;
+    gap: 4px;
+    position: relative;
+  }
+  
+  .desktop-sendeplan .heading {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    position: relative;
+    align-self: stretch;
+    width: 100%;
+    flex: 0 0 auto;
+  }
+  
+  .desktop-sendeplan .text-wrapper-5 {
+    position: relative;
+    width: fit-content;
+    margin-top: -1.00px;
+    font-family: "Signika Negative-SemiBold", Helvetica;
+    font-weight: 600;
+    color: #2d0e1f;
+    font-size: 40px;
+    letter-spacing: 0;
+    line-height: 41.8px;
+    white-space: nowrap;
+  }
+  
+  .desktop-sendeplan .frame-6 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 24px 64px;
+    position: relative;
+    align-self: stretch;
+    width: 100%;
+    flex: 0 0 auto;
+  }
+  
+  .desktop-sendeplan .frame-7 {
+    gap: 16px;
+    padding: 0px 245px 0px 224px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    position: relative;
+    align-self: stretch;
+    width: 100%;
+    flex: 0 0 auto;
+  }
+  
+  .desktop-sendeplan .frame-8 {
+    display: flex;
+    width: 456.5px;
+    align-items: center;
+    position: relative;
+    flex: 0 0 auto;
+  }
+  
+  .desktop-sendeplan .component-2 {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 8px;
+    position: relative;
+    flex: 0 0 auto;
+    background-color: #2d0e1f;
+    border-radius: 4px 0px 0px 4px;
+    overflow: hidden;
+    border: 1px solid;
+    border-color: #000000;
+  }
+  
+  .desktop-sendeplan .component-3 {
+    position: relative;
+    width: 25px;
+    height: 19px;
+  }
+  
+  .desktop-sendeplan .rectangle {
+    position: absolute;
+    width: 25px;
+    height: 5px;
+    top: 2px;
+    left: 0;
+    background-color: #ffffff;
+  }
+  
+  .desktop-sendeplan .rectangle-2 {
+    position: absolute;
+    width: 25px;
+    height: 5px;
+    top: 8px;
+    left: 0;
+    background-color: #ffffff;
+  }
+  
+  .desktop-sendeplan .rectangle-3 {
+    position: absolute;
+    width: 25px;
+    height: 5px;
+    top: 14px;
+    left: 0;
+    background-color: #ffffff;
+  }
+  
+  .desktop-sendeplan .text-wrapper-6 {
+    color: #ffffff;
+    position: relative;
+    width: fit-content;
+    margin-top: -1.00px;
+    font-family: "Noto Sans-DisplayRegular", Helvetica;
+    font-weight: 400;
+    font-size: 16px;
+    letter-spacing: 0;
+    line-height: 25.7px;
+    white-space: nowrap;
+  }
+  
+  .desktop-sendeplan .component-4 {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 8px;
+    position: relative;
+    flex: 0 0 auto;
+    margin-left: -1px;
+    background-color: #ffffff;
+    border-radius: 0px 4px 4px 0px;
+    overflow: hidden;
+    border: 1px solid;
+    border-color: #000000;
+  }
+  
+  .desktop-sendeplan .rectangle-4 {
+    position: absolute;
+    width: 7px;
+    height: 19px;
+    top: 0;
+    left: 0;
+    background-color: #511120;
+  }
+  
+  .desktop-sendeplan .rectangle-5 {
+    position: absolute;
+    width: 7px;
+    height: 19px;
+    top: 0;
+    left: 9px;
+    background-color: #511120;
+  }
+  
+  .desktop-sendeplan .rectangle-6 {
+    position: absolute;
+    width: 7px;
+    height: 19px;
+    top: 0;
+    left: 18px;
+    background-color: #511120;
+  }
+  
+  .desktop-sendeplan .frame-9 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 0px 64px;
+    position: relative;
+    align-self: stretch;
+    width: 100%;
+    flex: 0 0 auto;
+  }
+  
+  .desktop-sendeplan .frame-10 {
+    display: flex;
+    flex-wrap: wrap;
+    width: 744px;
+    align-items: flex-start;
+    gap: 8px 8px;
+    position: relative;
+    flex: 0 0 auto;
+  }
+  
+  .desktop-sendeplan .component-5 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 4px 8px;
+    position: relative;
+    flex: 1;
+    flex-grow: 1;
+    background-color: #2d0e1f;
+    border-radius: 4px;
+    overflow: hidden;
+    border: 1px solid;
+    border-color: #000000;
+  }
+  
+  .desktop-sendeplan .component-6 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 4px 8px;
+    position: relative;
+    flex: 1;
+    flex-grow: 1;
+    background-color: #f6f3f4;
+    border-radius: 4px;
+    overflow: hidden;
+    border: 1px solid;
+    border-color: #000000;
+  }
+  
+  .desktop-sendeplan .frame-11 {
+    margin: 0 auto;
+    position: relative;
+    
+    gap: 10px;
+    padding: 0px 64px;
+    
+  }
+  
+  .desktop-sendeplan .frame-12 {
+    gap: 24px;
+    padding: 0px 64px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    align-self: stretch;
+    width: 100%;
+    flex: 0 0 auto;
+  }
+  
+  .desktop-sendeplan .frame-13 {
+    display: flex;
+    flex-direction: column;
+    width: 744px;
+    align-items: flex-start;
+    gap: 24px;
+    position: relative;
+    flex: 0 0 auto;
+  }
+  
+  .desktop-sendeplan .frame-14 {
+    display: inline-flex;
+    align-items: flex-start;
+    gap: 8px;
+    position: relative;
+    flex: 0 0 auto;
+  }
+  
+  .desktop-sendeplan .image {
+    position: relative;
+    width: 156px;
+    height: 156px;
+  }
+  
+  .desktop-sendeplan .frame-15 {
+    display: inline-flex;
+    flex-direction: column;
+    height: 156px;
+    align-items: flex-start;
+    gap: 16px;
+    position: relative;
+    flex: 0 0 auto;
+  }
+  
+  .desktop-sendeplan .frame-16 {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    position: relative;
+    flex: 0 0 auto;
+  }
+  
+  .desktop-sendeplan .frame-17 {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    position: relative;
+    flex: 0 0 auto;
+  }
+  
+  .desktop-sendeplan .text-wrapper-7 {
+    position: relative;
+    width: fit-content;
+    margin-top: -1.00px;
+    font-family: "Noto Sans-DisplayRegular", Helvetica;
+    font-weight: 400;
+    color: #511120;
+    font-size: 24px;
+    letter-spacing: 0;
+    line-height: 25.7px;
+    white-space: nowrap;
+  }
+  
+  .desktop-sendeplan .aftenposten-wrapper {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 3px 12px;
+    position: relative;
+    flex: 0 0 auto;
+    background-color: #ffe8e8;
+    border-radius: 18px;
+    overflow: hidden;
+    border: 0.75px solid;
+    border-color: #2d0e1f;
+  }
+  
+  .desktop-sendeplan .text-wrapper-8 {
+    position: relative;
+    width: fit-content;
+    margin-top: -0.75px;
+    font-family: "Noto Sans-DisplayRegular", Helvetica;
+    font-weight: 400;
+    color: #511120;
+    font-size: 12px;
+    letter-spacing: 0;
+    line-height: 19.3px;
+    white-space: nowrap;
+  }
+  
+  .desktop-sendeplan .text-wrapper-9 {
+    position: relative;
+    width: 580px;
+    font-family: "Noto Sans-DisplayRegular", Helvetica;
+    font-weight: 400;
+    color: #511120;
+    font-size: 12px;
+    letter-spacing: 0;
+    line-height: 25.7px;
+  }
+  
+  .desktop-sendeplan .img {
+    position: relative;
+    width: 156px;
+    height: 156px;
+    object-fit: cover;
+  }
+  
+  .desktop-sendeplan .component-7 {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 3px 12px;
+    position: relative;
+    flex: 0 0 auto;
+    background-color: #e5ffdf;
+    border-radius: 18px;
+    overflow: hidden;
+    border: 0.75px solid;
+    border-color: #2d0e1f;
+  }
+  
+  .desktop-sendeplan .component-8 {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 3px 12px;
+    position: relative;
+    flex: 0 0 auto;
+    background-color: #dff7ff;
+    border-radius: 18px;
+    overflow: hidden;
+    border: 0.75px solid;
+    border-color: #2d0e1f;
+  }
+  
+  .desktop-sendeplan .frame-18 {
+    display: inline-flex;
+    align-items: flex-start;
+    gap: 8px;
+    /* overført til javascript position: relative;
+    flex: 0 0 auto;
+    background-color: #ffe4fb;
+    border-right-width: 4px;
+    border-right-style: solid;
+    border-color: #511120; */
+  }
+  
+  .desktop-sendeplan .overlap-group-wrapper {
+    position: absolute;
+    width: 50px;
+    height: 156px;
+    top: 0;
+    left: -58px;
+  }
+  
+  .desktop-sendeplan .overlap-group {
+    position: relative;
+    height: 156px;
+  }
+  
+  .desktop-sendeplan .rectangle-7 {
+    position: absolute;
+    width: 50px;
+    height: 156px;
+    top: 0;
+    left: 0;
+    background-color: #511120;
+    transform: rotate(180deg);
+  }
+  
+  .desktop-sendeplan .text-wrapper-10 {
+    position: absolute;
+    height: 26px;
+    top: 64px;
+    left: 14px;
+    font-family: "Noto Sans-DisplayRegular", Helvetica;
+    font-weight: 400;
+    color: #ffffff;
+    font-size: 16px;
+    letter-spacing: 0;
+    line-height: 25.7px;
+    white-space: nowrap;
+  }
+  
+  .desktop-sendeplan .component-9 {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 3px 12px;
+    position: relative;
+    flex: 0 0 auto;
+    background-color: #ffe4fb;
+    border-radius: 18px;
+    overflow: hidden;
+    border: 0.75px solid;
+    border-color: #2d0e1f;
+  }
+  
+  .desktop-sendeplan .frame-19 {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 0px 64px;
+    position: relative;
+    flex: 0 0 auto;
+    background-color: #fbf9fa;
+  }
+  
+  .desktop-sendeplan .frame-20 {
+    position: relative;
+    width: 1312px;
+    flex: 0 0 auto;
+  }
+  
+  
+  .desktop-sendeplan .frame-21 {
+    display: flex;
+    max-width: 1600px;
+    width: 864px;
+    align-items: flex-start;
+    gap: 24px;
+    padding: 64px 0px;
+    position: relative;
+    flex: 0 0 auto;
+  }
+  
+  .desktop-sendeplan .frame-22 {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    position: relative;
+    flex: 1;
+    flex-grow: 1;
+  }
+  
+  .desktop-sendeplan .text-wrapper-11 {
+    position: relative;
+    width: fit-content;
+    font-family: "Inter-Medium", Helvetica;
+    font-weight: 500;
+    color: #fef4f4;
+    font-size: 18px;
+    letter-spacing: 0;
+    line-height: 21.6px;
+    white-space: nowrap;
+  }
+  
+  .desktop-sendeplan .frame-23 {
+    display: flex;
+    flex-direction: column;
+    width: 224px;
+    align-items: flex-start;
+    gap: 8px;
+    position: relative;
+  }
+  
+  .desktop-sendeplan .frame-24 {
+    display: flex;
+    min-height: 44px;
+    align-items: center;
+    gap: 10px;
+    position: relative;
+    align-self: stretch;
+    width: 100%;
+    flex: 0 0 auto;
+  }
+  
+  .desktop-sendeplan .text-wrapper-12 {
+    position: relative;
+    flex: 1;
+    font-family: "Inter-Medium", Helvetica;
+    font-weight: 500;
+    color: #fef4f4;
+    font-size: 18px;
+    letter-spacing: 0;
+    line-height: 21.6px;
+  }
+  
+  .desktop-sendeplan .frame-25 {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    position: relative;
+    flex: 0 0 auto;
+  }
+  
+  .desktop-sendeplan .frame-26 {
+    position: relative;
+    width: 44px;
+    height: 44px;
+  }
+  
+  .desktop-sendeplan .overlap-group-2 {
+    position: relative;
+    width: 24px;
+    height: 24px;
+    top: 10px;
+    left: 10px;
+    background-image: url(./img/subtract.svg);
+    background-size: 100% 100%;
+  }
+  
+  .desktop-sendeplan .subtract {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    top: 6px;
+    left: 6px;
+  }
+  
+  .desktop-sendeplan .rectangle-8 {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    top: 4px;
+    left: 16px;
+    background-color: #fef4f4;
+    border-radius: 12px;
+  }
+  
+  .desktop-sendeplan .group {
+    position: absolute;
+    width: 22px;
+    height: 20px;
+    top: 12px;
+    left: 11px;
+  }
+  .frame {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 0px 64px;
+    position: relative;
+    background-color: #ffffff;
+  }
+  
+  .frame .frame-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+    padding: 24px 245px 24px 140px;
+    position: relative;
+    align-self: stretch;
+    width: 100%;
+    flex: 0 0 auto;
+  }
+  
+  .frame .div {
+    display: inline-flex;
+    align-items: flex-start;
+    gap: 32px;
+    position: relative;
+    flex: 0 0 auto;
+    margin-right: -106.00px;
+  }
+  
+  .frame .div-2 {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    position: relative;
+    flex: 0 0 auto;
+  }
+  
+  .frame .div-wrapper {
+    display: inline-flex;
+    flex-direction: column;
+    height: 40px;
+    align-items: flex-start;
+    gap: 16px;
+    position: relative;
+  }
+  
+  .frame .div-3 {
+    position: relative;
+    flex: 0 0 auto;
+  }
+  
+  .frame .frame-wrapper-2 {
+    display: inline-flex;
+    gap: 16px;
+    flex-direction: column;
+    height: 52px;
+    align-items: flex-start;
+    position: relative;
+  }
+  
+  .frame .frame-wrapper-3 {
+    display: inline-flex;
+    align-items: flex-start;
+    gap: 16px;
+    position: relative;
+    flex: 0 0 auto;
+  }
+  
+  .frame .div-wrapper-2 {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    position: relative;
+    flex: 0 0 auto;
+  }
+  
+  .frame .text-wrapper {
+    position: relative;
+    width: fit-content;
+    margin-top: -1.00px;
+    font-family: "Noto Sans-DisplayRegular", Helvetica;
+    font-weight: 400;
+    color: #511120;
+    font-size: 16px;
+    letter-spacing: 0;
+    line-height: 25.7px;
+    white-space: nowrap;
+  }
+  
+  .frame .frame-wrapper-4 {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    position: relative;
+    flex: 0 0 auto;
+  }
+  
+  .frame .text-wrapper-2 {
+    position: relative;
+    width: 92px;
+    height: 40px;
+    margin-top: -1.00px;
+    font-family: "Noto Sans-DisplayRegular", Helvetica;
+    font-weight: 400;
+    color: #511120;
+    font-size: 20px;
+    letter-spacing: 0;
+    line-height: 25.7px;
+  }
+  
+  .frame .div-wrapper-3 {
+    display: flex;
+    flex-direction: column;
+    width: 110px;
+    height: 52px;
+    align-items: flex-start;
+    gap: 16px;
+    position: relative;
+  }
+  
+  .frame .text-wrapper-3 {
+    position: relative;
+    width: 110px;
+    margin-top: -1.00px;
+    font-family: "Noto Sans-DisplayRegular", Helvetica;
+    font-weight: 400;
+    color: #511120;
+    font-size: 16px;
+    letter-spacing: 0;
+    line-height: 25.7px;
+  }
+  
+  .frame .text-wrapper-4 {
+    position: relative;
+    width: 111px;
+    margin-top: -1.00px;
+    margin-right: -1.00px;
+    font-family: "Noto Sans-DisplayRegular", Helvetica;
+    font-weight: 400;
+    color: #511120;
+    font-size: 16px;
+    letter-spacing: 0;
+    line-height: 25.7px;
+  }
+  
+  .frame .div-wrapper-4 {
+    display: flex;
+    flex-direction: column;
+    width: 110px;
+    height: 52px;
+    align-items: flex-start;
+    justify-content: flex-end;
+    gap: 16px;
+    position: relative;
+  }
+  
+  .frame .text-wrapper-5 {
+    position: relative;
+    width: fit-content;
+    font-family: "Noto Sans-DisplayRegular", Helvetica;
+    font-weight: 400;
+    color: #511120;
+    font-size: 16px;
+    letter-spacing: 0;
+    line-height: 25.7px;
+    white-space: nowrap;
+  }
+  
+  .frame .div-4 {
+    position: relative;
+    width: 110px;
+    height: 52px;
+  }
+  
+  .frame .text-wrapper-6 {
+    position: relative;
+    width: 85px;
+    height: 40px;
+    margin-top: -1.00px;
+    font-family: "Noto Sans-DisplayRegular", Helvetica;
+    font-weight: 400;
+    color: #511120;
+    font-size: 20px;
+    letter-spacing: 0;
+    line-height: 25.7px;
+  }
+  
+  .frame .text-wrapper-7 {
+    position: relative;
+    width: 88px;
+    height: 40px;
+    margin-top: -1.00px;
+    font-family: "Noto Sans-DisplayRegular", Helvetica;
+    font-weight: 400;
+    color: #511120;
+    font-size: 20px;
+    letter-spacing: 0;
+    line-height: 25.7px;
+  }
+  
+  .frame .text-wrapper-8 {
+    position: relative;
+    width: 90px;
+    height: 40px;
+    margin-top: -1.00px;
+    font-family: "Noto Sans-DisplayRegular", Helvetica;
+    font-weight: 400;
+    color: #511120;
+    font-size: 20px;
+    letter-spacing: 0;
+    line-height: 25.7px;
+  }
+  
+  .frame .text-wrapper-9 {
+    position: relative;
+    width: 81px;
+    height: 40px;
+    margin-top: -1.00px;
+    font-family: "Noto Sans-DisplayRegular", Helvetica;
+    font-weight: 400;
+    color: #511120;
+    font-size: 20px;
+    letter-spacing: 0;
+    line-height: 25.7px;
+  }
+  
+  .frame .text-wrapper-10 {
+    position: relative;
+    width: 82px;
+    height: 40px;
+    margin-top: -1.00px;
+    font-family: "Noto Sans-DisplayRegular", Helvetica;
+    font-weight: 400;
+    color: #511120;
+    font-size: 20px;
+    letter-spacing: 0;
+    line-height: 25.7px;
+  }
+  
+  .frame .div-wrapper-5 {
+    display: flex;
+    width: 110px;
+    flex-direction: column;
+    height: 52px;
+    align-items: flex-start;
+    position: relative;
+  }
+  
+  .frame .text-wrapper-11 {
+    position: relative;
+    width: 86px;
+    height: 40px;
+    margin-top: -1.00px;
+    font-family: "Noto Sans-DisplayRegular", Helvetica;
+    font-weight: 400;
+    color: #511120;
+    font-size: 20px;
+    letter-spacing: 0;
+    line-height: 25.7px;
+  }

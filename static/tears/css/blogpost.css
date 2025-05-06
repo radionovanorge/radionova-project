@@ -1,0 +1,86 @@
+body {
+    background: #fff;
+    color: hsl(235, 9%, 39%);
+    font-family: 'Open Sans', sans-serif;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    margin: 1rem;
+}
+
+.container {
+    display: grid;
+    grid-gap: 1rem;
+    grid-template-columns: 1fr;
+    max-width: 70rem;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+@media (min-width: 1024px) {
+    .container {
+        grid-template-columns: repeat(4, 1fr);
+    }
+    .post-title {
+        grid-column: 2 / span 2;
+        font-size: clamp(2rem, 3.5vw, 4rem); /* Slightly larger on bigger screens */
+        line-height: 1.2;
+    }
+}
+
+.main-image {
+    grid-column: 1 / -1;
+    width: 100%;
+}
+
+.main-image img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+.image-description {
+    grid-column: 2 / span 2;
+    font-style: italic;
+    color: #666;
+}
+
+.post-title {
+    grid-column: 2 / span 2;
+    font-size: clamp(1.5rem, 6vw, 3rem); /* Dynamic font size */
+    font-weight: 300;
+    line-height: 1.0; 
+    color: hsl(0, 0%, 0%);
+    
+    text-align: center; /* Center aligns if needed */
+    word-break: break-word; /* Prevents text from overflowing */
+}
+
+.ingress {
+    grid-column: 2 / span 2;
+    font-size: 1.2rem;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+    font-weight: 300;
+}
+
+.meta-info {
+    grid-column: 1 / 2;
+    font-family: Georgia, serif;
+    font-size: calc(0.7rem + 0.25vw);
+    font-style: italic;
+    padding: 1rem;
+    background-color: hsl(0, 0%, 100%);
+}
+
+.content {
+    grid-column: 2 / span 4;
+    line-height: 1.6;
+    color: #333;
+}
+
+@media (max-width: 1023px) {
+    .meta-info, .content, .post-title, .ingress, .image-description {
+        grid-column: 1 / -1;
+    }
+}
