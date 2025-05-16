@@ -165,7 +165,7 @@ class BlogPage(Page): #TODO add an article|anmeldelse|intervju field
     user = models.ForeignKey(User, on_delete=models.PROTECT)
     date = models.DateTimeField("Post time")
     forfatter = models.CharField("Forfatter", max_length=255, blank=True)
-    imageDecription = models.CharField("BildeTekst:", max_length=255, blank=True)
+    imageDecription = models.CharField("BildeTekst:", max_length=255, blank=True, help_text="BildeTekst under første bildet")
     ingress = models.CharField("Ingress", max_length=500, blank=True, help_text="Kort ingress/underoverskrift under tittelen")
 
     #this is for having nettsaker in programpages. makes it possible to show programs each nettsak they have made only
@@ -191,7 +191,7 @@ class BlogPage(Page): #TODO add an article|anmeldelse|intervju field
     body = StreamField(
         [
             ("main_image", ImageChooserBlock()),
-            ("more_images", ImageChooserBlock()),
+            ("imageDecription", blocks.CharBlock()),
             ("content", blocks.RichTextBlock()),
         ],
         blank=True,
@@ -203,6 +203,7 @@ class BlogPage(Page): #TODO add an article|anmeldelse|intervju field
         FieldPanel("typeArticle"),
         FieldPanel("program"),
         FieldPanel("forfatter"),
+        FieldPanel("ingress"),
         FieldPanel("date"),
         FieldPanel("body"),
         FieldPanel("imageDecription")

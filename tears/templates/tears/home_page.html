@@ -17,6 +17,35 @@
   <script src="{% static 'tears/js/base.js' %}"></script>
   <script src="{% static 'tears/js/programmerSlider.js' %}"></script>
 
+<style>
+    
+      
+.interview-parallelogram {
+  background: #511120;
+  transform: skewX(-20deg); /* ← makes it parallelogram */
+  border: 2px solid white; /* Full white border */
+  display: inline-block;
+  z-index: 4;
+}
+
+/* Inside text correction: */
+.interview-parallelogram > * {
+  transform: skewX(20deg); /* ← Reverses skew inside so text stays straight */
+}
+.interview-parallelogram-small {
+  background: #511120;
+  transform: skewX(-20deg);
+ 
+  display: inline-block;
+  z-index: 4;
+}
+
+.interview-parallelogram-small > * {
+  transform: skewX(20deg); /* optional if you wrap text inside a span */
+}
+      
+</style>
+
 </head>
 
 <body > <!-- #ToDo background color FBF9FA -->
@@ -131,31 +160,17 @@
       </a>
 
       {% elif forloop.counter == 5 %}
-      <!-- Third row: Big article on left -->
+      <!-- Third row: Big embed on left -->
       <a href="{{ post.url }}"
         class="col-span-1 sm:col-span-1 lg:col-span-3 bg-white overflow-hidden shadow-sm flex flex-col group">
         <div class="relative">
-          {% for block in post.body %}
-          {% if block.block_type == 'main_image' %}
-          {% image block.value fill-600x400 as img %}
-          <img src="{{ img.url }}" alt="{{ post.title }}" class="w-full h-64 object-cover">
-          {% endif %}
-          {% endfor %}
-          {% if post.typeArticle == "intervju" or post.typeArticle == "anmeldelse" %}
-          <div class="absolute bottom-0 left-2 translate-y-1/2">
-            <div class="interview-parallelogram text-white text-xs font-bold px-8 py-2">
-              {{ post.get_typeArticle_display }}
-            </div>
-          </div>
-          {% endif %}
+          <div style="left: 0; width: 100%; height: 352px; position: relative;"><iframe src="https://open.spotify.com/embed/playlist/2WHNNDXwH8dHX19oVuQZX9?utm_source=oembed" style="top: 0; left: 0; width: 100%; height: 100%; position: absolute; border: 0;" allowfullscreen allow="clipboard-write *; encrypted-media *; fullscreen *; picture-in-picture *;"></iframe></div>
 
         </div>
-        <div class="p-4 flex flex-col flex-1">
-          <h2 class="text-lg font-bold text-gray-800 mb-2 group-hover:text-red-700">{{ post.title }}</h2>
-        </div>
+        
       </a>
 
-      {% elif forloop.counter == 6 %}
+      
       <!-- Third row: stacked small articles -->
       <div class="col-span-1 sm:col-span-1 lg:col-span-3 flex flex-col gap-8">
         <a href="{{ post.url }}" class="bg-white overflow-hidden shadow-sm flex group">
@@ -179,7 +194,7 @@
           </div>
         </a>
 
-        {% elif forloop.counter == 7 %}
+        {% elif forloop.counter == 6 %}
         <a href="{{ post.url }}" class="bg-white overflow-hidden shadow-sm flex group">
           <div class="w-1/2 relative">
             {% for block in post.body %}
@@ -202,7 +217,7 @@
         </a>
       </div> <!-- End stacked column -->
 
-      {% elif forloop.counter >= 8 %}
+      {% elif forloop.counter >= 7 %}
       <!-- Fourth row: 3 normal articles side-by-side -->
       <a href="{{ post.url }}"
         class="col-span-1 sm:col-span-1 lg:col-span-2 bg-white shadow-sm overflow-hidden flex flex-col group">
@@ -230,8 +245,159 @@
 
       {% endfor %}
     </div>
-
+  
   </main>
+  <!-- A-lista bg-[#FBF9FA]-->
+  <div class="p-6">
+  <div class="max-w-6xl mx-auto flex">
+    
+    <!-- Vertikal rød strek -->
+    <div class="w-2 bg-[#511120] mr-4 rounded-sm"></div>
+
+    <!-- Innhold -->
+    <div class="flex-1">
+      <!-- Tittel -->
+      <h2 class="text-xl font-semibold text-[#511120] mb-4">Listemusikk</h2>
+
+      <!-- Grid -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+        <!-- A-liste kort 1 -->
+        <div class="bg-[#511120] text-white w-full">
+          <div class="p-4">
+            <h3 class="text-lg font-bold">A-LISTA</h3>
+            <p class="text-sm">Uke 48 – 49</p>
+          </div>
+          <img src="https://via.placeholder.com/300x200.png?text=Image" alt="A-liste bilde" class="w-full h-48 object-cover">
+        </div>
+
+        <!-- A-liste kort 2 -->
+        <div class="bg-[#511120] text-white w-full flex flex-col justify-between">
+          <div class="p-4">
+            <h3 class="text-lg font-bold">A-LISTA</h3>
+            <p class="text-sm">Uke 48 – 49</p>
+          </div>
+          <img src="https://upload.wikimedia.org/wikipedia/commons/5/56/Vinyl_record_symbol.svg" alt="Vinyl ikon" class="w-full h-48 object-contain p-4">
+        </div>
+
+        <!-- A-liste kort 3 -->
+        <div class="bg-[#511120] text-white w-full flex flex-col justify-between">
+          <div class="p-4">
+            <h3 class="text-lg font-bold">A-LISTA</h3>
+            <p class="text-sm">Uke 48 – 49</p>
+          </div>
+          <img src="https://upload.wikimedia.org/wikipedia/commons/5/56/Vinyl_record_symbol.svg" alt="Vinyl ikon" class="w-full h-48 object-contain p-4">
+        </div>
+      </div>
+
+      <!-- Knapp -->
+      <div class="mt-6">
+        <a href="#" class="inline-flex items-center border-2 border-[#511120] text-[#511120] text-sm font-medium px-5 py-2 rounded-full hover:bg-[#511120] hover:text-white transition">
+          Se alle A-lister →
+        </a>
+      </div>
+    </div>
+
+  </div>
+</div>
+<!-- Anmedelser bg-[#FBF9FA]-->
+<div class="py-4">
+  <!-- Border border-b-5 skal egentlig være border-b-4 -->
+  <div class="border-t-4 border-b-5 border-[#511120] py-5 max-w-6xl mx-auto px-6">
+
+    <!-- Tittel -->
+    <h2 class="text-base font-semibold text-[#511120] text-xl mb-3">Anmeldelser</h2>
+
+    <!-- Kort -->
+    <div class=" border-gray-400 p-3 grid grid-cols-1 md:grid-cols-3 gap-2 bg-gray-50">
+      <a href="#" class="bg-white hover:bg-gray-100 p-3 flex items-center justify-between">
+        <div>
+          <p class="text-sm text-[#511120]">Film</p>
+          <p class="text-lg font-bold text-[#511120]">“Kung Fu Panda 4”</p>
+        </div>
+        <span class="text-[#511120] text-xl">→</span>
+      </a>
+
+      <a href="#" class="bg-white hover:bg-gray-100 p-3 flex items-center justify-between">
+        <div>
+          <p class="text-sm text-[#511120]">Spisested</p>
+          <p class="text-lg font-bold text-[#511120]">“Dumpling AS”</p>
+        </div>
+        <span class="text-[#511120] text-xl">→</span>
+      </a>
+
+      <a href="#" class="bg-white hover:bg-gray-100 p-3 flex items-center justify-between">
+        <div>
+          <p class="text-sm text-[#511120]">Musikk</p>
+          <p class="text-lg font-bold text-[#511120]">“Mitt første album”</p>
+        </div>
+        <span class="text-[#511120] text-xl">→</span>
+      </a>
+    </div>
+
+    <!-- Knapp -->
+    <div class="mt-4">
+      <a href="#" class="inline-flex items-center border-2 border-[#511120] text-[#511120] text-sm font-medium px-5 py-2 rounded-full hover:bg-[#511120] hover:text-white transition">
+        Se alle anmeldelser →
+      </a>
+    </div>
+  </div>
+</div>
+<!-- Intervju bg-[#FBF9FA]-->
+<div class=" py-4">
+  <div class="border-t-4 border-b-4 border-[#511120] py-4 max-w-6xl mx-auto px-4">
+
+    <!-- Tittel -->
+    <h2 class="text-base font-semibold text-[#511120] mb-3 text-xl" >Intervjuer</h2>
+
+    <!-- Kort -->
+    <div class="border-gray-400 p-3 grid grid-cols-1 md:grid-cols-2 gap-2 bg-gray-50">
+      
+      <a href="#" class="bg-white hover:bg-gray-100 p-3 flex items-center justify-between">
+        <div>
+          <p class="text-sm text-[#511120]">Person Personsen</p>
+          <p class="text-base font-bold text-[#511120]">Kollektivtransporten i Oslo må endres drastisk</p>
+        </div>
+        <span class="text-[#511120] text-xl">→</span>
+      </a>
+
+      <a href="#" class="bg-white hover:bg-gray-100 p-3 flex items-center justify-between">
+        <div>
+          <p class="text-sm text-[#511120]">Person Personsen</p>
+          <p class="text-base font-bold text-[#511120]">Jeg vil ikke mer</p>
+        </div>
+        <span class="text-[#511120] text-xl">→</span>
+      </a>
+
+      <a href="#" class="bg-white hover:bg-gray-100 p-3 flex items-center justify-between">
+        <div>
+          <p class="text-sm text-[#511120]">Person Personsen</p>
+          <p class="text-base font-bold text-[#511120]">Kollektivtransporten i Oslo må endres drastisk</p>
+        </div>
+        <span class="text-[#511120] text-xl">→</span>
+      </a>
+
+      <a href="#" class="bg-white hover:bg-gray-100 p-3 flex items-center justify-between">
+        <div>
+          <p class="text-sm text-[#511120]">Person Personsen</p>
+          <p class="text-base font-bold text-[#511120]">Jeg vil ikke mer</p>
+        </div>
+        <span class="text-[#511120] text-xl">→</span>
+      </a>
+    </div>
+
+    <!-- Knapp -->
+    <div class="mt-4">
+      <a href="#" class="inline-flex items-center border-2 border-[#511120] text-[#511120] text-sm font-medium px-5 py-2 rounded-full hover:bg-[#511120] hover:text-white transition">
+        Se alle intervjuer →
+      </a>
+    </div>
+
+  </div>
+</div>
+
+
+
+
 </div>
 
 

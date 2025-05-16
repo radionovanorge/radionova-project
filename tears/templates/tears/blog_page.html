@@ -4,94 +4,104 @@
 {% block content %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
-    <link href="{% static 'tears/css/blogpost.css' %}" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="{% static 'tears/js/base.js' %}"></script>
-    
+  <meta charset="UTF-8">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
+  <link href="{% static 'tears/css/blogpost.css' %}" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="{% static 'tears/js/base.js' %}"></script>
+
 </head>
+
 <body>
-   
-    
-    <div class="bg-[#f7f4f4] w-full p-10 mb-8">
-        <div class="max-w-4xl mx-auto px-4">
-          <!-- Breadcrumb -->
-          <div class="text-sm text-gray-500 mb-4">
-            {% if self.get_ancestors|length > 1 %}
-            <nav aria-label="Breadcrumb">
-              <ul class="flex items-center space-x-2">
-                {% for p in self.get_ancestors %}
-                  {% if not p.is_root %}
-                    <li><a href="{{ p.url }}" class="hover:text-purple-600">{{ p.title }}</a><span class="mx-2 text-gray-400">></span></li>
-                  {% endif %}
-                {% endfor %}
-                <li class="text-[#511120] font-semibold">{{ self.title }}</li>
-              </ul>
-            </nav>
+
+
+  <div class="bg-[#f7f4f4] w-full p-10 mb-8">
+    <div class="max-w-4xl mx-auto px-4">
+      <!-- Breadcrumb -->
+      <div class="text-sm text-gray-500 mb-4">
+        {% if self.get_ancestors|length > 1 %}
+        <nav aria-label="Breadcrumb">
+          <ul class="flex items-center space-x-2">
+            {% for p in self.get_ancestors %}
+            {% if not p.is_root %}
+            <li><a href="{{ p.url }}" class="hover:text-purple-600">{{ p.title }}</a><span
+                class="mx-2 text-gray-400">></span></li>
             {% endif %}
-          </div>
-      
-          <!-- Page Title -->
-          <h1 class="text-4xl font-bold text-[#511120] mb-6">{{ page.title }}</h1>
-      
-          <!-- Ingress -->
-          <p class="text-lg text-gray-800 mb-8 leading-relaxed">{{ page.ingress }}</p>
-        </div>
-      
-      
-      <!-- Main Image -->
-      <div class="max-w-5xl mx-auto px-4 mb-4">
-        {% for block in page.body %}
-          {% if block.block_type == "main_image" %}
-            {% image block.value fill-1200x600 class="rounded shadow-md w-full object-cover" %}
-          {% endif %}
-        {% endfor %}
-        {% if page.imageDecription %}
-          <p class="text-xs text-gray-500 mt-2">{{ page.imageDecription }}</p>
+            {% endfor %}
+            <li class="text-[#511120] font-semibold">{{ self.title }}</li>
+          </ul>
+        </nav>
         {% endif %}
       </div>
+
+      <!-- Page Title -->
+      <h1 class="text-4xl font-bold text-[#511120] mb-6">{{ page.title }}</h1>
+
+      <!-- Ingress -->
+      <p class="text-lg text-gray-800 mb-8 leading-relaxed">{{ page.ingress }}</p>
     </div>
-      <!-- Meta Info -->
-      <div class="max-w-4xl mx-auto px-4 text-sm text-gray-600 mb-12">
-        <p>Publisert: {{ page.date }}</p>
-        <p>Skrevet av {{ page.forfatter }} for <span class="text-[#511120] font-semibold">{{ page.redaksjon }}</span></p>
-      </div>
-      
-      <!-- Article Content -->
-      <div class="max-w-4xl mx-auto px-4 prose prose-lg prose-img:rounded-lg prose-p:leading-relaxed">
-        {% for block in page.body %}
-          {% if block.block_type == "content" %}
-            {{ block.value }}
-          {% endif %}
-        {% endfor %}
-      </div>
-      
-      <!-- Related Section: “Mer fra [redaksjon]” -->
-      {% if page.related_posts %}
-        <div class="max-w-6xl mx-auto px-4 mt-16 bg-[#f7f4f4] py-12">
-          <h2 class="text-xl font-bold text-[#511120] mb-6">Mer fra {{ page.redaksjon }}</h2>
-          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-            {% for post in page.related_posts %}
-              <a href="{{ post.url }}" class="bg-white shadow rounded overflow-hidden group">
-                {% image post.main_image fill-600x400 class="w-full h-48 object-cover" %}
-                <div class="p-4">
-                  <h3 class="text-lg font-semibold group-hover:text-[#511120]">{{ post.title }}</h3>
-                  <p class="text-sm text-gray-500">{{ post.subtitle|default:"- Hvem er vi?" }}</p>
-                </div>
-              </a>
-            {% endfor %}
-          </div>
-      
-          <!-- CTA Button -->
-          <div class="mt-8">
-            <a href="#" class="inline-block border border-[#511120] text-[#511120] px-4 py-2 rounded-full hover:bg-[#511120] hover:text-white transition">
-              Se alle artikler fra {{ page.redaksjon }} →
-            </a>
-          </div>
-        </div>
+
+
+    <!-- Main Image -->
+    <div class="max-w-5xl mx-auto px-4 mb-4">
+      {% for block in page.body %}
+      {% if block.block_type == "main_image" %}
+      {% image block.value fill-1200x600 class="rounded shadow-md w-full object-cover" %}
       {% endif %}
-    {% endblock %}
+      {% endfor %}
+      {% if page.imageDecription %}
+      <p class="text-xs text-gray-500 mt-2">{{ page.imageDecription }}</p>
+      {% endif %}
+    </div>
+  </div>
+  <!-- Meta Info -->
+  <div class="max-w-4xl mx-auto px-4 text-sm text-gray-600 mb-12">
+    <p>Publisert: {{ page.date }}</p>
+    <p>Skrevet av {{ page.forfatter }} for <span class="text-[#511120] font-semibold">{{ page.redaksjon }}</span></p>
+  </div>
+
+  <!-- Article Content -->
+  <div class="max-w-4xl mx-auto px-4 prose prose-lg prose-img:rounded-lg prose-p:leading-relaxed">
+    {% for block in page.body %}
+    {% if block.block_type == "content" %}
+    {{ block.value }}
+    
+  
+{% endif %}
+
+    {% endfor %}
+  </div>
+  <br><br>
+
+  <!-- Related Section: “Mer fra [redaksjon]” -->
+  {% if page.related_posts %}
+  <div class="max-w-6xl mx-auto px-4 mt-16 bg-[#f7f4f4] py-12">
+    <h2 class="text-xl font-bold text-[#511120] mb-6">Mer fra {{ page.redaksjon }}</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+      {% for post in page.related_posts %}
+      <a href="{{ post.url }}" class="bg-white shadow rounded overflow-hidden group">
+        {% image post.main_image fill-600x400 class="w-full h-48 object-cover" %}
+        <div class="p-4">
+          <h3 class="text-lg font-semibold group-hover:text-[#511120]">{{ post.title }}</h3>
+          <p class="text-sm text-gray-500">{{ post.subtitle|default:"- Hvem er vi?" }}</p>
+        </div>
+      </a>
+      {% endfor %}
+    </div>
+
+    <!-- CTA Button -->
+    <div class="mt-8">
+      <a href="#"
+        class="inline-block border border-[#511120] text-[#511120] px-4 py-2 rounded-full hover:bg-[#511120] hover:text-white transition">
+        Se alle artikler fra {{ page.redaksjon }} →
+      </a>
+    </div>
+  </div>
+   <br><br>
+  {% endif %}
+  {% endblock %}
 </body>
+
 </html>
