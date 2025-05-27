@@ -300,90 +300,60 @@
   </div>
 </div>
 <!-- Anmedelser bg-[#FBF9FA]-->
-<div class="py-4">
-  <!-- Border border-b-5 skal egentlig være border-b-4 -->
-  <div class="border-t-4 border-b-5 border-[#511120] py-5 max-w-6xl mx-auto px-6">
+<div class="py-1">
+  <div class="border-t-4 border-[#511120] py-5 max-w-6xl mx-auto px-6">
 
     <!-- Tittel -->
     <h2 class="text-base font-semibold text-[#511120] text-xl mb-3">Anmeldelser</h2>
 
     <!-- Kort -->
-    <div class=" border-gray-400 p-3 grid grid-cols-1 md:grid-cols-3 gap-2 bg-gray-50">
-      <a href="#" class="bg-white hover:bg-gray-100 p-3 flex items-center justify-between">
+    <div class="border-gray-400 p-3 grid grid-cols-1 md:grid-cols-3 gap-2 bg-gray-50">
+      {% for post in latest_reviews %}
+      <a href="{{ post.url }}" class="bg-white hover:bg-gray-100 p-3 flex items-center justify-between">
         <div>
-          <p class="text-sm text-[#511120]">Film</p>
-          <p class="text-lg font-bold text-[#511120]">“Kung Fu Panda 4”</p>
+          <p class="text-sm text-[#511120]">
+            {% if post.overtittel%}
+              {{ post.overtittel }}
+            {% else %}
+              Anmeldelse
+            {% endif %}
+          </p>
+          <p class="text-lg font-bold text-[#511120]">“{{ post.title }}”</p>
         </div>
         <span class="text-[#511120] text-xl">→</span>
       </a>
-
-      <a href="#" class="bg-white hover:bg-gray-100 p-3 flex items-center justify-between">
-        <div>
-          <p class="text-sm text-[#511120]">Spisested</p>
-          <p class="text-lg font-bold text-[#511120]">“Dumpling AS”</p>
-        </div>
-        <span class="text-[#511120] text-xl">→</span>
-      </a>
-
-      <a href="#" class="bg-white hover:bg-gray-100 p-3 flex items-center justify-between">
-        <div>
-          <p class="text-sm text-[#511120]">Musikk</p>
-          <p class="text-lg font-bold text-[#511120]">“Mitt første album”</p>
-        </div>
-        <span class="text-[#511120] text-xl">→</span>
-      </a>
+      {% endfor %}
     </div>
 
     <!-- Knapp -->
     <div class="mt-4">
-      <a href="#" class="inline-flex items-center border-2 border-[#511120] text-[#511120] text-sm font-medium px-5 py-2 rounded-full hover:bg-[#511120] hover:text-white transition">
+      <a href="" class="inline-flex items-center border-2 border-[#511120] text-[#511120] text-sm font-medium px-5 py-2 rounded-full hover:bg-[#511120] hover:text-white transition">
         Se alle anmeldelser →
       </a>
     </div>
   </div>
 </div>
+
 <!-- Intervju bg-[#FBF9FA]-->
-<div class=" py-4">
+<div class=" py-2">
   <div class="border-t-4 border-b-4 border-[#511120] py-4 max-w-6xl mx-auto px-4">
+  <h2 class="text-base font-semibold text-[#511120] mb-3 text-xl">Intervjuer</h2>
 
-    <!-- Tittel -->
-    <h2 class="text-base font-semibold text-[#511120] mb-3 text-xl" >Intervjuer</h2>
+  <div class="border-gray-400 p-3 grid grid-cols-1 md:grid-cols-2 gap-2 bg-gray-50">
+    {% for post in latest_interviews %}
+    <a href="{{ post.url }}" class="bg-white hover:bg-gray-100 p-3 flex items-center justify-between">
+      <div>
+        <p class="text-sm text-[#511120]">
+          {% if post.overtittel %}{{ post.overtittel }}{% else %} Intervju {% endif %}
+        </p>
+        <p class="text-base font-bold text-[#511120]">{{ post.title }}</p>
+      </div>
+      <span class="text-[#511120] text-xl">→</span>
+    </a>
+    {% endfor %}
+  </div>
 
-    <!-- Kort -->
-    <div class="border-gray-400 p-3 grid grid-cols-1 md:grid-cols-2 gap-2 bg-gray-50">
-      
-      <a href="#" class="bg-white hover:bg-gray-100 p-3 flex items-center justify-between">
-        <div>
-          <p class="text-sm text-[#511120]">Person Personsen</p>
-          <p class="text-base font-bold text-[#511120]">Kollektivtransporten i Oslo må endres drastisk</p>
-        </div>
-        <span class="text-[#511120] text-xl">→</span>
-      </a>
-
-      <a href="#" class="bg-white hover:bg-gray-100 p-3 flex items-center justify-between">
-        <div>
-          <p class="text-sm text-[#511120]">Person Personsen</p>
-          <p class="text-base font-bold text-[#511120]">Jeg vil ikke mer</p>
-        </div>
-        <span class="text-[#511120] text-xl">→</span>
-      </a>
-
-      <a href="#" class="bg-white hover:bg-gray-100 p-3 flex items-center justify-between">
-        <div>
-          <p class="text-sm text-[#511120]">Person Personsen</p>
-          <p class="text-base font-bold text-[#511120]">Kollektivtransporten i Oslo må endres drastisk</p>
-        </div>
-        <span class="text-[#511120] text-xl">→</span>
-      </a>
-
-      <a href="#" class="bg-white hover:bg-gray-100 p-3 flex items-center justify-between">
-        <div>
-          <p class="text-sm text-[#511120]">Person Personsen</p>
-          <p class="text-base font-bold text-[#511120]">Jeg vil ikke mer</p>
-        </div>
-        <span class="text-[#511120] text-xl">→</span>
-      </a>
-    </div>
+  
 
     <!-- Knapp -->
     <div class="mt-4">
@@ -392,8 +362,8 @@
       </a>
     </div>
 
-  </div>
-</div>
+
+
 
 
 

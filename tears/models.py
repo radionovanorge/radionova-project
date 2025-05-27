@@ -39,6 +39,8 @@ class HomePage(RoutablePageMixin, Page):
         context = super().get_context(request)
         context["latest_posts"] = BlogPage.objects.live(
         ).public().order_by("-date")[:9]
+        context["latest_interviews"] = BlogPage.objects.live().filter(typeArticle="intervju").order_by('-first_published_at')[:4]
+        context["latest_reviews"] = BlogPage.objects.live().filter(typeArticle="anmeldelse").order_by('-first_published_at')[:4]
         context["programs"] = ProgramPage.objects.live().order_by("?")
         context["dagtid_list"] = self.get_dagtid()
         return context
@@ -88,6 +90,7 @@ class ProgrammerPage(Page):
         total_program_count = sum(len(programs) for programs in grouped_programs.values())
         context["grouped_programs"] = grouped_programs
         context["total_program_count"] = total_program_count 
+        
         return context
   
 
@@ -155,6 +158,7 @@ class ProgramPage(Page):
         FieldPanel("email_link"),
         FieldPanel("description"),
     ]
+    
 
 
     
@@ -167,7 +171,7 @@ class BlogPage(Page): #TODO add an article|anmeldelse|intervju field
     forfatter = models.CharField("Forfatter", max_length=255, blank=True)
     imageDecription = models.CharField("BildeTekst:", max_length=255, blank=True, help_text="BildeTekst under første bildet")
     ingress = models.CharField("Ingress", max_length=500, blank=True, help_text="Kort ingress/underoverskrift under tittelen")
-
+    overtittel = models.CharField("Overtittel", max_length=500, blank=True, help_text="Kort overtittel under hovedtittelen. For intervju er dette navnet på den som er intervjuet, for anmeldelse er det hva du anmelder (enten det er Film, Spisested eller Musikk), for vanlig nettsak trengs det ikke å skrive noe")
     #this is for having nettsaker in programpages. makes it possible to show programs each nettsak they have made only
 
     program = models.ForeignKey(
@@ -204,10 +208,13 @@ class BlogPage(Page): #TODO add an article|anmeldelse|intervju field
         FieldPanel("program"),
         FieldPanel("forfatter"),
         FieldPanel("ingress"),
+        FieldPanel("overtittel"),
         FieldPanel("date"),
         FieldPanel("body"),
-        FieldPanel("imageDecription")
+        FieldPanel("imageDecription"),
     ]
+    def related_posts(self):
+        return BlogPage.objects.live().filter(program=self.program).exclude(id=self.id)[:3]
   
 
 
