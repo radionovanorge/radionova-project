@@ -145,18 +145,27 @@
         {{ block.value }}
         {% endfor %}
     </div>
+
+
 </section>
      <!-- Nettsaker only the program has written-->
      {% with blog_posts=page.blog_posts.live %}
      {% if blog_posts %}
        <div class=" mx-auto px-6 mt-16 bg-[#f7f4f4] py-12">
       <h2 class="text-3xl font-bold text-[#511120] mb-6 text-center">Mer fra {{ page.title }}</h2>
-      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-8">
         {% for post in blog_posts|slice:":3" %}
-        <a href="{{ post.url }}" class="bg-white shadow rounded overflow-hidden group">
+        <a href="{{ post.url }}" class="group block rounded-lg shadow-md overflow-hidden transition-transform transform hover:scale-105">
            {% for block in post.body %}
             {% if block.block_type == "main_image" %}
-            {% image block.value fill-600x400 class="w-full h-48 object-cover" %}
+            {% image block.value fill-600x400 as img" %}
+             <div class="thumb" style="
+                 background-image: url('{{ img.url }}');
+                 width: 100%;
+                 height: 250px;
+                 background-size: cover;
+                 background-position: center;
+                 background-repeat: no-repeat;"></div>
             {% endif %}
             {% endfor %}
           <div class="p-4">

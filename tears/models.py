@@ -8,6 +8,7 @@ from wagtail import blocks
 from wagtail.images.blocks import ImageChooserBlock
 from wagtail.images.models import Image
 from wagtail.contrib.routable_page.models import RoutablePageMixin, route
+from django.http import HttpResponseRedirect
 
 
 
@@ -43,6 +44,8 @@ class HomePage(RoutablePageMixin, Page):
         context["latest_reviews"] = BlogPage.objects.live().filter(typeArticle="anmeldelse").order_by('-first_published_at')[:4]
         context["programs"] = ProgramPage.objects.live().order_by("?")
         context["dagtid_list"] = self.get_dagtid()
+        context["latest_alister"] = AListaPage.objects.live().order_by("-first_published_at")[:3]
+        context["latest_alista"] = self.get_latest_alista()
         return context
     
     """No need to routeablepages but we dont have model for nettsaker.html yet"""
@@ -157,6 +160,7 @@ class ProgramPage(Page):
         FieldPanel("tiktok_link"),
         FieldPanel("email_link"),
         FieldPanel("description"),
+        
     ]
     
 
@@ -195,7 +199,12 @@ class BlogPage(Page): #TODO add an article|anmeldelse|intervju field
     body = StreamField(
         [
             ("main_image", ImageChooserBlock()),
-            ("imageDecription", blocks.CharBlock()),
+            ('image_description', blocks.CharBlock(
+            required=False,
+            help_text="Beskrivelse under bildet",
+            classname="text-xs text-gray-500 mt-0 mb-4"
+)),
+
             ("content", blocks.RichTextBlock()),
         ],
         blank=True,
@@ -225,6 +234,12 @@ class FreeTextPage(Page):
     content_panels = Page.content_panels + [
         FieldPanel("body"),
     ]
+    def serve(self, request):
+        # Get the latest child AListaPage
+        latest_post = self.get_children().live().specific().order_by('-first_published_at').first()
+        if latest_post:
+            return HttpResponseRedirect(latest_post.url)
+        return super().serve(request)  # fallback if no child pages exist
    
 
    
@@ -284,20 +299,37 @@ class DagTidPage(Page):
 
 class AListaPage(Page):
     page_description = "This page is for configuring A-lista for every week"
-    body = RichTextField(blank=True)
-    uke = models.CharField(max_length=255, blank=True, help_text="Hvilken uke er det?")
-    post_message = models.TextField(blank=True, help_text="Underovskrift")
+    forfatter = models.CharField("Forfatter", max_length=255, blank=True)
+    ingress = models.TextField(blank=True, help_text="ingress")
+    dato = models.DateField("Dato", blank=True, null=True, help_text="Dato for A-lista")
 
-    images = StreamField([
-        ("image", ImageChooserBlock()),  # Allows multiple image uploads
-    ], blank=True, use_json_field=True)
+    program = models.ForeignKey(
+        'tears.ProgramPage',  
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='a_lista_posts',
+        verbose_name="Redaksjon"
+    )
+    content = StreamField(
+        [
+            ("main_image", ImageChooserBlock()),
+            ("content", blocks.RichTextBlock()),
+        ],
+        blank=True,
+        use_json_field=True,
+    )
 
     content_panels = Page.content_panels + [
-        FieldPanel("uke"),
-        FieldPanel("post_message"),
-        FieldPanel("images"),
-        FieldPanel("body"),
+        FieldPanel("forfatter"),
+        FieldPanel("program"),
+        FieldPanel("ingress"),
+        FieldPanel("dato"),
+        FieldPanel("content"),
     ]
+    def get_latest_alister(self, count=3):
+        # Get sibling pages of type AListaPage (excluding self), ordered by date
+        return AListaPage.objects.live().exclude(id=self.id).order_by('-first_published_at')[:count]
 
 class Sendeplan(Page):
      page_description = "This page is for configuring sendeplan for the semester"

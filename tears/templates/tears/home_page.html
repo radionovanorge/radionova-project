@@ -247,57 +247,54 @@
     </div>
   
   </main>
-  <!-- A-lista bg-[#FBF9FA]-->
-  <div class="p-6">
-  <div class="max-w-6xl mx-auto flex">
+  <!-- A-lista seksjon -->
+<section class="bg-[#FBF9FA] py-10 px-4">
+  <div class="max-w-6xl mx-auto flex flex-col md:flex-row">
     
-    <!-- Vertikal rød strek -->
+    <!-- Vertikal strek -->
     <div class="w-2 bg-[#511120] mr-4 rounded-sm"></div>
 
     <!-- Innhold -->
     <div class="flex-1">
       <!-- Tittel -->
-      <h2 class="text-xl font-semibold text-[#511120] mb-4">Listemusikk</h2>
+      <h2 class="text-xl font-semibold text-[#511120] mb-6">Listemusikk</h2>
 
-      <!-- Grid -->
+      <!-- Grid med fleksible kort -->
       <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-        <!-- A-liste kort 1 -->
-        <div class="bg-[#511120] text-white w-full">
+        {% for item in latest_alister %}
+        <a href="{{ item.url }}" class="bg-[#511120] text-white group hover:bg-[#3b0a18] transition w-full flex flex-col justify-between">
           <div class="p-4">
             <h3 class="text-lg font-bold">A-LISTA</h3>
-            <p class="text-sm">Uke 48 – 49</p>
+            {% if item.dato %}
+              <p class="text-sm">Uke {{ item.dato|date:"W" }} – {{ item.dato|date:"W"|add:"1" }}</p>
+            {% endif %}
           </div>
-          <img src="https://via.placeholder.com/300x200.png?text=Image" alt="A-liste bilde" class="w-full h-48 object-cover">
-        </div>
-
-        <!-- A-liste kort 2 -->
-        <div class="bg-[#511120] text-white w-full flex flex-col justify-between">
-          <div class="p-4">
-            <h3 class="text-lg font-bold">A-LISTA</h3>
-            <p class="text-sm">Uke 48 – 49</p>
+          <div>
+            {% with image_found=False %}
+              {% for block in item.content %}
+                {% if block.block_type == "main_image" %}
+                  {% image block.value fill-600x338 as img %}
+                  <img src="{{ img.url }}" alt="{{ item.title }}" class="w-full h-48 object-cover" />
+          
+    
+                {% endif %}
+              {% endfor %}
+            
+            {% endwith %}
           </div>
-          <img src="https://upload.wikimedia.org/wikipedia/commons/5/56/Vinyl_record_symbol.svg" alt="Vinyl ikon" class="w-full h-48 object-contain p-4">
-        </div>
-
-        <!-- A-liste kort 3 -->
-        <div class="bg-[#511120] text-white w-full flex flex-col justify-between">
-          <div class="p-4">
-            <h3 class="text-lg font-bold">A-LISTA</h3>
-            <p class="text-sm">Uke 48 – 49</p>
-          </div>
-          <img src="https://upload.wikimedia.org/wikipedia/commons/5/56/Vinyl_record_symbol.svg" alt="Vinyl ikon" class="w-full h-48 object-contain p-4">
-        </div>
+        </a>
+        {% endfor %}
       </div>
 
       <!-- Knapp -->
       <div class="mt-6">
-        <a href="#" class="inline-flex items-center border-2 border-[#511120] text-[#511120] text-sm font-medium px-5 py-2 rounded-full hover:bg-[#511120] hover:text-white transition">
+        <a href="{% pageurl latest_alista %}" class="inline-flex items-center border-2 border-[#511120] text-[#511120] text-sm font-medium px-5 py-2 rounded-full hover:bg-[#511120] hover:text-white transition">
           Se alle A-lister →
         </a>
       </div>
     </div>
-
   </div>
+</section>
 </div>
 <!-- Anmedelser bg-[#FBF9FA]-->
 <div class="py-1">

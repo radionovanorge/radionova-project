@@ -2,89 +2,138 @@
 {% load wagtailcore_tags wagtailimages_tags %}
 
 {% block content %}
-<div class="bg-gray-50 py-8">
-  <div class="container mx-auto px-4">
-    <!-- Page Header -->
-    <div class="mb-8 text-center">
-      <h1 class="text-3xl md:text-4xl font-bold mb-2">A-LISTA</h1>
-      <p class="text-gray-600">Våre favoritter fra musikkverdenen</p>
-    </div>
 
-    <!-- Main Content -->
-    <div class="bg-white rounded-lg shadow-sm overflow-hidden">
-      <div class="p-6">
-        <div class="flex flex-col md:flex-row md:space-x-8">
-          <!-- Left Column - Details -->
-          <div class="md:w-1/2 mb-6 md:mb-0">
-            <h2 class="text-2xl font-bold mb-4">
-              {{ page.uke }} <span class="text-radionova-maroon">Våre favoritter</span>
-            </h2>
-            <div class="prose max-w-none mb-6">
-              <p class="text-lg">
-                {{ page.post_message }}
-              </p>
-            </div>
-            
-            <!-- Spotify Embed if available -->
-            {% if page.spotify_embed_url %}
-              <div class="mb-6">
-                <h3 class="text-lg font-semibold mb-3">Lytt på Spotify</h3>
-                <iframe src="{{ page.spotify_embed_url }}" width="100%" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
-              </div>
-            {% endif %}
-          </div>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A-lista</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 
-          <!-- Right Column - Images -->
-          <div class="md:w-1/2">
-            <!-- Image Gallery -->
-            <div class="relative" x-data="{ activeSlide: 0 }">
-              <div class="overflow-hidden rounded-lg">
-                {% for block in page.images %}
-                  <div x-show="activeSlide === {{ forloop.counter0 }}" class="transition-opacity duration-300 ease-in-out">
-                    {% image block.value fill-600x600 class="w-full h-auto object-cover rounded-lg" %}
-                  </div>
-                {% endfor %}
-              </div>
+</head>
 
-              <!-- Navigation dots -->
-              {% if page.images|length > 1 %}
-                <div class="flex justify-center mt-4 space-x-2">
-                  {% for block in page.images %}
-                    <button @click="activeSlide = {{ forloop.counter0 }}" class="w-3 h-3 rounded-full" :class="{ 'bg-radionova-maroon': activeSlide === {{ forloop.counter0 }}, 'bg-gray-300': activeSlide !== {{ forloop.counter0 }} }"></button>
-                  {% endfor %}
-                </div>
-              {% endif %}
-            </div>
-          </div>
+{% for block in page.content %}
+    {% if block.block_type == 'main_image' %}
+      <div class="relative h-80 md:h-[400px] overflow-hidden">
+
+        <!-- Blurred Background -->
+        <div class="absolute inset-0 w-full h-full z-0">
+          {% image block.value fill-1200x600 as bg_image %}
+          <img src="{{ bg_image.url }}"
+               alt="{{ page.title }}"
+               class="w-full h-full object-cover blur-lg scale-105 opacity-70" />
         </div>
-      </div>
-    </div>
 
-    <!-- A-Lista Songs Grid -->
-    <div class="mt-12">
-      <h2 class="text-2xl font-bold mb-6 border-b border-gray-200 pb-2">A-Lista låter</h2>
-      
-      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {% for image_block in page.images %}
-          <div class="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition duration-200">
-            <div class="aspect-w-1 aspect-h-1 bg-gray-100">
-              {% image image_block.value fill-300x300 class="w-full h-full object-cover" %}
-            </div>
-            <div class="p-4">
-              <h3 class="font-semibold text-lg">Song Title</h3>
-              <p class="text-gray-600">Artist Name</p>
-            </div>
-          </div>
-        {% endfor %}
+        <!-- Foreground Image -->
+        <div class="relative z-10 flex items-center justify-center h-full">
+          {% image block.value fill-600x400 as fg_image %}
+          <img src="{{ fg_image.url }}"
+               alt="{{ page.title }}"
+               class="object-contain max-h-full rounded shadow-xl" />
+        </div>
+
+        
+
       </div>
+    {% endif %}
+  {% endfor %}
+<div class="bg-[#f7f4f4] w-full p-10 mb-8">
+    <div class="max-w-4xl mx-auto px-4">
+      <!-- Breadcrumb -->
+      <div class="text-sm text-gray-500 mb-4">
+        {% if self.get_ancestors|length > 1 %}
+        <nav aria-label="Breadcrumb">
+          <ul class="flex items-center space-x-2">
+            {% for p in self.get_ancestors %}
+            {% if not p.is_root %}
+            <li><a href="{{ p.url }}" class="hover:text-red-600">{{ p.title }}</a><span
+                class="mx-2 text-gray-400">></span></li>
+            {% endif %}
+            {% endfor %}
+            <li class="text-[#511120] font-semibold">{{ self.title }}</li>
+          </ul>
+        </nav>
+        {% endif %}
+      </div>
+
+
+      <!-- Ingress -->
+      <p class="text-lg text-gray-800 mb-8 leading-relaxed">{{ page.ingress }}</p>
+    </div>
+</div>
+
+
+<!-- Forfatter -->
+{% if page.forfatter %}
+  <div class="bg-white px-4 md:px-6 pb-6 max-w-3xl mx-auto">
+    <p class="text-gray-500 text-sm"> <span class="font-medium text-black">{{ page.forfatter }}</span></p>
+    <!--Page program url -->
+      <p class="text-red-500 text-sm">
+        <a href="{{ page.program_url }}" class="text-red">{{ page.program.title }}</a>
+      </p>
+    
+    <p class="text-gray-800 text-sm"> <span class="font-medium text-black">{{ page.dato }}</span></p>
+  </div>
+{% endif %}
+<!-- Spotify Embed Section -->
+<!-- Article Content -->
+ <div class="max-w-2xl mx-auto px-4 prose prose-xl prose-img:rounded-lg prose-p:leading-relaxed">
+  {% for block in page.content %}
+    {% if block.block_type == "content" %}
+      {{ block.value|richtext }}
+    {% endif %}
+  {% endfor %}
+</div>
+<!-- SPOTIFY SECTION -->
+<section class="bg-[#fff6f7] py-12 px-4">
+  <div class="max-w-4xl mx-auto">
+    <p class="text-sm text-gray-900 font-medium mb-4">
+      Nåværende og tidligere A-lister finner du i sin helhet på Spotify
+    </p>
+    <div class="w-full h-[352px] relative">
+      <iframe
+        src="https://open.spotify.com/embed/album/2ODvWsOgouMbaA5xf0RkJe?utm_source=oembed"
+        style="top: 0; left: 0; width: 100%; height: 100%; position: absolute; border: 0;"
+        allowfullscreen
+        allow="clipboard-write *; encrypted-media *; fullscreen *; picture-in-picture *;">
+      </iframe>
     </div>
   </div>
-</div>
+</section>
+
+<section class="bg-[#f5f5f5] py-12 px-4">
+  <div class="max-w-6xl mx-auto">
+    <h2 class="text-xl font-semibold mb-6">Tidligere A-lister</h2>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+      {% for item in page.get_latest_alister %}
+        <a href="{{ item.url }}" class="block group">
+          <div class="aspect-w-16 aspect-h-9 overflow-hidden rounded shadow">
+            {% for block in item.content %}
+              {% if block.block_type == 'main_image' %}
+                {% image block.value fill-600x338 as preview_img %}
+                <img src="{{ preview_img.url }}" alt="{{ item.title }}"
+                     class="object-cover w-full h-full transition-transform group-hover:scale-105" />
+                
+              {% endif %}
+            {% endfor %}
+          </div>
+          <p class="mt-2 text-xl text-gray-700">{{ item.title }}</p>
+        </a>
+      {% endfor %}
+    </div>
+
+   
+ 
+    <div class="mt-6 text-right">
+      <a href="{% pageurl page.get_parent %}" class="text-lg text-red-600 hover:text-grey-700 underline">Alle A-lister →</a>
+    </div>
+  </div>
+</section>
 {% endblock %}
 
 {% block extra_js %}
 {{ block.super }}
-<script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 {% endblock %}
 
 
