@@ -118,7 +118,7 @@ DATABASES = {
         'PASSWORD': os.environ.get('DBPASS'),
         'PORT': os.environ.get('DBPORT'),
         'OPTIONS': {
-             'sslmode': 'disable',  # Disable SSL for local development
+             'sslmode': 'require',  # Use SSL for database connection
         },
     }
 }
