@@ -9,6 +9,7 @@ from wagtail.images.blocks import ImageChooserBlock
 from wagtail.images.models import Image
 from wagtail.contrib.routable_page.models import RoutablePageMixin, route
 from django.http import HttpResponseRedirect
+from django.utils.translation import gettext_lazy as _
 
 
 
@@ -131,10 +132,21 @@ class ProgramPage(Page):
 
     intro = models.CharField("Introduksjon", max_length=255, blank=True)
 
-    # 🕒 New field: Day and Time string
-    schedule_info = models.CharField("Sendetid", max_length=100, blank=True, help_text="F.eks: Mandager · 19:00 - 20:30")
+    #  Day and Time 
+    class Weekday(models.TextChoices):
+        MONDAY = "1", _("Mandag")
+        TUESDAY = "2", _("Tirsdag")
+        WEDNESDAY = "3", _("Onsdag")
+        THURSDAY = "4", _("Torsdag")
+        FRIDAY = "5", _("Fredag")
+        SATURDAY = "6", _("Lørdag")
+        SUNDAY = "7", _("Søndag")
+    weekday = models.CharField(max_length=1, choices=Weekday.choices, blank=True)
+    start_time = models.TimeField(blank=True, null=True)
+    end_time = models.TimeField(blank=True, null=True)  
+    
 
-    # 🔗 Social Media Links
+    #  Social Media Links
     instagram_link = models.URLField("Instagram-link", blank=True)
     facebook_link = models.URLField("Facebook-link", blank=True)
     tiktok_link = models.URLField("TikTok-link", blank=True)
@@ -154,7 +166,9 @@ class ProgramPage(Page):
         FieldPanel("program"),
         FieldPanel("main_image"),
         FieldPanel("intro"),
-        FieldPanel("schedule_info"),
+        FieldPanel("weekday"),
+        FieldPanel("start_time"),
+        FieldPanel("end_time"),
         FieldPanel("instagram_link"),
         FieldPanel("facebook_link"),
         FieldPanel("tiktok_link"),
@@ -333,13 +347,14 @@ class AListaPage(Page):
 
 class Sendeplan(Page):
      page_description = "This page is for configuring sendeplan for the semester"
-    
-    #def get_context(self, request):
-     #   context = super().get_context(request)
-      #  return context
-      # context["programs"] = sendplan.objects.live().order_by("?")
-      #  return context
 
+     def get_context(self, request):
+        context = super().get_context(request)
+        context["latest"] = ProgramPage.objects.live().order_by('-first_published_at').first()
+        return context
+     
+    
+   
 
 
 

@@ -45,53 +45,7 @@ dagene.forEach((dagClass, index) => {
 });
 
 
-  
-
-
-
-
-
-
-  dagsKnapp.addEventListener("click", () => {
-    dagsliste.style.display = "block";
-    ukesoversikt.style.display = "none";
-    ukedager.style.display= "block";
-  
-    // Visuelt bytte komponenter
-    dagsKnapp.classList.remove("component-4");
-    dagsKnapp.classList.add("component-2");
-    ukeKnapp.classList.remove("component-2");
-    ukeKnapp.classList.add("component-4");
-  
-    // Endre tekstfarge direkte
-    dagsKnapp.querySelector(".text-wrapper-4, .text-wrapper-6").style.color = "#ffffff";
-    ukeKnapp.querySelector(".text-wrapper-4, .text-wrapper-6").style.color = "#511120";
-  
-    // Endre rektangel-farge
-    dagsKnapp.querySelectorAll(".rectangle, .rectangle-2, .rectangle-3").forEach(r => r.style.backgroundColor = "#ffffff");
-    ukeKnapp.querySelectorAll(".rectangle-4, .rectangle-5, .rectangle-6").forEach(r => r.style.backgroundColor = "#511120");
-  });
-  
-  ukeKnapp.addEventListener("click", () => {
-    dagsliste.style.display = "none";
-    ukesoversikt.style.display = "block";
-    ukedager.style.display="none"
-  
-    ukeKnapp.classList.remove("component-4");
-    ukeKnapp.classList.add("component-2");
-    dagsKnapp.classList.remove("component-2");
-    dagsKnapp.classList.add("component-4");
-  
-    ukeKnapp.querySelector(".text-wrapper-4, .text-wrapper-6").style.color = "#ffffff";
-    dagsKnapp.querySelector(".text-wrapper-4, .text-wrapper-6").style.color = "#511120";
-  
-    ukeKnapp.querySelectorAll(".rectangle-4, .rectangle-5, .rectangle-6").forEach(r => r.style.backgroundColor = "#ffffff");
-    dagsKnapp.querySelectorAll(".rectangle, .rectangle-2, .rectangle-3").forEach(r => r.style.backgroundColor = "#511120");
-  });
-  
-  
-
-//start med ukedageneknappene til å endre farge on click
+  //start med ukedageneknappene til å endre farge on click
 dagKnappene.forEach(knapp => {
   knapp.addEventListener("click", () => {
     // 1. Bytt stil på knappene
