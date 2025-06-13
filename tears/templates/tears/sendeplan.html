@@ -18,6 +18,29 @@
     <div class="desktop-sendeplan">
 
         <div class="frame-6">
+            <div class="max-w-6xl mx-auto px-20">
+            <!-- Breadcrumb Navigation -->
+            <div class="text-sm text-gray-500 mb-4 mt-1">
+
+                <div class="breadcrumb-content text-sm text-gray-500 mb-4 mt-1">
+                    {% if self.get_ancestors|length > 1 %}
+                    <nav aria-label="Breadcrumb">
+                        <ul class="flex items-center space-x-2">
+                            {% for p in self.get_ancestors %}
+                            {% if not p.is_root %}
+                            <li>
+                                <a href="{{ p.url }}" class="hover:text-purple-600">{{ p.title }}</a>
+                                <span class="mx-2 text-gray-400">></span>
+                            </li>
+                            {% endif %}
+                            {% endfor %}
+                            <!-- Current Page -->
+                            <li class="text-red-600 font-semibold">{{ self.title }}</li>
+                        </ul>
+                    </nav>
+                    {% endif %}
+                </div>
+            </div>
             <h1 class="sendeplan-heading"> Sendeplan </h1>
 
             <div class="frame-7">
