@@ -158,7 +158,7 @@
         <a href="{{ post.url }}" class="group block rounded-lg shadow-md overflow-hidden transition-transform transform hover:scale-105">
            {% for block in post.body %}
             {% if block.block_type == "main_image" %}
-            {% image block.value fill-600x400 as img" %}
+            {% image block.value fill-600x400 as img %}
              <div class="thumb" style="
                  background-image: url('{{ img.url }}');
                  width: 100%;
@@ -170,7 +170,7 @@
             {% endfor %}
           <div class="p-4">
             <h3 class="text-lg font-semibold group-hover:text-[#511120]">{{ post.title }}</h3>
-            <p class="text-sm text-gray-500">{{ post.ingress|default:"- Nettsak" }}</p>
+            <!-- This can be too much text and makes the box too long <p class="text-sm text-gray-500">{{ post.ingress|default:"- Nettsak" }}</p> -->
           </div>
         </a>
         

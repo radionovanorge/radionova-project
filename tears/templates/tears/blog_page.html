@@ -76,17 +76,21 @@
   </div>
 
   <!-- Article Content -->
-  <div class="max-w-3xl mx-auto px-4 prose prose-xl prose-img:rounded-lg prose-p:leading-relaxed">
-    {% for block in page.body %}
+ <div class="max-w-3xl mx-auto px-4 prose prose-xl prose-img:rounded-lg prose-p:leading-relaxed">
+  {% for block in page.body %}
     {% if block.block_type == "content" %}
-    {{ block.value }}
-    {% elif block.block_type == "image_description" %}
-    <p class="text-xs text-gray-500 -mt-6">{{ block.value }}
-    
-  
-{% endif %}
-
-    {% endfor %}
+      {{ block.value }}
+      
+    {% elif block.block_type == "image_with_description" %}
+      {% image block.value.image fill-1200x600 class="rounded shadow-md w-full object-cover" %}
+      
+      {% if block.value.description %}
+        <p class="text-xs text-gray-500 -mt-6">{{ block.value.description }}</p>
+      {% endif %}
+      
+    {% endif %}
+  {% endfor %}
+</div>
   </div>
   <br><br>
 
@@ -100,7 +104,7 @@
         <a href="{{ post.url }}" class="group block rounded-lg shadow-md overflow-hidden transition-transform transform hover:scale-105">
            {% for block in post.body %}
             {% if block.block_type == "main_image" %}
-            {% image block.value fill-600x400 as img%}
+            {% image block.value fill-600x400 as img %}
             <div class="thumb" style="
                  background-image: url('{{ img.url }}');
                  width: 100%;

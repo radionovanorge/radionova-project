@@ -10,7 +10,8 @@ from wagtail.images.models import Image
 from wagtail.contrib.routable_page.models import RoutablePageMixin, route
 from django.http import HttpResponseRedirect
 from django.utils.translation import gettext_lazy as _
-
+from .blocks import Weekday, TimeChoices
+from .blocks import ImageWithDescriptionBlock
 
 
 class HomePage(RoutablePageMixin, Page):
@@ -132,18 +133,20 @@ class ProgramPage(Page):
 
     intro = models.CharField("Introduksjon", max_length=255, blank=True)
 
-    #  Day and Time 
-    class Weekday(models.TextChoices):
-        MONDAY = "1", _("Mandag")
-        TUESDAY = "2", _("Tirsdag")
-        WEDNESDAY = "3", _("Onsdag")
-        THURSDAY = "4", _("Torsdag")
-        FRIDAY = "5", _("Fredag")
-        SATURDAY = "6", _("Lørdag")
-        SUNDAY = "7", _("Søndag")
-    weekday = models.CharField(max_length=1, choices=Weekday.choices, blank=True)
-    start_time = models.TimeField(blank=True, null=True)
-    end_time = models.TimeField(blank=True, null=True)  
+    sendetider = StreamField(
+    [#we are using Choices in since timeblock does not support choices every half hour. Its in blocks.py 
+        ("sendetid", blocks.StructBlock([
+            ("weekday", blocks.ChoiceBlock(
+                choices=Weekday.choices, required=False, help_text="Choose the day of the week")),
+            ("start_time", blocks.ChoiceBlock(
+                choices=TimeChoices.choices, required=False, help_text="Start time")),
+            ("end_time", blocks.ChoiceBlock(
+                choices=TimeChoices.choices, required=False, help_text="End time")),
+        ])),
+    ],
+    blank=True,
+    verbose_name="Sendetider (Broadcast Times)"
+)
     
 
     #  Social Media Links
@@ -166,9 +169,7 @@ class ProgramPage(Page):
         FieldPanel("program"),
         FieldPanel("main_image"),
         FieldPanel("intro"),
-        FieldPanel("weekday"),
-        FieldPanel("start_time"),
-        FieldPanel("end_time"),
+        FieldPanel("sendetider"),
         FieldPanel("instagram_link"),
         FieldPanel("facebook_link"),
         FieldPanel("tiktok_link"),
@@ -213,11 +214,8 @@ class BlogPage(Page): #TODO add an article|anmeldelse|intervju field
     body = StreamField(
         [
             ("main_image", ImageChooserBlock()),
-            ('image_description', blocks.CharBlock(
-            required=False,
-            help_text="Beskrivelse under bildet",
-            classname="text-xs text-gray-500 mt-0 mb-4"
-)),
+            ("image_with_description", ImageWithDescriptionBlock()),
+            
 
             ("content", blocks.RichTextBlock()),
         ],
