@@ -15,7 +15,6 @@
 
 <body>
 
-
     <div class="desktop-sendeplan">
 
         <div class="frame-6">
@@ -76,43 +75,12 @@
             <div class="Mandager">
                 <div class="frame-12">
                     <div class="frame-13">
+                        {% for program in sendeplan.1 %}
                         <div class="frame-14">
                             <div class="frame-18">
-                                <img class="image" src="img/image-4.png" />
-                                <div class="frame-15">
-                                    <div class="frame-16">
-                                        <div class="frame-17">
-                                            <div class="frame-14">
-                                                <div class="text-wrapper-4">07:00 - 09:00</div>
-                                            </div>
-                                        </div>
-                                        <div class="frame-3">
-                                            <div class="frame-17">
-                                                <div class="text-wrapper-7">Mandagtest</div>
-                                            </div>
-                                            <div class="aftenposten-wrapper">
-                                                <div class="text-wrapper-8">Aktualitet</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="text-wrapper-9">Morgenradio</div>
-                                </div><!-- This is showing if the program starts now or not-->
-                                <div class="overlap-group-wrapper" style="display: none;">
-                                    <div class="overlap-group">
-                                        <div class="rectangle-7"></div>
-                                        <div class="text-wrapper-10">NÅ</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        {% if latest %}
-                        <div class="frame-14">
-                            <div class="frame-18">
-                                {% if latest.main_image %}
-                                {% image latest.main_image fill-1200x500 as img %}
-                                <img class="img" src="{{ img.url }}" alt="{{ latest.title }}" />
-                                {% else %}
-                                <img class="img" src="/static/img/fallback.png" alt="No image" />
+
+                                {% if program.main_image %}
+                                {% image program.main_image fill-400x400 class="image" %}
                                 {% endif %}
 
                                 <div class="frame-15">
@@ -120,128 +88,85 @@
                                         <div class="frame-17">
                                             <div class="frame-14">
                                                 <div class="text-wrapper-4">
-                                                    {{ latest.start_time|time:"H:i" }} -
-                                                    {{ latest.end_time|time:"H:i" }}
+                                                    {{ program.start_time }} - {{ program.end_time }}
                                                 </div>
                                             </div>
                                         </div>
+
                                         <div class="frame-3">
                                             <div class="frame-17">
-                                                <div class="text-wrapper-7">{{ latest.title }}</div>
+                                                <div class="text-wrapper-7">{{ program.title }}</div>
                                             </div>
                                             <div class="component-7">
-                                                <div class="text-wrapper-8">{{ latest.get_category_display }}</div>
+                                                <div class="text-wrapper-8">{{ program.category }}</div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="text-wrapper-9">{{ latest.intro }}</div>
+
+                                    <div class="text-wrapper-9">{{ program.intro }}</div>
                                 </div>
 
-                                <div class="overlap-group-wrapper" style="display: none;">
+                                {% if program.is_live_now %}
+                                <div class="overlap-group-wrapper">
                                     <div class="overlap-group">
                                         <div class="rectangle-7"></div>
                                         <div class="text-wrapper-10">NÅ</div>
                                     </div>
                                 </div>
+                                {% endif %}
+
                             </div>
                         </div>
-                        {% endif %}
-                        <div class="frame-14">
-                            <div class="frame-18">
-                                <img class="img" src="img/image-19.png" />
-                                <div class="frame-15">
-                                    <div class="frame-16">
-                                        <div class="frame-17">
-                                            <div class="frame-14">
-                                                <div class="text-wrapper-4">19:00 til 20:30</div>
-                                            </div>
-                                        </div>
-                                        <div class="frame-3">
-                                            <div class="frame-17">
-                                                <div class="text-wrapper-7">Vitenselskapet</div>
-                                            </div>
-                                            <div class="component-8">
-                                                <div class="text-wrapper-8">Tema</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="text-wrapper-9">Populærvitenskap</div>
-                                </div>
-                                <div class="overlap-group-wrapper" style="display: none;">
-                                    <div class="overlap-group">
-                                        <div class="rectangle-7"></div>
-                                        <div class="text-wrapper-10">NÅ</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-
+                        {% endfor %}
                     </div>
                 </div>
             </div>
             <div class="Tirsdager">
                 <div class="frame-12">
                     <div class="frame-13">
+                        {% for program in sendeplan.2 %}
                         <div class="frame-14">
                             <div class="frame-18">
-                                <img class="image" src="img/image-4.png" />
+
+                                {% if program.main_image %}
+                                {% image program.main_image fill-400x400 class="image" %}
+                                {% endif %}
+
                                 <div class="frame-15">
                                     <div class="frame-16">
                                         <div class="frame-17">
                                             <div class="frame-14">
-                                                <div class="text-wrapper-4">07:00 - 09:00</div>
+                                                <div class="text-wrapper-4">
+                                                    {{ program.start_time }} - {{ program.end_time }}
+                                                </div>
                                             </div>
                                         </div>
+
                                         <div class="frame-3">
                                             <div class="frame-17">
-                                                <div class="text-wrapper-7">tirsdags</div>
-                                            </div>
-                                            <div class="aftenposten-wrapper">
-                                                <div class="text-wrapper-8">Aktualitet</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="text-wrapper-9">Morgenradio</div>
-                                </div>
-                                <div class="overlap-group-wrapper" style="display: none;">
-                                    <div class="overlap-group">
-                                        <div class="rectangle-7"></div>
-                                        <div class="text-wrapper-10">NÅ</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="frame-14">
-                            <div class="frame-18">
-                                <img class="img" src="img/image-3.png" />
-                                <div class="frame-15">
-                                    <div class="frame-16">
-                                        <div class="frame-17">
-                                            <div class="frame-14">
-                                                <div class="text-wrapper-4">09:00 - 10:00</div>
-                                            </div>
-                                        </div>
-                                        <div class="frame-3">
-                                            <div class="frame-17">
-                                                <div class="text-wrapper-7">Skumma kultur</div>
+                                                <div class="text-wrapper-7">{{ program.title }}</div>
                                             </div>
                                             <div class="component-7">
-                                                <div class="text-wrapper-8">Kultur</div>
+                                                <div class="text-wrapper-8">{{ program.category }}</div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="text-wrapper-9">Diverse kultur</div>
+
+                                    <div class="text-wrapper-9">{{ program.intro }}</div>
                                 </div>
-                                <div class="overlap-group-wrapper" style="display: none;">
+
+                                {% if program.is_live_now %}
+                                <div class="overlap-group-wrapper">
                                     <div class="overlap-group">
                                         <div class="rectangle-7"></div>
                                         <div class="text-wrapper-10">NÅ</div>
                                     </div>
                                 </div>
+                                {% endif %}
+
                             </div>
                         </div>
-
+                        {% endfor %}
                     </div>
                 </div>
             </div>
@@ -249,190 +174,263 @@
             <div class="Onsdager">
                 <div class="frame-12">
                     <div class="frame-13">
+                        {% for program in sendeplan.3 %}
                         <div class="frame-14">
                             <div class="frame-18">
-                                <img class="image" src="img/image-4.png" />
+
+                                {% if program.main_image %}
+                                {% image program.main_image fill-400x400 class="image" %}
+                                {% endif %}
+
                                 <div class="frame-15">
                                     <div class="frame-16">
                                         <div class="frame-17">
                                             <div class="frame-14">
-                                                <div class="text-wrapper-4">07:00 - 09:00</div>
+                                                <div class="text-wrapper-4">
+                                                    {{ program.start_time }} - {{ program.end_time }}
+                                                </div>
                                             </div>
                                         </div>
+
                                         <div class="frame-3">
                                             <div class="frame-17">
-                                                <div class="text-wrapper-7">Onsdagtest</div>
+                                                <div class="text-wrapper-7">{{ program.title }}</div>
                                             </div>
-                                            <div class="aftenposten-wrapper">
-                                                <div class="text-wrapper-8">Aktualitet</div>
+                                            <div class="component-7">
+                                                <div class="text-wrapper-8">{{ program.category }}</div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="text-wrapper-9">Morgenradio</div>
+
+                                    <div class="text-wrapper-9">{{ program.intro }}</div>
                                 </div>
-                                <div class="overlap-group-wrapper" style="display: none;">
+
+                                {% if program.is_live_now %}
+                                <div class="overlap-group-wrapper">
                                     <div class="overlap-group">
                                         <div class="rectangle-7"></div>
                                         <div class="text-wrapper-10">NÅ</div>
                                     </div>
                                 </div>
+                                {% endif %}
+
                             </div>
                         </div>
-
+                        {% endfor %}
                     </div>
                 </div>
             </div>
+
             <div class="Torsdager">
                 <div class="frame-12">
                     <div class="frame-13">
+                        {% for program in sendeplan.4 %}
                         <div class="frame-14">
                             <div class="frame-18">
-                                <img class="image" src="img/image-4.png" />
+
+                                {% if program.main_image %}
+                                {% image program.main_image fill-400x400 class="image" %}
+                                {% endif %}
+
                                 <div class="frame-15">
                                     <div class="frame-16">
                                         <div class="frame-17">
                                             <div class="frame-14">
-                                                <div class="text-wrapper-4">14:00 - 16:00</div>
+                                                <div class="text-wrapper-4">
+                                                    {{ program.start_time }} - {{ program.end_time }}
+                                                </div>
                                             </div>
                                         </div>
+
                                         <div class="frame-3">
                                             <div class="frame-17">
-                                                <div class="text-wrapper-7">Torsdag</div>
+                                                <div class="text-wrapper-7">{{ program.title }}</div>
                                             </div>
-                                            <div class="aftenposten-wrapper">
-                                                <div class="text-wrapper-8">Aktualitet</div>
+                                            <div class="component-7">
+                                                <div class="text-wrapper-8">{{ program.category }}</div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="text-wrapper-9">Morgenradio</div>
+
+                                    <div class="text-wrapper-9">{{ program.intro }}</div>
                                 </div>
-                                <div class="overlap-group-wrapper" style="display: none;">
+
+                                {% if program.is_live_now %}
+                                <div class="overlap-group-wrapper">
                                     <div class="overlap-group">
                                         <div class="rectangle-7"></div>
                                         <div class="text-wrapper-10">NÅ</div>
                                     </div>
                                 </div>
+                                {% endif %}
+
                             </div>
                         </div>
-
+                        {% endfor %}
                     </div>
                 </div>
             </div>
             <div class="Fredager">
                 <div class="frame-12">
                     <div class="frame-13">
+                        {% for program in sendeplan.5 %}
                         <div class="frame-14">
                             <div class="frame-18">
-                                <img class="image" src="img/image-4.png" />
+
+                                {% if program.main_image %}
+                                {% image program.main_image fill-400x400 class="image" %}
+                                {% endif %}
+
                                 <div class="frame-15">
                                     <div class="frame-16">
                                         <div class="frame-17">
                                             <div class="frame-14">
-                                                <div class="text-wrapper-4">07:00 - 09:00</div>
+                                                <div class="text-wrapper-4">
+                                                    {{ program.start_time }} - {{ program.end_time }}
+                                                </div>
                                             </div>
                                         </div>
+
                                         <div class="frame-3">
                                             <div class="frame-17">
-                                                <div class="text-wrapper-7">Fredags</div>
+                                                <div class="text-wrapper-7">{{ program.title }}</div>
                                             </div>
-                                            <div class="aftenposten-wrapper">
-                                                <div class="text-wrapper-8">Aktualitet</div>
+                                            <div class="component-7">
+                                                <div class="text-wrapper-8">{{ program.category }}</div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="text-wrapper-9">Morgenradio</div>
+
+                                    <div class="text-wrapper-9">{{ program.intro }}</div>
                                 </div>
-                                <div class="overlap-group-wrapper" style="display: none;">
+
+                                {% if program.is_live_now %}
+                                <div class="overlap-group-wrapper">
                                     <div class="overlap-group">
                                         <div class="rectangle-7"></div>
                                         <div class="text-wrapper-10">NÅ</div>
                                     </div>
                                 </div>
+                                {% endif %}
+
                             </div>
                         </div>
-
+                        {% endfor %}
                     </div>
                 </div>
             </div>
+
             <div class="Lordager">
                 <div class="frame-12">
                     <div class="frame-13">
+                        {% for program in sendeplan.6 %}
                         <div class="frame-14">
                             <div class="frame-18">
-                                <img class="image" src="img/image-4.png" />
+
+                                {% if program.main_image %}
+                                {% image program.main_image fill-400x400 class="image" %}
+                                {% endif %}
+
                                 <div class="frame-15">
                                     <div class="frame-16">
                                         <div class="frame-17">
                                             <div class="frame-14">
-                                                <div class="text-wrapper-4">07:00 - 09:00</div>
+                                                <div class="text-wrapper-4">
+                                                    {{ program.start_time }} - {{ program.end_time }}
+                                                </div>
                                             </div>
                                         </div>
+
                                         <div class="frame-3">
                                             <div class="frame-17">
-                                                <div class="text-wrapper-7">Fredags</div>
+                                                <div class="text-wrapper-7">{{ program.title }}</div>
                                             </div>
-                                            <div class="aftenposten-wrapper">
-                                                <div class="text-wrapper-8">Aktualitet</div>
+                                            <div class="component-7">
+                                                <div class="text-wrapper-8">{{ program.category }}</div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="text-wrapper-9">Morgenradio</div>
+
+                                    <div class="text-wrapper-9">{{ program.intro }}</div>
                                 </div>
-                                <div class="overlap-group-wrapper" style="display: none;">
+
+                                {% if program.is_live_now %}
+                                <div class="overlap-group-wrapper">
                                     <div class="overlap-group">
                                         <div class="rectangle-7"></div>
                                         <div class="text-wrapper-10">NÅ</div>
                                     </div>
                                 </div>
+                                {% endif %}
+
                             </div>
                         </div>
-
+                        {% endfor %}
                     </div>
                 </div>
             </div>
             <div class="Sondager">
                 <div class="frame-12">
                     <div class="frame-13">
+                        {% for program in sendeplan.7 %}
                         <div class="frame-14">
                             <div class="frame-18">
-                                <img class="image" src="img/image-4.png" />
+
+                                {% if program.main_image %}
+                                {% image program.main_image fill-400x400 class="image" %}
+                                {% endif %}
+
                                 <div class="frame-15">
                                     <div class="frame-16">
                                         <div class="frame-17">
                                             <div class="frame-14">
-                                                <div class="text-wrapper-4">07:00 - 09:00</div>
+                                                <div class="text-wrapper-4">
+                                                    {{ program.start_time }} - {{ program.end_time }}
+                                                </div>
                                             </div>
                                         </div>
+
                                         <div class="frame-3">
                                             <div class="frame-17">
-                                                <div class="text-wrapper-7">Søndags</div>
+                                                <div class="text-wrapper-7">{{ program.title }}</div>
                                             </div>
-                                            <div class="aftenposten-wrapper">
-                                                <div class="text-wrapper-8">Aktualitet</div>
+                                            <div class="component-7">
+                                                <div class="text-wrapper-8">{{ program.category }}</div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="text-wrapper-9">Morgenradio</div>
+
+                                    <div class="text-wrapper-9">{{ program.intro }}</div>
                                 </div>
 
-
-
+                                {% if program.is_live_now %}
+                                <div class="overlap-group-wrapper">
+                                    <div class="overlap-group">
+                                        <div class="rectangle-7"></div>
+                                        <div class="text-wrapper-10">NÅ</div>
+                                    </div>
+                                </div>
+                                {% endif %}
 
                             </div>
                         </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
 
 
 
 
 
 
-                        <!-- Toggle html code when vis som uke oversikt er clicked-->
-                        <div class="frame" id="frame">
-                            <p> her skal sendeplanen</p>
+            <!-- Toggle html code when vis som uke oversikt er clicked-->
+            <div class="frame" id="frame">
+                <p> her skal sendeplanen</p>
 
 
 
-                        </div>
+            </div>
 
 
 </body>

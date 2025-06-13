@@ -118,7 +118,7 @@ DATABASES = {
         'PASSWORD': os.environ.get('DBPASS'),
         'PORT': os.environ.get('DBPORT'),
         'OPTIONS': {
-             'sslmode': 'require',  # Use SSL for database connection
+             'sslmode': 'require',  # Disable SSL for local development
         },
     }
 }
@@ -152,7 +152,7 @@ CSRF_TRUSTED_ORIGINS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Oslo'
 
 USE_I18N = True
 

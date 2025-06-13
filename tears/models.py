@@ -12,6 +12,8 @@ from django.http import HttpResponseRedirect
 from django.utils.translation import gettext_lazy as _
 from .blocks import Weekday, TimeChoices
 from .blocks import ImageWithDescriptionBlock
+from django.utils.timezone import now, localtime
+from datetime import datetime
 
 
 class HomePage(RoutablePageMixin, Page):
@@ -344,15 +346,41 @@ class AListaPage(Page):
         return AListaPage.objects.live().exclude(id=self.id).order_by('-first_published_at')[:count]
 
 class Sendeplan(Page):
-     page_description = "This page is for configuring sendeplan for the semester"
+    page_description = "This page is for configuring sendeplan for the semester"
 
-     def get_context(self, request):
+    def get_context(self, request):
         context = super().get_context(request)
-        context["latest"] = ProgramPage.objects.live().order_by('-first_published_at').first()
+
+        programs = ProgramPage.objects.live().all()
+        sendeplan = {str(i): [] for i in range(1, 8)}  # 1=Mandag .. 7=Søndag
+
+        current_time = localtime(now()).time()
+        current_weekday = str(localtime(now()).isoweekday())
+
+        for program in programs:
+            for block in program.sendetider:
+                data = block.value
+                weekday = data.get("weekday")
+                if weekday:
+                    start_time_str = data.get("start_time")
+                    end_time_str = data.get("end_time")
+
+                    start_time = datetime.strptime(start_time_str, "%H:%M").time() if start_time_str else None
+                    end_time = datetime.strptime(end_time_str, "%H:%M").time() if end_time_str else None
+
+                    is_now = False
+                    if weekday == current_weekday and start_time and end_time:
+                        if start_time <= current_time <= end_time:
+                            is_now = True
+
+                    sendeplan[weekday].append({
+                        "title": program.title,
+                        "start_time": start_time_str,
+                        "end_time": end_time_str,
+                        "category": program.get_category_display(),
+                        "intro": program.intro,
+                        "main_image": program.main_image,
+                        "is_live_now": is_now,
+                    })
+        context["sendeplan"] = sendeplan
         return context
-     
-    
-   
-
-
-
