@@ -1,6 +1,6 @@
 
   const dagsliste = document.querySelector(".frame-11");
-  const ukesoversikt = document.querySelector(".frame");
+  const ukesoversikt = document.querySelector(".frame-123");
   const ukedager = document.querySelector(".frame-2")
   const dagsKnapp = document.querySelector(".component-2");
   const ukeKnapp = document.querySelector(".component-4");
@@ -10,9 +10,10 @@
   const dagKnappene = document.querySelectorAll("#mandag, #tirsdag, #onsdag, #torsdag, #fredag, #lordag, #sondag");
   const alleDager = document.querySelectorAll(".Mandager, .Tirsdager, .Onsdager, .Torsdager, .Fredager, .Lordager, .Sondager");
   
-  // Start med å skjule ukesoversikt
-
+  // skjule ukesoveriskt
   ukesoversikt.style.display = "none";
+  
+ 
 
   // prøver å sette av den dagen det er og gjorde den knappen svart og vise bare den.
 const dagene = ["Sondager", "Mandager", "Tirsdager", "Onsdager", "Torsdager", "Fredager", "Lordager"];
@@ -45,6 +46,7 @@ dagene.forEach((dagClass, index) => {
 });
 
 
+
   //start med ukedageneknappene til å endre farge on click
 dagKnappene.forEach(knapp => {
   knapp.addEventListener("click", () => {
@@ -72,3 +74,61 @@ dagKnappene.forEach(knapp => {
     });
   });
 });
+
+dagsKnapp.addEventListener("click", () => {
+  dagsliste.style.display = "block";
+  ukesoversikt.style.display = "none";
+  ukedager.style.display = "block";
+  console.log("Dagsliste er nå synlig");
+  dagsKnapp.classList.remove("component-4");
+    dagsKnapp.classList.add("component-2");
+    ukeKnapp.classList.remove("component-2");
+    ukeKnapp.classList.add("component-4");
+  
+    // Endre tekstfarge direkte
+    dagsKnapp.querySelector(".text-wrapper-4, .text-wrapper-6").style.color = "#ffffff";
+    ukeKnapp.querySelector(".text-wrapper-4, .text-wrapper-6").style.color = "#511120";
+  
+    // Endre rektangel-farge
+    dagsKnapp.querySelectorAll(".rectangle, .rectangle-2, .rectangle-3").forEach(r => r.style.backgroundColor = "#ffffff");
+    ukeKnapp.querySelectorAll(".rectangle-4, .rectangle-5, .rectangle-6").forEach(r => r.style.backgroundColor = "#511120");
+
+
+});
+
+ukeKnapp.addEventListener("click", () => {
+  dagsliste.style.display = "none";
+  ukesoversikt.style.display = "block";
+  ukedager.style.display = "none";
+  console.log("Ukesoversikt er nå synlig");
+
+  ukeKnapp.classList.remove("component-4");
+    ukeKnapp.classList.add("component-2");
+    dagsKnapp.classList.remove("component-2");
+    dagsKnapp.classList.add("component-4");
+  
+    ukeKnapp.querySelector(".text-wrapper-4, .text-wrapper-6").style.color = "#ffffff";
+    dagsKnapp.querySelector(".text-wrapper-4, .text-wrapper-6").style.color = "#511120";
+  
+    ukeKnapp.querySelectorAll(".rectangle-4, .rectangle-5, .rectangle-6").forEach(r => r.style.backgroundColor = "#ffffff");
+    dagsKnapp.querySelectorAll(".rectangle, .rectangle-2, .rectangle-3").forEach(r => r.style.backgroundColor = "#511120");
+});
+// addProgram function to add a program to the schedule
+// This function will add a program to the schedule based on the day, time, title, and end time
+ function addProgram(day, time, title, endTime) {
+            const rows = document.querySelectorAll('tbody tr');
+            const dayIndex = ['mandag', 'tirsdag', 'onsdag', 'torsdag', 'fredag', 'lørdag', 'søndag'].indexOf(day.toLowerCase()) + 1;
+            
+            rows.forEach(row => {
+                const timeCell = row.querySelector('.time-cell');
+                if (timeCell && timeCell.textContent === time) {
+                    const cell = row.cells[dayIndex];
+                    if (cell) {
+                        cell.innerHTML = `
+                            <div class="program">${title}</div>
+                            <div class="program-time">${time} - ${endTime}</div>
+                        `;
+                    }
+                }
+            });
+        }

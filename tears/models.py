@@ -372,6 +372,13 @@ class Sendeplan(Page):
                     if weekday == current_weekday and start_time and end_time:
                         if start_time <= current_time <= end_time:
                             is_now = True
+                    if start_time_str and end_time_str:
+                        start_time_obj = datetime.strptime(start_time_str, "%H:%M")
+                        end_time_obj = datetime.strptime(end_time_str, "%H:%M")
+                        duration = (end_time_obj - start_time_obj).total_seconds() / 60  # minutes
+                        rowspan = int(duration / 30)
+                    else:
+                     rowspan = 1  # default if missing times
 
                     sendeplan[weekday].append({
                         "title": program.title,
@@ -381,6 +388,15 @@ class Sendeplan(Page):
                         "intro": program.intro,
                         "main_image": program.main_image,
                         "is_live_now": is_now,
+                        "rowspan": rowspan,
                     })
+                    
         context["sendeplan"] = sendeplan
+        context["weekdays"] = ["1", "2", "3", "4", "5", "6", "7"]
+        context["time_slots"] = ["00:00"] +[
+            f"{hour:02d}:{minute:02d}" 
+            for hour in range(6, 24) 
+            for minute in (0, 30)
+     ]       
+
         return context
