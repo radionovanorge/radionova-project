@@ -1,7 +1,7 @@
 {% load static %}
 
 <!-- Radio player component -->
-<div id="radiospiller" class="bg-radionova-dark text-white py-4">
+<div id="radiospiller" class="bg-radionova-dark text-white py-4 mt-4">
     <div class="radio-player-container">
         <!-- Play/Pause toggle button -->
         <button id="play-toggle" class="radio-player-btn" aria-label="Spill eller pause radio">
@@ -25,7 +25,7 @@
         
         <!-- Station info -->
         <div class="text-sm">
-            <p>Direkte: Radio Nova / 00:00-05:59: Novanatt</p>
+            <p>{{ current_live_text }}</p>
         </div>
     </div>
     

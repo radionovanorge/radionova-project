@@ -14,11 +14,7 @@
 </head>
 
 <body>
-
-    <div class="desktop-sendeplan">
-
-        <div class="frame-6">
-            <div class="max-w-6xl mx-auto px-20">
+    <div class="max-w-6xl mx-auto px-20">
             <!-- Breadcrumb Navigation -->
             <div class="text-sm text-gray-500 mb-4 mt-1">
 
@@ -29,7 +25,7 @@
                             {% for p in self.get_ancestors %}
                             {% if not p.is_root %}
                             <li>
-                                <a href="{{ p.url }}" class="hover:text-purple-600">{{ p.title }}</a>
+                                <a href="{{ p.url }}" class="hover:text-red-600">{{ p.title }}</a>
                                 <span class="mx-2 text-gray-400">></span>
                             </li>
                             {% endif %}
@@ -41,9 +37,13 @@
                     {% endif %}
                 </div>
             </div>
-            <h1 class="sendeplan-heading"> Sendeplan </h1>
+            <h1 class="sendeplan-heading"> Sendeplan  </h1>
+            </div>
+    <div class="desktop-sendeplan">
 
-            <div class="frame-7">
+        <div class="frame-6">
+            
+            <div class="frame-9">
 
 
                 <div class="frame-8">
@@ -450,8 +450,8 @@
         <!-- Toggle html code when vis som uke oversikt er clicked-->
         
         <div class="frame-123 h-[90vh]"><iframe 
-    class="absolute top-100 left-0 w-full h-[70vh]"
-    src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQjJWU0pFrXumqG27LgHN5U1P3WLCZJ1CE4z-WQXYiuOGg0nR93ETOeu-VbGyLum1ZsTbxh_ihufqQo/pubhtml?gid=0&amp;single=true&amp;widget=false&amp;headers=true" 
+    class="absolute top-200 left-0 w-full h-[70vh]"
+    src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQjJWU0pFrXumqG27LgHN5U1P3WLCZJ1CE4z-WQXYiuOGg0nR93ETOeu-VbGyLum1ZsTbxh_ihufqQo/pubhtml?gid=0&amp;single=true&amp;widget=false&amp;headers=false" 
     >
   </iframe>
             <!--IDEA: Webscapre the googlesheet and style it yourself

@@ -397,6 +397,21 @@ class Sendeplan(Page):
             f"{hour:02d}:{minute:02d}" 
             for hour in range(6, 24) 
             for minute in (0, 30)
-     ]       
+     ]  
+         # Finner nåværende live program
+        current_program = None
+
+        for day_programs in sendeplan.values():
+            for program in day_programs:
+                if program["is_live_now"]:
+                    current_program = program
+                    break
+            if current_program:
+                break
+
+        if current_program:
+            context["current_live_text"] = f"Direkte: Radio Nova / {current_program['start_time']}–{current_program['end_time']}: {current_program['title']}"
+        else:
+            context["current_live_text"] = "Direkte: Radio Nova"       
 
         return context

@@ -32,7 +32,7 @@
                             {% for p in self.get_ancestors %}
                             {% if not p.is_root %}
                             <li>
-                                <a href="{{ p.url }}" class="hover:text-purple-600">{{ p.title }}</a>
+                                <a href="{{ p.url }}" class="hover:text-red-600">{{ p.title }}</a>
                                 <span class="mx-2 text-gray-400">></span>
                             </li>
                             {% endif %}
