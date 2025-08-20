@@ -15,24 +15,31 @@
 <header class="w-full bg-[#f7f4f4] p-10 mb-8">
     <div class="program-container px-4 py-8 max-w-4xl mx-auto">
         <!-- Breadcrumb -->
-        <div class="breadcrumb-content text-sm text-gray-500 mb-4 mt-1">
-            {% if self.get_ancestors|length > 1 %}
-            <nav aria-label="Breadcrumb">
-                <ul class="flex items-center space-x-2">
-                    {% for p in self.get_ancestors %}
-                    {% if not p.is_root %}
-                    <li>
-                        <a href="{{ p.url }}" class="hover:text-red-600">{{ p.title }}</a>
-                        <span class="mx-2 text-gray-400">></span>
-                    </li>
-                    {% endif %}
-                    {% endfor %}
-                    <!-- Current Page -->
-                    <li class="text-red-600 font-semibold">{{ self.title }}</li>
-                </ul>
-            </nav>
+         <div class="text-sm text-gray-500 mb-4 mt-1">
+    {% if self.get_ancestors|length > 1 %}
+    <nav aria-label="Breadcrumb">
+        <ul class="flex items-center space-x-2 flex-wrap">
+            {% for p in self.get_ancestors %}
+            {% if not p.is_root %}
+            <li class="flex items-center {% if forloop.counter > 1 and forloop.counter < forloop.parentloop.counter0|add:'-1' %}hidden sm:flex{% endif %}">
+                <a href="{{ p.url }}" class="hover:text-red-600 transition-colors">{{ p.title }}</a>
+                <span class="mx-2 text-gray-400">→</span>
+            </li>
             {% endif %}
-        </div>
+            {% endfor %}
+            <!-- Show ellipsis on small screens if there are hidden items -->
+            {% if self.get_ancestors|length > 3 %}
+            <li class="sm:hidden flex items-center">
+                <span class="text-gray-400">...</span>
+                <span class="mx-2 text-gray-400">→</span>
+            </li>
+            {% endif %}
+            <!-- Current Page -->
+            <li class="text-red-600 font-semibold">{{ self.title }}</li>
+        </ul>
+    </nav>
+    {% endif %}
+</div>
 
         <!-- Flex Layout for Header Content -->
         <!-- Flex Layout for Header Content -->
