@@ -1,5 +1,7 @@
+console.log("Programmer page script loaded.");
 document.querySelectorAll('.filter-checkbox').forEach(checkbox => {
     checkbox.addEventListener('change', () => {
+        console.log(`Checkbox ${checkbox.value} changed to ${checkbox.checked}`);
         // Deselect all checkboxes except the one that was just clicked
         document.querySelectorAll('.filter-checkbox').forEach(cb => {
             if (cb !== checkbox) cb.checked = false;
@@ -47,4 +49,25 @@ toggleBtn.addEventListener("click", () => {
         toggleBtn.querySelector("span").textContent = "Vis som rutenett";
     }
 });
+// asc/desc sorting (locale-aware for nb)
+document.getElementById("sortSelect").addEventListener("change", function () {
+  const asc = this.value === "asc";
+  const container = showingGrid ? grid : list; // use your existing refs
+  if (!container) return;
 
+  const collator = new Intl.Collator("nb", { sensitivity: "base", numeric: true });
+  const titleOf = el => (el.querySelector("h3")?.textContent || "").trim().toLowerCase();
+
+  const cards = Array.from(container.querySelectorAll(":scope > div"));
+
+  cards.sort((a, b) => collator.compare(titleOf(a), titleOf(b)));
+  if (!asc) cards.reverse();
+
+  // reattach in new order
+  const frag = document.createDocumentFragment();
+  cards.forEach(c => frag.appendChild(c));
+  container.appendChild(frag);
+
+  console.log(`Sorted programs ${asc ? "A–Å" : "Å–A"} in the ${showingGrid ? "grid" : "list"} view.`);
+  
+});

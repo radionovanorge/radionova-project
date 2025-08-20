@@ -1,12 +1,15 @@
 {% extends "tears/base.html" %}
 {% load wagtailcore_tags wagtailimages_tags %}
+{% load static %}
 {% block content %}
+
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Programoversikt</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="{% static 'tears/js/naavaerendeprogram.js' %}?v={% now 'U' %}"></script>
 
 </head>
 <header class="w-full bg-[#f7f4f4] p-10 mb-8">
@@ -32,41 +35,61 @@
         </div>
 
         <!-- Flex Layout for Header Content -->
-        <div class="flex flex-col-reverse lg:flex-row lg:justify-between lg:items-start gap-6">
+        <!-- Flex Layout for Header Content -->
+        <div class="flex flex-col-reverse lg:flex-row lg:items-start gap-6">
             <!-- Left Column: Text and Info -->
             <div class="flex-1">
                 <!-- Title -->
                 <h1 class="program-title text-3xl font-bold text-gray-900 mb-2">{{ page.title }}</h1>
 
-                <!-- Meta Info TID-->
-                <!-- Tags -->
-                <div class="flex flex-wrap items-center justify-start gap-2 text-sm text-gray-700 mb-3">
-                    {% if page.schedule_info %}
-                    <span>{{ page.schedule_info }}</span>
-                    {% endif %}
-                    {% if page.category %}
-                    {% with category_name=page.get_category_display %}
-                    {% if category_name == 'Aktualitet' %}
-                    <span class="text-base px-2 py-1 bg-blue-100 text-blue-700 rounded-full">{{ category_name }}</span>
-                    {% elif category_name == 'Humor & underholdning' %}
-                    <span class="text-base px-2 py-1 bg-pink-100 text-pink-700 rounded-full">{{ category_name }}</span>
-                    {% elif category_name == 'Kultur' %}
-                    <span class="text-base px-2 py-1 bg-green-100 text-green-700 rounded-full">{{ category_name }}</span>
-                    {% elif category_name == 'Musikk' %}
-                    <span
-                        class="text-base px-2 py-1 bg-yellow-100 text-yellow-700 rounded-full">{{ category_name }}</span>
-                    {% elif category_name == 'Tema' %}
-                    <span
-                        class="text-base px-2 py-1 bg-purple-100 text-purple-700 rounded-full">{{ category_name }}</span>
-                    {% elif category_name == 'Tidligere programmer' %}
-                    <span class="text-base px-2 py-1 bg-gray-100 text-gray-700 rounded-full">{{ category_name }}</span>
-                    {% else %}
-                    <span
-                        class="text-base px-2 py-1 bg-neutral-100 text-neutral-700 rounded-full">{{ category_name }}</span>
-                    {% endif %}
-                    {% endwith %}
-                    {% endif %}
+
+                <div class="flex flex-wrap items-center justify-start gap-x-2 gap-y-0 text-sm text-gray-700 mb-3">
+                    <div class="flex flex-wrap items-center justify-between gap-x-2 gap-y-1 mb-2">
+
+                        {# Left: rotating weekday • time #}
+                        <div id="sendetid-rotator" class="relative min-h-[1.75rem] flex-1">
+                            <span id="sendetid-current"
+                                class="text-[#4b0c1b] font-sans text-lg leading-tight transition-opacity duration-300 opacity-100"></span>
+
+                            {# Hidden source items for the rotator #}
+                            {% if page.sendetider %}
+                            <div class="mt-2">
+                                {% for block in page.sendetider %}
+                                {% if block.block_type == "sendetid" and block.value.weekday and block.value.start_time and block.value.end_time %}
+                                <div class="mb-1">
+                                    <span class="text-[#4b0c1b] font-sans text-lg rot-item hidden">
+                                        {% if block.value.weekday == "1" %}Mandager{% elif block.value.weekday == "2" %}Tirsdager{% elif block.value.weekday == "3" %}Onsdager{% elif block.value.weekday == "4" %}Torsdager{% elif block.value.weekday == "5" %}Fredager{% elif block.value.weekday == "6" %}Lørdager{% elif block.value.weekday == "7" %}Søndager{% endif %}
+                                        &bull; {{ block.value.start_time }} - {{ block.value.end_time }}
+                                    </span>
+                                </div>
+                                {% endif %}
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+
+                        </div>
+
+                        {# Right: category badge #}
+                        {% if page.category %}
+                        {% with category_name=page.get_category_display %}
+                        <span class="px-3 py-1 mb-1 rounded-full text-base
+                   {% if category_name == 'Aktualitet' %} bg-blue-100 text-blue-700
+                   {% elif category_name == 'Humor & underholdning' %} bg-pink-100 text-pink-700
+                   {% elif category_name == 'Kultur' %} bg-green-100 text-green-700
+                   {% elif category_name == 'Musikk' %} bg-yellow-100 text-yellow-700
+                   {% elif category_name == 'Tema' %} bg-purple-100 text-purple-700
+                   {% else %} bg-neutral-100 text-neutral-700 {% endif %}">
+                            {{ category_name }}
+                        </span>
+                        {% endwith %}
+                        {% endif %}
+
+                    </div>
+
+
+
                 </div>
+
 
 
 
@@ -93,14 +116,24 @@
 
                     {% if page.instagram_link %}
                     <a href="{{ page.instagram_link }}" class="flex items-center space-x-2 hover:underline">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 448 512"
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 170 170"
                             class="w-5 h-5">
+                            <path d="M122.406,0H46.654C20.929,0,0,20.93,0,46.655v75.752c0,25.726,20.929,46.655,46.654,46.655h75.752
+      c25.727,0,46.656-20.93,46.656-46.655V46.655C169.063,20.93,148.133,0,122.406,0z M154.063,122.407
+      c0,17.455-14.201,31.655-31.656,31.655H46.654C29.2,154.063,15,139.862,15,122.407V46.655C15,29.201,29.2,15,46.654,15h75.752
+      c17.455,0,31.656,14.201,31.656,31.655V122.407z" />
                             <path
-                                d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8z" />
+                                d="M84.531,40.97c-24.021,0-43.563,19.542-43.563,43.563c0,24.02,19.542,43.561,43.563,43.561s43.563-19.541,43.563-43.561
+      C128.094,60.512,108.552,40.97,84.531,40.97z M84.531,113.093c-15.749,0-28.563-12.812-28.563-28.561
+      c0-15.75,12.813-28.563,28.563-28.563s28.563,12.813,28.563,28.563C113.094,100.281,100.28,113.093,84.531,113.093z" />
+                            <path d="M129.921,28.251c-2.89,0-5.729,1.17-7.77,3.22c-2.051,2.04-3.23,4.88-3.23,7.78c0,2.891,1.18,5.73,3.23,7.78
+      c2.04,2.04,4.88,3.22,7.77,3.22c2.9,0,5.73-1.18,7.78-3.22c2.05-2.05,3.22-4.89,3.22-7.78c0-2.9-1.17-5.74-3.22-7.78
+      C135.661,29.421,132.821,28.251,129.921,28.251z" />
                         </svg>
                         <span>Instagram</span>
                     </a>
                     {% endif %}
+
 
                     {% if page.tiktok_link %}
                     <a href="{{ page.tiktok_link }}" class="flex items-center space-x-2 hover:underline">
@@ -130,7 +163,7 @@
 
             <!-- Right Column: Main Image -->
             {% if page.main_image %}
-            <div class="flex-shrink-0 w-full max-w-xs mx-auto lg:mx-0">
+            <div class="flex-shrink-0 w-full max-w-xs">
                 {% image page.main_image width-800 class="program-image w-full h-auto object-cover" %}
             </div>
             {% endif %}
@@ -148,18 +181,19 @@
 
 
 </section>
-     <!-- Nettsaker only the program has written-->
-     {% with blog_posts=page.blog_posts.live %}
-     {% if blog_posts %}
-       <div class=" mx-auto px-6 mt-16 bg-[#f7f4f4] py-12">
-      <h2 class="text-3xl font-bold text-[#511120] mb-6 text-center">Mer fra {{ page.title }}</h2>
-      <div class="grid grid-cols-1 sm:grid-cols-3 gap-8">
+<!-- Nettsaker only the program has written-->
+{% with blog_posts=page.blog_posts.live %}
+{% if blog_posts %}
+<div class=" mx-auto px-6 mt-16 bg-[#f7f4f4] py-12">
+    <h2 class="text-3xl font-bold text-[#511120] mb-6 text-center">Mer fra {{ page.title }}</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-8">
         {% for post in blog_posts|slice:":3" %}
-        <a href="{{ post.url }}" class="group block rounded-lg shadow-md overflow-hidden transition-transform transform hover:scale-105">
-           {% for block in post.body %}
+        <a href="{{ post.url }}"
+            class="group block rounded-lg shadow-md overflow-hidden transition-transform transform hover:scale-105">
+            {% for block in post.body %}
             {% if block.block_type == "main_image" %}
             {% image block.value fill-600x400 as img %}
-             <div class="thumb" style="
+            <div class="thumb" style="
                  background-image: url('{{ img.url }}');
                  width: 100%;
                  height: 250px;
@@ -168,19 +202,20 @@
                  background-repeat: no-repeat;"></div>
             {% endif %}
             {% endfor %}
-          <div class="p-4">
-            <h3 class="text-lg font-semibold group-hover:text-[#511120]">{{ post.title }}</h3>
-            <!-- This can be too much text and makes the box too long <p class="text-sm text-gray-500">{{ post.ingress|default:"- Nettsak" }}</p> -->
-          </div>
+            <div class="p-4">
+                <h3 class="text-lg font-semibold group-hover:text-[#511120]">{{ post.title }}</h3>
+                <!-- This can be too much text and makes the box too long <p class="text-sm text-gray-500">{{ post.ingress|default:"- Nettsak" }}</p> -->
+            </div>
         </a>
-        
-         {% endfor %}
-       </div>
-     {% endif %}
-   {% endwith %}
-   
+
+        {% endfor %}
     </div>
+    {% endif %}
+    {% endwith %}
+
+</div>
 </section>
 </div>
+
 
 {% endblock %}

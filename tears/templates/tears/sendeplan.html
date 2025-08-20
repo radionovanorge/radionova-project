@@ -5,10 +5,12 @@
 {% block content %}
 
 <head>
-    <link href="{% static '\tears\css\sendeplan.css' %}" rel="stylesheet">
+    <link rel="stylesheet"
+      href="{% static 'tears/css/sendeplan.css' %}?v={% now 'U' %}">
 
 
     <script src="https://cdn.tailwindcss.com"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
 </head>
@@ -37,9 +39,10 @@
                     {% endif %}
                 </div>
             </div>
-            <h1 class="sendeplan-heading"> Sendeplan  </h1>
-            </div>
-    <div class="desktop-sendeplan">
+            <h1 class="sendeplan-heading"> Sendeplan </h1>
+            <h2 class="text-base font-semibold text-[#511120] mb-3 mt-3 ml-2 text-xl"> Radio Nova sender programmer hverdager 06:00 til 00:00, og helger 09:00 til 00:00. </h2>
+            
+    <div class="desktop-sendeplan mb-2">
 
         <div class="frame-6">
             
@@ -459,6 +462,7 @@
             and then find where the html table starts. -->
             
         
+        </div>
         </div>
         
         

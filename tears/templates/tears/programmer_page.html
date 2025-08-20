@@ -154,15 +154,17 @@
                         <span class="mr-2">Vis som liste</span>
 
                     </button>
-                    <select class="border border-gray-300 rounded px-3 py-2">
-                        <option>A til Å</option>
-                        <option>Å til A</option>
+                    <select id="sortSelect" class="border border-gray-300 rounded px-3 py-2">
+                        <option value="asc">A til Å</option>
+                        <option value="desc">Å til A</option>
                     </select>
+
+
                 </div>
             </div>
 
             <!-- Programs Grid Layout 1 -->
-            <div id="programGrid" class="program-rutenett grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-10 mr-6" >
+            <div id="programGrid" class="program-rutenett grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-10 mr-6">
 
                 {% for category_name, programs in grouped_programs.items %}
                 {% for program in programs %}
@@ -209,8 +211,7 @@
 
                 {% for category_name, programs in grouped_programs.items %}
                 {% for program in programs %}
-                <div class="flex flex-col md:flex-row bg-white p-4 rounded gap-4"
-                    data-category="{{ category_name }}">
+                <div class="flex flex-col md:flex-row bg-white p-4 rounded gap-4" data-category="{{ category_name }}">
 
                     <!-- Image -->
                     {% if program.main_image %}
@@ -221,19 +222,17 @@
                     {% endif %}
 
                     <!-- Content -->
-                    <div class="flex-1 flex flex-col justify-between">
-                        <!-- Schedule -->
+                    <!-- Content -->
+                    <div class="flex-1 flex flex-col gap-1 md:gap-1.5">
                         {% if program.schedule_info %}
-                        <p class="text-sm text-gray-700 font-medium mb-1">{{ program.schedule_info }}</p>
+                        <p class="text-sm text-gray-700 font-medium">{{ program.schedule_info }}</p>
                         {% endif %}
 
                         <!-- Title + Tag -->
-                        <div class="flex flex-wrap items-center gap-2 mb-1">
+                        <div class="flex flex-wrap items-baseline gap-2">
                             <a href="{{ program.url }}">
-                                <h3 class="text-xl font-semibold text-[#4b0c1b]">{{ program.title }}</h3>
+                                <h3 class="text-xl font-semibold text-[#4b0c1b] leading-tight">{{ program.title }}</h3>
                             </a>
-
-                            <!-- Category Tag -->
                             {% if category_name == 'Aktualitet' %}
                             <span
                                 class="text-xs px-2 py-1 bg-blue-100 text-blue-700 rounded-full">{{ category_name }}</span>
@@ -255,11 +254,11 @@
                             {% endif %}
                         </div>
 
-                        <!-- Intro -->
                         {% if program.intro %}
                         <p class="text-sm text-gray-700">{{ program.intro }}</p>
                         {% endif %}
                     </div>
+
                 </div>
                 {% endfor %}
                 {% endfor %}
@@ -270,7 +269,7 @@
         </div>
     </div>
     </div>
-    <script src="{% static 'tears/js/programmer_page.js' %}"></script>
+    <script src="{% static 'tears/js/programmer_page.js' %}?v={% now 'U' %}" defer></script>
 </body>
 
 

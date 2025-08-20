@@ -30,6 +30,26 @@
     margin: 10px;
     
 }
+.sendeplan-sub{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    position: relative;
+    align-self: stretch;
+    width: 100%;
+    flex: 0 0 auto;
+    display: flex;
+    width: 100%;
+    color: #511120;
+    font-family: "Noto Sans", sans-serif;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 26px;
+    margin-bottom: 10px;
+}
+
   
   .desktop-sendeplan .column {
     display: inline-flex;
@@ -96,13 +116,7 @@
     align-self: stretch;
   }
   
-  .desktop-sendeplan .menu {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--01-primitive-IMDI-spacing-2xl);
-    position: relative;
-    flex: 0 0 auto;
-  }
+  
   
   .desktop-sendeplan .div {
     display: inline-flex;
@@ -389,17 +403,33 @@
     width: 100%;
     flex: 0 0 auto;
   }
+  @media (max-width: 768px) {
+  .desktop-sendeplan .frame-9 {
+    margin-left: auto;   /* shift slightly left */
+    margin-right: 100px; /* keep auto right */
+    padding: 0px 16px;  /* reduce padding for mobile */
+  }
+}
+
+  
   
  .desktop-sendeplan .frame-10 {
     display: grid;
       
     grid-template-rows: auto;
-    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(100px, auto));
 
     flex-wrap: wrap;
-    width: 100%;
+    
     justify-content: center; /* Sentrer grid-elementene */
     position: relative;
+    
+    
+    width: 100%;
+    
+    gap: 8px 8px;
+    
+
 }
 
   
@@ -407,7 +437,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 2px;
+    gap: 8px;
     padding: 4px 8px;
     position: relative;
     flex: 1;
@@ -423,7 +453,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 2px;
+    gap: 8px;
     padding: 4px 8px;
     position: relative;
     flex: 1;
@@ -441,13 +471,22 @@
 }
   
   .desktop-sendeplan .frame-11 {
-    margin: 0 auto;
+    display: flex;
+    margin-left: 150px;
     position: relative;
     
     gap: 10px;
-    padding: 0px 64px;
+    padding: 0px 24px;
     
   }
+  @media (max-width: 768px) {
+  .desktop-sendeplan .frame-11 {
+    margin-left: 250px;   
+     
+    padding: 0px 16px;  
+  }
+}
+  
   
   .desktop-sendeplan .frame-12 {
     gap: 24px;
