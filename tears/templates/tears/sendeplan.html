@@ -5,8 +5,7 @@
 {% block content %}
 
 <head>
-    <link rel="stylesheet"
-      href="{% static 'tears/css/sendeplan.css' %}?v={% now 'U' %}">
+    <link rel="stylesheet" href="{% static 'tears/css/sendeplan.css' %}?v={% now 'U' %}">
 
 
     <script src="https://cdn.tailwindcss.com"></script>
@@ -16,55 +15,82 @@
 </head>
 
 <body>
-    <div class="max-w-6xl mx-auto px-20">
+
+
+    <header class="w-full bg-[#f7f4f4] p-10 mb-8">
+        <div class="max-w-6xl mx-auto px-200">
             <!-- Breadcrumb Navigation -->
-             <div class="text-sm text-gray-500 mb-4 mt-1">
-    {% if self.get_ancestors|length > 1 %}
-    <nav aria-label="Breadcrumb">
-        <ul class="flex items-center space-x-2 flex-wrap">
-            {% for p in self.get_ancestors %}
-            {% if not p.is_root %}
-            <li class="flex items-center {% if forloop.counter > 1 and forloop.counter < forloop.parentloop.counter0|add:'-1' %}hidden sm:flex{% endif %}">
-                <a href="{{ p.url }}" class="hover:text-red-600 transition-colors">{{ p.title }}</a>
-                <span class="mx-2 text-gray-400">→</span>
-            </li>
-            {% endif %}
-            {% endfor %}
-            <!-- Show ellipsis on small screens if there are hidden items -->
-            {% if self.get_ancestors|length > 3 %}
-            <li class="sm:hidden flex items-center">
-                <span class="text-gray-400">...</span>
-                <span class="mx-2 text-gray-400">→</span>
-            </li>
-            {% endif %}
-            <!-- Current Page -->
-            <li class="text-red-600 font-semibold">{{ self.title }}</li>
-        </ul>
-    </nav>
-    {% endif %}
-</div>
+            <div class="text-sm text-gray-500 mb-4 mt-1">
+                {% if self.get_ancestors|length > 1 %}
+                <nav aria-label="Breadcrumb">
+                    <ul class="flex items-center space-x-2 flex-wrap">
+                        {% for p in self.get_ancestors %}
+                        {% if not p.is_root %}
+                        <li
+                            class="flex items-center {% if forloop.counter > 1 and forloop.counter < forloop.parentloop.counter0|add:'-1' %}hidden sm:flex{% endif %}">
+                            <a href="{{ p.url }}" class="hover:text-red-600 transition-colors">{{ p.title }}</a>
+                            <span class="mx-2 text-gray-400">→</span>
+                        </li>
+                        {% endif %}
+                        {% endfor %}
+                        <!-- Show ellipsis on small screens if there are hidden items -->
+                        {% if self.get_ancestors|length > 3 %}
+                        <li class="sm:hidden flex items-center">
+                            <span class="text-gray-400">...</span>
+                            <span class="mx-2 text-gray-400">→</span>
+                        </li>
+                        {% endif %}
+                        <!-- Current Page -->
+                        <li class="text-red-600 font-semibold">{{ self.title }}</li>
+                    </ul>
+                </nav>
+                {% endif %}
+            </div>
+
+
+            <!-- Title Section -->
             <h1 class="sendeplan-heading"> Sendeplan </h1>
-            <h2 class="text-base font-semibold text-[#511120] mb-3 mt-3 ml-2 text-xl"> Radio Nova sender programmer hverdager 06:00 til 00:00, og helger 09:00 til 00:00. </h2>
-            
+            <h2 class="text-base font-semibold text-[#511120] mb-3 mt-3 ml-2 text-xl"> Radio Nova sender programmer
+                hverdager 06:00 til 00:00, og helger 09:00 til 00:00. </h2>
+        </div>
+    </header>
+
+
     <div class="desktop-sendeplan mb-2">
+        <div class="bg-white p-6 md:p-8">
 
-        <div class="frame-6">
-            
-            <div class="frame-9">
+            <!-- TABS: bruker dine klassenavn + Tailwind for utseende -->
+            <div class="frame-6 relative">
+                <div class="flex gap-3">
+                    <!-- Aktiv tab (component-2) -->
+                    <div
+                        class="component-2 inline-flex items-center rounded-sm border-2 border-[#4B0C1B] text-white px-4 py-2">
+                        <!-- Bruk gjerne SVG-ikonet ditt her -->
+                        <svg class="w-5 h-5 mr-2 color_logo text-white" viewBox="0 0 20 20" fill="none">
+                            <rect x="3" y="4" width="14" height="12" rx="2" stroke="currentColor" stroke-width="1.7" />
+                            <line x1="6" y1="7" x2="14" y2="7" stroke="currentColor" stroke-width="1.7"
+                                stroke-linecap="round" />
+                            <line x1="6" y1="10" x2="12" y2="10" stroke="currentColor" stroke-width="1.7"
+                                stroke-linecap="round" />
+                            <line x1="6" y1="13" x2="10" y2="13" stroke="currentColor" stroke-width="1.7"
+                                stroke-linecap="round" />
+                        </svg>
 
+                        <!-- beholder dine wrappers -->
 
-                <div class="frame-8">
-
-                    <div class="component-2">
-                        <div class="component-3">
-                            <div class="rectangle"></div>
-                            <div class="rectangle-2"></div>
-                            <div class="rectangle-3"></div>
-                        </div>
                         <div class="text-wrapper-6">Vis som dagsliste</div>
                     </div>
-                    <div class="component-4">
-                        <div class="component-3">
+
+                    <!-- Inaktiv tab (component-4) -->
+                    <div
+                        class="component-4 inline-flex items-center rounded-md border-2 border-[#4B0C1B] bg-[#EBDDE1] text-[#4B0C1B] px-4 py-2">
+                        <svg class="w-5 h-5 mr-2 color_logo text-[#4B0C1B]" viewBox="0 0 20 20" fill="none">
+                            <rect x="3" y="3" width="3" height="14" rx="1" stroke="currentColor" stroke-width="1.7" />
+                            <rect x="8.5" y="3" width="3" height="14" rx="1" stroke="currentColor" stroke-width="1.7" />
+                            <rect x="14" y="3" width="3" height="14" rx="1" stroke="currentColor" stroke-width="1.7" />
+                        </svg>
+
+                        <div class="component-3 hidden">
                             <div class="rectangle-4"></div>
                             <div class="rectangle-5"></div>
                             <div class="rectangle-6"></div>
@@ -72,35 +98,50 @@
                         <div class="text-wrapper-4">Vis som ukesoversikt</div>
                     </div>
                 </div>
+
+                <!-- underline under tabs -->
+                <div class="absolute bottom-0 right-100 -translate-x-20 w-[1200px] h-[2px] bg-[#4B0C1B]"></div>
+
             </div>
-        </div>
-        <div class="frame-9">
-            <div class="frame-2">
-                <div class="frame-10">
-                    <div class="component-5" id="mandag">
-                        <div class="text-wrapper-6">Mandager</div>
-                    </div>
-                    <div class="component-6" id="tirsdag">
-                        <div class="text-wrapper-4">Tirsdager</div>
-                    </div>
-                    <div class="component-6" id="onsdag">
-                        <div class="text-wrapper-4">Onsdager</div>
-                    </div>
-                    <div class="component-6" id="torsdag">
-                        <div class="text-wrapper-4">Torsdager</div>
-                    </div>
-                    <div class="component-6" id="fredag">
-                        <div class="text-wrapper-4">Fredager</div>
-                    </div>
-                    <div class="component-6" id="lordag">
-                        <div class="text-wrapper-4">Lordager</div>
-                    </div>
-                    <div class="component-6" id="sondag">
-                        <div class="text-wrapper-4">Sondager</div>
+
+            <!-- UKE-DAGER: bruker dine containere + Tailwind for “pills” -->
+            <div class="frame-9 mt-10">
+                <div class="frame-2">
+                    <div class="frame-10 flex flex-wrap gap-4">
+                        <div class="component-5 inline-block px-5 py-2 rounded-md border-2 border-[#4B0C1B] bg-[#F2E7EB] text-[#4B0C1B]"
+                            id="mandag">
+                            <div class="text-wrapper-4">Mandag</div>
+                        </div>
+                        <div class="component-6 inline-block px-5 py-2 rounded-md border-2 border-[#4B0C1B] bg-[#F2E7EB] text-[#4B0C1B]"
+                            id="tirsdag">
+                            <div class="text-wrapper-4">Tirsdag</div>
+                        </div>
+                        <div class="component-6 inline-block px-5 py-2 rounded-md border-2 border-[#4B0C1B] bg-[#F2E7EB] text-[#4B0C1B]"
+                            id="onsdag">
+                            <div class="text-wrapper-4">Onsdag</div>
+                        </div>
+                        <div class="component-6 inline-block px-5 py-2 rounded-md border-2 border-[#4B0C1B] bg-[#F2E7EB] text-[#4B0C1B]"
+                            id="torsdag">
+                            <div class="text-wrapper-4">Torsdag</div>
+                        </div>
+                        <div class="component-6 inline-block px-5 py-2 rounded-md border-2 border-[#4B0C1B] bg-[#F2E7EB] text-[#4B0C1B]"
+                            id="fredag">
+                            <div class="text-wrapper-4">Fredag</div>
+                        </div>
+                        <div class="component-6 inline-block px-5 py-2 rounded-md border-2 border-[#4B0C1B] bg-[#F2E7EB] text-[#4B0C1B]"
+                            id="lordag">
+                            <div class="text-wrapper-4">Lørdag</div>
+                        </div>
+                        <div class="component-6 inline-block px-5 py-2 rounded-md border-2 border-[#4B0C1B] bg-[#F2E7EB] text-[#4B0C1B]"
+                            id="sondag">
+                            <div class="text-wrapper-4">Søndag</div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+
+
         <div class="frame-11">
             <div class="Mandager">
                 <div class="frame-12">
@@ -454,30 +495,37 @@
 
 
         </div>
-        <!-- Toggle html code when vis som uke oversikt er clicked-->
-        
-        <div class="frame-123 h-[90vh]"><iframe 
-    class="absolute top-200 left-0 w-full h-[70vh]"
-    src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQjJWU0pFrXumqG27LgHN5U1P3WLCZJ1CE4z-WQXYiuOGg0nR93ETOeu-VbGyLum1ZsTbxh_ihufqQo/pubhtml?gid=0&amp;single=true&amp;widget=false&amp;headers=false" 
-    >
-  </iframe>
-            <!--IDEA: Webscapre the googlesheet and style it yourself
-            go on inpect on this link view-source:https://docs.google.com/spreadsheets/u/1/d/e/2PACX-1vQjJWU0pFrXumqG27LgHN5U1P3WLCZJ1CE4z-WQXYiuOGg0nR93ETOeu-VbGyLum1ZsTbxh_ihufqQo/pubhtml
-            and then find where the html table starts. -->
-            
-        
-        </div>
-        </div>
-        
-        
-        <!--Create empty space so that the google sheet is not covering anything-->
-       
-        
+    </div>
+    <!-- Toggle html code when vis som uke oversikt er clicked-->
+    <div class="schedule-shell frame-123">
+  <!-- Top red scrollbar -->
+  <div class="scrollbar-top" id="hBar"><div class="spacer" id="hSpace"></div></div>
+
+  <!-- Content wrapper (the only scroller for the iframe) -->
+  <div class="content-wrap" id="wrap">
+    <iframe
+      id="sheet"
+      title="Sendeplan"
+      scrolling="no"
+      src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQjJWU0pFrXumqG27LgHN5U1P3WLCZJ1CE4z-WQXYiuOGg0nR93ETOeu-VbGyLum1ZsTbxh_ihufqQo/pubhtml?gid=0&single=true&widget=false&headers=false&chrome=false&range=A1:H49"
+      style="width:1600px;height:1200px;display:block">
+    </iframe>
+  </div>
+
+  <!-- Right red scrollbar -->
+  <div class="scrollbar-right" id="vBar"><div class="spacer-vert" id="vSpace"></div></div>
+</div>
+
+
+
+    <!--Create empty space so that the google sheet is not covering anything-->
 
 
 
 
-       
+
+
+
 
 </body>
 
@@ -486,6 +534,6 @@
 {% block extra_js %}
 {{ block.super }}
 <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-<script src="{% static 'tears/js/sendeplan.js' %}"></script>
+<script src="{% static 'tears/js/sendeplan.js' %}?v={% now 'U' %}" defer></script>
 <script src="{% static 'tears/js/naavaerendeprogram.js' %}"></script>
 {% endblock %}

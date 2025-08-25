@@ -1,13 +1,35 @@
+body{
+  overflow-x: hidden;
+}
 .desktop-sendeplan {
+    
     display: flex;
     flex-direction: column;
     width: 100%;
-    align-items: center;
+    align-items: left;
     position: relative;
     background-color: #ffffff;
     cursor: default;
     user-select: none;
+    
   }
+  @media (min-width: 1024px) {
+    .desktop-sendeplan {
+      margin-left: 200px;
+    }
+    
+  }
+.frame-123 {
+  position: relative;
+  bottom:100px;
+  display:flex;
+  left:100px;
+
+
+}
+.oneliner {
+  margin-left: 0px !important;
+}
  
 
 .sendeplan-heading{
@@ -141,19 +163,69 @@
     flex: 0 0 auto;
     background-color: #f7f4f4;
   }
-  
-  .desktop-sendeplan .frame-2 {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 16px;
-    padding: 24px 0px; /*  was 24px 245px 24px 224px */
-    position: relative;
-    align-self: stretch;
-    width: 100%;
-    flex: 0 0 auto;
+:root{
+  --burgundy: #4B0C1B;
+  --burgundy-alt: #511120;
+  --pill-bg: #F2E7EB;
+  --tab-inactive: #EBDDE1;
+  --white: #ffffff;
 }
-  
+
+/* ---- Tabs (matches det du forventer at JS toggler) ---- */
+.component-2{ /* aktiv tab */
+  position: relative;
+  z-index: 10;
+  display:inline-flex; align-items:center;
+  padding:.5rem 1rem; border-radius:.375rem;
+  border-top:2px solid var(--burgundy);
+  border-left:2px solid var(--burgundy);
+  border-right:2px solid var(--burgundy);
+  border-bottom: 3px solid var(--white);
+  border-radius: 1px 1px 0 0;
+  background:var(--white); color:var(--black);
+  transition: background-color .15s ease, color .15s ease, border-color .15s ease;
+}
+.component-4{ /* inaktiv tab */
+  display:inline-flex; align-items:center;
+  padding:.5rem 1rem; border-radius:.375rem;
+  border-top:2px solid var(--burgundy);
+  border-left:2px solid var(--burgundy);
+  border-right:2px solid var(--burgundy);
+  border-bottom: 1px solid var(--burgundy);
+  border-radius: 1px 1px 0 0;
+  background:var(--pill-bg); color:var(--black);
+  transition: background-color .15s ease, color .15s ease, border-color .15s ease;
+}
+
+/* SVG skal følge tekstfarge */
+.color_logo { color: inherit; }
+
+/* ---- Ukedag-piller (aktiv / inaktiv) ---- */
+.component-5{ /* aktiv dag */
+  display:inline-block; padding:.5rem 1.25rem;
+  border-radius:.375rem; border:2px solid var(--burgundy);
+  background-color:var(--white); color:var(--burgundy);
+  transition: background-color .15s ease, color .15s ease, border-color .15s ease;
+}
+.component-6{ /* inaktiv dag */
+  display:inline-block; padding:.5rem 1.25rem;
+  border-radius:.375rem; border:2px solid var(--burgundy);
+  background:var(--pill-bg); color:var(--burgundy);
+  transition: background-color .15s ease, color .15s ease, border-color .15s ease;
+}
+
+/* ---- Tekst wrappers (om du bruker dem for farge) ---- */
+.text-wrapper-6{ color: var(--black); }
+.text-wrapper-4{ color: var(--burgundy-alt); }
+
+/* Skjul dekorgruppe hvis den ikke skal påvirke layout */
+.component-3{ display:none; }
+
+/* Rad med ukedager (samme som Tailwind: flex, wrap, gap) */
+.frame-10{ display:flex; flex-wrap:wrap; gap:1rem; 
+}
+
+
   .desktop-sendeplan .frame-3 {
     display: inline-flex;
     align-items: flex-start;
@@ -188,20 +260,6 @@
     line-height: 25.7px;
     white-space: nowrap;
   }
-  
-  .desktop-sendeplan .text-wrapper-4 {
-    position: relative;
-    width: fit-content;
-    margin-top: -1.00px;
-    font-family: "Noto Sans-DisplayRegular", Helvetica;
-    font-weight: 400;
-    color: #511120;
-    font-size: 16px;
-    letter-spacing: 0;
-    line-height: 25.7px;
-    white-space: nowrap;
-  }
-  
   .desktop-sendeplan .frame-4 {
     display: inline-flex;
     flex-direction: column;
@@ -259,16 +317,7 @@
   }
   
   .desktop-sendeplan .frame-6 {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 0px 64px;
-    position: relative;
-    align-self: stretch;
-    width: 100%;
-    flex: 0 0 auto;
-    margin-top: 14px;
-    margin-bottom: 0px; /* was -10px */
+    
   }
   
   .desktop-sendeplan .frame-7 {
@@ -283,27 +332,7 @@
     flex: 0 0 auto;
   }
   
-  .desktop-sendeplan .frame-8 {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    width: 100%;
-    flex: 0 0 auto;
-}
   
-  .desktop-sendeplan .component-2 {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 4px 8px;
-    position: relative;
-    flex: 0 0 auto; 
-    background-color:#4D0F1E ;
-    border-radius: 4px 0px 0px 4px;
-    overflow: hidden;
-    border: 1px solid;
-    border-color: #000000;
-  }
   
   .desktop-sendeplan .component-3 {
     position: relative;
@@ -311,189 +340,27 @@
     height: 19px;
   }
   
-  .desktop-sendeplan .rectangle {
-    position: absolute;
-    width: 25px;
-    height: 5px;
-    top: 2px;
-    left: 0;
-    background-color: #ffffff;
-  }
-  
-  .desktop-sendeplan .rectangle-2 {
-    position: absolute;
-    width: 25px;
-    height: 5px;
-    top: 8px;
-    left: 0;
-    background-color: #ffffff;
-  }
-  
-  .desktop-sendeplan .rectangle-3 {
-    position: absolute;
-    width: 25px;
-    height: 5px;
-    top: 14px;
-    left: 0;
-    background-color: #ffffff;
-  }
-  
-  .desktop-sendeplan .text-wrapper-6 {
-    color: #ffffff;
-    position: relative;
-    width: fit-content;
-    margin-top: -1.00px;
-    font-family: "Noto Sans-DisplayRegular", Helvetica;
-    font-weight: 400;
-    font-size: 16px;
-    letter-spacing: 0;
-    line-height: 25.7px;
-    white-space: nowrap;
-  }
-  
-  .desktop-sendeplan .component-4 {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 4px 8px;
-    position: relative;
-    flex: 0 0 auto;
-    margin-left: -1px;
-    background-color: #ffffff;
-    border-radius: 0px 4px 4px 0px;
-    overflow: hidden;
-    border: 1px solid;
-    border-color: #000000;
-  }
-  
-  .desktop-sendeplan .rectangle-4 {
-    position: absolute;
-    width: 7px;
-    height: 19px;
-    top: 0;
-    left: 0;
-    background-color: #511120;
-  }
-  
-  .desktop-sendeplan .rectangle-5 {
-    position: absolute;
-    width: 7px;
-    height: 19px;
-    top: 0;
-    left: 9px;
-    background-color: #511120;
-  }
-  
-  .desktop-sendeplan .rectangle-6 {
-    position: absolute;
-    width: 7px;
-    height: 19px;
-    top: 0;
-    left: 18px;
-    background-color: #511120;
-  }
-  
-  .desktop-sendeplan .frame-9 {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 0px 130px;
-    position: relative;
-    align-self: stretch;
-    width: 100%;
-    flex: 0 0 auto;
-  }
-  @media (max-width: 768px) {
-  .desktop-sendeplan .frame-9 {
-    margin-left: auto;   /* shift slightly left */
-    margin-right: 100px; /* keep auto right */
-    padding: 0px 16px;  /* reduce padding for mobile */
-  }
-}
-
   
   
- .desktop-sendeplan .frame-10 {
-    display: grid;
-      
-    grid-template-rows: auto;
-    grid-template-columns: repeat(auto-fit, minmax(100px, auto));
-
-    flex-wrap: wrap;
-    
-    justify-content: center; /* Sentrer grid-elementene */
-    position: relative;
-    
-    
-    width: 100%;
-    
-    gap: 8px 8px;
-    
-
-}
-
-  
-  .desktop-sendeplan .component-5 {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    padding: 4px 8px;
-    position: relative;
-    flex: 1;
-    flex-grow: 1;
-    background-color: #4D0F1E;
-    border-radius: 4px;
-    overflow: hidden;
-    border: 1px solid;
-    border-color: #000000;
-  }
-  
-  .desktop-sendeplan .component-6 {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    padding: 4px 8px;
-    position: relative;
-    flex: 1;
-    flex-grow: 1;
-    background-color: #f6f3f4;
-    border-radius: 4px;
-    overflow: hidden;
-    border: 1px solid;
-    border-color: #000000;
-  }
-  .desktop-sendeplan .component-5,
-.desktop-sendeplan .component-6 {
-    min-width: 100px;
-    max-width: 200px; /* Begrens maksimal bredde */
-}
   
   .desktop-sendeplan .frame-11 {
     display: flex;
-    margin-left: 150px;
+    
     position: relative;
     
-    gap: 10px;
-    padding: 0px 24px;
+    
+    
     
   }
-  @media (max-width: 768px) {
-  .desktop-sendeplan .frame-11 {
-    margin-left: 290px;   
-     
-    padding: 0px 16px;  
-  }
-}
+  
+
   
   
   .desktop-sendeplan .frame-12 {
-    gap: 24px;
-    padding: 0px 64px;
+    padding: 0px 28px;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: left;
     position: relative;
     align-self: stretch;
     width: 100%;
@@ -1098,3 +965,48 @@
     letter-spacing: 0;
     line-height: 25.7px;
   }
+
+  /*  Sendeplan scrollbar  */
+    /* Layout */
+.schedule-shell{position:relative;width:100%;max-width:100%;margin-top:12px}
+.content-wrap{
+  position:relative;width:100%;height:70vh;      /* screen-relative */
+  overflow:auto;                                  /* the only real scroller */
+  scrollbar-width:none;  
+  right: 100px;  
+  bottom:10px;                       /* hide native bars (Firefox) */
+}
+.content-wrap::-webkit-scrollbar{width:0;height:0}/* hide native bars (WebKit) */
+
+/* Top bar (red track, white pill thumb) */
+.scrollbar-top{
+  width:100%;height:18px;background:#5b0c1b;border-radius:9999px;
+  overflow-x:auto;overflow-y:hidden;margin:0 40px 8px 0;  /* make room for right bar */
+}
+.scrollbar-top .spacer{height:1px;width:1600px} /* JS will resize this */
+.scrollbar-top::-webkit-scrollbar{height:18px}
+.scrollbar-top::-webkit-scrollbar-track{background:#5b0c1b;border-radius:9999px}
+.scrollbar-top::-webkit-scrollbar-thumb{background:#fff;border-radius:9999px;border:4px solid #5b0c1b;min-width:48px}
+.scrollbar-top::-webkit-scrollbar-thumb:hover{background:#f0f0f0}
+
+/* Right bar (same style, vertical) */
+.scrollbar-right{
+  position:absolute;top:18px;right:0;height:calc(70vh - 18px);width:18px;
+  background:#5b0c1b;border-radius:9999px;overflow-y:auto;overflow-x:hidden;
+}
+.scrollbar-right .spacer-vert{width:1px;height:1200px} /* JS will resize this */
+.scrollbar-right::-webkit-scrollbar{width:18px}
+.scrollbar-right::-webkit-scrollbar-track{background:#5b0c1b;border-radius:9999px}
+.scrollbar-right::-webkit-scrollbar-thumb{background:#fff;border-radius:9999px;border:4px solid #5b0c1b;min-height:48px}
+.scrollbar-right::-webkit-scrollbar-thumb:hover{background:#f0f0f0}
+
+/* Auto-hide helper */
+.hidden{display:none}
+@media screen and (min-width: 1404px) { 
+  .scrollbar-top{
+  
+    /*hidden*/
+    display:none;
+}
+  
+}
