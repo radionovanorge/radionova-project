@@ -969,41 +969,41 @@ body{
   /*  Sendeplan scrollbar  */
     /* Layout */
 .schedule-shell{position:relative;width:100%;max-width:100%;margin-top:12px}
-.content-wrap{
+.schedule-shell .content-wrap{
   position:relative;width:100%;height:70vh;      /* screen-relative */
   overflow:auto;                                  /* the only real scroller */
   scrollbar-width:none;  
   right: 100px;  
   bottom:10px;                       /* hide native bars (Firefox) */
 }
-.content-wrap::-webkit-scrollbar{width:0;height:0}/* hide native bars (WebKit) */
+.schedule-shell .content-wrap::-webkit-scrollbar{width:0;height:0}/* hide native bars (WebKit) */
 
 /* Top bar (red track, white pill thumb) */
-.scrollbar-top{
+.schedule-shell .scrollbar-top{
   width:100%;height:18px;background:#5b0c1b;border-radius:9999px;
   overflow-x:auto;overflow-y:hidden;margin:0 40px 8px 0;  /* make room for right bar */
 }
-.scrollbar-top .spacer{height:1px;width:1600px} /* JS will resize this */
-.scrollbar-top::-webkit-scrollbar{height:18px}
-.scrollbar-top::-webkit-scrollbar-track{background:#5b0c1b;border-radius:9999px}
-.scrollbar-top::-webkit-scrollbar-thumb{background:#fff;border-radius:9999px;border:4px solid #5b0c1b;min-width:48px}
-.scrollbar-top::-webkit-scrollbar-thumb:hover{background:#f0f0f0}
+.schedule-shell .scrollbar-top .spacer{height:1px;width:1600px} /* JS will resize this */
+.schedule-shell .scrollbar-top::-webkit-scrollbar{height:18px}
+.schedule-shell .scrollbar-top::-webkit-scrollbar-track{background:#5b0c1b;border-radius:9999px}
+.schedule-shell .scrollbar-top::-webkit-scrollbar-thumb{background:#fff;border-radius:9999px;border:4px solid #5b0c1b;min-width:48px}
+.schedule-shell .scrollbar-top::-webkit-scrollbar-thumb:hover{background:#f0f0f0}
 
 /* Right bar (same style, vertical) */
-.scrollbar-right{
+.schedule-shell .scrollbar-right{
   position:absolute;top:18px;right:0;height:calc(70vh - 18px);width:18px;
   background:#5b0c1b;border-radius:9999px;overflow-y:auto;overflow-x:hidden;
 }
-.scrollbar-right .spacer-vert{width:1px;height:1200px} /* JS will resize this */
-.scrollbar-right::-webkit-scrollbar{width:18px}
-.scrollbar-right::-webkit-scrollbar-track{background:#5b0c1b;border-radius:9999px}
-.scrollbar-right::-webkit-scrollbar-thumb{background:#fff;border-radius:9999px;border:4px solid #5b0c1b;min-height:48px}
-.scrollbar-right::-webkit-scrollbar-thumb:hover{background:#f0f0f0}
+.schedule-shell .scrollbar-right .spacer-vert{width:1px;height:1200px} /* JS will resize this */
+.schedule-shell .scrollbar-right::-webkit-scrollbar{width:18px}
+.schedule-shell .scrollbar-right::-webkit-scrollbar-track{background:#5b0c1b;border-radius:9999px}
+.schedule-shell .scrollbar-right::-webkit-scrollbar-thumb{background:#fff;border-radius:9999px;border:4px solid #5b0c1b;min-height:48px}
+.schedule-shell .scrollbar-right::-webkit-scrollbar-thumb:hover{background:#f0f0f0}
 
 /* Auto-hide helper */
-.hidden{display:none}
+.schedule-shell .hidden{display:none}
 @media screen and (min-width: 1404px) { 
-  .scrollbar-top{
+  .schedule-shell .scrollbar-top{
   
     /*hidden*/
     display:none;
