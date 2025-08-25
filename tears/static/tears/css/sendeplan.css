@@ -99,7 +99,7 @@
     margin-top: -1.00px;
     font-family: "Inter-Regular", Helvetica;
     font-weight: 400;
-    color: #2d0e1f;
+    color: #4D0F1E;
     font-size: 18px;
     letter-spacing: 0;
     line-height: normal;
@@ -251,7 +251,7 @@
     margin-top: -1.00px;
     font-family: "Signika Negative-SemiBold", Helvetica;
     font-weight: 600;
-    color: #2d0e1f;
+    color: #4D0F1E;
     font-size: 40px;
     letter-spacing: 0;
     line-height: 41.8px;
@@ -297,8 +297,8 @@
     gap: 8px;
     padding: 4px 8px;
     position: relative;
-    flex: 0 0 auto;
-    background-color: #2d0e1f;
+    flex: 0 0 auto; 
+    background-color:#4D0F1E ;
     border-radius: 4px 0px 0px 4px;
     overflow: hidden;
     border: 1px solid;
@@ -442,7 +442,7 @@
     position: relative;
     flex: 1;
     flex-grow: 1;
-    background-color: #2d0e1f;
+    background-color: #4D0F1E;
     border-radius: 4px;
     overflow: hidden;
     border: 1px solid;
@@ -576,7 +576,7 @@
     border-radius: 18px;
     overflow: hidden;
     border: 0.75px solid;
-    border-color: #2d0e1f;
+    border-color: #4D0F1E;
   }
   
   .desktop-sendeplan .text-wrapper-8 {
@@ -621,7 +621,7 @@
     border-radius: 18px;
     overflow: hidden;
     border: 0.75px solid;
-    border-color: #2d0e1f;
+    border-color: #4D0F1E;
   }
   
   .desktop-sendeplan .component-8 {
@@ -635,7 +635,7 @@
     border-radius: 18px;
     overflow: hidden;
     border: 0.75px solid;
-    border-color: #2d0e1f;
+    border-color: #4D0F1E;
   }
   
   .desktop-sendeplan .frame-18 {
@@ -698,7 +698,7 @@
     border-radius: 18px;
     overflow: hidden;
     border: 0.75px solid;
-    border-color: #2d0e1f;
+    border-color: #4D0F1E;
   }
   
   .desktop-sendeplan .frame-19 {

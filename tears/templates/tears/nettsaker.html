@@ -12,408 +12,381 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Arkiv</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'nova-red': '#4D0F1E',
+                        'nova-dark-red': '#4D0F1E',
+                        'nova-brown': '#92400e',
+                        'nova-burgundy': '#671620'
+                    }
+                }
+            }
+        }
+    </script>
 
 </head>
 
-<body class="bg-gray-100 font-sans antialiased">
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="bg-white shadow-sm">
 
-
-    <!-- Header Section -->
-
-    <header class="w-full bg-[#f7f4f4] p-10 mb-8">
-        <div class="max-w-6xl mx-auto px-20">
-            <!-- Breadcrumb Navigation -->
-            <div class="text-sm text-gray-500 mb-4 mt-1">
-
-                <div class="breadcrumb-content text-sm text-gray-500 mb-4 mt-1">
-                    {% if self.get_ancestors|length > 1 %}
-                    <nav aria-label="Breadcrumb">
-                        <ul class="flex items-center space-x-2">
-                            {% for p in self.get_ancestors %}
-                            {% if not p.is_root %}
-                            <li>
-                                <a href="{{ p.url }}" class="hover:text-red-600">{{ p.title }}</a>
-                                <span class="mx-2 text-gray-400">></span>
-                            </li>
-                            {% endif %}
-                            {% endfor %}
-                            <!-- Current Page -->
-                            <li class="text-red-600 font-semibold">{{ self.title }}</li>
-                        </ul>
-                    </nav>
-                    {% endif %}
-                </div>
-            </div>
-
-            <!-- Title Section -->
-            <h1 class="text-4xl font-bold text-black-800">Arkiv</h1>
-        </div>
     </header>
 
-    <!-- Main Content Wrapper -->
-    <div class="flex flex-col lg:flex-row gap-8">
-
-        <!-- Filter Sidebar (No borders) -->
-        <aside class="w-full lg:w-1/4 bg-white p-4">
-            <h2 class="font-semibold text-lg mb-4">Filtrering</h2>
-            <div>
-                <h3 class="font-semibold mb-2 cursor-pointer">Programmer</h3>
-                <ul class="space-y-2">
-                    <li>
-                        <div class="inline-flex items-center">
-                            <label class="flex items-center cursor-pointer relative">
-                                <input type="checkbox" value="Aktualitet"
-                                    class="peer filter-checkbox h-6 w-6 cursor-pointer transition-all appearance-none rounded border border-slate-300 checked:bg-slate-800 checked:border-slate-800" />
-                                <span
-                                    class="absolute text-white opacity-0 peer-checked:opacity-100 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"
-                                        class="w-4 h-4">
-                                        <path d="M18 6 L6 18 M6 6 L18 18" stroke="white" stroke-width="2" />
-                                    </svg>
-                                </span>
-                            </label>
-                            <span class="ml-2 pb-2">Aktualitet</span>
-                        </div>
+    <div class="max-w-7xl mx-auto px-4 py-6">
+        <!-- Breadcrumb -->
+        <div class="text-sm text-gray-500 mb-4 mt-1">
+            {% if self.get_ancestors|length > 1 %}
+            <nav aria-label="Breadcrumb">
+                <ul class="flex items-center space-x-2 flex-wrap">
+                    {% for p in self.get_ancestors %}
+                    {% if not p.is_root %}
+                    <li
+                        class="flex items-center {% if forloop.counter > 1 and forloop.counter < forloop.parentloop.counter0|add:'-1' %}hidden sm:flex{% endif %}">
+                        <a href="{{ p.url }}" class="hover:text-red-600 transition-colors">{{ p.title }}</a>
+                        <span class="mx-2 text-gray-400">→</span>
                     </li>
-                    <li>
-                        <div class="inline-flex items-center">
-                            <label class="flex items-center cursor-pointer relative">
-                                <input type="checkbox" value="Diverse"
-                                    class="peer filter-checkbox h-6 w-6 cursor-pointer transition-all appearance-none rounded border border-slate-300 checked:bg-slate-800 checked:border-slate-800" />
-                                <span
-                                    class="absolute text-white opacity-0 peer-checked:opacity-100 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"
-                                        class="w-4 h-4">
-                                        <path d="M18 6 L6 18 M6 6 L18 18" stroke="white" stroke-width="2" />
-                                    </svg>
-                                </span>
-                            </label>
-                            <span class="ml-2 pb-2">Diverse</span>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="inline-flex items-center">
-                            <label class="flex items-center cursor-pointer relative">
-                                <input type="checkbox" value="Humor & underholdning"
-                                    class="peer filter-checkbox h-6 w-6 cursor-pointer transition-all appearance-none rounded border border-slate-300 checked:bg-slate-800 checked:border-slate-800" />
-                                <span
-                                    class="absolute text-white opacity-0 peer-checked:opacity-100 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"
-                                        class="w-4 h-4">
-                                        <path d="M18 6 L6 18 M6 6 L18 18" stroke="white" stroke-width="2" />
-                                    </svg>
-                                </span>
-                            </label>
-                            <span class="ml-2 pb-2">Humor & underholdning</span>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="inline-flex items-center">
-                            <label class="flex items-center cursor-pointer relative">
-                                <input type="checkbox" value="Kultur"
-                                    class="peer filter-checkbox h-6 w-6 cursor-pointer transition-all appearance-none rounded border border-slate-300 checked:bg-slate-800 checked:border-slate-800" />
-                                <span
-                                    class="absolute text-white opacity-0 peer-checked:opacity-100 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"
-                                        class="w-4 h-4">
-                                        <path d="M18 6 L6 18 M6 6 L18 18" stroke="white" stroke-width="2" />
-                                    </svg>
-                                </span>
-                            </label>
-                            <span class="ml-2 pb-2">Kultur</span>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="inline-flex items-center">
-                            <label class="flex items-center cursor-pointer relative">
-                                <input type="checkbox" value="Tema"
-                                    class="peer filter-checkbox h-6 w-6 cursor-pointer transition-all appearance-none rounded border border-slate-300 checked:bg-slate-800 checked:border-slate-800" />
-                                <span
-                                    class="absolute text-white opacity-0 peer-checked:opacity-100 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"
-                                        class="w-4 h-4">
-                                        <path d="M18 6 L6 18 M6 6 L18 18" stroke="white" stroke-width="2" />
-                                    </svg>
-                                </span>
-                            </label>
-                            <span class="ml-2 pb-2">Tema</span>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-            <div>
-            <h3 class="font-semibold mb-2 cursor-pointer">Type</h3>
-                <ul class="space-y-2">
-                    <li>
-                        <div class="inline-flex items-center">
-                            <label class="flex items-center cursor-pointer relative">
-                                <input type="checkbox" value="Aktualitet"
-                                    class="peer filter-checkbox h-6 w-6 cursor-pointer transition-all appearance-none rounded border border-slate-300 checked:bg-slate-800 checked:border-slate-800" />
-                                <span
-                                    class="absolute text-white opacity-0 peer-checked:opacity-100 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"
-                                        class="w-4 h-4">
-                                        <path d="M18 6 L6 18 M6 6 L18 18" stroke="white" stroke-width="2" />
-                                    </svg>
-                                </span>
-                            </label>
-                            <span class="ml-2 pb-2">Artikkel</span>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="inline-flex items-center">
-                            <label class="flex items-center cursor-pointer relative">
-                                <input type="checkbox" value="Diverse"
-                                    class="peer filter-checkbox h-6 w-6 cursor-pointer transition-all appearance-none rounded border border-slate-300 checked:bg-slate-800 checked:border-slate-800" />
-                                <span
-                                    class="absolute text-white opacity-0 peer-checked:opacity-100 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"
-                                        class="w-4 h-4">
-                                        <path d="M18 6 L6 18 M6 6 L18 18" stroke="white" stroke-width="2" />
-                                    </svg>
-                                </span>
-                            </label>
-                            <span class="ml-2 pb-2">Anmeldelse</span>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="inline-flex items-center">
-                            <label class="flex items-center cursor-pointer relative">
-                                <input type="checkbox" value="Humor & underholdning"
-                                    class="peer filter-checkbox h-6 w-6 cursor-pointer transition-all appearance-none rounded border border-slate-300 checked:bg-slate-800 checked:border-slate-800" />
-                                <span
-                                    class="absolute text-white opacity-0 peer-checked:opacity-100 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"
-                                        class="w-4 h-4">
-                                        <path d="M18 6 L6 18 M6 6 L18 18" stroke="white" stroke-width="2" />
-                                    </svg>
-                                </span>
-                            </label>
-                            <span class="ml-2 pb-2">A-liste</span>
-                        </div>
-                    </li>
-                    
-                    
-                </ul>
-                </div>
-
-                <div>
-                <h3 class="font-semibold mb-2 cursor-pointer">Tema</h3>
-                <ul class="space-y-2">
-                    <li>
-                        <div class="inline-flex items-center">
-                            <label class="flex items-center cursor-pointer relative">
-                                <input type="checkbox" value="Aktualitet"
-                                    class="peer filter-checkbox h-6 w-6 cursor-pointer transition-all appearance-none rounded border border-slate-300 checked:bg-slate-800 checked:border-slate-800" />
-                                <span
-                                    class="absolute text-white opacity-0 peer-checked:opacity-100 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"
-                                        class="w-4 h-4">
-                                        <path d="M18 6 L6 18 M6 6 L18 18" stroke="white" stroke-width="2" />
-                                    </svg>
-                                </span>
-                            </label>
-                            <span class="ml-2 pb-2">Aktualitet</span>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="inline-flex items-center">
-                            <label class="flex items-center cursor-pointer relative">
-                                <input type="checkbox" value="Diverse"
-                                    class="peer filter-checkbox h-6 w-6 cursor-pointer transition-all appearance-none rounded border border-slate-300 checked:bg-slate-800 checked:border-slate-800" />
-                                <span
-                                    class="absolute text-white opacity-0 peer-checked:opacity-100 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"
-                                        class="w-4 h-4">
-                                        <path d="M18 6 L6 18 M6 6 L18 18" stroke="white" stroke-width="2" />
-                                    </svg>
-                                </span>
-                            </label>
-                            <span class="ml-2 pb-2">Diverse</span>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="inline-flex items-center">
-                            <label class="flex items-center cursor-pointer relative">
-                                <input type="checkbox" value="Humor & underholdning"
-                                    class="peer filter-checkbox h-6 w-6 cursor-pointer transition-all appearance-none rounded border border-slate-300 checked:bg-slate-800 checked:border-slate-800" />
-                                <span
-                                    class="absolute text-white opacity-0 peer-checked:opacity-100 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"
-                                        class="w-4 h-4">
-                                        <path d="M18 6 L6 18 M6 6 L18 18" stroke="white" stroke-width="2" />
-                                    </svg>
-                                </span>
-                            </label>
-                            <span class="ml-2 pb-2">Humor & underholdning</span>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="inline-flex items-center">
-                            <label class="flex items-center cursor-pointer relative">
-                                <input type="checkbox" value="Kultur"
-                                    class="peer filter-checkbox h-6 w-6 cursor-pointer transition-all appearance-none rounded border border-slate-300 checked:bg-slate-800 checked:border-slate-800" />
-                                <span
-                                    class="absolute text-white opacity-0 peer-checked:opacity-100 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"
-                                        class="w-4 h-4">
-                                        <path d="M18 6 L6 18 M6 6 L18 18" stroke="white" stroke-width="2" />
-                                    </svg>
-                                </span>
-                            </label>
-                            <span class="ml-2 pb-2">Kultur</span>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="inline-flex items-center">
-                            <label class="flex items-center cursor-pointer relative">
-                                <input type="checkbox" value="Tema"
-                                    class="peer filter-checkbox h-6 w-6 cursor-pointer transition-all appearance-none rounded border border-slate-300 checked:bg-slate-800 checked:border-slate-800" />
-                                <span
-                                    class="absolute text-white opacity-0 peer-checked:opacity-100 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"
-                                        class="w-4 h-4">
-                                        <path d="M18 6 L6 18 M6 6 L18 18" stroke="white" stroke-width="2" />
-                                    </svg>
-                                </span>
-                            </label>
-                            <span class="ml-2 pb-2">Tema</span>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-                
-        </aside>
-
-        <!-- Programs Grid -->
-        <div class="flex-1">
-
-            <!-- Sorting Controls -->
-            <div class="flex justify-between items-center mb-6">
-                <p id="resultCount">Viser {{ total_program_count }} treff</p>
-                <div class="flex gap-2 mr-5">
-                    <button id="toggleViewBtn" class="flex items-center px-4 py-2 border border-gray-300 rounded">
-                        <span class="mr-2">Vis som liste</span>
-
-                    </button>
-                    <select class="border border-gray-300 rounded px-3 py-2">
-                        <option>Nyeste først</option>
-                        <option>Eldste først</option>
-                    </select>
-                </div>
-            </div>
-
-            <!-- ARKIV Grid Layout 1 NEEDS TO BE CHANGED !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! now it only follows programs -->
-            <div id="programGrid" class="program-rutenett grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-10 mr-6" >
-
-                {% for category_name, programs in grouped_programs.items %}
-                {% for program in programs %}
-
-                <div class="bg-white p-4" data-category="{{ category_name }}">
-                    <a href="{{ program.url }}" class="image-link">
-                        {% if program.main_image %}
-                        {% image program.main_image fill-150x150 as img %}
-                        <img src="{{ img.url }}" alt="{{ program.title }}" class="w-full mb-2">
-                        {% endif %}
-                        <h3 class="font-semibold mb-1">{{ program.title }}</h3>
-
-                        <!-- Assign category colors based on the category_name -->
-                        {% if category_name == 'Aktualitet' %}
-                        <span
-                            class="text-xs px-2 py-1 bg-blue-100 text-blue-700 rounded-full">{{ category_name }}</span>
-                        {% elif category_name == 'Humor & underholdning' %}
-                        <span
-                            class="text-xs px-2 py-1 bg-pink-100 text-pink-700 rounded-full">{{ category_name }}</span>
-                        {% elif category_name == 'Kultur' %}
-                        <span
-                            class="text-xs px-2 py-1 bg-green-100 text-green-700 rounded-full">{{ category_name }}</span>
-                        {% elif category_name == 'Musikk' %}
-                        <span
-                            class="text-xs px-2 py-1 bg-yellow-100 text-yellow-700 rounded-full">{{ category_name }}</span>
-                        {% elif category_name == 'Tema' %}
-                        <span
-                            class="text-xs px-2 py-1 bg-purple-100 text-purple-700 rounded-full">{{ category_name }}</span>
-                        {% elif category_name == 'Tidligere_programmer' %}
-                        <span
-                            class="text-xs px-2 py-1 bg-gray-100 text-gray-700 rounded-full">{{ category_name }}</span>
-                        {% endif %}
-                    </a>
-                </div>
-
-                {% endfor %}
-                {% endfor %}
-
-            </div>
-
-            <!-- Hero cards on programs, does not show until you click the vis som liste button-->
-            <!-- Programs List Layout 2 -->
-            <div id="programGrid" class="space-y-8 program-list" style="display:none;">
-
-                {% for category_name, programs in grouped_programs.items %}
-                {% for program in programs %}
-                <div class="flex flex-col md:flex-row bg-white p-4 rounded gap-4"
-                    data-category="{{ category_name }}">
-
-                    <!-- Image -->
-                    {% if program.main_image %}
-                    <div class="md:w-1/4">
-                        {% image program.main_image fill-300x300 as img %}
-                        <img src="{{ img.url }}" alt="{{ program.title }}" class="w-full h-auto rounded">
-                    </div>
                     {% endif %}
+                    {% endfor %}
+                    <!-- Show ellipsis on small screens if there are hidden items -->
+                    {% if self.get_ancestors|length > 3 %}
+                    <li class="sm:hidden flex items-center">
+                        <span class="text-gray-400">...</span>
+                        <span class="mx-2 text-gray-400">→</span>
+                    </li>
+                    {% endif %}
+                    <!-- Current Page -->
+                    <li class="text-red-600 font-semibold">{{ self.title }}</li>
+                </ul>
+            </nav>
+            {% endif %}
+        </div>
 
-                    <!-- Content -->
-                    <div class="flex-1 flex flex-col justify-between">
-                        <!-- Schedule -->
-                        {% if program.schedule_info %}
-                        <p class="text-sm text-gray-700 font-medium mb-1">{{ program.schedule_info }}</p>
-                        {% endif %}
+        <!-- Page Title -->
+        <h1 class="text-3xl font-bold text-gray-900 mb-6">Søk i artikkelarkiv</h1>
 
-                        <!-- Title + Tag -->
-                        <div class="flex flex-wrap items-center gap-2 mb-1">
-                            <a href="{{ program.url }}">
-                                <h3 class="text-xl font-semibold text-[#4b0c1b]">{{ program.title }}</h3>
-                            </a>
+        <!-- Search Bar -->
+        <form id="mainSearchForm" method="get" class="flex mb-8 gap-2">
+            <div class="flex-1 relative">
+                <input 
+                    type="text" 
+                    name="q" 
+                    value="{{ q }}"
+                    placeholder="Søk i artikler..."
+                    class="w-full border border-gray-300 px-4 py-3 text-gray-700 rounded-l-md focus:outline-none focus:ring-2 focus:ring-nova-dark-red focus:border-transparent"
+                    aria-label="Søk i artikler" 
+                />
+                <!-- Clear button -->
+                <button 
+                    type="button" 
+                    id="clearSearch"
+                    class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                    style="display: none;">
+                    ✕
+                </button>
+            </div>
+            
+            <button 
+                type="submit"
+                class="bg-nova-dark-red text-white px-8 py-3 hover:bg-opacity-90 transition-colors rounded-r-md">
+                Søk
+            </button>
 
-                            <!-- Category Tag -->
-                            {% if category_name == 'Aktualitet' %}
-                            <span
-                                class="text-xs px-2 py-1 bg-blue-100 text-blue-700 rounded-full">{{ category_name }}</span>
-                            {% elif category_name == 'Humor & underholdning' %}
-                            <span
-                                class="text-xs px-2 py-1 bg-pink-100 text-pink-700 rounded-full">{{ category_name }}</span>
-                            {% elif category_name == 'Kultur' %}
-                            <span
-                                class="text-xs px-2 py-1 bg-green-100 text-green-700 rounded-full">{{ category_name }}</span>
-                            {% elif category_name == 'Musikk' %}
-                            <span
-                                class="text-xs px-2 py-1 bg-yellow-100 text-yellow-700 rounded-full">{{ category_name }}</span>
-                            {% elif category_name == 'Tema' %}
-                            <span
-                                class="text-xs px-2 py-1 bg-purple-100 text-purple-700 rounded-full">{{ category_name }}</span>
-                            {% elif category_name == 'Tidligere programmer' %}
-                            <span
-                                class="text-xs px-2 py-1 bg-gray-100 text-gray-700 rounded-full">{{ category_name }}</span>
-                            {% endif %}
+            <!-- Bevar alle filterverdier når du søker -->
+            <input type="hidden" name="program" value="{{ selected_program|default:'' }}">
+            <input type="hidden" name="kategori" value="{{ selected_kategori|default:'' }}">
+            <input type="hidden" name="tema" value="{{ selected_tema|default:'' }}">
+            <input type="hidden" name="sort" value="{{ sort|default:'Ny' }}">
+        </form>
+
+
+        <div class="flex gap-8">
+            <!-- Main Content -->
+
+            <div class="flex-1">
+                <!-- Results Info & Controls -->
+                <div class="flex items-center justify-between mb-6">
+                    <div class="flex items-center space-x-4">
+                        <span id="resultCount" class="text-ml text-gray-600" data-total="{{ total_article_count }}">
+                            Viser {{ page_obj|length }} av {{ total_article_count }} resultater
+                        </span>
+
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <div
+                            class="relative inline-flex items-stretch border-2 border-red-900 rounded-md overflow-hidden bg-gray-50">
+                              <form method="get" id="filterForm">
+                            <select id="sortSelect"
+                                class="bg-transparent border-0 text-black-900 font-medium pl-2 pr-14 py-2 text-sm outline-none w-full cursor-pointer"
+                                aria-label="Sorter">
+                                <option value="Ny">Nyest først</option>
+                                <option value="Gammel">Eldst først</option>
+                                <option value="asc">A-Å</option>
+                                <option value="desc">Å-A</option>
+                            </select>
+                            </form>
+
+
+                            <div
+                                class="pointer-events-none absolute inset-y-0 right-0 w-8 bg-nova-dark-red flex items-center justify-center">
+                                <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                    aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3"
+                                        d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </div>
                         </div>
-
-                        <!-- Intro -->
-                        {% if program.intro %}
-                        <p class="text-sm text-gray-700">{{ program.intro }}</p>
-                        {% endif %}
                     </div>
                 </div>
-                {% endfor %}
-                {% endfor %}
+                <div id="Grid" class="program-rutenett grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-10 mr-6">
+                </div>
+                <!-- Article Results -->
+                <div id="articleList" class="space-y-8">
+                    {% for post in all_posts %}
+                    <article class="border-b border-gray-200 pb-8" data-title="{{ post.title|lower }}"
+                        data-date="{{ post.date|date:'c' }}"
+                        data-program="{% if post.program %}{{ post.program.slug }}{% endif %}"
+                        data-kategori="{{ post.typeArticle|lower }}"
+                        data-tema="{% if post.program %}{{ post.program.category }}{% endif %}">
+                        <div class="text-sm text-gray-500 mb-2">{{ post.date|date:"d. F Y" }}</div>
+                        <h2 class="text-xl font-semibold text-gray-900 mb-3 hover:text-nova-red cursor-pointer">
+                            <a href="{{ post.url }}">{{ post.title }}</a>
+                        </h2>
+                        <p class="text-gray-700 leading-relaxed">
+                            {{ post.ingress|default:post.search_description|truncatewords:30 }}
+                        </p>
+                    </article>
+                    {% empty %}
+                    <p class="text-gray-500">Ingen artikler funnet.</p>
+                    {% endfor %}
+                </div>
 
+
+                <!-- Pagination -->
+              {% if page_obj.paginator.count > page_obj.paginator.per_page %}
+  <nav class="flex items-center justify-center space-x-2 mt-12" aria-label="Pagination">
+
+    {% if page_obj.has_previous %}
+      <a href="?page={{ page_obj.previous_page_number }}{% if querystring %}&{{ querystring }}{% endif %}"
+         class="border border-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-50">← Forrige</a>
+    {% endif %}
+
+    {% for i in page_obj.paginator.page_range %}
+      {% if i == page_obj.number %}
+        <span class="bg-nova-dark-red text-white w-10 h-10 rounded font-medium flex items-center justify-center">{{ i }}</span>
+      {% else %}
+        <a href="?page={{ i }}{% if querystring %}&{{ querystring }}{% endif %}"
+           class="border border-gray-300 text-gray-700 w-10 h-10 rounded hover:bg-gray-50 flex items-center justify-center">{{ i }}</a>
+      {% endif %}
+    {% endfor %}
+
+    {% if page_obj.has_next %}
+      <a href="?page={{ page_obj.next_page_number }}{% if querystring %}&{{ querystring }}{% endif %}"
+         class="border border-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-50">Neste →</a>
+    {% endif %}
+
+  </nav>
+{% endif %}
             </div>
 
+            <!-- Sidebar -->
+            <aside class="w-80">
+                <!-- Programmer Filter -->
+                <details class="group bg-white rounded-lg shadow-sm mb-6" open>
+                    <summary class="list-none cursor-pointer">
+                        <div class="p-6 text-lg font-semibold text-gray-900 flex items-center justify-between">
+                            Programmer
+                            <svg class="w-5 h-5 transition-transform duration-200 rotate-180 group-open:rotate-0"
+                                fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </div>
+                    </summary>
+                    <form method="get" id="filterForm">
+                    <div class="px-6 pb-6">
+                        <div class="flex flex-col gap-3">
+                            {% for program in programs %}
+                            <div class="flex items-center">
+                                <label class="flex items-center cursor-pointer relative">
+                                    <input type="radio" name="program" value="{{ program.slug }}" class="peer filter-checkbox h-6 w-6 cursor-pointer transition-all appearance-none rounded border border-slate-300 checked:bg-[#4D0F1E] checked:border-[#4D0F1E]" 
+                                        {% if selected_program == program.slug %}checked{% endif %} />
+                                    <span class="pointer-events-none absolute text-white opacity-0 peer-checked:opacity-100
+                       top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"
+                                            class="w-4 h-4">
+                                            <path d="M18 6 L6 18 M6 6 L18 18" stroke="white" stroke-width="2" />
+                                        </svg>
+                                    </span>
+                                </label>
+                                <span class="ml-3 text-gray-800">{{ program.title }}</span>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </details>
 
+
+                <!-- Kategori Filter -->
+                <details class="group bg-white rounded-lg shadow-sm mb-6" open>
+                    <summary class="list-none cursor-pointer">
+                        <div class="p-6 text-lg font-semibold text-gray-900 flex items-center justify-between">
+                            Kategori
+                            <svg class="w-5 h-5 transition-transform duration-200 rotate-180 group-open:rotate-0"
+                                fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </div>
+                    </summary>
+
+                    <div class="px-6 pb-6">
+                        <div class="space-y-3">
+                            <!-- Nyheter -->
+                            <div class="flex items-center">
+                                <label class="flex items-center cursor-pointer relative">
+                                    <input type="radio" name="kategori" value="nyheter" class="peer filter-checkbox h-6 w-6 cursor-pointer transition-all appearance-none rounded border border-slate-300 checked:bg-[#4D0F1E] checked:border-[#4D0F1E]" 
+
+                                        {% if selected_kategori == 'nyheter' %}checked{% endif %} />
+                                    <span class="pointer-events-none absolute text-white opacity-0 peer-checked:opacity-100
+                       top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24"
+                                            fill="currentColor">
+                                            <path d="M18 6 L6 18 M6 6 L18 18" stroke="white" stroke-width="2" />
+                                        </svg>
+                                    </span>
+                                </label>
+                                <span class="ml-3 text-gray-700">Nyheter</span>
+                            </div>
+
+                            <!-- Anmeldelse -->
+                            <div class="flex items-center">
+                                <label class="flex items-center cursor-pointer relative">
+                                    <input type="radio" name="kategori" value="anmeldelse" class="peer filter-checkbox h-6 w-6 cursor-pointer transition-all appearance-none rounded border border-slate-300 checked:bg-[#4D0F1E] checked:border-[#4D0F1E]" 
+                                        {% if selected_kategori == 'anmeldelse' %}checked{% endif %} />
+                                    <span class="pointer-events-none absolute text-white opacity-0 peer-checked:opacity-100
+                       top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24"
+                                            fill="currentColor">
+                                            <path d="M18 6 L6 18 M6 6 L18 18" stroke="white" stroke-width="2" />
+                                        </svg>
+                                    </span>
+                                </label>
+                                <span class="ml-3 text-gray-700">Anmeldelse</span>
+                            </div>
+                            <div class="flex items-center">
+                                <label class="flex items-center cursor-pointer relative">
+                                    <input type="radio" name="kategori" value="intervju" class="peer filter-checkbox h-6 w-6 cursor-pointer transition-all appearance-none rounded border border-slate-300 checked:bg-[#4D0F1E] checked:border-[#4D0F1E]" 
+                                        {% if selected_kategori == 'intervju' %}checked{% endif %} />
+                                    <span class="pointer-events-none absolute text-white opacity-0 peer-checked:opacity-100
+                       top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24"
+                                            fill="currentColor">
+                                            <path d="M18 6 L6 18 M6 6 L18 18" stroke="white" stroke-width="2" />
+                                        </svg>
+                                    </span>
+                                </label>
+                                <span class="ml-3 text-gray-700">Intervju</span>
+                            </div>
+
+                            <!-- A-lista 
+                            <div class="flex items-center">
+                                <label class="flex items-center cursor-pointer relative">
+                                    <input type="radio" name="kategori" value="a-lista" class="peer filter-checkbox h-6 w-6 cursor-pointer transition-all appearance-none rounded border border-slate-300 checked:bg-[#4D0F1E] checked:border-[#4D0F1E]" 
+                                        {% if selected_kategori == 'a-lista' %}checked{% endif %} />
+                                    <span class="pointer-events-none absolute text-white opacity-0 peer-checked:opacity-100
+                       top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24"
+                                            fill="currentColor">
+                                            <path d="M18 6 L6 18 M6 6 L18 18" stroke="white" stroke-width="2" />
+                                        </svg>
+                                    </span>
+                                </label>
+                                <span class="ml-3 text-gray-700">A-lista</span>
+                            </div> -->
+
+                            <!-- Kommentar 
+                            <div class="flex items-center">
+                                <label class="flex items-center cursor-pointer relative">
+                                    <input type="radio" name="kategori" value="kommentar" class="peer filter-checkbox h-6 w-6 cursor-pointer transition-all appearance-none rounded border border-slate-300 checked:bg-[#4D0F1E] checked:border-[#4D0F1E]" 
+                                        {% if selected_kategori == 'kommentar' %}checked{% endif %} />
+                                    <span class="pointer-events-none absolute text-white opacity-0 peer-checked:opacity-100
+                       top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24"
+                                            fill="currentColor">
+                                            <path d="M18 6 L6 18 M6 6 L18 18" stroke="white" stroke-width="2" />
+                                        </svg>
+                                    </span>
+                                </label>
+                                <span class="ml-3 text-gray-700">Kommentar</span>
+                            </div> -->
+                        </div>
+                    </div>
+                </details>
+                </form>
+
+
+
+
+                <!-- Tema Filter -->
+                <details class="group bg-white rounded-lg shadow-sm" open>
+                    <summary class="list-none cursor-pointer">
+                        <div class="p-6 text-lg font-semibold text-gray-900 flex items-center justify-between">
+                            Tema
+                            <svg class="w-5 h-5 transition-transform duration-200 rotate-180 group-open:rotate-0"
+                                fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </div>
+                    </summary>
+
+                    <div class="px-6 pb-6">
+                        <div class="space-y-3">
+                            {% for key,label in categories %}
+                            <div class="flex items-center">
+                                <label class="flex items-center cursor-pointer relative">
+                                    <input type="radio" name="tema" value="{{ key }}" class="peer filter-checkbox h-6 w-6 cursor-pointer transition-all appearance-none rounded border border-slate-300 checked:bg-[#4D0F1E] checked:border-[#4D0F1E]" 
+                                        {% if selected_tema == key %}checked{% endif %} />
+                                    <span class="pointer-events-none absolute text-white opacity-0 peer-checked:opacity-100
+                       top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24"
+                                            fill="currentColor">
+                                            <path d="M18 6 L6 18 M6 6 L18 18" stroke="white" stroke-width="2" />
+                                        </svg>
+                                    </span>
+                                </label>
+                                <span class="ml-3 text-gray-700">{{ label }}</span>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </details>
+
+
+
+            </aside>
         </div>
     </div>
     </div>
-    <script src="{% static 'tears/js/programmer_page.js' %}"></script>
+
+   <script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Sett sort dropdown til riktig verdi
+    const sortSelect = document.getElementById('sortSelect');
+    const currentSort = '{{ sort|default:"Ny" }}';
+    if (sortSelect) {
+        sortSelect.value = currentSort;
+    }
+});
+
+</script>
+    <script src="{% static 'tears/js/nettsaker.js' %}?v={% now 'U' %}" defer></script>
 </body>
+
+
 
 
 {% endblock %}

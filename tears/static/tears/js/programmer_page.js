@@ -43,10 +43,14 @@ toggleBtn.addEventListener("click", () => {
         grid.style.display = "grid"; // Show grid
         list.style.display = "none"; // Hide list
         toggleBtn.querySelector("span").textContent = "Vis som liste";
+        document.getElementById('listIcon').classList.remove('hidden');
+        document.getElementById('gridIcon').classList.add('hidden');
     } else {
         grid.style.display = "none"; // Hide grid
         list.style.display = "block"; // Show list
         toggleBtn.querySelector("span").textContent = "Vis som rutenett";
+        document.getElementById('gridIcon').classList.remove('hidden');
+        document.getElementById('listIcon').classList.add('hidden');
     }
 });
 // asc/desc sorting (locale-aware for nb)
