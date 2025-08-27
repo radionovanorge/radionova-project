@@ -69,20 +69,20 @@ class HomePage(RoutablePageMixin, Page):
      selected_kategori = request.GET.get('kategori') 
      selected_tema = request.GET.get('tema')
      sort = request.GET.get('sort', 'Ny')
-    
+
      posts = BlogPage.objects.live()
-    
+
      # SMART SØKEFUNKSJONALITET
      if q:
          # Del opp søkeordet
          search_terms = q.split()
-         
+
          # Først prøv eksakt søk
          exact_matches = posts.filter(title__iexact=q)
-         
+
          # Deretter delvis matching i tittel (høy prioritet)
          title_matches = posts.filter(title__icontains=q)
-         
+
          # Til slutt søk i alle felt
          all_field_query = Q()
          for term in search_terms:
@@ -92,64 +92,64 @@ class HomePage(RoutablePageMixin, Page):
                  Q(search_description__icontains=term)
              )
              all_field_query |= term_query  # Bruk OR for mer fleksibilitet
-         
+
          all_field_matches = posts.filter(all_field_query)
-         
+
          # Kombiner og fjern duplikater
          posts = (exact_matches | title_matches | all_field_matches).distinct()
-         
+
          # Manuell relevans-sortering
          def relevance_score(post):
              score = 0
              q_lower = q.lower()
-             
+
              # Eksakt match i tittel = høyeste score
              if post.title.lower() == q_lower:
                  score += 100
-             
+
              # Tittel starter med søkeord
              elif post.title.lower().startswith(q_lower):
                  score += 50
-                 
+
              # Søkeord i tittel
              elif q_lower in post.title.lower():
                  score += 25
-                 
+
              # Søkeord i ingress
              if post.ingress and q_lower in post.ingress.lower():
                  score += 10
-                 
+
              # Søkeord i beskrivelse
              if post.search_description and q_lower in post.search_description.lower():
                  score += 5
-             
+
              return score
-         
+
          # Sorter etter relevans
          posts = sorted(posts, key=relevance_score, reverse=True)
-         
+
      else:
          posts = posts.order_by('-first_published_at')
-     
+
      # FILTRERING (etter søk)
      if selected_program:
          if hasattr(posts, 'filter'):  # QuerySet
              posts = posts.filter(program__slug=selected_program)
          else:  # List (fra sorting)
              posts = [p for p in posts if p.program and p.program.slug == selected_program]
-     
+
      if selected_kategori:
          if hasattr(posts, 'filter'):
              posts = posts.filter(typeArticle__iexact=selected_kategori)
          else:
              posts = [p for p in posts if p.typeArticle and p.typeArticle.lower() == selected_kategori.lower()]
-     
+
      if selected_tema:
          if hasattr(posts, 'filter'):
              posts = posts.filter(program__category=selected_tema)
          else:
              posts = [p for p in posts if p.program and p.program.category == selected_tema]
-    
+
      # Konverter tilbake til QuerySet hvis det er en liste
      if not hasattr(posts, 'filter') and posts:
          post_ids = [p.id for p in posts]
@@ -157,7 +157,7 @@ class HomePage(RoutablePageMixin, Page):
          # Bevar rekkefølgen
          preserved_order = {id: index for index, id in enumerate(post_ids)}
          posts = sorted(posts, key=lambda x: preserved_order[x.id])
-    
+
      # SORTERING (kun hvis ikke søk)
      if not q and hasattr(posts, 'order_by'):
          if sort == 'Gammel':
@@ -166,22 +166,22 @@ class HomePage(RoutablePageMixin, Page):
              posts = posts.order_by('title')
          elif sort == 'desc':
              posts = posts.order_by('-title')
-     
+
      # PAGINATION QUERYSTRING
      qs = request.GET.copy()
      if 'page' in qs:
          del qs['page']
      querystring = qs.urlencode()
-     
+
      # Håndter count for lister vs QuerySet
      try:
          total_article_count = posts.count()  # QuerySet
      except (TypeError, AttributeError):
          total_article_count = len(posts)     # Liste
-     
+
      paginator = Paginator(posts, 10)
      page_obj = paginator.get_page(request.GET.get("page"))
-     
+
      return self.render(
          request,
          template='tears/nettsaker.html',
@@ -199,13 +199,13 @@ class HomePage(RoutablePageMixin, Page):
              "querystring": querystring,
          }
      )
-     
-    
-         
-     
-    
-     
-    
+
+
+
+
+
+
+
 
     
     
@@ -311,7 +311,7 @@ class ProgramPage(Page):
         blank=True,
         use_json_field=True,
     )
-
+   
     content_panels = Page.content_panels + [
         FieldPanel("category"),
         FieldPanel("program"),
@@ -324,7 +324,10 @@ class ProgramPage(Page):
         FieldPanel("email_link"),
         FieldPanel("description"),
         
+        
     ]
+    
+   
     
 
 
@@ -336,13 +339,13 @@ class BlogPage(Page):
     user = models.ForeignKey(User, on_delete=models.PROTECT)
     date = models.DateTimeField("Post time")
     forfatter = models.CharField("Forfatter", max_length=255, blank=True)
-    imageDecription = models.CharField("BildeTekst:", max_length=255, blank=True, help_text="BildeTekst under første bildet")
+    imageDecription = models.CharField("Bildetekst på hovedbilde:", max_length=255, blank=True, help_text="Bildetekst under første bildet")
     ingress = models.CharField("Ingress", max_length=500, blank=True, help_text="Kort ingress/underoverskrift under tittelen")
-    overtittel = models.CharField("Overtittel", max_length=500, blank=True, help_text="Kort overtittel under hovedtittelen. For intervju er dette navnet på den som er intervjuet, for anmeldelse er det hva du anmelder (enten det er Film, Spisested eller Musikk), for vanlig nettsak trengs det ikke å skrive noe")
+    overtittel = models.CharField("Navn på det du andmelder/intervjuer.", max_length=500, blank=True, help_text=" F.eks. '[Navn på festival]' eller '[Navn på artist]'.")
     #this is for having nettsaker in programpages. makes it possible to show programs each nettsak they have made only
 
     program = models.ForeignKey(
-        'tears.ProgramPage',  
+        'tears.ProgramPage',
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
@@ -374,7 +377,6 @@ class BlogPage(Page):
     content_panels = Page.content_panels + [
         FieldPanel("user"),
         FieldPanel("typeArticle"),
-        FieldPanel("program"),
         FieldPanel("forfatter"),
         FieldPanel("ingress"),
         FieldPanel("overtittel"),
@@ -382,6 +384,14 @@ class BlogPage(Page):
         FieldPanel("body"),
         FieldPanel("imageDecription"),
     ]
+    def save(self, *args, **kwargs):
+        # Auto-assign program based on parent page
+        if not self.program:
+            parent = self.get_parent()
+            # Check if parent is a ProgramPage
+            if parent and parent.__class__.__name__ == 'ProgramPage':
+                self.program = parent
+        super().save(*args, **kwargs)
     def related_posts(self):
         return BlogPage.objects.live().filter(program=self.program).exclude(id=self.id)[:3]
    
@@ -458,7 +468,7 @@ class DagTidPage(Page):
 
     
 
-class AListaPage(Page):
+class AListaPage(Page): ##TODO: make it so only alista pages can be created under /a-lista/"
     page_description = "This page is for configuring A-lista for every week"
     forfatter = models.CharField("Forfatter", max_length=255, blank=True)
     ingress = models.TextField(blank=True, help_text="ingress")

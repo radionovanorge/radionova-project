@@ -37,23 +37,27 @@
     {% endif %}
 </div>
   
-      <!-- PAGE TITLE (MISSING PART) -->
+      <!-- PAGE TITLE  -->
       <h1 class="text-4xl font-bold text-[#511120] mb-6">{{ self.title }}</h1>
   
     </div>
   </header>
   
         
-<!-- About Radio Nova -->
-<div class="max-w-4xl mx-auto px-4 py-12">
+<!-- About Radio Nova   -->
+<div class="max-w-4xl mx-auto px-4 py-12 prose">
   {% for block in page.about_radio_nova %}
-    {{ block }}
+    {% if block.block_type == "content" %}
+      {{ block.value|richtext }}
+    {% else %}
+      {{ block }}
+    {% endif %}
   {% endfor %}
 </div>
 
 <!-- Ansatte Section -->
 <div class="max-w-6xl mx-auto px-4 py-12">
-    <h2 class="text-2xl font-bold mb-8">Ansatte</h2>
+    <h2 class="text-2xl font-bold mb-8">Dagtid</h2>
     <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10">
       {% for block in page.ansatte %}
         <div class="bg-white p-4 rounded-lg text-center flex flex-col items-center">
@@ -63,6 +67,7 @@
             </div>
           {% endif %}
           <h3 class="text-lg font-semibold mb-1">{{ block.value.name }}</h3>
+          <h4 class="text-sm text-gray-500 mb-2">{{ block.value.email }}</h4>
   
           <!-- Role as green tag -->
           <span class="inline-block text-sm text-[#511120] border border-[#511120] bg-green-100 px-4 py-1 rounded-full">
