@@ -64,149 +64,97 @@ class HomePage(RoutablePageMixin, Page):
     
     @route(r'^nettsaker/$', name='nettsaker')
     def nettsaker_page(self, request):
-     q = request.GET.get('q', '').strip()
-     selected_program = request.GET.get('program')
-     selected_kategori = request.GET.get('kategori') 
-     selected_tema = request.GET.get('tema')
-     sort = request.GET.get('sort', 'Ny')
-
-     posts = BlogPage.objects.live()
-
-     # SMART SØKEFUNKSJONALITET
-     if q:
-         # Del opp søkeordet
-         search_terms = q.split()
-
-         # Først prøv eksakt søk
-         exact_matches = posts.filter(title__iexact=q)
-
-         # Deretter delvis matching i tittel (høy prioritet)
-         title_matches = posts.filter(title__icontains=q)
-
-         # Til slutt søk i alle felt
-         all_field_query = Q()
-         for term in search_terms:
-             term_query = (
-                 Q(title__icontains=term) |
-                 Q(ingress__icontains=term) |
-                 Q(search_description__icontains=term)
-             )
-             all_field_query |= term_query  # Bruk OR for mer fleksibilitet
-
-         all_field_matches = posts.filter(all_field_query)
-
-         # Kombiner og fjern duplikater
-         posts = (exact_matches | title_matches | all_field_matches).distinct()
-
-         # Manuell relevans-sortering
-         def relevance_score(post):
-             score = 0
-             q_lower = q.lower()
-
-             # Eksakt match i tittel = høyeste score
-             if post.title.lower() == q_lower:
-                 score += 100
-
-             # Tittel starter med søkeord
-             elif post.title.lower().startswith(q_lower):
-                 score += 50
-
-             # Søkeord i tittel
-             elif q_lower in post.title.lower():
-                 score += 25
-
-             # Søkeord i ingress
-             if post.ingress and q_lower in post.ingress.lower():
-                 score += 10
-
-             # Søkeord i beskrivelse
-             if post.search_description and q_lower in post.search_description.lower():
-                 score += 5
-
-             return score
-
-         # Sorter etter relevans
-         posts = sorted(posts, key=relevance_score, reverse=True)
-
-     else:
-         posts = posts.order_by('-first_published_at')
-
-     # FILTRERING (etter søk)
-     if selected_program:
-         if hasattr(posts, 'filter'):  # QuerySet
-             posts = posts.filter(program__slug=selected_program)
-         else:  # List (fra sorting)
-             posts = [p for p in posts if p.program and p.program.slug == selected_program]
-
-     if selected_kategori:
-         if hasattr(posts, 'filter'):
-             posts = posts.filter(typeArticle__iexact=selected_kategori)
-         else:
-             posts = [p for p in posts if p.typeArticle and p.typeArticle.lower() == selected_kategori.lower()]
-
-     if selected_tema:
-         if hasattr(posts, 'filter'):
-             posts = posts.filter(program__category=selected_tema)
-         else:
-             posts = [p for p in posts if p.program and p.program.category == selected_tema]
-
-     # Konverter tilbake til QuerySet hvis det er en liste
-     if not hasattr(posts, 'filter') and posts:
-         post_ids = [p.id for p in posts]
-         posts = BlogPage.objects.filter(id__in=post_ids)
-         # Bevar rekkefølgen
-         preserved_order = {id: index for index, id in enumerate(post_ids)}
-         posts = sorted(posts, key=lambda x: preserved_order[x.id])
-
-     # SORTERING (kun hvis ikke søk)
-     if not q and hasattr(posts, 'order_by'):
-         if sort == 'Gammel':
-             posts = posts.order_by('first_published_at')
-         elif sort == 'asc':
-             posts = posts.order_by('title')
-         elif sort == 'desc':
-             posts = posts.order_by('-title')
-
-     # PAGINATION QUERYSTRING
-     qs = request.GET.copy()
-     if 'page' in qs:
-         del qs['page']
-     querystring = qs.urlencode()
-
-     # Håndter count for lister vs QuerySet
-     try:
-         total_article_count = posts.count()  # QuerySet
-     except (TypeError, AttributeError):
-         total_article_count = len(posts)     # Liste
-
-     paginator = Paginator(posts, 10)
-     page_obj = paginator.get_page(request.GET.get("page"))
-
-     return self.render(
-         request,
-         template='tears/nettsaker.html',
-         context_overrides={
-             "page_obj": page_obj,
-             "all_posts": page_obj,
-             "programs": ProgramPage.objects.live().order_by('title'),
-             "categories": ProgramPage.CATEGORY_CHOICES,
-             "q": q,
-             "selected_program": selected_program,
-             "selected_kategori": selected_kategori,
-             "selected_tema": selected_tema,
-             "sort": sort,
-             "total_article_count": total_article_count,
-             "querystring": querystring,
-         }
-     )
-
-
-
-
-
-
-
-
+        selected_programs = request.GET.getlist('program')
+        selected_tema     = request.GET.get('tema')
+        selected_kategori = (request.GET.get('kategori') or '').lower()
+    
+        # Base querysets – allerede sortert etter først publisert
+        blog_qs   = BlogPage.objects.live().order_by('-first_published_at')
+        alista_qs = AListaPage.objects.live().order_by('-first_published_at')
+    
+        # Filtre som før
+        if selected_programs:
+            blog_qs   = blog_qs.filter(program__slug__in=selected_programs)
+            alista_qs = alista_qs.filter(program__slug__in=selected_programs)
+    
+        if selected_tema:
+            blog_qs   = blog_qs.filter(program__category=selected_tema)
+            alista_qs = alista_qs.filter(program__category=selected_tema)
+    
+        if selected_kategori == 'a-lista':
+            blog_qs   = BlogPage.objects.none()
+        elif selected_kategori in {'article', 'anmeldelse', 'intervju'}:
+            blog_qs   = blog_qs.filter(typeArticle=selected_kategori)
+            alista_qs = AListaPage.objects.none()
+        # ellers: begge typer er med
+    
+        # Normaliser til én liste med dato = first_published_at (ingen klokkeslett)
+        items = []
+    
+        for p in blog_qs:
+            d = p.first_published_at or p.latest_revision_created_at
+            items.append({
+                'title': p.title,
+                'url': p.url,
+                'date_obj': d,
+                'date_iso': d.strftime('%Y-%m-%d') if d else '',
+                'date_human': d.strftime('%d. %B %Y') if d else '',
+                'ingress': p.ingress or p.search_description or '',
+                'program_slug': p.program.slug if getattr(p, 'program', None) else '',
+                'tema': p.program.category if getattr(p, 'program', None) and getattr(p.program, 'category', None) else '',
+                'kategori': p.typeArticle.lower(),
+                'kind': 'blog',
+            })
+    
+        for a in alista_qs:
+            d = a.first_published_at  # <-- kun first_published_at
+            items.append({
+                'title': a.title,
+                'url': a.url,
+                'date_obj': d,
+                'date_iso': d.strftime('%Y-%m-%d') if d else '',
+                'date_human': d.strftime('%d. %B %Y') if d else '',
+                'ingress': a.ingress or '',
+                'program_slug': a.program.slug if getattr(a, 'program', None) else '',
+                'tema': a.program.category if getattr(a, 'program', None) and getattr(a.program, 'category', None) else '',
+                'kategori': 'a-lista',
+                'kind': 'a-lista',
+            })
+    
+        # Sortér igjen i memory (belt & suspenders) – nyest først
+        items.sort(key=lambda x: (x['date_obj'] or datetime.min), reverse=True)
+    
+        total_article_count = len(items)
+    
+        paginator = Paginator(items, 10)
+        page_obj = paginator.get_page(request.GET.get("page"))
+    
+        qs = request.GET.copy(); qs.pop('page', None)
+        querystring = qs.urlencode()
+    
+        return self.render(
+            request,
+            template='tears/nettsaker.html',
+            context_overrides={
+                "page_obj": page_obj,
+                "all_posts": page_obj,
+                "programs": ProgramPage.objects.live().order_by('title'),
+                "categories": ProgramPage.CATEGORY_CHOICES,
+                "selected_tema": selected_tema,
+                "selected_programs": selected_programs,
+                "selected_kategori": selected_kategori,
+                "total_article_count": total_article_count,
+                "querystring": querystring,
+            }
+        )
+    
+    
+    
+    
+    
+    
+    
+    
     
     
 
@@ -340,7 +288,7 @@ class BlogPage(Page):
     date = models.DateTimeField("Post time")
     forfatter = models.CharField("Forfatter", max_length=255, blank=True)
     imageDecription = models.CharField("Bildetekst på hovedbilde:", max_length=255, blank=True, help_text="Bildetekst under første bildet")
-    ingress = models.CharField("Ingress", max_length=500, blank=True, help_text="Kort ingress/underoverskrift under tittelen")
+    ingress = models.TextField("Ingress", max_length=500, blank=True, help_text="Kort ingress/underoverskrift under tittelen")
     overtittel = models.CharField("Navn på det du andmelder/intervjuer.", max_length=500, blank=True, help_text=" F.eks. '[Navn på festival]' eller '[Navn på artist]'.")
     #this is for having nettsaker in programpages. makes it possible to show programs each nettsak they have made only
 

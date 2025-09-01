@@ -14,16 +14,15 @@
   <script src="{% static 'tears/js/base.js' %}"></script>
   <style>
     * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+      
+      
     }
     
-    html, body {
+    body {
       width: 100%;
       height: 100%;
       margin: 0;
-      padding: 0;
+      
       overflow-x: hidden;
     }
   </style>
@@ -106,24 +105,24 @@
 
   <!-- Related Section: “Mer fra [redaksjon]” -->
   {% with posts=page.related_posts %}
-  {% if posts %}
-    <div class=" mx-auto px-6 mt-16 bg-[#f7f4f4] py-12">
+  {% if posts and posts|length > 0 and page.program %}
+    <div class="mx-auto px-6 mt-16 bg-[#f7f4f4] py-12">
       <h2 class="text-xl font-bold text-[#511120] mb-6">Les mer fra {{ page.program }}</h2>
       <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         {% for post in posts %}
         <a href="{{ post.url }}" class="group block rounded-lg shadow-md overflow-hidden transition-transform transform hover:scale-105">
-           {% for block in post.body %}
+          {% for block in post.body %}
             {% if block.block_type == "main_image" %}
             {% image block.value fill-600x400 as img %}
             <div class="thumb" style="
-                 background-image: url('{{ img.url }}');
-                 width: 100%;
-                 height: 250px;
-                 background-size: cover;
-                 background-position: center;
-                 background-repeat: no-repeat;"></div>
+                background-image: url('{{ img.url }}');
+                width: 100%;
+                height: 250px;
+                background-size: cover;
+                background-position: center;
+                background-repeat: no-repeat;"></div>
             {% endif %}
-            {% endfor %}
+          {% endfor %}
           <div class="p-4">
             <h3 class="text-lg font-semibold group-hover:text-[#511120]">{{ post.title }}</h3>
             <p class="text-sm text-gray-500">{{ post.ingress|default:"- Nettsak" }}</p>
@@ -131,7 +130,7 @@
         </a>
         {% endfor %}
       </div>
-
+      
       <div class="mt-8 text-center">
         <a href="{{ page.program.url }}"
           class="inline-block border border-[#511120] px-4 py-2 rounded-full bg-[#511120] text-white transition-transform transform hover:scale-105">
@@ -143,5 +142,5 @@
 {% endwith %}
 </body>
 
-</html>
+
 {% endblock %}

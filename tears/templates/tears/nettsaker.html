@@ -144,24 +144,27 @@
                 </div>
                 <!-- Article Results -->
                 <div id="articleList" class="space-y-8">
-                    {% for post in all_posts %}
-                    <article class="border-b border-gray-200 pb-8" data-title="{{ post.title|lower }}"
-                        data-date="{{ post.date|date:'c' }}"
-                        data-program="{% if post.program %}{{ post.program.slug }}{% endif %}"
-                        data-kategori="{{ post.typeArticle|lower }}"
-                        data-tema="{% if post.program %}{{ post.program.category }}{% endif %}">
-                        <div class="text-sm text-gray-500 mb-2">{{ post.date|date:"d. F Y" }}</div>
-                        <h2 class="text-xl font-semibold text-gray-900 mb-3 hover:text-nova-red cursor-pointer">
-                            <a href="{{ post.url }}">{{ post.title }}</a>
-                        </h2>
-                        <p class="text-gray-700 leading-relaxed">
-                            {{ post.ingress|default:post.search_description|truncatewords:30 }}
-                        </p>
-                    </article>
-                    {% empty %}
-                    <p class="text-gray-500">Ingen artikler funnet.</p>
-                    {% endfor %}
-                </div>
+  {% for post in all_posts %}
+    <article
+      class="border-b border-gray-200 pb-8"
+      data-title="{{ post.title|lower }}"
+      data-date="{{ post.date_iso }}"
+      data-program="{{ post.program_slug }}"
+      data-kategori="{{ post.kategori }}"
+      data-tema="{{ post.tema }}"
+    >
+      <div class="text-sm text-gray-500 mb-2">{{ post.date_human }}</div>
+      <h2 class="text-xl font-semibold text-gray-900 mb-3 hover:text-nova-red cursor-pointer">
+        <a href="{{ post.url }}">{{ post.title }}</a>
+      </h2>
+      <p class="text-gray-700 leading-relaxed">
+        {{ post.ingress|truncatewords:30 }}
+      </p>
+    </article>
+  {% empty %}
+    <p class="text-gray-500">Ingen artikler funnet.</p>
+  {% endfor %}
+</div>
 
 
                 <!-- Pagination -->
@@ -194,7 +197,7 @@
             <!-- Sidebar -->
             <aside class="w-80">
                 <!-- Programmer Filter -->
-                <details class="group bg-white rounded-lg shadow-sm mb-6" open>
+                <details class="group bg-white rounded-lg shadow-sm mb-6" closed>
                     <summary class="list-none cursor-pointer">
                         <div class="p-6 text-lg font-semibold text-gray-900 flex items-center justify-between">
                             Programmer
@@ -244,12 +247,12 @@
 
                     <div class="px-6 pb-6">
                         <div class="space-y-3">
-                            <!-- Nyheter -->
+                            <!-- A-LISTA -->
                             <div class="flex items-center">
                                 <label class="flex items-center cursor-pointer relative">
-                                    <input type="radio" name="kategori" value="nyheter" class="peer filter-checkbox h-6 w-6 cursor-pointer transition-all appearance-none rounded border border-slate-300 checked:bg-[#4D0F1E] checked:border-[#4D0F1E]" 
+                                    <input type="radio" name="kategori" value="a-lista" class="peer filter-checkbox h-6 w-6 cursor-pointer transition-all appearance-none rounded border border-slate-300 checked:bg-[#4D0F1E] checked:border-[#4D0F1E]" 
 
-                                        {% if selected_kategori == 'nyheter' %}checked{% endif %} />
+                                        {% if selected_kategori == 'a-lista' %}checked{% endif %} />
                                     <span class="pointer-events-none absolute text-white opacity-0 peer-checked:opacity-100
                        top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24"
@@ -258,7 +261,7 @@
                                         </svg>
                                     </span>
                                 </label>
-                                <span class="ml-3 text-gray-700">Nyheter</span>
+                                <span class="ml-3 text-gray-700">A-lista</span>
                             </div>
 
                             <!-- Anmeldelse -->
