@@ -67,30 +67,30 @@ class HomePage(RoutablePageMixin, Page):
         selected_programs = request.GET.getlist('program')
         selected_tema     = request.GET.get('tema')
         selected_kategori = (request.GET.get('kategori') or '').lower()
-    
+
         # Base querysets – allerede sortert etter først publisert
         blog_qs   = BlogPage.objects.live().order_by('-first_published_at')
         alista_qs = AListaPage.objects.live().order_by('-first_published_at')
-    
+
         # Filtre som før
         if selected_programs:
             blog_qs   = blog_qs.filter(program__slug__in=selected_programs)
             alista_qs = alista_qs.filter(program__slug__in=selected_programs)
-    
+
         if selected_tema:
             blog_qs   = blog_qs.filter(program__category=selected_tema)
             alista_qs = alista_qs.filter(program__category=selected_tema)
-    
+
         if selected_kategori == 'a-lista':
             blog_qs   = BlogPage.objects.none()
         elif selected_kategori in {'article', 'anmeldelse', 'intervju'}:
             blog_qs   = blog_qs.filter(typeArticle=selected_kategori)
             alista_qs = AListaPage.objects.none()
         # ellers: begge typer er med
-    
+
         # Normaliser til én liste med dato = first_published_at (ingen klokkeslett)
         items = []
-    
+
         for p in blog_qs:
             d = p.first_published_at or p.latest_revision_created_at
             items.append({
@@ -105,7 +105,7 @@ class HomePage(RoutablePageMixin, Page):
                 'kategori': p.typeArticle.lower(),
                 'kind': 'blog',
             })
-    
+
         for a in alista_qs:
             d = a.first_published_at  # <-- kun first_published_at
             items.append({
@@ -120,18 +120,18 @@ class HomePage(RoutablePageMixin, Page):
                 'kategori': 'a-lista',
                 'kind': 'a-lista',
             })
-    
+
         # Sortér igjen i memory (belt & suspenders) – nyest først
         items.sort(key=lambda x: (x['date_obj'] or datetime.min), reverse=True)
-    
+
         total_article_count = len(items)
-    
+
         paginator = Paginator(items, 10)
         page_obj = paginator.get_page(request.GET.get("page"))
-    
+
         qs = request.GET.copy(); qs.pop('page', None)
         querystring = qs.urlencode()
-    
+
         return self.render(
             request,
             template='tears/nettsaker.html',
@@ -147,14 +147,14 @@ class HomePage(RoutablePageMixin, Page):
                 "querystring": querystring,
             }
         )
-    
-    
-    
-    
-    
-    
-    
-    
+
+
+
+
+
+
+
+
     
     
 
@@ -495,7 +495,9 @@ class Sendeplan(Page):
                         "is_live_now": is_now,
                         "rowspan": rowspan,
                     })
-                    
+        context["day_names"] = ["Mandag", "Tirsdag", "Onsdag", "Torsdag", "Fredag", "Lørdag", "Søndag"]
+       
+        # tried to have only 8 colums context["rendered_cells"] = {str(i): {} for i in range(1, 8)}
         context["sendeplan"] = sendeplan
         context["weekdays"] = ["1", "2", "3", "4", "5", "6", "7"]
         context["time_slots"] = ["00:00"] +[

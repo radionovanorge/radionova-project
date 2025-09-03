@@ -162,7 +162,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const vBar  = document.getElementById('vBar');
   const vSpace= document.getElementById('vSpace');
 
-  ifrm.style.transform = 'scale(0.9)';
+  
   
 
   function syncSizes(){
