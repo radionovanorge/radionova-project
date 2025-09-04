@@ -646,16 +646,9 @@
                                     
                                     <!-- If no program found and not covered by rowspan, render placeholder -->
                                     {% if not program_found %}
-                                        <td class="border border-gray-300 schedule-cell 
-                                            {% if not forloop.parentloop.counter0|divisibleby:2 %}
-                                                {% if forloop.counter0|divisibleby:2 %}bg-green-100{% else %}bg-yellow-100{% endif %}
-                                            {% else %}
-                                                bg-white
-                                            {% endif %}">
-                                            -
-                                        </td>
-                                    {% endif %}
-                                    
+<td class="invisible p-0 m-0 border-0 bg-transparent schedule-cell">-</td>
+{% endif %}
+
                                 {% endwith %}
                                 {% endwith %}
                             {% endfor %}
