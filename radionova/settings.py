@@ -119,7 +119,7 @@ DATABASES = {
         'PASSWORD': os.environ.get('DBPASS'),
         'PORT': os.environ.get('DBPORT'),
         'OPTIONS': {
-             'sslmode': 'require',  # Disable SSL for local development
+             'sslmode': 'disable',  # Disable SSL for local development
         },
     }
 }
