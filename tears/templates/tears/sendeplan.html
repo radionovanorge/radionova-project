@@ -581,30 +581,31 @@
 =======
 >>>>>>> Stashed changes
 
-        <!-- Content wrapper (the only scroller for the iframe) -->
-         
-        <div class="content-wrap" id="wrap">
-             <div class="schedule-content-wrapper" style="min-width: 1200px;">
-           <div class="max-w-10xl mx-auto">
-    <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-        <div class="flex">
-            <!-- Time Column  -->
-            <div class="time-table">
-                <table class="border-collapse">
-                    <thead>
-                        <tr class="bg-gray-100">
-                            <th class="border border-gray-300 p-2 text-left font-semibold w-16">Tid</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for time in time_slots %}
-                        <tr class="{% if forloop.counter0|divisibleby:2 %}bg-white{% endif %}">
-                            <td class="border border-gray-300 time-cell">{{ time }}</td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
+            <!-- Content wrapper (the only scroller for the iframe) -->
+
+            <div class="content-wrap" id="wrap">
+                <div class="schedule-content-wrapper" style="min-width: 1200px;">
+                    <div class="max-w-10xl mx-auto">
+                        <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                            <div class="flex">
+                                <!-- Time Column  -->
+                                <div class="time-table">
+                                    <table class="border-collapse">
+                                        <thead>
+                                            <tr class=""><!-- design this TODO -->
+                                                <th class="border border-gray-300 p-2 text-left font-semibold w-16">Tid
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for time in time_slots %}
+                                            <tr class="{% if forloop.counter0|divisibleby:2 %}bg-white{% endif %}">
+                                                <td class="border border-gray-300 time-cell">{{ time }}</td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
 
 <<<<<<< Updated upstream
             <!-- Schedule Content -->
@@ -707,14 +708,15 @@
                                         {% for program in day_programs %}
                                             {% if program.start_time < time and program.end_time > time %}
                                                 {% with program_found=True %}{% endwith %}
-                                            {% endif %}
-                                        {% endfor %}
-                                    {% endif %}
-                                    
-                                    <!-- If no program found and not covered by rowspan, render placeholder -->
-                                    {% if not program_found %}
-<td class="invisible p-0 m-0 border-0 bg-transparent schedule-cell">-</td>
-{% endif %}
+                                                {% endif %}
+                                                {% endfor %}
+                                                {% endif %}
+
+                                                <!-- If no program found and not covered by rowspan, render placeholder -->
+                                                {% if not program_found %}
+                                                <td class="invisible p-0 m-0 border-0 bg-transparent schedule-cell">-
+                                                </td>
+                                                {% endif %}
 
                                 {% endwith %}
                                 {% endwith %}
@@ -773,14 +775,15 @@
     </div>
 </div>
 
-        </div>
+                </div>
 
 
-        <!-- Right red scrollbar -->
-        <div class="scrollbar-right" id="vBar">
-            <div class="spacer-vert" id="vSpace"></div>
+
+            </div>
+            <div class="scrollbar-right hidden" id="vBar">
+  <div class="spacer-vert" id="vSpace"></div>
+</div>
         </div>
-    </div>
     </div>
 
 

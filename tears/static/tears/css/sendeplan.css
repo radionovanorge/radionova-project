@@ -13,7 +13,7 @@ body{
     user-select: none;
     
   }
-  @media (min-width: 1024px) {
+  @media (min-width: 964px) {
     .desktop-sendeplan {
       margin-left: 200px;
     }
@@ -968,45 +968,162 @@ body{
 
   /*  Sendeplan scrollbar  */
     /* Layout */
-.schedule-shell{position:relative;width:100%;max-width:100%;margin-top:12px}
-.schedule-shell .content-wrap{
-  position:relative;width:100%;height:70vh;      /* screen-relative */
-  overflow:auto;                                  /* the only real scroller */
-  scrollbar-width:none;  
-  right: 50px;  
-  bottom:10px;                       /* hide native bars (Firefox) */
-}
-.schedule-shell .content-wrap::-webkit-scrollbar{width:0;height:0}/* hide native bars (WebKit) */
+    /* Ensure the shell contains everything properly */
+.schedule-shell {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  margin-top: 12px;
+  min-width: 700px;
 
-/* Top bar (red track, white pill thumb) */
-.schedule-shell .scrollbar-top{
-  width:100%;height:18px;background:#5b0c1b;border-radius:9999px;
-  overflow-x:auto;overflow-y:hidden;margin:0 40px 8px 0;  /* make room for right bar */
 }
-.schedule-shell .scrollbar-top .spacer{height:1px;width:1600px} /* JS will resize this */
-.schedule-shell .scrollbar-top::-webkit-scrollbar{height:18px}
-.schedule-shell .scrollbar-top::-webkit-scrollbar-track{background:#5b0c1b;border-radius:9999px}
-.schedule-shell .scrollbar-top::-webkit-scrollbar-thumb{background:#fff;border-radius:9999px;border:4px solid #5b0c1b;min-width:48px}
-.schedule-shell .scrollbar-top::-webkit-scrollbar-thumb:hover{background:#f0f0f0}
+/* schedule shell for mobile */
+@media (max-width: 968px) {
+  .schedule-shell {
+    right:70px;
+    margin-top: 10px;
+  }
+}
 
-/* Right bar (same style, vertical) */
-.schedule-shell .scrollbar-right{
-  position:absolute;top:18px;right:0;height:calc(70vh - 18px);width:18px;
-  background:#5b0c1b;border-radius:9999px;overflow-y:auto;overflow-x:hidden;
+/* Content that scrolls */
+.schedule-shell .content-wrap {
+  position: relative;
+  width: 100%;
+  height: 70vh;
+  overflow: auto;
+  scrollbar-width: none;
+  /* hide native scrollbars */
 }
-.schedule-shell .scrollbar-right .spacer-vert{width:1px;height:1200px} /* JS will resize this */
-.schedule-shell .scrollbar-right::-webkit-scrollbar{width:18px}
-.schedule-shell .scrollbar-right::-webkit-scrollbar-track{background:#5b0c1b;border-radius:9999px}
-.schedule-shell .scrollbar-right::-webkit-scrollbar-thumb{background:#fff;border-radius:9999px;border:4px solid #5b0c1b;min-height:48px}
-.schedule-shell .scrollbar-right::-webkit-scrollbar-thumb:hover{background:#f0f0f0}
 
-/* Auto-hide helper */
-.schedule-shell .hidden{display:none}
-@media screen and (min-width: 1404px) { 
-  .schedule-shell .scrollbar-top{
-  
-    /*hidden*/
-    display:none;
+/* ---------------------------
+   TOP SCROLLBAR
+---------------------------- */
+
+.schedule-shell .scrollbar-top {
+  position: absolute;
+  top: -25px;
+  width: calc(100% - 150px); /* subtract width of right scrollbar */
+  height: 18px;
+  background: #5b0c1b;
+  border-radius: 9999px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  z-index: 50; /* on top of table */
+  pointer-events: auto;
 }
-  
+
+.schedule-shell .scrollbar-top .spacer {
+  width: 2000px; /* or adjust to content width */
+  height: 1px;
 }
+
+/* Style the inner thumb */
+.schedule-shell .scrollbar-top::-webkit-scrollbar {
+  height: 18px;
+}
+.schedule-shell .scrollbar-top::-webkit-scrollbar-track {
+  background: #5b0c1b;
+  border-radius: 9999px;
+}
+.schedule-shell .scrollbar-top::-webkit-scrollbar-thumb {
+  background: #fff;
+  border-radius: 9999px;
+  border: 4px solid #5b0c1b;
+}
+
+/* ---------------------------
+   RIGHT SCROLLBAR
+---------------------------- */
+
+.schedule-shell .scrollbar-right {
+  position: absolute;
+  top: 18px;  /* below top scrollbar */
+  right: 0;
+  width: 18px;
+  height: calc(70vh - 18px);
+  background: #5b0c1b;
+  border-radius: 9999px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  z-index: 50;
+  pointer-events: auto;
+}
+
+.schedule-shell .scrollbar-right .spacer-vert {
+  width: 1px;
+  height: 1200px; /* or dynamically calculated */
+}
+
+.schedule-shell .scrollbar-right::-webkit-scrollbar {
+  width: 18px;
+}
+.schedule-shell .scrollbar-right::-webkit-scrollbar-track {
+  background: #5b0c1b;
+  border-radius: 9999px;
+}
+.schedule-shell .scrollbar-right::-webkit-scrollbar-thumb {
+  background: #fff;
+  border-radius: 9999px;
+  border: 4px solid #5b0c1b;
+}
+
+.hidden {
+  display: none;
+}
+
+/* Optional: add a slight shadow for visibility */
+.schedule-shell .scrollbar-top,
+.schedule-shell .scrollbar-right {
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+ /* Ensure text doesn't wrap in cells */
+        .schedule-cell {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            vertical-align: top;
+            text-align: center;
+            padding: 2px;
+            font-size: 11px;
+            line-height: 1.2;
+            height: 32px;
+        }
+
+        /* Time column styling */
+        .time-cell {
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 500;
+        }
+
+        /* Program blocks that span multiple rows */
+        .program-1-row {
+            height: 32px;
+        }
+
+        .program-2-rows {
+            height: 64px;
+        }
+
+        .program-3-rows {
+            height: 96px;
+        }
+
+        .program-4-rows {
+            height: 128px;
+        }
+
+        /* Sync scrolling */
+        .time-table,
+        .schedule-table {
+            display: inline-block;
+            vertical-align: top;
+        }
+
+        .schedule-container table {
+            table-layout: fixed;
+            width: 100%;
+        }
