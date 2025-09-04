@@ -156,42 +156,48 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 (function(){
   const wrap  = document.getElementById('wrap');
-  const ifrm  = document.getElementById('sheet');
   const hBar  = document.getElementById('hBar');
   const hSpace= document.getElementById('hSpace');
   const vBar  = document.getElementById('vBar');
   const vSpace= document.getElementById('vSpace');
 
-  
-  
-
   function syncSizes(){
-    // set spacer sizes to the wrapper's scroll sizes
-    hSpace.style.width  = wrap.scrollWidth + 'px';
+    hSpace.style.width  = wrap.scrollWidth + 'px'; // we are doing this since the table is alot bigger than the container
     vSpace.style.height = wrap.scrollHeight + 'px';
 
-    // auto-hide bars if no scroll needed
-    const needH = wrap.scrollWidth  > wrap.clientWidth;
+    const needH = wrap.scrollWidth  > wrap.clientWidth + 180;
     const needV = wrap.scrollHeight > wrap.clientHeight;
+
     hBar.classList.toggle('hidden', !needH);
     vBar.classList.toggle('hidden', !needV);
   }
-
-  // top bar <-> wrapper (horizontal)
-  hBar.addEventListener('scroll', () => { wrap.scrollLeft = hBar.scrollLeft; });
   wrap.addEventListener('scroll', () => {
-    hBar.scrollLeft = wrap.scrollLeft;
-    vBar.scrollTop  = wrap.scrollTop;   // also keep vertical bar in sync
+  if (wrap.scrollLeft > 400) {
+    wrap.scrollLeft = 400; // max scroll allowed
+  }
+  hBar.scrollLeft = wrap.scrollLeft;
+});
+
+
+
+  // Sync scroll positions
+  hBar.addEventListener('scroll', () => {
+    wrap.scrollLeft = hBar.scrollLeft;
   });
 
-  // right bar <-> wrapper (vertical)
-  vBar.addEventListener('scroll', () => { wrap.scrollTop = vBar.scrollTop; });
+  wrap.addEventListener('scroll', () => {
+    hBar.scrollLeft = wrap.scrollLeft;
+    vBar.scrollTop  = wrap.scrollTop;
+  });
 
-  // update when iframe loads (dimension known) + on resize
+  vBar.addEventListener('scroll', () => {
+    wrap.scrollTop = vBar.scrollTop;
+  });
+
+  // Sync on load + resize
   window.addEventListener('load', syncSizes);
-  ifrm.addEventListener('load', syncSizes);
   window.addEventListener('resize', syncSizes);
 
-  // also observe wrapper for changes
+  // Watch for container changes
   new ResizeObserver(syncSizes).observe(wrap);
 })();
