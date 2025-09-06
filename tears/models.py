@@ -61,93 +61,116 @@ class HomePage(RoutablePageMixin, Page):
         return context
     
     """No need to routeablepages but we dont have model for nettsaker.html yet"""
-    
     @route(r'^nettsaker/$', name='nettsaker')
     def nettsaker_page(self, request):
-        selected_programs = request.GET.getlist('program')
-        selected_tema     = request.GET.get('tema')
-        selected_kategori = (request.GET.get('kategori') or '').lower()
+     selected_programs = [p for p in request.GET.getlist('program') if p.strip()]
+     selected_tema = request.GET.get('tema', '').strip() or None
+     selected_kategori = (request.GET.get('kategori', '').strip() or '').lower()
+     search_query = request.GET.get('q', '').strip()  # Get search query
+     sort_order = request.GET.get('sort', 'Ny')  # Get sort parameter
 
-        # Base querysets – allerede sortert etter først publisert
-        blog_qs   = BlogPage.objects.live().order_by('-first_published_at')
-        alista_qs = AListaPage.objects.live().order_by('-first_published_at')
+     # Base querysets
+     blog_qs = BlogPage.objects.live()
+     alista_qs = AListaPage.objects.live()
 
-        # Filtre som før
-        if selected_programs:
-            blog_qs   = blog_qs.filter(program__slug__in=selected_programs)
-            alista_qs = alista_qs.filter(program__slug__in=selected_programs)
+     # Apply filters FIRST (before search, since search returns PostgresSearchResults)
+     if selected_programs:
+         blog_qs = blog_qs.filter(program__slug__in=selected_programs)
+         alista_qs = alista_qs.filter(program__slug__in=selected_programs)
 
-        if selected_tema:
-            blog_qs   = blog_qs.filter(program__category=selected_tema)
-            alista_qs = alista_qs.filter(program__category=selected_tema)
+     if selected_tema:
+         blog_qs = blog_qs.filter(program__category=selected_tema)
+         alista_qs = alista_qs.filter(program__category=selected_tema)
 
-        if selected_kategori == 'a-lista':
-            blog_qs   = BlogPage.objects.none()
-        elif selected_kategori in {'article', 'anmeldelse', 'intervju'}:
-            blog_qs   = blog_qs.filter(typeArticle=selected_kategori)
-            alista_qs = AListaPage.objects.none()
-        # ellers: begge typer er med
+     if selected_kategori == 'a-lista':
+         blog_qs = BlogPage.objects.none()
+     elif selected_kategori in {'article', 'anmeldelse', 'intervju'}:
+         blog_qs = blog_qs.filter(typeArticle=selected_kategori)
+         alista_qs = AListaPage.objects.none()
 
-        # Normaliser til én liste med dato = first_published_at (ingen klokkeslett)
-        items = []
-
-        for p in blog_qs:
-            d = p.first_published_at or p.latest_revision_created_at
-            items.append({
-                'title': p.title,
-                'url': p.url,
-                'date_obj': d,
-                'date_iso': d.strftime('%Y-%m-%d') if d else '',
-                'date_human': d.strftime('%d. %B %Y') if d else '',
-                'ingress': p.ingress or p.search_description or '',
-                'program_slug': p.program.slug if getattr(p, 'program', None) else '',
-                'tema': p.program.category if getattr(p, 'program', None) and getattr(p.program, 'category', None) else '',
-                'kategori': p.typeArticle.lower(),
-                'kind': 'blog',
-            })
-
-        for a in alista_qs:
-            d = a.first_published_at  # <-- kun first_published_at
-            items.append({
-                'title': a.title,
-                'url': a.url,
-                'date_obj': d,
-                'date_iso': d.strftime('%Y-%m-%d') if d else '',
-                'date_human': d.strftime('%d. %B %Y') if d else '',
-                'ingress': a.ingress or '',
-                'program_slug': a.program.slug if getattr(a, 'program', None) else '',
-                'tema': a.program.category if getattr(a, 'program', None) and getattr(a.program, 'category', None) else '',
-                'kategori': 'a-lista',
-                'kind': 'a-lista',
-            })
-
-        # Sortér igjen i memory (belt & suspenders) – nyest først
-        items.sort(key=lambda x: (x['date_obj'] or datetime.min), reverse=True)
-
-        total_article_count = len(items)
-
-        paginator = Paginator(items, 10)
-        page_obj = paginator.get_page(request.GET.get("page"))
-
-        qs = request.GET.copy(); qs.pop('page', None)
-        querystring = qs.urlencode()
-
-        return self.render(
-            request,
-            template='tears/nettsaker.html',
-            context_overrides={
-                "page_obj": page_obj,
-                "all_posts": page_obj,
-                "programs": ProgramPage.objects.live().order_by('title'),
-                "categories": ProgramPage.CATEGORY_CHOICES,
-                "selected_tema": selected_tema,
-                "selected_programs": selected_programs,
-                "selected_kategori": selected_kategori,
-                "total_article_count": total_article_count,
-                "querystring": querystring,
-            }
+     # Apply search filter AFTER other filters
+     if search_query:
+         
+        blog_qs = blog_qs.filter(
+            Q(title__icontains=search_query) | 
+            Q(ingress__icontains=search_query) |
+            Q(search_description__icontains=search_query)
+        )
+        alista_qs = alista_qs.filter(
+            Q(title__icontains=search_query) | 
+            Q(ingress__icontains=search_query)
         )
 
+     # Convert to list with proper date handling
+     items = []
+
+     for p in blog_qs:
+         d = p.first_published_at or p.latest_revision_created_at
+         items.append({
+             'title': p.title,
+             'url': p.url,
+             'date_obj': d,
+             'date_iso': d.strftime('%Y-%m-%d') if d else '',
+             'date_human': d.strftime('%d. %B %Y') if d else '',
+             'ingress': p.ingress or p.search_description or '',
+             'program_slug': p.program.slug if getattr(p, 'program', None) else '',
+             'tema': p.program.category if getattr(p, 'program', None) and getattr(p.program, 'category', None) else '',
+             'kategori': p.typeArticle.lower(),
+             'kind': 'blog',
+         })
+
+     for a in alista_qs:
+         d = a.first_published_at
+         items.append({
+             'title': a.title,
+             'url': a.url,
+             'date_obj': d,
+             'date_iso': d.strftime('%Y-%m-%d') if d else '',
+             'date_human': d.strftime('%d. %B %Y') if d else '',
+             'ingress': a.ingress or '',
+             'program_slug': a.program.slug if getattr(a, 'program', None) else '',
+             'tema': a.program.category if getattr(a, 'program', None) and getattr(a.program, 'category', None) else '',
+             'kategori': 'a-lista',
+             'kind': 'a-lista',
+         })
+
+     # Apply sorting
+     if sort_order == 'Gammel':  # Oldest first
+         items.sort(key=lambda x: (x['date_obj'] or datetime.min), reverse=False)
+     elif sort_order == 'asc':  # A-Å
+         items.sort(key=lambda x: x['title'].lower())
+     elif sort_order == 'desc':  # Å-A  
+         items.sort(key=lambda x: x['title'].lower(), reverse=True)
+     else:  # Default: Newest first
+         items.sort(key=lambda x: (x['date_obj'] or datetime.min), reverse=True)
+
+     total_article_count = len(items)
+
+     paginator = Paginator(items, 10)
+     page_obj = paginator.get_page(request.GET.get("page"))
+
+     # Preserve all parameters for pagination
+     qs = request.GET.copy()
+     qs.pop('page', None)
+     querystring = qs.urlencode()
+
+     return self.render(
+         request,
+         template='tears/nettsaker.html',
+         context_overrides={
+             "page_obj": page_obj,
+             "all_posts": page_obj,
+             "programs": ProgramPage.objects.live().order_by('title'),
+             "categories": ProgramPage.CATEGORY_CHOICES,
+             "selected_tema": selected_tema,
+             "selected_programs": selected_programs,
+             "selected_kategori": selected_kategori,
+             "q": search_query,  # Pass search query to template
+             "sort": sort_order,  # Pass sort order to template
+             "total_article_count": total_article_count,
+             "querystring": querystring,
+         }
+     )
 
 
 

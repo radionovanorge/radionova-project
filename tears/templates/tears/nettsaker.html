@@ -26,49 +26,77 @@
             }
         }
     </script>
+    <style>
+         /* Custom slide-up animation */
+        .slide-up-enter {
+            transform: translateY(100%);
+            opacity: 0;
+        }
+        .slide-up-enter-active {
+            transform: translateY(0);
+            opacity: 1;
+            transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+        }
+        .slide-up-exit {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        .slide-up-exit-active {
+            transform: translateY(100%);
+            opacity: 0;
+            transition: transform 0.3s ease-in, opacity 0.3s ease-in;
+        }
+        
+        /* Backdrop fade animation */
+        .backdrop-enter {
+            opacity: 0;
+        }
+        .backdrop-enter-active {
+            opacity: 1;
+            transition: opacity 0.3s ease-out;
+        }
+        .backdrop-exit {
+            opacity: 1;
+        }
+        .backdrop-exit-active {
+            opacity: 0;
+            transition: opacity 0.3s ease-in;
+        }
+    </style>
 
 </head>
 
 <body class="bg-gray-50">
     <!-- Header -->
-    <header class="bg-white shadow-sm">
+    <header class="w-full bg-[#f7f4f4] p-8 mb-2">
+    <div class="max-w-6xl mx-auto px-200">
+           
 
-    </header>
+    <nav aria-label="Breadcrumb">
+        <ul class="flex items-center space-x-2 flex-wrap text-sm text-gray-500 mb-2 mt-1">
+           
+            <li class="flex items-center">
+                <a href="/" class="hover:text-red-600 transition-colors">Forside</a>
+                <span class="mx-2 text-gray-400">→</span>
+            </li>
+            
+            <!-- Show ellipsis on small screens if there are hidden items -->
+           
+         
+            <!-- Current Page -->
+            <li class="text-red-600 font-semibold">Nettsakarkiv</li>
+        </ul>
+    </nav>
+    
 
-    <div class="max-w-7xl mx-auto px-4 py-6">
-        <!-- Breadcrumb -->
-        <div class="text-sm text-gray-500 mb-4 mt-1">
-            {% if self.get_ancestors|length > 1 %}
-            <nav aria-label="Breadcrumb">
-                <ul class="flex items-center space-x-2 flex-wrap">
-                    {% for p in self.get_ancestors %}
-                    {% if not p.is_root %}
-                    <li
-                        class="flex items-center {% if forloop.counter > 1 and forloop.counter < forloop.parentloop.counter0|add:'-1' %}hidden sm:flex{% endif %}">
-                        <a href="{{ p.url }}" class="hover:text-red-600 transition-colors">{{ p.title }}</a>
-                        <span class="mx-2 text-gray-400">→</span>
-                    </li>
-                    {% endif %}
-                    {% endfor %}
-                    <!-- Show ellipsis on small screens if there are hidden items -->
-                    {% if self.get_ancestors|length > 3 %}
-                    <li class="sm:hidden flex items-center">
-                        <span class="text-gray-400">...</span>
-                        <span class="mx-2 text-gray-400">→</span>
-                    </li>
-                    {% endif %}
-                    <!-- Current Page -->
-                    <li class="text-red-600 font-semibold">{{ self.title }}</li>
-                </ul>
-            </nav>
-            {% endif %}
-        </div>
+            
 
-        <!-- Page Title -->
-        <h1 class="text-3xl font-bold text-gray-900 mb-6">Søk i artikkelarkiv</h1>
-
+            <!-- Title Section -->
+            <h1 class="text-4xl font-bold text-black-800">Søk i artikkelarkiv</h1>
+      
+        
         <!-- Search Bar -->
-        <form id="mainSearchForm" method="get" class="flex mb-8 gap-2">
+        <form id="mainSearchForm" method="get" class="flex mb-4 gap-2 mt-4">
             <div class="flex-1 relative">
                 <input 
                     type="text" 
@@ -100,136 +128,52 @@
             <input type="hidden" name="tema" value="{{ selected_tema|default:'' }}">
             <input type="hidden" name="sort" value="{{ sort|default:'Ny' }}">
         </form>
+  </div>
+    </header>
 
+  
+    
+        
 
-        <div class="flex gap-8">
-            <!-- Main Content -->
+      
 
-            <div class="flex-1">
-                <!-- Results Info & Controls -->
-                <div class="flex items-center justify-between mb-6">
-                    <div class="flex items-center space-x-4">
-                        <span id="resultCount" class="text-ml text-gray-600" data-total="{{ total_article_count }}">
-                            Viser {{ page_obj|length }} av {{ total_article_count }} resultater
-                        </span>
-
-                    </div>
-                    <div class="flex items-center space-x-2">
-                        <div
-                            class="relative inline-flex items-stretch border-2 border-red-900 rounded-md overflow-hidden bg-gray-50">
-                              <form method="get" id="filterForm">
-                            <select id="sortSelect"
-                                class="bg-transparent border-0 text-black-900 font-medium pl-2 pr-14 py-2 text-sm outline-none w-full cursor-pointer"
-                                aria-label="Sorter">
-                                <option value="Ny">Nyest først</option>
-                                <option value="Gammel">Eldst først</option>
-                                <option value="asc">A-Å</option>
-                                <option value="desc">Å-A</option>
-                            </select>
-                            </form>
-
-
-                            <div
-                                class="pointer-events-none absolute inset-y-0 right-0 w-8 bg-nova-dark-red flex items-center justify-center">
-                                <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                                    aria-hidden="true">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3"
-                                        d="M19 9l-7 7-7-7"></path>
-                                </svg>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div id="Grid" class="program-rutenett grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-10 mr-6">
-                </div>
-                <!-- Article Results -->
-                <div id="articleList" class="space-y-8">
-  {% for post in all_posts %}
-    <article
-      class="border-b border-gray-200 pb-8"
-      data-title="{{ post.title|lower }}"
-      data-date="{{ post.date_iso }}"
-      data-program="{{ post.program_slug }}"
-      data-kategori="{{ post.kategori }}"
-      data-tema="{{ post.tema }}"
-    >
-      <div class="text-sm text-gray-500 mb-2">{{ post.date_human }}</div>
-      <h2 class="text-xl font-semibold text-gray-900 mb-3 hover:text-nova-red cursor-pointer">
-        <a href="{{ post.url }}">{{ post.title }}</a>
-      </h2>
-      <p class="text-gray-700 leading-relaxed">
-        {{ post.ingress|truncatewords:30 }}
-      </p>
-    </article>
-  {% empty %}
-    <p class="text-gray-500">Ingen artikler funnet.</p>
-  {% endfor %}
-</div>
-
-
-                <!-- Pagination -->
-              {% if page_obj.paginator.count > page_obj.paginator.per_page %}
-  <nav class="flex items-center justify-center space-x-2 mt-12" aria-label="Pagination">
-
-    {% if page_obj.has_previous %}
-      <a href="?page={{ page_obj.previous_page_number }}{% if querystring %}&{{ querystring }}{% endif %}"
-         class="border border-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-50">← Forrige</a>
-    {% endif %}
-
-    {% for i in page_obj.paginator.page_range %}
-      {% if i == page_obj.number %}
-        <span class="bg-nova-dark-red text-white w-10 h-10 rounded font-medium flex items-center justify-center">{{ i }}</span>
-      {% else %}
-        <a href="?page={{ i }}{% if querystring %}&{{ querystring }}{% endif %}"
-           class="border border-gray-300 text-gray-700 w-10 h-10 rounded hover:bg-gray-50 flex items-center justify-center">{{ i }}</a>
-      {% endif %}
-    {% endfor %}
-
-    {% if page_obj.has_next %}
-      <a href="?page={{ page_obj.next_page_number }}{% if querystring %}&{{ querystring }}{% endif %}"
-         class="border border-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-50">Neste →</a>
-    {% endif %}
-
-  </nav>
-{% endif %}
-            </div>
-
+        
+        <div class="flex flex.col lg:flex-row gap-8">
             <!-- Sidebar -->
-            <aside class="w-80">
+             
+            <aside class="w-full lg:w-1/4 p-4 hidden lg:block w-1/4 bg-white p-4">
                 <!-- Programmer Filter -->
                 <details class="group bg-white rounded-lg shadow-sm mb-6" closed>
-                    <summary class="list-none cursor-pointer">
-                        <div class="p-6 text-lg font-semibold text-gray-900 flex items-center justify-between">
-                            Programmer
-                            <svg class="w-5 h-5 transition-transform duration-200 rotate-180 group-open:rotate-0"
-                                fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M19 9l-7 7-7-7"></path>
+        <summary class="list-none cursor-pointer">
+            <div class="p-6 text-lg font-semibold text-gray-900 flex items-center justify-between">
+                Programmer
+                <svg class="w-5 h-5 transition-transform duration-200 rotate-180 group-open:rotate-0"
+                    fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M19 9l-7 7-7-7"></path>
+                </svg>
+            </div>
+        </summary>
+        <div class="px-6 pb-6">
+            <div class="flex flex-col gap-3">
+                {% for program in programs %}
+                <div class="flex items-center">
+                    <label class="flex items-center cursor-pointer relative">
+                        <input type="radio" name="program" value="{{ program.slug }}" 
+                               class="peer filter-checkbox h-6 w-6 cursor-pointer transition-all appearance-none rounded border border-slate-300 checked:bg-[#4D0F1E] checked:border-[#4D0F1E]" 
+                               {% if selected_program == program.slug %}checked{% endif %} />
+                        <span class="pointer-events-none absolute text-white opacity-0 peer-checked:opacity-100 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" class="w-4 h-4">
+                                <path d="M18 6 L6 18 M6 6 L18 18" stroke="white" stroke-width="2" />
                             </svg>
-                        </div>
-                    </summary>
-                    <form method="get" id="filterForm">
-                    <div class="px-6 pb-6">
-                        <div class="flex flex-col gap-3">
-                            {% for program in programs %}
-                            <div class="flex items-center">
-                                <label class="flex items-center cursor-pointer relative">
-                                    <input type="radio" name="program" value="{{ program.slug }}" class="peer filter-checkbox h-6 w-6 cursor-pointer transition-all appearance-none rounded border border-slate-300 checked:bg-[#4D0F1E] checked:border-[#4D0F1E]" 
-                                        {% if selected_program == program.slug %}checked{% endif %} />
-                                    <span class="pointer-events-none absolute text-white opacity-0 peer-checked:opacity-100
-                       top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"
-                                            class="w-4 h-4">
-                                            <path d="M18 6 L6 18 M6 6 L18 18" stroke="white" stroke-width="2" />
-                                        </svg>
-                                    </span>
-                                </label>
-                                <span class="ml-3 text-gray-800">{{ program.title }}</span>
-                            </div>
-                            {% endfor %}
-                        </div>
-                    </div>
-                </details>
+                        </span>
+                    </label>
+                    <span class="ml-3 text-gray-800">{{ program.title }}</span>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </details>
 
 
                 <!-- Kategori Filter -->
@@ -371,21 +315,343 @@
 
 
             </aside>
+            <!-- Main Content -->
+ 
+            <div class="flex-1">
+                <!-- Results Info & Controls -->
+                <div class="flex items-center justify-between mb-6">
+                 
+                    <div class=" ml-6 lg:flex items-center space-x-4">
+                        
+                        <span id="resultCount" class="text-ml text-gray-600" data-total="{{ total_article_count }}">
+                            Viser {{ page_obj|length }} av {{ total_article_count }} resultater
+                        </span>
+
+                    </div>
+                    <div class="flex items-center space-x-2">
+    <div class="flex items-center space-x-2">
+    <div class="relative inline-flex items-stretch border-2 border-red-900 rounded-md overflow-hidden bg-gray-50">
+        <select id="sortSelect" name="sort"
+            class="bg-transparent border-0 text-black-900 font-medium pl-2 pr-14 py-2 text-sm outline-none w-full cursor-pointer"
+            aria-label="Sorter">
+            <option value="Ny" {% if sort == 'Ny' or not sort %}selected{% endif %}>Nyest først</option>
+            <option value="Gammel" {% if sort == 'Gammel' %}selected{% endif %}>Eldst først</option>
+            <option value="asc" {% if sort == 'asc' %}selected{% endif %}>A-Å</option>
+            <option value="desc" {% if sort == 'desc' %}selected{% endif %}>Å-A</option>
+        </select>
+
+        <div class="pointer-events-none absolute inset-y-0 right-0 w-8 bg-nova-dark-red flex items-center justify-center">
+            <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 9l-7 7-7-7"></path>
+            </svg>
         </div>
     </div>
+</div>
+</div>
+                    
+                </div>
+                
+                <div id="activeFilters" class="flex flex-wrap gap-8"></div>
+                <!-- Article Results -->
+                <div id="articleList" class="ml-10 lg:space-y-8">
+                    
+  {% for post in all_posts %}
+    <article
+      class="border-b border-gray-200 pb-8"
+      data-title="{{ post.title|lower }}"
+      data-date="{{ post.date_iso }}"
+      data-program="{{ post.program_slug }}"
+      data-kategori="{{ post.kategori }}"
+      data-tema="{{ post.tema }}"
+    >
+      <div class="text-sm text-gray-500 mb-2">{{ post.date_human }}</div>
+      <h2 class="text-xl font-semibold text-gray-900 mb-3 hover:text-nova-red cursor-pointer">
+        <a href="{{ post.url }}">{{ post.title }}</a>
+      </h2>
+      <p class="text-gray-700 leading-relaxed">
+        {{ post.ingress|truncatewords:30 }}
+      </p>
+    </article>
+  {% empty %}
+    <p class="text-gray-500">Ingen artikler funnet.</p>
+  {% endfor %}
+</div>
+  <!-- Mobile Filter Button - Only visible on mobile -->
+            <div class="w-full flex justify-center px-4 mt-2">
+                <div class="lg:hidden mb-4 w-100 max-w-xs">
+                    <button id="filterButton"
+                        class="w-full flex items-center justify-center gap-2 bg-white border border-gray-300 rounded-lg px-6 py-3 text-gray-700 hover:bg-gray-50 transition-colors shadow">
+                        <!-- New Filter Sliders Icon -->
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="#4D0F1E" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M10 6a2 2 0 104 0M4 18h16M6 18a2 2 0 104 0" />
+                        </svg>
+                        <span class="text-base font-medium" style="color:#4D0F1E">Filter</span>
+                    </button>
+                </div>
+            </div>
+
+
+
+                <!-- Pagination -->
+              {% if page_obj.paginator.count > page_obj.paginator.per_page %}
+  <nav class="flex items-center justify-center space-x-2 mt-6" aria-label="Pagination">
+
+    {% if page_obj.has_previous %}
+      <a href="?page={{ page_obj.previous_page_number }}{% if querystring %}&{{ querystring }}{% endif %}"
+         class="border border-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-50">← Forrige</a>
+    {% endif %}
+
+    {% for i in page_obj.paginator.page_range %}
+      {% if i == page_obj.number %}
+        <span class="bg-nova-dark-red text-white w-10 h-10 rounded font-medium flex items-center justify-center">{{ i }}</span>
+      {% else %}
+        <a href="?page={{ i }}{% if querystring %}&{{ querystring }}{% endif %}"
+           class="border border-gray-300 text-gray-700 w-10 h-10 rounded hover:bg-gray-50 flex items-center justify-center">{{ i }}</a>
+      {% endif %}
+    {% endfor %}
+
+    {% if page_obj.has_next %}
+      <a href="?page={{ page_obj.next_page_number }}{% if querystring %}&{{ querystring }}{% endif %}"
+         class="border border-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-50">Neste →</a>
+    {% endif %}
+
+  </nav>
+{% endif %}
+            </div>
+
+            
+        </div>
+    </div>
+    
+    </div>
+     <!-- Mobile Filter Modal Backdrop -->
+    <div id="modalBackdrop" class="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden hidden"></div>
+
+    <!-- Mobile Filter Modal -->
+    <div id="filterModal" class="fixed inset-x-0 bottom-0 bg-white z-50 lg:hidden transform translate-y-full transition-transform duration-300 ease-out max-h-[80vh] overflow-y-auto">
+        <!-- Modal Header -->
+        <div class="flex items-center justify-between p-4 border-b border-gray-200 bg-[#4D0F1E] sticky top-0 z-10">
+            <h3 class="text-lg font-semibold text-white">Filtrer søket</h3>
+            <button id="closeFilter" class="p-2 hover:bg-[#3A0C18] rounded-full transition-colors">
+                <svg class="w-5 h-5" fill="none" stroke="white" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+        </div>
+
+        <!-- Mobile Filter Content -->
+        <div class="p-4">
+            <!-- Programmer Filter Mobile -->
+            <details class="group bg-gray-50 rounded-lg mb-4" closed>
+                <summary class="list-none cursor-pointer">
+                    <div class="p-4 text-lg font-semibold text-gray-900 flex items-center justify-between">
+                        Programmer
+                        <svg class="w-5 h-5 transition-transform duration-200 rotate-180 group-open:rotate-0"
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </div>
+                </summary>
+                <div class="px-4 pb-4">
+                    <div class="flex flex-col gap-3">
+
+                        {% for program in programs %}
+                            <div class="flex items-center">
+                                <label class="flex items-center cursor-pointer relative">
+                                    <input type="radio" name="program" value="{{ program.slug }}" class="peer filter-checkbox h-6 w-6 cursor-pointer transition-all appearance-none rounded border border-slate-300 checked:bg-[#4D0F1E] checked:border-[#4D0F1E]" 
+                                        {% if selected_program == program.slug %}checked{% endif %} />
+                                    <span class="pointer-events-none absolute text-white opacity-0 peer-checked:opacity-100
+                       top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"
+                                            class="w-4 h-4">
+                                            <path d="M18 6 L6 18 M6 6 L18 18" stroke="white" stroke-width="2" />
+                                        </svg>
+                                    </span>
+                                </label>
+                                <span class="ml-3 text-gray-800">{{ program.title }}</span>
+                            </div>
+                            {% endfor %}
+                    </div>
+                </div>
+            </details>
+
+            <!-- Kategori Filter Mobile -->
+            <details class="group bg-gray-50 rounded-lg mb-4" open>
+                <summary class="list-none cursor-pointer">
+                    <div class="p-4 text-lg font-semibold text-gray-900 flex items-center justify-between">
+                        Kategori
+                        <svg class="w-5 h-5 transition-transform duration-200 rotate-180 group-open:rotate-0"
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </div>
+                </summary>
+                <div class="px-4 pb-4">
+                    <div class="space-y-3">
+                         <div class="flex items-center">
+                                <label class="flex items-center cursor-pointer relative">
+                                    <input type="radio" name="kategori" value="a-lista" class="peer filter-checkbox h-6 w-6 cursor-pointer transition-all appearance-none rounded border border-slate-300 checked:bg-[#4D0F1E] checked:border-[#4D0F1E]" 
+
+                                        {% if selected_kategori == 'a-lista' %}checked{% endif %} />
+                                    <span class="pointer-events-none absolute text-white opacity-0 peer-checked:opacity-100
+                       top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24"
+                                            fill="currentColor">
+                                            <path d="M18 6 L6 18 M6 6 L18 18" stroke="white" stroke-width="2" />
+                                        </svg>
+                                    </span>
+                                </label>
+                                <span class="ml-3 text-gray-700">A-lista</span>
+                            </div>
+
+                            <!-- Anmeldelse -->
+                            <div class="flex items-center">
+                                <label class="flex items-center cursor-pointer relative">
+                                    <input type="radio" name="kategori" value="anmeldelse" class="peer filter-checkbox h-6 w-6 cursor-pointer transition-all appearance-none rounded border border-slate-300 checked:bg-[#4D0F1E] checked:border-[#4D0F1E]" 
+                                        {% if selected_kategori == 'anmeldelse' %}checked{% endif %} />
+                                    <span class="pointer-events-none absolute text-white opacity-0 peer-checked:opacity-100
+                       top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24"
+                                            fill="currentColor">
+                                            <path d="M18 6 L6 18 M6 6 L18 18" stroke="white" stroke-width="2" />
+                                        </svg>
+                                    </span>
+                                </label>
+                                <span class="ml-3 text-gray-700">Anmeldelse</span>
+                            </div>
+                            <div class="flex items-center">
+                                <label class="flex items-center cursor-pointer relative">
+                                    <input type="radio" name="kategori" value="intervju" class="peer filter-checkbox h-6 w-6 cursor-pointer transition-all appearance-none rounded border border-slate-300 checked:bg-[#4D0F1E] checked:border-[#4D0F1E]" 
+                                        {% if selected_kategori == 'intervju' %}checked{% endif %} />
+                                    <span class="pointer-events-none absolute text-white opacity-0 peer-checked:opacity-100
+                       top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24"
+                                            fill="currentColor">
+                                            <path d="M18 6 L6 18 M6 6 L18 18" stroke="white" stroke-width="2" />
+                                        </svg>
+                                    </span>
+                                </label>
+                                <span class="ml-3 text-gray-700">Intervju</span>
+                            </div>
+                        
+                    </div>
+                </div>
+            </details>
+
+            <!-- Tema Filter Mobile -->
+            <details class="group bg-gray-50 rounded-lg" open>
+                <summary class="list-none cursor-pointer">
+                    <div class="p-4 text-lg font-semibold text-gray-900 flex items-center justify-between">
+                        Tema
+                        <svg class="w-5 h-5 transition-transform duration-200 rotate-180 group-open:rotate-0"
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </div>
+                </summary>
+                <div class="px-4 pb-4">
+                    <div class="space-y-3">
+                        {% for key,label in categories %}
+                            <div class="flex items-center">
+                                <label class="flex items-center cursor-pointer relative">
+                                    <input type="radio" name="tema" value="{{ key }}" class="peer filter-checkbox h-6 w-6 cursor-pointer transition-all appearance-none rounded border border-slate-300 checked:bg-[#4D0F1E] checked:border-[#4D0F1E]" 
+                                        {% if selected_tema == key %}checked{% endif %} />
+                                    <span class="pointer-events-none absolute text-white opacity-0 peer-checked:opacity-100
+                       top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24"
+                                            fill="currentColor">
+                                            <path d="M18 6 L6 18 M6 6 L18 18" stroke="white" stroke-width="2" />
+                                        </svg>
+                                    </span>
+                                </label>
+                                <span class="ml-3 text-gray-700">{{ label }}</span>
+                            </div>
+                            {% endfor %}
+                        
+                    </div>
+                </div>
+            </details>
+        </div>
+
+        <!-- Modal Footer with Apply Button -->
+        <div class="p-4 border-t border-gray-200 bg-white sticky bottom-0">
+            <button id="applyFilters" class="w-full bg-[#4D0F1E] text-white py-3 px-4 rounded-lg font-medium hover:bg-[#3D0B18] transition-colors">
+                Bruk filtre
+            </button>
+        </div>
     </div>
 
-   <script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Sett sort dropdown til riktig verdi
-    const sortSelect = document.getElementById('sortSelect');
-    const currentSort = '{{ sort|default:"Ny" }}';
-    if (sortSelect) {
-        sortSelect.value = currentSort;
-    }
-});
+   
+<script>
+        // Mobile filter functionality
+        const filterButton = document.getElementById('filterButton');
+        const filterModal = document.getElementById('filterModal');
+        const modalBackdrop = document.getElementById('modalBackdrop');
+        const closeFilter = document.getElementById('closeFilter');
+        const applyFilters = document.getElementById('applyFilters');
 
-</script>
+        function openFilterModal() {
+            modalBackdrop.classList.remove('hidden');
+            filterModal.classList.remove('translate-y-full');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeFilterModal() {
+            filterModal.classList.add('translate-y-full');
+            modalBackdrop.classList.add('hidden');
+            document.body.style.overflow = '';
+        }
+
+        // Event listeners
+        filterButton.addEventListener('click', openFilterModal);
+        closeFilter.addEventListener('click', closeFilterModal);
+        modalBackdrop.addEventListener('click', closeFilterModal);
+        applyFilters.addEventListener('click', closeFilterModal);
+
+        // Escape key to close modal
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && !filterModal.classList.contains('translate-y-full')) {
+                closeFilterModal();
+            }
+        });
+
+        // Prevent modal content clicks from closing the modal
+        filterModal.addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
+
+        // Sync desktop and mobile filter selections (optional functionality)
+        function syncFilters() {
+            const desktopInputs = document.querySelectorAll('aside input[type="radio"]');
+            const mobileInputs = document.querySelectorAll('#filterModal input[type="radio"]');
+            
+            // Sync from desktop to mobile
+            desktopInputs.forEach(input => {
+                input.addEventListener('change', function() {
+                    const mobileInput = document.querySelector(`#filterModal input[value="${this.value}"]`);
+                    if (mobileInput) {
+                        mobileInput.checked = this.checked;
+                    }
+                });
+            });
+            
+            // Sync from mobile to desktop
+            mobileInputs.forEach(input => {
+                input.addEventListener('change', function() {
+                    const desktopInput = document.querySelector(`aside input[value="${this.value}"]`);
+                    if (desktopInput) {
+                        desktopInput.checked = this.checked;
+                    }
+                });
+            });
+        }
+
+        // Initialize filter sync
+        syncFilters();
+    </script>
     <script src="{% static 'tears/js/nettsaker.js' %}?v={% now 'U' %}" defer></script>
 </body>
 
