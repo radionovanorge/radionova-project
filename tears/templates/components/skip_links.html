@@ -1,9 +1,35 @@
 {% load static %}
+<style>
+    /* Hide the whole bar off-screen, but keep it in the tab order */
+.skip-bar {
+  position: absolute;
+  left: -9999px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
 
-<!-- Visible skip links section -->
-<div class="bg-radionova text-white py-2 border-b border-white">
-    <div class="skip-links-container">
-        <a href="#hovedinnhold" class="skip-link">Hopp til hovedinnhold</a>
-        <a href="#radiospiller" class="skip-link">Hopp til radiospiller</a>
-    </div>
-</div> 
+/* When any link inside receives focus via Tab, show the bar */
+.skip-bar:focus-within {
+  position: fixed;     /* so it sits on top when shown */
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+  z-index: 1000;
+}
+
+/* Optional: visible focus outline for the links (no color/layout change) */
+.skip-link:focus {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+</style>
+<div class="bg-radionova text-white py-2 border-b border-white skip-bar">
+  <div class="skip-links-container">
+    <a href="#hovedinnhold" class="skip-link">Hopp til hovedinnhold</a>
+    <a href="#radiospiller" class="skip-link">Hopp til radiospiller</a>
+  </div>
+</div>
