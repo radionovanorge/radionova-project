@@ -473,6 +473,10 @@ class AListaPage(Page): ##TODO: make it so only alista pages can be created unde
         # Get sibling pages of type AListaPage (excluding self), ordered by date
         return AListaPage.objects.live().exclude(id=self.id).order_by('-first_published_at')[:count]
 
+from django.utils.timezone import localtime, now
+from datetime import datetime, time
+
+
 class Sendeplan(Page):
     page_description = "This page is for configuring sendeplan for the semester"
 
@@ -484,6 +488,67 @@ class Sendeplan(Page):
 
         current_time = localtime(now()).time()
         current_weekday = str(localtime(now()).isoweekday())
+
+        # Create time slots mapping for proper positioning
+        time_slots = ["00:00"] + [
+            f"{hour:02d}:{minute:02d}" 
+            for hour in range(6, 24) 
+            for minute in (0, 30)
+        ]
+        
+        def get_time_slot_index(time_str):
+            """Get the index of a time slot in our time_slots array"""
+            if not time_str:
+                return 0
+            try:
+                return time_slots.index(time_str)
+            except ValueError:
+                # If exact match not found, find the closest earlier slot
+                time_obj = datetime.strptime(time_str, "%H:%M").time()
+                for i, slot in enumerate(time_slots):
+                    slot_time = datetime.strptime(slot, "%H:%M").time()
+                    if slot_time > time_obj:
+                        return max(0, i - 1)
+                return len(time_slots) - 1
+
+        def calculate_rowspan(start_time_str, end_time_str):
+            """Calculate rowspan considering the 00:00-06:00 gap"""
+            if not start_time_str or not end_time_str:
+                return 1
+                
+            start_time_obj = datetime.strptime(start_time_str, "%H:%M").time()
+            end_time_obj = datetime.strptime(end_time_str, "%H:%M").time()
+            
+            # Handle overnight programs (crossing midnight)
+            if end_time_obj <= start_time_obj:
+                # Program goes past midnight
+                if start_time_obj >= time(22, 0):  # Starts late evening
+                    # Calculate from start to midnight, then from 06:00 to end
+                    minutes_to_midnight = (24 * 60) - (start_time_obj.hour * 60 + start_time_obj.minute)
+                    
+                    if end_time_obj <= time(6, 0):
+                        # Ends before 06:00, so it spans the gap
+                        return max(1, int(minutes_to_midnight / 30))
+                    else:
+                        # Ends after 06:00
+                        minutes_from_6am = end_time_obj.hour * 60 + end_time_obj.minute - 6 * 60
+                        total_minutes = minutes_to_midnight + minutes_from_6am
+                        return max(1, int(total_minutes / 30))
+                else:
+                    # Normal case - shouldn't happen with proper data
+                    return 1
+            else:
+                # Normal program within same day
+                if start_time_obj < time(6, 0) and end_time_obj < time(6, 0):
+                    # Both in the 00:00-06:00 range (mapped to single slot)
+                    return 1
+                elif start_time_obj >= time(6, 0) and end_time_obj >= time(6, 0):
+                    # Both in the 06:00-24:00 range
+                    duration_minutes = (end_time_obj.hour - start_time_obj.hour) * 60 + (end_time_obj.minute - start_time_obj.minute)
+                    return max(1, int(duration_minutes / 30))
+                else:
+                    # Spans across the gap - shouldn't happen with proper scheduling
+                    return 1
 
         for program in programs:
             for block in program.sendetider:
@@ -500,13 +565,10 @@ class Sendeplan(Page):
                     if weekday == current_weekday and start_time and end_time:
                         if start_time <= current_time <= end_time:
                             is_now = True
-                    if start_time_str and end_time_str:
-                        start_time_obj = datetime.strptime(start_time_str, "%H:%M")
-                        end_time_obj = datetime.strptime(end_time_str, "%H:%M")
-                        duration = (end_time_obj - start_time_obj).total_seconds() / 60  # minutes
-                        rowspan = int(duration / 30)
-                    else:
-                     rowspan = 1  # default if missing times
+
+                    # Calculate proper rowspan and position
+                    rowspan = calculate_rowspan(start_time_str, end_time_str)
+                    time_slot_index = get_time_slot_index(start_time_str)
 
                     sendeplan[weekday].append({
                         "title": program.title,
@@ -517,21 +579,48 @@ class Sendeplan(Page):
                         "main_image": program.main_image,
                         "is_live_now": is_now,
                         "rowspan": rowspan,
+                        "time_slot_index": time_slot_index,
                     })
-        context["day_names"] = ["Mandag", "Tirsdag", "Onsdag", "Torsdag", "Fredag", "Lørdag", "Søndag"]
-        for day in sendeplan:
-            sendeplan[day].sort(key=lambda x: x["start_time"] if x["start_time"] else "99:99")
-        # tried to have only 8 colums context["rendered_cells"] = {str(i): {} for i in range(1, 8)}
-        context["sendeplan"] = sendeplan
-        context["weekdays"] = ["1", "2", "3", "4", "5", "6", "7"]
-        context["time_slots"] = ["00:00"] +[
-            f"{hour:02d}:{minute:02d}" 
-            for hour in range(6, 24) 
-            for minute in (0, 30)
-     ]  
-         # Finner nåværende live program
-        current_program = None
 
+        # Sort programs by start time for each day
+        for day in sendeplan:
+            sendeplan[day].sort(key=lambda x: x["time_slot_index"])
+
+        # Create a proper grid structure to avoid positioning issues
+        grid = {}
+        for day_num in range(1, 8):
+            day_str = str(day_num)
+            grid[day_str] = {}
+            
+            # Track which time slots are occupied
+            occupied_slots = set()
+            
+            for program in sendeplan[day_str]:
+                start_index = program["time_slot_index"]
+                rowspan = program["rowspan"]
+                
+                # Find the first available slot at or after the program's start time
+                actual_start_index = start_index
+                while actual_start_index in occupied_slots:
+                    actual_start_index += 1
+                
+                # Mark slots as occupied
+                for i in range(actual_start_index, actual_start_index + rowspan):
+                    occupied_slots.add(i)
+                
+                # Update program's actual position
+                program["actual_time_slot_index"] = actual_start_index
+                grid[day_str][actual_start_index] = program
+
+        context["day_names"] = ["Mandag", "Tirsdag", "Onsdag", "Torsdag", "Fredag", "Lørdag", "Søndag"]
+        context["sendeplan"] = sendeplan
+        context["sendeplan_grid"] = grid
+        context["occupied_cells"] = occupied_slots
+        context["weekdays"] = ["1", "2", "3", "4", "5", "6", "7"]
+        context["time_slots"] = time_slots
+        
+        # Find current live program
+        current_program = None
         for day_programs in sendeplan.values():
             for program in day_programs:
                 if program["is_live_now"]:

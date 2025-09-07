@@ -39,3 +39,30 @@ def lookup(d, key):
         return d.get(key)
     except (AttributeError, TypeError):
         return None
+@register.filter
+def get_item(dictionary, key):
+    """
+    Template filter to access dictionary items with dynamic keys
+    Usage: {{ my_dict|get_item:my_key }}
+    """
+    if dictionary and hasattr(dictionary, '__getitem__'):
+        try:
+            if isinstance(key, str):
+                # Try to convert string key to int if it looks like a number
+                try:
+                    key = int(key)
+                except ValueError:
+                    pass
+            return dictionary.get(key, None)
+        except (KeyError, TypeError):
+            return None
+    return None
+
+@register.filter
+def get_dict_item(dictionary, key):
+    """
+    Alternative filter for nested dictionary access
+    """
+    if not dictionary:
+        return {}
+    return dictionary.get(str(key), {})

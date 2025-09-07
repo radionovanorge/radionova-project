@@ -575,100 +575,93 @@
         </div>
 
         <!-- Content wrapper (the only scroller for the iframe) -->
-         
-        <div class="content-wrap" id="wrap">
-             <div class="schedule-content-wrapper" style="min-width: 1200px;">
-           <div class="max-w-10xl mx-auto">
-    <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-        <div class="flex">
-            <!-- Time Column  -->
-            <div class="time-table">
-                <table class="border-collapse">
-                    <thead>
-                        <tr class="">
-                            <th class="border p-2 text-left font-semibold w-16">Tid</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for time in time_slots %}
-                        <tr class="{% if forloop.counter0|divisibleby:2 %}bg-white{% endif %}">
-                            <td class="border time-cell">{{ time }}</td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
 
-            <!-- Schedule Content -->
-            <div class="schedule-container overflow-x-auto flex-1">
-                <table class="border-collapse min-w-max">
-                    <thead>
-                        <tr class="">
-                            {% for day_name in day_names %}
-                            <th class="border p-2 text-center font-semibold min-w-32">
-                                {{ day_name }}
-                            </th>
-                            {% endfor %}
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for time in time_slots %}
-                        <tr class="{% if forloop.counter0|divisibleby:2 %}bg-white{% endif %}">
-                            {% for day_index in weekdays %}
-                                {% with day_programs=sendeplan|dict_get:day_index %}
-                                {% with program_found=False %}
-                                
-                                    <!-- Check if any program starts at this time for this day -->
-                                    {% for program in day_programs %}
-                                        {% if program.start_time == time and not program_found %}
-                                            <td class="border border-gray-300 schedule-cell 
-                                                {% if not forloop.parentloop.parentloop.counter0|divisibleby:2 %}
-                                                    {% if forloop.parentloop.counter0|divisibleby:2 %}bg-[##FFE8E8]{% else %}bg-[#FCCFD1]{% endif %}
-                                                {% else %}
-                                                    bg-white
-                                                {% endif %}"
-                                                rowspan="{{ program.rowspan }}">
+        <div class="content-wrap" id="wrap">
+            <div class="schedule-content-wrapper" style="min-width: 1200px;">
+                <div class="max-w-10xl mx-auto">
+                    <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                        <div class="flex">
+                            <!-- Time Column  -->
+                            <div class="time-table">
+                                <table class="border-collapse">
+                                    <thead>
+                                        <tr class="">
+                                            <th class="border p-2 text-left font-semibold w-16">Tid</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for time in time_slots %}
+                                        <tr class="{% if forloop.counter0|divisibleby:2 %}bg-white{% endif %}">
+                                            <td class="border time-cell">{{ time }}</td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <!-- Schedule Content -->
+                            <div class="schedule-container overflow-x-auto flex-1">
+                                <table class="border-collapse min-w-max">
+                                    <thead>
+                                        <tr class="">
+                                            {% for day_name in day_names %}
+                                            <th class="border p-2 text-center font-semibold min-w-32">
+                                                {{ day_name }}
+                                            </th>
+                                            {% endfor %}
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for time in time_slots %}
+                                        <tr class="{% if forloop.counter0|divisibleby:2 %}bg-white{% endif %}">
+                                            {% for day_index in weekdays %}
+                                            {% with day_programs=sendeplan|dict_get:day_index program_found=False %}
+
+                                            {# 1) Program starts exactly now -> render the cell #}
+                                            {% for program in day_programs %}
+                                            {% if program.start_time == time and not program_found %}
+                                            <td class="border border-gray-300 schedule-cell
+                 {% if not forloop.parentloop.parentloop.counter0|divisibleby:2 %}
+                   {% if forloop.parentloop.counter0|divisibleby:2 %}bg-[##FFE8E8]{% else %}bg-[#FCCFD1]{% endif %}
+                 {% else %}bg-white{% endif %}" rowspan="{{ program.rowspan }}">
                                                 <strong>{{ program.title }}</strong><br>
-                                                <span class="text-xs">{{ program.start_time }} - {{ program.end_time }}</span>
+                                                <span class="text-xs">{{ program.start_time }} -
+                                                    {{ program.end_time }}</span>
                                             </td>
                                             {% with program_found=True %}{% endwith %}
-                                        {% endif %}
-                                    {% endfor %}
-                                    
-                                    <!-- Check if this time slot is covered by a program that started earlier -->
-                                    {% if not program_found %}
-                                        {% for program in day_programs %}
-                                            {% if program.start_time < time and program.end_time > time %}
-                                                {% with program_found=True %}{% endwith %}
                                             {% endif %}
-                                        {% endfor %}
-                                    {% endif %}
-                                    
-                                    <!-- If no program found and not covered by rowspan, render placeholder -->
-                                    {% if not program_found %}
-<td class="invisible p-0 m-0 border-0 bg-transparent schedule-cell">-</td>
-{% endif %}
+                                            {% endfor %}
 
-                                {% endwith %}
-                                {% endwith %}
-                            {% endfor %}
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
+                                            {# 2) Covered by a rowspan from above -> mark found, render NOTHING #}
+                                            {% if not program_found %}
+                                            {% for program in day_programs %}
+                                            {% if program.start_time < time and program.end_time > time %}
+                                            {% with program_found=True %}{% endwith %}
+                                            {% endif %}
+                                            {% endfor %}
+                                            {% endif %}
+
+                                            {# 3) If still not found -> render NOTHING (no placeholder td) #}
+
+                                            {% endwith %}
+                                            {% endfor %}
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <!-- Right red scrollbar -->
+            <div class="scrollbar-right" id="vBar">
+                <div class="spacer-vert" id="vSpace"></div>
             </div>
         </div>
-    </div>
-</div>
-
-        </div>
-
-
-        <!-- Right red scrollbar -->
-        <div class="scrollbar-right" id="vBar">
-            <div class="spacer-vert" id="vSpace"></div>
-        </div>
-    </div>
     </div>
 
 </body>
