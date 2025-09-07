@@ -38,10 +38,13 @@ def add_custom_menu_item(request, menu_items):
     if not user.is_superuser:
         group = user.groups.first()
         default_site = Site.objects.get(is_default_site=True)
-
-        create_new_page_id = default_site.root_page.get_children().filter(
+        
+        programmer_page = default_site.root_page.get_children().filter(
+            title='Programmer'
+        ).first()
+        create_new_page_id = programmer_page.get_children().filter(
             title=group.name
-        ).first().id
+        ).id
 
         custom_menu_item = MenuItem(
             label="Write an article",
