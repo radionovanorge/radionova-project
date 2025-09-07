@@ -519,7 +519,8 @@ class Sendeplan(Page):
                         "rowspan": rowspan,
                     })
         context["day_names"] = ["Mandag", "Tirsdag", "Onsdag", "Torsdag", "Fredag", "Lørdag", "Søndag"]
-       
+        for day in sendeplan:
+            sendeplan[day].sort(key=lambda x: x["start_time"] if x["start_time"] else "99:99")
         # tried to have only 8 colums context["rendered_cells"] = {str(i): {} for i in range(1, 8)}
         context["sendeplan"] = sendeplan
         context["weekdays"] = ["1", "2", "3", "4", "5", "6", "7"]

@@ -585,14 +585,14 @@
             <div class="time-table">
                 <table class="border-collapse">
                     <thead>
-                        <tr class="bg-gray-100">
-                            <th class="border border-gray-300 p-2 text-left font-semibold w-16">Tid</th>
+                        <tr class="">
+                            <th class="border p-2 text-left font-semibold w-16">Tid</th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for time in time_slots %}
                         <tr class="{% if forloop.counter0|divisibleby:2 %}bg-white{% endif %}">
-                            <td class="border border-gray-300 time-cell">{{ time }}</td>
+                            <td class="border time-cell">{{ time }}</td>
                         </tr>
                         {% endfor %}
                     </tbody>
@@ -603,9 +603,9 @@
             <div class="schedule-container overflow-x-auto flex-1">
                 <table class="border-collapse min-w-max">
                     <thead>
-                        <tr class="bg-gray-100">
+                        <tr class="">
                             {% for day_name in day_names %}
-                            <th class="border border-gray-300 p-2 text-center font-semibold min-w-32">
+                            <th class="border p-2 text-center font-semibold min-w-32">
                                 {{ day_name }}
                             </th>
                             {% endfor %}
@@ -623,7 +623,7 @@
                                         {% if program.start_time == time and not program_found %}
                                             <td class="border border-gray-300 schedule-cell 
                                                 {% if not forloop.parentloop.parentloop.counter0|divisibleby:2 %}
-                                                    {% if forloop.parentloop.counter0|divisibleby:2 %}bg-green-100{% else %}bg-yellow-100{% endif %}
+                                                    {% if forloop.parentloop.counter0|divisibleby:2 %}bg-[##FFE8E8]{% else %}bg-[#FCCFD1]{% endif %}
                                                 {% else %}
                                                     bg-white
                                                 {% endif %}"
