@@ -44,7 +44,7 @@ def add_custom_menu_item(request, menu_items):
         ).first()
         create_new_page_id = programmer_page.get_children().filter(
             title=group.name
-        ).id
+        ).first().id
 
         custom_menu_item = MenuItem(
             label="Write an article",
