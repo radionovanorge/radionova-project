@@ -5,3 +5,24 @@
          alt="radionova logo"
          width="150" />
 {% endblock %}
+{% block welcome_message %}
+    <div class="w-home-header">
+        <div class="w-home-header__icon">
+            <div class="avatar square">
+                <img src="{% if user.wagtail_userprofile.avatar %}{{ user.wagtail_userprofile.avatar.url }}{% endif %}" alt="{ medlemnavn }" />
+            </div>
+        </div>
+        <div class="w-home-header__details">
+            <h1>Hei velkommen til Tears, {{ user.get_full_name|default:user.username }}</h1>
+            {% if user.groups.exists %}
+                <p class="w-home-header__subtitle">
+                    {% for group in user.groups.all %}
+                        {{ group.name }}{% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                </p>
+            {% else %}
+                <p class="w-home-header__subtitle"> 'No groups assigned </p>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
