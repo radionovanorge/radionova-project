@@ -66,3 +66,4 @@ def get_dict_item(dictionary, key):
     if not dictionary:
         return {}
     return dictionary.get(str(key), {})
+
