@@ -12,24 +12,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <style>
-        /* Custom scrollbar styling */
-        .schedule-container::-webkit-scrollbar {
-            height: 8px;
-        }
-
-        .schedule-container::-webkit-scrollbar-track {
-            background: #f1f1f1;
-            border-radius: 4px;
-        }
-
-        .schedule-container::-webkit-scrollbar-thumb {
-            background: #888;
-            border-radius: 4px;
-        }
-
-        .schedule-container::-webkit-scrollbar-thumb:hover {
-            background: #555;
-        }
+       
 
         /* Ensure text doesn't wrap in cells */
         .schedule-cell {
@@ -78,10 +61,7 @@
             vertical-align: top;
         }
 
-        .schedule-container table {
-            table-layout: fixed;
-            width: 100%;
-        }
+       
     </style>
 </head>
 
@@ -569,8 +549,7 @@
     </div>
     <!-- Toggle html code when vis som uke oversikt er clicked-->
     <div class="schedule-shell frame-123">
-        <!-- Top red scrollbar -->
-        <div class="scrollbar-top" id="hBar">
+       <div class="scrollbar-top" id="hBar">
             <div class="spacer" id="hSpace"></div>
         </div>
 
@@ -586,12 +565,12 @@
       <table class="border-collapse">
         <thead>
           <tr>
-            <th class="border p-2 text-left font-semibold w-16">Tid</th>
+            <th class="border border-t-transparent p-2  text-left font-semibold w-16">Tid</th>
           </tr>
         </thead>
         <tbody>
           {% for time in time_slots %}
-          <tr class="{% if forloop.counter0|divisibleby:2 %}bg-white{% else %}bg-gray-50{% endif %}">
+          <tr class="">
             <td class="border time-cell">{{ time }}</td>
           </tr>
           {% endfor %}
@@ -602,26 +581,26 @@
     <!-- Schedule Content -->
     <div class="flex flex-row gap-0 overflow-x-auto flex-1">
       <!-- Monday -->
-      <table class="border-collapse min-w-32">
+      <table class="border-collapse min-w-32 relative z-10">
         <thead>
-          <tr class="bg-gray-100">
-            <th class="border p-2 text-center font-semibold">Mandag</th>
+          <tr class="">
+            <th class="border border-t-transparent p-2 text-center font-semibold">Mandag</th>
           </tr>
         </thead>
         <tbody>
           {% for time in time_slots %}
-          <tr class="{% if forloop.counter0|divisibleby:2 %}bg-white{% else %}bg-gray-50{% endif %}">
+          <tr class="">
             {% with day_programs=sendeplan|dict_get:"1" %}
               {% for program in day_programs %}
                 {% if program.start_time == time %}
-                  <td class="border border-gray-300 schedule-cell bg-[#FFE8E8]" rowspan="{{ program.rowspan }}">
+                  <td class="border border-grey schedule-cell {% if forloop.counter0|divisibleby:2 %}bg-white{% else %}bg-[#FFE8E8]{% endif %}" rowspan="{{ program.rowspan }}">
                     <strong>{{ program.title }}</strong><br>
                     <span class="text-xs">{{ program.start_time }} - {{ program.end_time }}</span>
                   </td>
                 {% endif %}
               {% endfor %}
               {% if not day_programs or not program.start_time == time %}
-                <td class="border schedule-cell"></td>
+                <td class="border-transparent schedule-cell"></td>
               {% endif %}
             {% endwith %}
           </tr>
@@ -630,26 +609,26 @@
       </table>
 
       <!-- Tuesday -->
-      <table class="border-collapse min-w-32">
+      <table class="border-collapse min-w-32 relative z-20 -ml-1.5">
         <thead>
-          <tr class="bg-gray-100">
-            <th class="border p-2 text-center font-semibold">Tirsdag</th>
+          <tr class="">
+            <th class="border border-t-transparent p-2 text-center font-semibold">Tirsdag</th>
           </tr>
         </thead>
         <tbody>
           {% for time in time_slots %}
-          <tr class="{% if forloop.counter0|divisibleby:2 %}bg-white{% else %}bg-gray-50{% endif %}">
+          <tr class="">
             {% with day_programs=sendeplan|dict_get:"2" %}
               {% for program in day_programs %}
                 {% if program.start_time == time %}
-                  <td class="border border-gray-300 schedule-cell bg-[#FFE8E8]" rowspan="{{ program.rowspan }}">
+                  <td class="border border-gray-300 schedule-cell {% if forloop.counter0|divisibleby:2 %}bg-white{% else %}bg-[#F8BBD9]{% endif %}" rowspan="{{ program.rowspan }}">
                     <strong>{{ program.title }}</strong><br>
                     <span class="text-xs">{{ program.start_time }} - {{ program.end_time }}</span>
                   </td>
                 {% endif %}
               {% endfor %}
               {% if not day_programs or not program.start_time == time %}
-                <td class="border schedule-cell"></td>
+                <td class="border-transparent schedule-cell"></td>
               {% endif %}
             {% endwith %}
           </tr>
@@ -658,26 +637,26 @@
       </table>
 
       <!-- Wednesday -->
-      <table class="border-collapse min-w-32">
+      <table class="border-collapse min-w-32 relative z-30 -ml-1.5">
         <thead>
-          <tr class="bg-gray-100">
-            <th class="border p-2 text-center font-semibold">Onsdag</th>
+          <tr class="">
+            <th class="border border-t-transparent p-2 text-center font-semibold">Onsdag</th>
           </tr>
         </thead>
         <tbody>
           {% for time in time_slots %}
-          <tr class="{% if forloop.counter0|divisibleby:2 %}bg-white{% else %}bg-gray-50{% endif %}">
+          <tr class="">
             {% with day_programs=sendeplan|dict_get:"3" %}
               {% for program in day_programs %}
                 {% if program.start_time == time %}
-                  <td class="border border-gray-300 schedule-cell bg-[#FFE8E8]" rowspan="{{ program.rowspan }}">
-                    <strong>{{ program.title }}</strong><br>
+                  <td class="border border-gray-300 schedule-cell {% if forloop.counter0|divisibleby:2 %}bg-white{% else %}bg-[#FFE8E8]{% endif %}" rowspan="{{ program.rowspan }}">
+                    <strong class="">{{ program.title }}</strong><br>
                     <span class="text-xs">{{ program.start_time }} - {{ program.end_time }}</span>
                   </td>
                 {% endif %}
               {% endfor %}
               {% if not day_programs or not program.start_time == time %}
-                <td class="border schedule-cell"></td>
+                <td class="border-transparent schedule-cell"></td>
               {% endif %}
             {% endwith %}
           </tr>
@@ -686,26 +665,26 @@
       </table>
 
       <!-- Thursday -->
-      <table class="border-collapse min-w-32">
+      <table class="border-collapse min-w-32 relative z-40 -ml-1.5">
         <thead>
-          <tr class="bg-gray-100">
-            <th class="border p-2 text-center font-semibold">Torsdag</th>
+          <tr class="">
+            <th class="border border-t-transparent p-2 text-center font-semibold">Torsdag</th>
           </tr>
         </thead>
         <tbody>
           {% for time in time_slots %}
-          <tr class="{% if forloop.counter0|divisibleby:2 %}bg-white{% else %}bg-gray-50{% endif %}">
+          <tr class="">
             {% with day_programs=sendeplan|dict_get:"4" %}
               {% for program in day_programs %}
                 {% if program.start_time == time %}
-                  <td class="border border-gray-300 schedule-cell bg-[#FFE8E8]" rowspan="{{ program.rowspan }}">
+                  <td class="border border-gray-300 schedule-cell {% if forloop.counter0|divisibleby:2 %}bg-white{% else %}bg-[#F8BBD9]{% endif %}" rowspan="{{ program.rowspan }}">
                     <strong>{{ program.title }}</strong><br>
                     <span class="text-xs">{{ program.start_time }} - {{ program.end_time }}</span>
                   </td>
                 {% endif %}
               {% endfor %}
               {% if not day_programs or not program.start_time == time %}
-                <td class="border schedule-cell"></td>
+                <td class="border-transparent schedule-cell"></td>
               {% endif %}
             {% endwith %}
           </tr>
@@ -714,26 +693,26 @@
       </table>
 
       <!-- Friday -->
-      <table class="border-collapse min-w-32">
+      <table class="border-collapse min-w-32 relative z-50 -ml-1.5">
         <thead>
-          <tr class="bg-gray-100">
-            <th class="border p-2 text-center font-semibold">Fredag</th>
+          <tr class="">
+            <th class="border border-t-transparent p-2 text-center font-semibold">Fredag</th>
           </tr>
         </thead>
         <tbody>
           {% for time in time_slots %}
-          <tr class="{% if forloop.counter0|divisibleby:2 %}bg-white{% else %}bg-gray-50{% endif %}">
+          <tr class="">
             {% with day_programs=sendeplan|dict_get:"5" %}
               {% for program in day_programs %}
                 {% if program.start_time == time %}
-                  <td class="border border-gray-300 schedule-cell bg-[#FFE8E8]" rowspan="{{ program.rowspan }}">
+                  <td class="border border-gray-300 schedule-cell {% if forloop.counter0|divisibleby:2 %}bg-white{% else %}bg-[#FFE8E8]{% endif %}" rowspan="{{ program.rowspan }}">
                     <strong>{{ program.title }}</strong><br>
                     <span class="text-xs">{{ program.start_time }} - {{ program.end_time }}</span>
                   </td>
                 {% endif %}
               {% endfor %}
               {% if not day_programs or not program.start_time == time %}
-                <td class="border schedule-cell"></td>
+                <td class="border-transparent schedule-cell"></td>
               {% endif %}
             {% endwith %}
           </tr>
@@ -742,26 +721,26 @@
       </table>
 
       <!-- Saturday -->
-      <table class="border-collapse min-w-32">
+      <table class="border-collapse min-w-32 relative z-60 -ml-1.5">
         <thead>
-          <tr class="bg-gray-100">
-            <th class="border p-2 text-center font-semibold">Lørdag</th>
+          <tr class="">
+            <th class="border border-t-transparent p-2 text-center font-semibold">Lørdag</th>
           </tr>
         </thead>
         <tbody>
           {% for time in time_slots %}
-          <tr class="{% if forloop.counter0|divisibleby:2 %}bg-white{% else %}bg-gray-50{% endif %}">
+          <tr class="">
             {% with day_programs=sendeplan|dict_get:"6" %}
               {% for program in day_programs %}
                 {% if program.start_time == time %}
-                  <td class="border border-gray-300 schedule-cell bg-[#FFE8E8]" rowspan="{{ program.rowspan }}">
+                  <td class="border border-gray-300 schedule-cell {% if forloop.counter0|divisibleby:2 %}bg-white{% else %}bg-[#F8BBD9]{% endif %}" rowspan="{{ program.rowspan }}">
                     <strong>{{ program.title }}</strong><br>
                     <span class="text-xs">{{ program.start_time }} - {{ program.end_time }}</span>
                   </td>
                 {% endif %}
               {% endfor %}
               {% if not day_programs or not program.start_time == time %}
-                <td class="border schedule-cell"></td>
+                <td class="border-transparent schedule-cell"></td>
               {% endif %}
             {% endwith %}
           </tr>
@@ -770,26 +749,26 @@
       </table>
 
       <!-- Sunday -->
-      <table class="border-collapse min-w-32">
+      <table class="border-collapse min-w-32 relative z-70 -ml-1.5">
         <thead>
-          <tr class="bg-gray-100">
-            <th class="border p-2 text-center font-semibold">Søndag</th>
+          <tr class="">
+            <th class="border border-t-transparent p-2 text-center font-semibold">Søndag</th>
           </tr>
         </thead>
         <tbody>
           {% for time in time_slots %}
-          <tr class="{% if forloop.counter0|divisibleby:2 %}bg-white{% else %}bg-gray-50{% endif %}">
+          <tr class="">
             {% with day_programs=sendeplan|dict_get:"7" %}
               {% for program in day_programs %}
                 {% if program.start_time == time %}
-                  <td class="border border-gray-300 schedule-cell bg-[#FFE8E8]" rowspan="{{ program.rowspan }}">
+                  <td class="border border-gray-300 schedule-cell {% if forloop.counter0|divisibleby:2 %}bg-white{% else %}bg-[#FFE8E8]{% endif %}" rowspan="{{ program.rowspan }}">
                     <strong>{{ program.title }}</strong><br>
                     <span class="text-xs">{{ program.start_time }} - {{ program.end_time }}</span>
                   </td>
                 {% endif %}
               {% endfor %}
               {% if not day_programs or not program.start_time == time %}
-                <td class="border schedule-cell"></td>
+                <td class="border-transparent schedule-cell"></td>
               {% endif %}
             {% endwith %}
           </tr>
@@ -804,9 +783,7 @@
 
 
         <!-- Right red scrollbar -->
-        <div class="scrollbar-right" id="vBar">
-            <div class="spacer-vert" id="vSpace"></div>
-        </div>
+       
     </div>
     </div>
 
