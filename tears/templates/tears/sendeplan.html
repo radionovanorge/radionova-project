@@ -603,7 +603,7 @@
             <div class="schedule-container overflow-x-auto flex-1">
                 <table class="border-collapse min-w-max">
                     <thead>
-                        <tr class="">
+                        <tr class="bg-gray-100">
                             {% for day_name in day_names %}
                             <th class="border p-2 text-center font-semibold min-w-32">
                                 {{ day_name }}
@@ -630,10 +630,6 @@
                                                 rowspan="{{ program.rowspan }}">
                                                 <strong>{{ program.title }}</strong><br>
                                                 <span class="text-xs">{{ program.start_time }} - {{ program.end_time }}</span>
-                                                <br>
-                                                <span class="text-xs">{{ day_index }}</span>
-                                                <!--trying to also get programs day --> 
-                                                
                                             </td>
                                             {% with program_found=True %}{% endwith %}
                                         {% endif %}
@@ -641,13 +637,12 @@
                                     
                                     <!-- Check if this time slot is covered by a program that started earlier -->
                                     {% if not program_found %}
-  {% for program in day_programs %}
-    {% if program.start_time < time and program.end_time > time %}
-      {# Covered by a rowspan above → mark found and render NOTHING #}
-      {% with program_found=True %}{% endwith %}
-    {% endif %}
-  {% endfor %}
-{% endif %}
+                                        {% for program in day_programs %}
+                                            {% if program.start_time < time and program.end_time > time %}
+                                                {% with program_found=True %}{% endwith %}
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% endif %}
                                     
                                     <!-- If no program found and not covered by rowspan, render placeholder -->
                                     {% if not program_found %}
