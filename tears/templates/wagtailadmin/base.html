@@ -1,10 +1,72 @@
 {% extends "wagtailadmin/base.html" %}
-{% load static i18n wagtailadmin_tags %}
+{% load static %}
 {% block branding_logo %}
     <img src="{% static 'tears/images/radionova.png' %}"
          alt="radionova logo"
          width="150" />
 {% endblock %}
-{% fragment as header_title %}
-    {% blocktrans trimmed %}Velkommen til {{ site_name }}, {{ first_name }}{% endblocktrans %}
-{% endfragment %}
+ {% block extra_css %}
+ <style>
+:root {
+    --w-color-primary: #2E1F5E !important;
+  /* Any valid CSS format is supported. */
+  --w-color-primary-200: hsl(253.8 50% 20.4%) !important;
+  /* Set each HSL component separately to change all hues at once. */
+  --w-color-secondary-hue: 180.5 !important;
+  --w-color-secondary-saturation: 100% !important;
+  --w-color-secondary-lightness: 24.7% !important;
+
+  /*dark mode default*/
+   --w-color-surface-page:var(--w-color-grey-600);
+        --w-color-surface-field: var(--w-color-grey-600);
+        --w-color-surface-field-inactive: var(--w-color-grey-500);
+        --w-color-surface-header: var(--w-color-grey-700);
+        --w-color-surface-menus: var(--w-color-grey-800);
+        --w-color-surface-menu-item-active: var(--w-color-grey-700);
+        --w-color-surface-tooltip: var(--w-color-grey-500);
+        --w-color-surface-button-default: #C61A24;
+        --w-color-surface-button-hover: #ED1C24;
+        --w-color-surface-button-inactive: var(--w-color-grey-400);
+        --w-color-surface-button-outline-hover: var(--w-color-grey-700);
+        --w-color-surface-button-critical-hover: var(--w-color-grey-600);
+        --w-color-surface-status-label: var(--w-color-grey-600);
+        --w-color-surface-info-panel: var(--w-color-info-100);
+        --w-color-surface-dashboard-panel: var(--w-color-grey-800);
+        --w-color-text-button: var(--w-color-white);
+        --w-color-text-label-menus-default: var(--w-color-white-80);
+        --w-color-text-label-menus-active: var(--w-color-white);
+        --w-color-text-label: var(--w-color-grey-150);
+        --w-color-text-context: var(--w-color-grey-50);
+        --w-color-text-meta: var(--w-color-grey-150);
+        --w-color-text-placeholder: var(--w-color-grey-200);
+        --w-color-text-link-default: #fff;
+        --w-color-text-link-hover: #ED1C24;
+        --w-color-text-button-outline-default: #C61A24;
+        --w-color-text-button-outline-hover: #ED1C24;
+        --w-color-text-highlight: #C61A24;
+        --w-color-text-error: var(--w-color-critical-100);
+        --w-color-text-button-critical-outline-hover: var(--w-color-critical-50);
+        --w-color-text-status-label: var(--w-color-info-75);
+        --w-color-text-link-info: var(--w-color-grey-50);
+        --w-color-icon-primary: var(--w-color-grey-150);
+        --w-color-icon-primary-hover: var(--w-color-grey-50);
+        --w-color-icon-secondary: var(--w-color-grey-150);
+        --w-color-icon-secondary-hover: var(--w-color-grey-50);
+        --w-color-border-furniture: var(--w-color-grey-500);
+        --w-color-border-button-small-outline-default: var(--w-color-grey-400);
+        --w-color-border-field-default: var(--w-color-grey-400);
+        --w-color-border-field-inactive: var(--w-color-grey-500);
+        --w-color-border-field-hover: var(--w-color-grey-200);
+        --w-color-border-button-outline-default: #C61A24;
+        --w-color-border-button-outline-hover: #ED1C24;
+        --w-color-border-interactive-more-contrast: var(--w-color-grey-150);
+        --w-color-border-interactive-more-contrast-hover: var(--w-color-white);
+        --w-color-border-interactive-more-contrast-dark-bg: var(--w-color-grey-150);
+        --w-color-border-interactive-more-contrast-dark-bg-hover: var(--w-color-white);
+        --w-color-border-furniture-more-contrast: var(--w-color-grey-400);
+        --w-color-focus: #a1a1a1;
+        --w-color-box-shadow-md: var(--w-color-black-50);
+        color-scheme: dark
+}
+</style>
+ {% endblock %}

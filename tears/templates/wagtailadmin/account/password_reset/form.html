@@ -16,84 +16,62 @@
  {% block extra_css %}
     <style>
        /* Got to make sure to override the wagtail styles with important and i want to have a simple dark theme and red buttons and details*/
-         body {
-              background-color: #ffffff !important; /* Dark background */
-              color: #000000 !important; /* Light text color */
+         :root {
+            /*dark mode default*/
+   --w-color-surface-page:var(--w-color-grey-600);
+        --w-color-surface-field: var(--w-color-grey-600);
+        --w-color-surface-field-inactive: var(--w-color-grey-500);
+        --w-color-surface-header: var(--w-color-grey-700);
+        --w-color-surface-menus: var(--w-color-grey-800);
+        --w-color-surface-menu-item-active: var(--w-color-grey-700);
+        --w-color-surface-tooltip: var(--w-color-grey-500);
+        --w-color-surface-button-default: #E85A4F;
+        --w-color-surface-button-hover: #FF6B5A;
+        --w-color-surface-button-inactive: var(--w-color-grey-400);
+        --w-color-surface-button-outline-hover: var(--w-color-grey-700);
+        --w-color-surface-button-critical-hover: var(--w-color-grey-600);
+        --w-color-surface-status-label: var(--w-color-grey-600);
+        --w-color-surface-info-panel: var(--w-color-info-100);
+        --w-color-surface-dashboard-panel: var(--w-color-grey-800);
+        --w-color-text-button: var(--w-color-white);
+        --w-color-text-label-menus-default: var(--w-color-white-80);
+        --w-color-text-label-menus-active: var(--w-color-white);
+        --w-color-text-label: var(--w-color-grey-150);
+        --w-color-text-context: var(--w-color-grey-50);
+        --w-color-text-meta: var(--w-color-grey-150);
+        --w-color-text-placeholder: var(--w-color-grey-200);
+        --w-color-text-link-default: #E85A4F;
+        --w-color-text-link-hover: #FF6B5A;
+        --w-color-text-button-outline-default: var(--w-color-secondary-100);
+        --w-color-text-button-outline-hover: var(--w-color-secondary-100);
+        --w-color-text-highlight: var(--w-color-secondary-400);
+        --w-color-text-error: var(--w-color-critical-100);
+        --w-color-text-button-critical-outline-hover: var(--w-color-critical-50);
+        --w-color-text-status-label: var(--w-color-info-75);
+        --w-color-text-link-info: var(--w-color-grey-50);
+        --w-color-icon-primary: var(--w-color-grey-150);
+        --w-color-icon-primary-hover: var(--w-color-grey-50);
+        --w-color-icon-secondary: var(--w-color-grey-150);
+        --w-color-icon-secondary-hover: var(--w-color-grey-50);
+        --w-color-border-furniture: var(--w-color-grey-500);
+        --w-color-border-button-small-outline-default: var(--w-color-grey-400);
+        --w-color-border-field-default: var(--w-color-grey-400);
+        --w-color-border-field-inactive: var(--w-color-grey-500);
+        --w-color-border-field-hover: var(--w-color-grey-200);
+        --w-color-border-button-outline-default: var(--w-color-secondary-100);
+        --w-color-border-button-outline-hover: var(--w-color-secondary-100);
+        --w-color-border-interactive-more-contrast: var(--w-color-grey-150);
+        --w-color-border-interactive-more-contrast-hover: var(--w-color-white);
+        --w-color-border-interactive-more-contrast-dark-bg: var(--w-color-grey-150);
+        --w-color-border-interactive-more-contrast-dark-bg-hover: var(--w-color-white);
+        --w-color-border-furniture-more-contrast: var(--w-color-grey-400);
+        --w-color-focus: #E85A4F;
+        --w-color-box-shadow-md: var(--w-color-black-50);
+        color-scheme: dark
          }
-         .login, .login-wrapper, .w-panel, .w-panel__content {
-            background: rgba(3, 3, 3, 0.95) !important;
-            backdrop-filter: blur(20px) !important;
-          
-           
-            
-        }
-        a:hover, .login a:hover {
-            color: #ff4444 !important;
-        }
-        
-       .button {
-            background: #A21723 !important;
-            border: none !important;
-            color: white !important;
-            font-weight: 600 !important;
-            border-radius: 8px !important;
-            
-            transition: all 0.3s ease !important;
-            box-shadow: 0 4px 15px rgba(229, 62, 62, 0.3) !important;
-            width: 100% !important;
-            cursor: pointer !important;
-            font-size: 16px !important;
-        }
-          /* Checkbox label */
-        label[for*="remember"], .login label[for*="remember"] {
-            color: #d1d5db !important;
-            font-weight: normal !important;
-        }
-        .login .content-wrapper {
-           background:  #1c1b1b !important;
-        }
-        .login h1 {
-            color: #ffffff !important;
-            font-weight: 700 !important;
-        }
-        .w-field__label{
-            color: #d1d5db !important;
-            font-weight: 600 !important;
-        }
-        a {
-            color: #ff4444 !important;
-            text-decoration: none !important;
-        }
-        .login .remember-me {
-            color: #d1d5db !important;
-        }
-        input[type=checkbox] {
-    appearance: none;
-    background-color: var(--w-color-surface-field);
-    border: 1px solid var(--w-color-border-field-default);
-    border-radius: .3125rem;
-    color: black;
-    cursor: pointer;
-    display: inline-block;
-    flex-shrink: 0;
-    height: 1.5rem;
-    margin-inline-end: .625rem;
-    position: relative;
-    width: 1.5rem;
-    --w-color-secondary: hsl(0deg 0% 0%) !important;
-}
-input[type=date], input[type=datetime-local], input[type=email], input[type=file], input[type=month], input[type=number], input[type=password], input[type=search], input[type=tel], input[type=text], input[type=time], input[type=url], input[type=week], textarea, select {
-    background-color: #2c2c2c !important;
-    border: 1px solid #444 !important;
-    color: #f0f0f0 !important;
-}
-:focus-visible {
-    outline: 2px solid #ff4444 !important;
-    outline-offset: 2px !important;
-}
-       
-
-       
+         .login {
+    background: var(--w-color-grey-800);
+    color: var(--w-color-text-label);}
         
     </style>
 {% endblock %}
