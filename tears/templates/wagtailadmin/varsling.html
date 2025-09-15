@@ -1,0 +1,135 @@
+{% extends "wagtailadmin/base.html" %}
+{% load wagtailadmin_tags %}
+
+{% block titletag %}Varsling{% endblock %}
+
+{% block content %}
+
+
+<div class="nice-padding">
+    {% if messages %}
+    {% for message in messages %}
+    <div class="messages">
+        <div class="message-wrapper">
+            <div class="message success">{{ message }}</div>
+        </div>
+    </div>
+    {% endfor %}
+    {% endif %}
+
+    <div class="content-section">
+        <h1>Varsling i Radio Nova</h1>
+        
+        <p> For å se hvordan vi behandler varsler i Radio Nova,
+ <a href="https://docs.google.com/document/d/1vMbofzLN86FNvfA7gePfC-eL1l-LzPwZ5G01aY-2ySU/edit?usp=sharing">klikk her</a>
+
+</p>
+
+        <p>Vi er opptatt av å ha et godt psykososialt miljø innad i organisasjonen. Det oppfordres til et godt
+            ytringsklima, med lav terskel for å si ifra til sin nærmeste leder dersom det skulle være noe.</p>
+
+        <p>I visse situasjoner vil dette kanskje ikke være tilstrekkelig. Vi har derfor et varslingssystem, som vi
+            oppfordrer alle våre medarbeidere til å bruke.</p>
+
+        <h2><strong>Når bør jeg varsle?</strong></h2>
+        <p>Du bør varsle dersom du opplever, er vitne til, eller mistenker kritikkverdige forhold i organisasjonen. Hva
+            som menes med «kritikkverdige forhold» står beskrevet i arbeidsmiljøloven §2 A-1 (2):</p>
+
+        <blockquote
+            style="margin: 20px 0; padding: 15px; border-left: 4px solid #ffffff; font-style: italic;">
+            <p>«Med kritikkverdige forhold, menes forhold som er i strid med rettsregler, skriftlige etiske
+                retningslinjer i virksomheter eller etiske normer som det er bred tilslutning til i samfunnet, for
+                eksempel forhold som kan innebære</p>
+            <p>a) fare for liv eller helse<br>
+                b) fare for klima eller miljø<br>
+                c) korrupsjon eller annen økonomisk kriminalitet<br>
+                d) myndighetsmisbruk<br>
+                e) uforsvarlig arbeidsmiljø<br>
+                f) brudd på personopplysningssikkerheten»</p>
+            <p><em>Hentet fra: <a href="https://lovdata.no/dokument/NL/lov/2005-06-17-62?q=ARBEIDSMILJ%C3%98LOVEN"
+                        target="_blank">https://lovdata.no/dokument/NL/lov/2005-06-17-62?q=ARBEIDSMILJ%C3%98LOVEN</a></em>
+            </p>
+        </blockquote>
+
+        <p>Dersom du opplever at situasjonen/saken du ønsker å opplyse om, ikke passer inn i arbeidsmiljølovens
+            beskrivelse av «kritikkverdige forhold», oppfordrer vi deg likevel til å varsle.</p>
+        <p>Varsling kan skje anonymt eller ved fullt navn.</p>
+
+
+        <h2><strong>Varslingsprosessen</strong></h2>
+        <p>Alle Studentradioens medlemmer kan varsle både muntlig og skriftlig, på egne eller andres vegne. Muntlig
+            varsling kan skje gjennom en samtale med tillitsvalgt, ansvarlig redaktør eller daglig leder, også per
+            telefon. Disse telefonnumrene finner du både på radionova.no under «OM OSS», og i lokalene våre.</p>
+
+        <p>Skriftlig varsling skjer gjennom det elektroniske skjemaet lenger ned på siden. Når du varsler gjennom dette
+            skjemaet, vil det bli sendt til egne e-poster spesifikt opprettet for varsling. Det er kun den/de du har
+            valgt at skal motta varslet, som vil få denne e-posten.</p>
+
+        <p>Når du varsler skriftlig, kan du velge å gjøre det anonymt eller med fullt navn. Vær oppmerksom på at det vil
+            være vanskeligere å håndtere varsler som sendes inn anonymt. Saken det varsles om, vil ikke bli kjent for
+            flere enn det som er nødvendig for å behandle den.</p>
+
+        <p>Dersom du har oppgitt en e-postadresse, vil du så raskt som mulig få en bekreftelse på at varslet er mottatt.
+            Håndtering av saken blir gjort i samråd med den som varsler, uavhengig av alvorlighetsgrad.</p>
+
+        <p>I de fleste saker som omhandler kritikkverdige forhold, vil den som anklages ha rett til å vite om anklagen,
+            samt få innsyn i saken og rett til å uttale seg. Den som anklages har ikke rett på å vite hvem som har
+            varslet.</p>
+
+        <p>Ved varsling skal det ikke være risiko for straff eller negative reaksjoner som direkte følge av varslingen.
+        </p>
+
+        <p>Alle varsler blir loggført og registrert. Det er bare den/de du varsler, og eventuelt de du ønsker å
+            involvere, som vil ha tilgang på varslene.</p>
+
+        <h2><strong>Rolleavklaring</strong></h2>
+        <p>Varslingssaker håndteres i utgangspunktet av Studentradioens tillitsvalgt, men kan også håndteres av radioens
+            ansvarlige redaktør eller daglige leder dersom det er å foretrekke. Alle tre har taushetsplikt i
+            varslingssaker. Denne taushetsplikten er formelt inngått gjennom en skriftlig taushetserklæring.
+            Tillitsvalgt, ansvarlig redaktør og daglig leder har også taushetsplikt overfor hverandre, og kan kun
+            diskutere varsler eller andre henvendelser seg imellom dersom du har gitt tillatelse til dette.</p>
+
+        <div style="padding: 20px; border-radius: 5px; margin: 20px 0;">
+            <p><strong>Dersom du er usikker på om noe bør varsles om, har spørsmål, eller bare trenger noen å snakke
+                    med, så kan du kontakte tillitsvalgt, ansvarlig redaktør eller daglig leder på følgende
+                    e-poster:</strong></p>
+            <p><strong>Tillitsvalgt:</strong> <a href="mailto:tillitsvalgt@radionova.no">tillitsvalgt@radionova.no</a>
+            </p>
+            <p><strong>Ansvarlig redaktør:</strong> <a
+                    href="mailto:ansvarligredaktor@radionova.no">ansvarligredaktor@radionova.no</a></p>
+            <p><strong>Daglig leder:</strong> <a href="mailto:dagligleder@radionova.no">dagligleder@radionova.no</a></p>
+        </div>
+    </div>
+</div>
+
+<style>
+    .content-section h1 {
+        color: #C61A24;
+        margin-bottom: 20px;
+        font-size: 28px;
+    }
+
+    .content-section h2 {
+        color: #C61A24;
+        margin: 30px 0 15px 0;
+        font-size: 22px;
+    }
+
+    .content-section p {
+        line-height: 1.6;
+        margin-bottom: 15px;
+    }
+
+    .content-section blockquote {
+        font-size: 14px;
+    }
+
+    .content-section a {
+        color: #C61A24;
+    }
+
+    .content-section a:hover {
+        text-decoration: underline;
+    }
+</style>
+{% endblock %}

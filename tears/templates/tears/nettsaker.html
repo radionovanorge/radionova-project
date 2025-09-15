@@ -329,10 +329,10 @@
 
                     </div>
                     <div class="flex items-center space-x-2">
-    <div class="flex items-center space-x-2">
-    <div class="relative inline-flex items-stretch border-2 border-red-900 rounded-md overflow-hidden bg-gray-50">
+    <div class="flex items-center space-x-2 mr-10 lg:mr-0">
+    <div class="relative inline-flex items-stretch border-2 border-black-900 rounded-md overflow-hidden focus-within:ring-2 focus-within:ring-red-900 focus-within:ring-offset-4">
         <select id="sortSelect" name="sort"
-            class="bg-transparent border-0 text-black-900 font-medium pl-2 pr-14 py-2 text-sm outline-none w-full cursor-pointer"
+            class="bg-transparent border-0 text-black-900 font-medium pl-2 pr-14 py-2 text-sm outline-none w-full cursor-pointer ml-2 text-red-900"
             aria-label="Sorter">
             <option value="Ny" {% if sort == 'Ny' or not sort %}selected{% endif %}>Nyest først</option>
             <option value="Gammel" {% if sort == 'Gammel' %}selected{% endif %}>Eldst først</option>
@@ -340,11 +340,14 @@
             <option value="desc" {% if sort == 'desc' %}selected{% endif %}>Å-A</option>
         </select>
 
-        <div class="pointer-events-none absolute inset-y-0 right-0 w-8 bg-nova-dark-red flex items-center justify-center">
-            <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 9l-7 7-7-7"></path>
-            </svg>
-        </div>
+       <div
+                                class="pointer-events-none absolute inset-y-0 right-0 w-8 bg-nova-dark-red flex items-center justify-center">
+                                <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                    aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3"
+                                        d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </div>
     </div>
 </div>
 </div>

@@ -169,7 +169,7 @@
             <div class="flex justify-between items-center mb-6">
                 <p id="resultCount">Viser {{ total_program_count }} treff</p>
                 <div class="flex gap-2 mr-5">
-                     <button id="toggleViewBtn" class="flex items-center px-4 py-2 border-2 border-red-900 rounded-md bg-white hover:bg-gray-50 transition-colors">
+                     <button id="toggleViewBtn" class="flex items-center px-4 py-2 border-2 border-red-900 rounded-md bg-white hover:bg-gray-50 transition-colors focus-within:ring-2 focus-within:ring-red-900">
         <!-- Grid/rutenett icon -->
         <svg class="w-4 h-4 text-red-900 hidden" id="gridIcon" fill="currentColor" viewBox="0 0 24 24">
             <path d="M3 3h6v6H3V3zm8 0h6v6h-6V3zm-8 8h6v6H3v-6zm8 0h6v6h-6v-6zm0 8h6v6h-6v-6zm-8 0h6v6H3v-6z"/>
@@ -181,7 +181,7 @@
         <span class="ml-2 text-red-900 font-medium">Vis som liste</span>
     </button>
                     <div
-                            class="relative inline-flex items-stretch border-2 border-red-900 rounded-md overflow-hidden">
+                            class="relative inline-flex items-stretch border-2 border-black-900 rounded-md overflow-hidden focus-within:ring-2 focus-within:ring-red-900 focus-within:ring-offset-4">
                     <select id="sortSelect"
                                 class="bg-transparent border-0 text-black-900 font-medium pl-2 pr-14 py-2 text-sm outline-none w-full cursor-pointer ml-2 text-red-900"
                                 aria-label="Sorter">
@@ -190,7 +190,7 @@
                                 <option value="desc">Å-A</option>
                             </select>
                             <div
-                                class="pointer-events-none absolute inset-y-0 right-0 w-8 bg-nova-dark-red flex items-center justify-center">
+                                class="absolute inset-y-0 right-0 w-8 bg-nova-dark-red flex items-center justify-center">
                                 <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                     aria-hidden="true">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3"

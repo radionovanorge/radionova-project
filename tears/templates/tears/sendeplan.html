@@ -5,786 +5,799 @@
 {% block content %}
 
 <head>
-    <link rel="stylesheet" href="{% static 'tears/css/sendeplan.css' %}?v={% now 'U' %}">
+  <link rel="stylesheet" href="{% static 'tears/css/sendeplan.css' %}?v={% now 'U' %}">
 
 
-    <script src="https://cdn.tailwindcss.com"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <style>
-       
+  <style>
+    /* Ensure text doesn't wrap in cells */
+    .schedule-cell {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      vertical-align: top;
+      text-align: center;
+      padding: 2px;
+      font-size: 11px;
+      line-height: 1.2;
+      height: 32px;
+    }
 
-        /* Ensure text doesn't wrap in cells */
-        .schedule-cell {
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            vertical-align: top;
-            text-align: center;
-            padding: 2px;
-            font-size: 11px;
-            line-height: 1.2;
-            height: 32px;
-        }
+    /* Time column styling */
+    .time-cell {
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 500;
+    }
 
-        /* Time column styling */
-        .time-cell {
-            height: 32px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 11px;
-            font-weight: 500;
-        }
+    /* Program blocks that span multiple rows */
+    .program-1-row {
+      height: 32px;
+    }
 
-        /* Program blocks that span multiple rows */
-        .program-1-row {
-            height: 32px;
-        }
+    .program-2-rows {
+      height: 64px;
+    }
 
-        .program-2-rows {
-            height: 64px;
-        }
+    .program-3-rows {
+      height: 96px;
+    }
 
-        .program-3-rows {
-            height: 96px;
-        }
+    .program-4-rows {
+      height: 128px;
+    }
 
-        .program-4-rows {
-            height: 128px;
-        }
-
-        /* Sync scrolling */
-        .time-table,
-        .schedule-table {
-            display: inline-block;
-            vertical-align: top;
-        }
-
-       
-    </style>
+    /* Sync scrolling */
+    .time-table,
+    .schedule-table {
+      display: inline-block;
+      vertical-align: top;
+    }
+  </style>
 </head>
 
 <body>
 
 
-    <header class="w-full bg-[#f7f4f4] p-10 mb-8">
-        <div class="max-w-6xl mx-auto px-200">
-            <!-- Breadcrumb Navigation -->
-            <div class="text-sm text-gray-500 mb-4 mt-1">
-                {% if self.get_ancestors|length > 1 %}
-                <nav aria-label="Breadcrumb">
-                    <ul class="flex items-center space-x-2 flex-wrap">
-                        {% for p in self.get_ancestors %}
-                        {% if not p.is_root %}
-                        <li
-                            class="flex items-center {% if forloop.counter > 1 and forloop.counter < forloop.parentloop.counter0|add:'-1' %}hidden sm:flex{% endif %}">
-                            <a href="{{ p.url }}" class="hover:text-red-600 transition-colors">{{ p.title }}</a>
-                            <span class="mx-2 text-gray-400">→</span>
-                        </li>
-                        {% endif %}
-                        {% endfor %}
-                        <!-- Show ellipsis on small screens if there are hidden items -->
-                        {% if self.get_ancestors|length > 3 %}
-                        <li class="sm:hidden flex items-center">
-                            <span class="text-gray-400">...</span>
-                            <span class="mx-2 text-gray-400">→</span>
-                        </li>
-                        {% endif %}
-                        <!-- Current Page -->
-                        <li class="text-red-600 font-semibold">{{ self.title }}</li>
-                    </ul>
-                </nav>
-                {% endif %}
-            </div>
-
-
-            <!-- Title Section -->
-            <h1 class="sendeplan-heading"> Sendeplan </h1>
-            <h2 class="text-base font-semibold text-[#511120] mb-3 mt-3 ml-2 text-xl"> Radio Nova sender programmer
-                hverdager 06:00 til 00:00, og helger 09:00 til 00:00. </h2>
-        </div>
-    </header>
-
-
-    <div class="desktop-sendeplan mb-2">
-        <div class="bg-white p-6 md:p-8">
-
-            <!-- TABS: bruker dine klassenavn + Tailwind for utseende -->
-            <div class="frame-6 relative">
-                <div class="flex gap-3">
-                    <!-- Aktiv tab (component-2) -->
-                    <div
-                        class="component-2 inline-flex items-center rounded-sm border-2 border-[#4B0C1B] text-white px-4 py-2">
-                        <!-- Bruk gjerne SVG-ikonet ditt her -->
-                        <svg class="w-5 h-5 mr-2 color_logo text-white" viewBox="0 0 20 20" fill="none">
-                            <rect x="3" y="4" width="14" height="12" rx="2" stroke="currentColor" stroke-width="1.7" />
-                            <line x1="6" y1="7" x2="14" y2="7" stroke="currentColor" stroke-width="1.7"
-                                stroke-linecap="round" />
-                            <line x1="6" y1="10" x2="12" y2="10" stroke="currentColor" stroke-width="1.7"
-                                stroke-linecap="round" />
-                            <line x1="6" y1="13" x2="10" y2="13" stroke="currentColor" stroke-width="1.7"
-                                stroke-linecap="round" />
-                        </svg>
-
-                        <!-- beholder dine wrappers -->
-
-                        <div class="text-wrapper-6">Vis som dagsliste</div>
-                    </div>
-
-                    <!-- Inaktiv tab (component-4) -->
-                    <div
-                        class="component-4 inline-flex items-center rounded-md border-2 border-[#4B0C1B] bg-[#EBDDE1] text-[#4B0C1B] px-4 py-2">
-                        <svg class="w-5 h-5 mr-2 color_logo text-[#4B0C1B]" viewBox="0 0 20 20" fill="none">
-                            <rect x="3" y="3" width="3" height="14" rx="1" stroke="currentColor" stroke-width="1.7" />
-                            <rect x="8.5" y="3" width="3" height="14" rx="1" stroke="currentColor" stroke-width="1.7" />
-                            <rect x="14" y="3" width="3" height="14" rx="1" stroke="currentColor" stroke-width="1.7" />
-                        </svg>
-
-                        <div class="component-3 hidden">
-                            <div class="rectangle-4"></div>
-                            <div class="rectangle-5"></div>
-                            <div class="rectangle-6"></div>
-                        </div>
-                        <div class="text-wrapper-4">Vis som ukesoversikt</div>
-                    </div>
-                </div>
-
-                <!-- underline under tabs -->
-                <div class="absolute bottom-0 right-100 -translate-x-20 w-[1200px] h-[2px] bg-[#4B0C1B]"></div>
-
-            </div>
-
-            <!-- UKE-DAGER: bruker dine containere + Tailwind for “pills” -->
-            <div class="frame-9 mt-10">
-                <div class="frame-2">
-                    <div class="frame-10 flex flex-wrap gap-4">
-                        <div class="component-5 inline-block px-5 py-2 rounded-md border-2 border-[#4B0C1B] bg-[#F2E7EB] text-[#4B0C1B]"
-                            id="mandag">
-                            <div class="text-wrapper-4">Mandag</div>
-                        </div>
-                        <div class="component-6 inline-block px-5 py-2 rounded-md border-2 border-[#4B0C1B] bg-[#F2E7EB] text-[#4B0C1B]"
-                            id="tirsdag">
-                            <div class="text-wrapper-4">Tirsdag</div>
-                        </div>
-                        <div class="component-6 inline-block px-5 py-2 rounded-md border-2 border-[#4B0C1B] bg-[#F2E7EB] text-[#4B0C1B]"
-                            id="onsdag">
-                            <div class="text-wrapper-4">Onsdag</div>
-                        </div>
-                        <div class="component-6 inline-block px-5 py-2 rounded-md border-2 border-[#4B0C1B] bg-[#F2E7EB] text-[#4B0C1B]"
-                            id="torsdag">
-                            <div class="text-wrapper-4">Torsdag</div>
-                        </div>
-                        <div class="component-6 inline-block px-5 py-2 rounded-md border-2 border-[#4B0C1B] bg-[#F2E7EB] text-[#4B0C1B]"
-                            id="fredag">
-                            <div class="text-wrapper-4">Fredag</div>
-                        </div>
-                        <div class="component-6 inline-block px-5 py-2 rounded-md border-2 border-[#4B0C1B] bg-[#F2E7EB] text-[#4B0C1B]"
-                            id="lordag">
-                            <div class="text-wrapper-4">Lørdag</div>
-                        </div>
-                        <div class="component-6 inline-block px-5 py-2 rounded-md border-2 border-[#4B0C1B] bg-[#F2E7EB] text-[#4B0C1B]"
-                            id="sondag">
-                            <div class="text-wrapper-4">Søndag</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-        <div class="frame-11">
-            <div class="Mandager">
-                <div class="frame-12">
-                    <div class="frame-13">
-                        {% for program in sendeplan.1 %}
-                        <div class="frame-14">
-                            <div class="frame-18">
-
-                                {% if program.main_image %}
-                                {% image program.main_image fill-400x400 class="image" %}
-                                {% endif %}
-
-                                <div class="frame-15">
-                                    <div class="frame-16">
-                                        <div class="frame-17">
-                                            <div class="frame-14">
-                                                <div class="text-wrapper-4">
-                                                    {{ program.start_time }} - {{ program.end_time }}
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="frame-3">
-                                            <div class="frame-17">
-                                                <div class="text-wrapper-7">{{ program.title }}</div>
-                                            </div>
-                                            <div class="component-7">
-                                                <div class="text-wrapper-8">{{ program.category }}</div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="text-wrapper-9">{{ program.intro }}</div>
-                                </div>
-
-                                {% if program.is_live_now %}
-                                <div class="overlap-group-wrapper">
-                                    <div class="overlap-group">
-                                        <div class="rectangle-7"></div>
-                                        <div class="text-wrapper-10">NÅ</div>
-                                    </div>
-                                </div>
-                                {% endif %}
-
-                            </div>
-                        </div>
-                        {% endfor %}
-                    </div>
-                </div>
-            </div>
-            <div class="Tirsdager">
-                <div class="frame-12">
-                    <div class="frame-13">
-                        {% for program in sendeplan.2 %}
-                        <div class="frame-14">
-                            <div class="frame-18">
-
-                                {% if program.main_image %}
-                                {% image program.main_image fill-400x400 class="image" %}
-                                {% endif %}
-
-                                <div class="frame-15">
-                                    <div class="frame-16">
-                                        <div class="frame-17">
-                                            <div class="frame-14">
-                                                <div class="text-wrapper-4">
-                                                    {{ program.start_time }} - {{ program.end_time }}
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="frame-3">
-                                            <div class="frame-17">
-                                                <div class="text-wrapper-7">{{ program.title }}</div>
-                                            </div>
-                                            <div class="component-7">
-                                                <div class="text-wrapper-8">{{ program.category }}</div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="text-wrapper-9">{{ program.intro }}</div>
-                                </div>
-
-                                {% if program.is_live_now %}
-                                <div class="overlap-group-wrapper">
-                                    <div class="overlap-group">
-                                        <div class="rectangle-7"></div>
-                                        <div class="text-wrapper-10">NÅ</div>
-                                    </div>
-                                </div>
-                                {% endif %}
-
-                            </div>
-                        </div>
-                        {% endfor %}
-                    </div>
-                </div>
-            </div>
-
-            <div class="Onsdager">
-                <div class="frame-12">
-                    <div class="frame-13">
-                        {% for program in sendeplan.3 %}
-                        <div class="frame-14">
-                            <div class="frame-18">
-
-                                {% if program.main_image %}
-                                {% image program.main_image fill-400x400 class="image" %}
-                                {% endif %}
-
-                                <div class="frame-15">
-                                    <div class="frame-16">
-                                        <div class="frame-17">
-                                            <div class="frame-14">
-                                                <div class="text-wrapper-4">
-                                                    {{ program.start_time }} - {{ program.end_time }}
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="frame-3">
-                                            <div class="frame-17">
-                                                <div class="text-wrapper-7">{{ program.title }}</div>
-                                            </div>
-                                            <div class="component-7">
-                                                <div class="text-wrapper-8">{{ program.category }}</div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="text-wrapper-9">{{ program.intro }}</div>
-                                </div>
-
-                                {% if program.is_live_now %}
-                                <div class="overlap-group-wrapper">
-                                    <div class="overlap-group">
-                                        <div class="rectangle-7"></div>
-                                        <div class="text-wrapper-10">NÅ</div>
-                                    </div>
-                                </div>
-                                {% endif %}
-
-                            </div>
-                        </div>
-                        {% endfor %}
-                    </div>
-                </div>
-            </div>
-
-            <div class="Torsdager">
-                <div class="frame-12">
-                    <div class="frame-13">
-                        {% for program in sendeplan.4 %}
-                        <div class="frame-14">
-                            <div class="frame-18">
-
-                                {% if program.main_image %}
-                                {% image program.main_image fill-400x400 class="image" %}
-                                {% endif %}
-
-                                <div class="frame-15">
-                                    <div class="frame-16">
-                                        <div class="frame-17">
-                                            <div class="frame-14">
-                                                <div class="text-wrapper-4">
-                                                    {{ program.start_time }} - {{ program.end_time }}
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="frame-3">
-                                            <div class="frame-17">
-                                                <div class="text-wrapper-7">{{ program.title }}</div>
-                                            </div>
-                                            <div class="component-7">
-                                                <div class="text-wrapper-8">{{ program.category }}</div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="text-wrapper-9">{{ program.intro }}</div>
-                                </div>
-
-                                {% if program.is_live_now %}
-                                <div class="overlap-group-wrapper">
-                                    <div class="overlap-group">
-                                        <div class="rectangle-7"></div>
-                                        <div class="text-wrapper-10">NÅ</div>
-                                    </div>
-                                </div>
-                                {% endif %}
-
-                            </div>
-                        </div>
-                        {% endfor %}
-                    </div>
-                </div>
-            </div>
-            <div class="Fredager">
-                <div class="frame-12">
-                    <div class="frame-13">
-                        {% for program in sendeplan.5 %}
-                        <div class="frame-14">
-                            <div class="frame-18">
-
-                                {% if program.main_image %}
-                                {% image program.main_image fill-400x400 class="image" %}
-                                {% endif %}
-
-                                <div class="frame-15">
-                                    <div class="frame-16">
-                                        <div class="frame-17">
-                                            <div class="frame-14">
-                                                <div class="text-wrapper-4">
-                                                    {{ program.start_time }} - {{ program.end_time }}
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="frame-3">
-                                            <div class="frame-17">
-                                                <div class="text-wrapper-7">{{ program.title }}</div>
-                                            </div>
-                                            <div class="component-7">
-                                                <div class="text-wrapper-8">{{ program.category }}</div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="text-wrapper-9">{{ program.intro }}</div>
-                                </div>
-
-                                {% if program.is_live_now %}
-                                <div class="overlap-group-wrapper">
-                                    <div class="overlap-group">
-                                        <div class="rectangle-7"></div>
-                                        <div class="text-wrapper-10">NÅ</div>
-                                    </div>
-                                </div>
-                                {% endif %}
-
-                            </div>
-                        </div>
-                        {% endfor %}
-                    </div>
-                </div>
-            </div>
-
-            <div class="Lordager">
-                <div class="frame-12">
-                    <div class="frame-13">
-                        {% for program in sendeplan.6 %}
-                        <div class="frame-14">
-                            <div class="frame-18">
-
-                                {% if program.main_image %}
-                                {% image program.main_image fill-400x400 class="image" %}
-                                {% endif %}
-
-                                <div class="frame-15">
-                                    <div class="frame-16">
-                                        <div class="frame-17">
-                                            <div class="frame-14">
-                                                <div class="text-wrapper-4">
-                                                    {{ program.start_time }} - {{ program.end_time }}
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="frame-3">
-                                            <div class="frame-17">
-                                                <div class="text-wrapper-7">{{ program.title }}</div>
-                                            </div>
-                                            <div class="component-7">
-                                                <div class="text-wrapper-8">{{ program.category }}</div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="text-wrapper-9">{{ program.intro }}</div>
-                                </div>
-
-                                {% if program.is_live_now %}
-                                <div class="overlap-group-wrapper">
-                                    <div class="overlap-group">
-                                        <div class="rectangle-7"></div>
-                                        <div class="text-wrapper-10">NÅ</div>
-                                    </div>
-                                </div>
-                                {% endif %}
-
-                            </div>
-                        </div>
-                        {% endfor %}
-                    </div>
-                </div>
-            </div>
-            <div class="Sondager">
-                <div class="frame-12">
-                    <div class="frame-13">
-                        {% for program in sendeplan.7 %}
-                        <div class="frame-14">
-                            <div class="frame-18">
-
-                                {% if program.main_image %}
-                                {% image program.main_image fill-400x400 class="image" %}
-                                {% endif %}
-
-                                <div class="frame-15">
-                                    <div class="frame-16">
-                                        <div class="frame-17">
-                                            <div class="frame-14">
-                                                <div class="text-wrapper-4">
-                                                    {{ program.start_time }} - {{ program.end_time }}
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="frame-3">
-                                            <div class="frame-17">
-                                                <div class="text-wrapper-7">{{ program.title }}</div>
-                                            </div>
-                                            <div class="component-7">
-                                                <div class="text-wrapper-8">{{ program.category }}</div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="text-wrapper-9">{{ program.intro }}</div>
-                                </div>
-
-                                {% if program.is_live_now %}
-                                <div class="overlap-group-wrapper">
-                                    <div class="overlap-group">
-                                        <div class="rectangle-7"></div>
-                                        <div class="text-wrapper-10">NÅ</div>
-                                    </div>
-                                </div>
-                                {% endif %}
-
-                            </div>
-                        </div>
-                        {% endfor %}
-                    </div>
-                </div>
-            </div>
-
-
-
-
-
-        </div>
+  <header class="w-full bg-[#f7f4f4] p-10 mb-8">
+    <div class="max-w-6xl mx-auto px-200">
+      <!-- Breadcrumb Navigation -->
+      <div class="text-sm text-gray-500 mb-4 mt-1">
+        {% if self.get_ancestors|length > 1 %}
+        <nav aria-label="Breadcrumb">
+          <ul class="flex items-center space-x-2 flex-wrap">
+            {% for p in self.get_ancestors %}
+            {% if not p.is_root %}
+            <li
+              class="flex items-center {% if forloop.counter > 1 and forloop.counter < forloop.parentloop.counter0|add:'-1' %}hidden sm:flex{% endif %}">
+              <a href="{{ p.url }}" class="hover:text-red-600 transition-colors">{{ p.title }}</a>
+              <span class="mx-2 text-gray-400">→</span>
+            </li>
+            {% endif %}
+            {% endfor %}
+            <!-- Show ellipsis on small screens if there are hidden items -->
+            {% if self.get_ancestors|length > 3 %}
+            <li class="sm:hidden flex items-center">
+              <span class="text-gray-400">...</span>
+              <span class="mx-2 text-gray-400">→</span>
+            </li>
+            {% endif %}
+            <!-- Current Page -->
+            <li class="text-red-600 font-semibold">{{ self.title }}</li>
+          </ul>
+        </nav>
+        {% endif %}
+      </div>
+
+
+      <!-- Title Section -->
+      <h1 class="sendeplan-heading"> Sendeplan </h1>
+      <h2 class="text-base font-semibold text-[#511120] mb-3 mt-3 ml-2 text-xl"> Radio Nova sender programmer
+        hverdager 06:00 til 00:00, og helger 09:00 til 00:00. </h2>
     </div>
-    <!-- Toggle html code when vis som uke oversikt er clicked-->
-    <div class="schedule-shell frame-123">
-       <div class="scrollbar-top" id="hBar">
-            <div class="spacer" id="hSpace"></div>
+  </header>
+
+
+  <div class="desktop-sendeplan mb-2">
+    <div class="bg-white p-6 md:p-8">
+
+      <!-- TABS: bruker dine klassenavn + Tailwind for utseende -->
+      <div class="frame-6 relative">
+        <div class="flex gap-3">
+          <!-- Aktiv tab (component-2) -->
+          <div class="component-2 inline-flex items-center rounded-sm border-2 border-[#4B0C1B] text-white px-4 py-2">
+            <!-- Bruk gjerne SVG-ikonet ditt her -->
+            <svg class="w-5 h-5 mr-2 color_logo text-white" viewBox="0 0 20 20" fill="none">
+              <rect x="3" y="4" width="14" height="12" rx="2" stroke="currentColor" stroke-width="1.7" />
+              <line x1="6" y1="7" x2="14" y2="7" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" />
+              <line x1="6" y1="10" x2="12" y2="10" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" />
+              <line x1="6" y1="13" x2="10" y2="13" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" />
+            </svg>
+
+            <!-- beholder dine wrappers -->
+
+            <div class="text-wrapper-6">Vis som dagsliste</div>
+          </div>
+
+          <!-- Inaktiv tab (component-4) -->
+          <div
+            class="component-4 inline-flex items-center rounded-md border-2 border-[#4B0C1B] bg-[#EBDDE1] text-[#4B0C1B] px-4 py-2">
+            <svg class="w-5 h-5 mr-2 color_logo text-[#4B0C1B]" viewBox="0 0 20 20" fill="none">
+              <rect x="3" y="3" width="3" height="14" rx="1" stroke="currentColor" stroke-width="1.7" />
+              <rect x="8.5" y="3" width="3" height="14" rx="1" stroke="currentColor" stroke-width="1.7" />
+              <rect x="14" y="3" width="3" height="14" rx="1" stroke="currentColor" stroke-width="1.7" />
+            </svg>
+
+            <div class="component-3 hidden">
+              <div class="rectangle-4"></div>
+              <div class="rectangle-5"></div>
+              <div class="rectangle-6"></div>
+            </div>
+            <div class="text-wrapper-4">Vis som ukesoversikt</div>
+          </div>
         </div>
 
-        <!-- Content wrapper (the only scroller for the iframe) -->
-         
-        <div class="content-wrap" id="wrap">
-             <div class="schedule-content-wrapper" style="min-width: 1200px;">
-           <div class="max-w-10xl mx-auto">
-    <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-  <div class="flex">
-    <!-- Time Column -->
-    <div class="time-table">
-      <table class="border-collapse">
-        <thead>
-          <tr>
-            <th class="border border-t-transparent p-2  text-left font-semibold w-16">Tid</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for time in time_slots %}
-          <tr class="">
-            <td class="border time-cell">{{ time }}</td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
+        <!-- underline under tabs -->
+        <div class="absolute bottom-0 left-0 right-0 h-[2px] bg-[#4B0C1B] z-0 max-w-[1000px]"></div>
+
+      </div>
+
+      <!-- UKE-DAGER: bruker dine containere + Tailwind for “pills” -->
+      <div class="frame-9 mt-10">
+        <div class="frame-2">
+          <div class="frame-10 flex flex-wrap gap-4">
+            <div
+              class="component-5 inline-block px-5 py-2 rounded-md border-2 border-[#4B0C1B] bg-[#F2E7EB] text-[#4B0C1B]"
+              id="mandag">
+              <div class="text-wrapper-4">Mandag</div>
+            </div>
+            <div
+              class="component-6 inline-block px-5 py-2 rounded-md border-2 border-[#4B0C1B] bg-[#F2E7EB] text-[#4B0C1B]"
+              id="tirsdag">
+              <div class="text-wrapper-4">Tirsdag</div>
+            </div>
+            <div
+              class="component-6 inline-block px-5 py-2 rounded-md border-2 border-[#4B0C1B] bg-[#F2E7EB] text-[#4B0C1B]"
+              id="onsdag">
+              <div class="text-wrapper-4">Onsdag</div>
+            </div>
+            <div
+              class="component-6 inline-block px-5 py-2 rounded-md border-2 border-[#4B0C1B] bg-[#F2E7EB] text-[#4B0C1B]"
+              id="torsdag">
+              <div class="text-wrapper-4">Torsdag</div>
+            </div>
+            <div
+              class="component-6 inline-block px-5 py-2 rounded-md border-2 border-[#4B0C1B] bg-[#F2E7EB] text-[#4B0C1B]"
+              id="fredag">
+              <div class="text-wrapper-4">Fredag</div>
+            </div>
+            <div
+              class="component-6 inline-block px-5 py-2 rounded-md border-2 border-[#4B0C1B] bg-[#F2E7EB] text-[#4B0C1B]"
+              id="lordag">
+              <div class="text-wrapper-4">Lørdag</div>
+            </div>
+            <div
+              class="component-6 inline-block px-5 py-2 rounded-md border-2 border-[#4B0C1B] bg-[#F2E7EB] text-[#4B0C1B]"
+              id="sondag">
+              <div class="text-wrapper-4">Søndag</div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <!-- Schedule Content -->
-    <div class="flex flex-row gap-0 overflow-x-auto flex-1">
-      <!-- Monday -->
-      <table class="border-collapse min-w-32 relative z-10">
-        <thead>
-          <tr class="">
-            <th class="border border-t-transparent p-2 text-center font-semibold">Mandag</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for time in time_slots %}
-          <tr class="">
-            {% with day_programs=sendeplan|dict_get:"1" %}
-              {% for program in day_programs %}
-                {% if program.start_time == time %}
-                  <td class="border border-grey schedule-cell {% if forloop.counter0|divisibleby:2 %}bg-white{% else %}bg-[#FFE8E8]{% endif %}" rowspan="{{ program.rowspan }}">
-                    <strong>{{ program.title }}</strong><br>
-                    <span class="text-xs">{{ program.start_time }} - {{ program.end_time }}</span>
-                  </td>
-                {% endif %}
-              {% endfor %}
-              {% if not day_programs or not program.start_time == time %}
-                <td class="border-transparent schedule-cell"></td>
-              {% endif %}
-            {% endwith %}
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
 
-      <!-- Tuesday -->
-      <table class="border-collapse min-w-32 relative z-20 -ml-1.5">
-        <thead>
-          <tr class="">
-            <th class="border border-t-transparent p-2 text-center font-semibold">Tirsdag</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for time in time_slots %}
-          <tr class="">
-            {% with day_programs=sendeplan|dict_get:"2" %}
-              {% for program in day_programs %}
-                {% if program.start_time == time %}
-                  <td class="border border-gray-300 schedule-cell {% if forloop.counter0|divisibleby:2 %}bg-white{% else %}bg-[#F8BBD9]{% endif %}" rowspan="{{ program.rowspan }}">
-                    <strong>{{ program.title }}</strong><br>
-                    <span class="text-xs">{{ program.start_time }} - {{ program.end_time }}</span>
-                  </td>
-                {% endif %}
-              {% endfor %}
-              {% if not day_programs or not program.start_time == time %}
-                <td class="border-transparent schedule-cell"></td>
-              {% endif %}
-            {% endwith %}
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
+    <div class="frame-11">
+      <div class="Mandager">
+        <div class="frame-12">
+          <div class="frame-13">
+            {% for program in sendeplan.1 %}
+            <div class="frame-14 {% if program.is_live_now %}bg-[#FFE4FB]{% endif %}">
+              <div class="frame-18">
 
-      <!-- Wednesday -->
-      <table class="border-collapse min-w-32 relative z-30 -ml-1.5">
-        <thead>
-          <tr class="">
-            <th class="border border-t-transparent p-2 text-center font-semibold">Onsdag</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for time in time_slots %}
-          <tr class="">
-            {% with day_programs=sendeplan|dict_get:"3" %}
-              {% for program in day_programs %}
-                {% if program.start_time == time %}
-                  <td class="border border-gray-300 schedule-cell {% if forloop.counter0|divisibleby:2 %}bg-white{% else %}bg-[#FFE8E8]{% endif %}" rowspan="{{ program.rowspan }}">
-                    <strong class="">{{ program.title }}</strong><br>
-                    <span class="text-xs">{{ program.start_time }} - {{ program.end_time }}</span>
-                  </td>
+                {% if program.main_image %}
+                {% image program.main_image fill-400x400 class="image" %}
                 {% endif %}
-              {% endfor %}
-              {% if not day_programs or not program.start_time == time %}
-                <td class="border-transparent schedule-cell"></td>
-              {% endif %}
-            {% endwith %}
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
 
-      <!-- Thursday -->
-      <table class="border-collapse min-w-32 relative z-40 -ml-1.5">
-        <thead>
-          <tr class="">
-            <th class="border border-t-transparent p-2 text-center font-semibold">Torsdag</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for time in time_slots %}
-          <tr class="">
-            {% with day_programs=sendeplan|dict_get:"4" %}
-              {% for program in day_programs %}
-                {% if program.start_time == time %}
-                  <td class="border border-gray-300 schedule-cell {% if forloop.counter0|divisibleby:2 %}bg-white{% else %}bg-[#F8BBD9]{% endif %}" rowspan="{{ program.rowspan }}">
-                    <strong>{{ program.title }}</strong><br>
-                    <span class="text-xs">{{ program.start_time }} - {{ program.end_time }}</span>
-                  </td>
-                {% endif %}
-              {% endfor %}
-              {% if not day_programs or not program.start_time == time %}
-                <td class="border-transparent schedule-cell"></td>
-              {% endif %}
-            {% endwith %}
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
+                <div class="frame-15">
+                  <div class="frame-16">
+                    <div class="frame-17">
+                      <div class="frame-14">
+                        <div class="text-wrapper-4">
+                          {{ program.start_time }} - {{ program.end_time }}
+                        </div>
+                      </div>
+                    </div>
 
-      <!-- Friday -->
-      <table class="border-collapse min-w-32 relative z-50 -ml-1.5">
-        <thead>
-          <tr class="">
-            <th class="border border-t-transparent p-2 text-center font-semibold">Fredag</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for time in time_slots %}
-          <tr class="">
-            {% with day_programs=sendeplan|dict_get:"5" %}
-              {% for program in day_programs %}
-                {% if program.start_time == time %}
-                  <td class="border border-gray-300 schedule-cell {% if forloop.counter0|divisibleby:2 %}bg-white{% else %}bg-[#FFE8E8]{% endif %}" rowspan="{{ program.rowspan }}">
-                    <strong>{{ program.title }}</strong><br>
-                    <span class="text-xs">{{ program.start_time }} - {{ program.end_time }}</span>
-                  </td>
-                {% endif %}
-              {% endfor %}
-              {% if not day_programs or not program.start_time == time %}
-                <td class="border-transparent schedule-cell"></td>
-              {% endif %}
-            {% endwith %}
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
+                    <div class="frame-3">
+                      <div class="frame-17">
+                        <div class="text-wrapper-7">{{ program.title }}</div>
+                      </div>
+                      <div class="component-7">
+                        <div class="text-wrapper-8">{{ program.category }}</div>
+                      </div>
+                    </div>
+                  </div>
 
-      <!-- Saturday -->
-      <table class="border-collapse min-w-32 relative z-60 -ml-1.5">
-        <thead>
-          <tr class="">
-            <th class="border border-t-transparent p-2 text-center font-semibold">Lørdag</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for time in time_slots %}
-          <tr class="">
-            {% with day_programs=sendeplan|dict_get:"6" %}
-              {% for program in day_programs %}
-                {% if program.start_time == time %}
-                  <td class="border border-gray-300 schedule-cell {% if forloop.counter0|divisibleby:2 %}bg-white{% else %}bg-[#F8BBD9]{% endif %}" rowspan="{{ program.rowspan }}">
-                    <strong>{{ program.title }}</strong><br>
-                    <span class="text-xs">{{ program.start_time }} - {{ program.end_time }}</span>
-                  </td>
-                {% endif %}
-              {% endfor %}
-              {% if not day_programs or not program.start_time == time %}
-                <td class="border-transparent schedule-cell"></td>
-              {% endif %}
-            {% endwith %}
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
+                  <div class="text-wrapper-9">{{ program.intro }}</div>
+                </div>
 
-      <!-- Sunday -->
-      <table class="border-collapse min-w-32 relative z-70 -ml-1.5">
-        <thead>
-          <tr class="">
-            <th class="border border-t-transparent p-2 text-center font-semibold">Søndag</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for time in time_slots %}
-          <tr class="">
-            {% with day_programs=sendeplan|dict_get:"7" %}
-              {% for program in day_programs %}
-                {% if program.start_time == time %}
-                  <td class="border border-gray-300 schedule-cell {% if forloop.counter0|divisibleby:2 %}bg-white{% else %}bg-[#FFE8E8]{% endif %}" rowspan="{{ program.rowspan }}">
-                    <strong>{{ program.title }}</strong><br>
-                    <span class="text-xs">{{ program.start_time }} - {{ program.end_time }}</span>
-                  </td>
+                {% if program.is_live_now %}
+                <div class="overlap-group-wrapper">
+                  <div class="overlap-group">
+                    <div class="rectangle-7"></div>
+                    <div class="text-wrapper-10">NÅ</div>
+                  </div>
+                </div>
                 {% endif %}
-              {% endfor %}
-              {% if not day_programs or not program.start_time == time %}
-                <td class="border-transparent schedule-cell"></td>
-              {% endif %}
-            {% endwith %}
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
+
+
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+      <div class="Tirsdager">
+        <div class="frame-12">
+          <div class="frame-13">
+            {% for program in sendeplan.2 %}
+            <div class="frame-14 {% if program.is_live_now %}bg-[#FFE4FB]{% endif %}">
+              <div class="frame-18">
+
+                {% if program.main_image %}
+                {% image program.main_image fill-400x400 class="image" %}
+                {% endif %}
+
+                <div class="frame-15">
+                  <div class="frame-16">
+                    <div class="frame-17">
+                      <div class="frame-14 {% if program.is_live_now %}bg-[#FFE4FB]{% endif %}">
+                        <div class="text-wrapper-4">
+                          {{ program.start_time }} - {{ program.end_time }}
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="frame-3">
+                      <div class="frame-17">
+                        <div class="text-wrapper-7">{{ program.title }}</div>
+                      </div>
+                      <div class="component-7">
+                        <div class="text-wrapper-8">{{ program.category }}</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="text-wrapper-9">{{ program.intro }}</div>
+                </div>
+
+                {% if program.is_live_now %}
+                <div class="overlap-group-wrapper">
+                  <div class="overlap-group">
+                    <div class="rectangle-7"></div>
+                    <div class="text-wrapper-10">NÅ</div>
+                  </div>
+                </div>
+                {% endif %}
+
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+
+      <div class="Onsdager">
+        <div class="frame-12">
+          <div class="frame-13">
+            {% for program in sendeplan.3 %}
+            <div class="frame-14 {% if program.is_live_now %}bg-[#FFE4FB]{% endif %}">
+              <div class="frame-18">
+
+                {% if program.main_image %}
+                {% image program.main_image fill-400x400 class="image" %}
+                {% endif %}
+
+                <div class="frame-15">
+                  <div class="frame-16">
+                    <div class="frame-17">
+                      <div class="frame-14 {% if program.is_live_now %}bg-[#FFE4FB]{% endif %}">
+                        <div class="text-wrapper-4">
+                          {{ program.start_time }} - {{ program.end_time }}
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="frame-3">
+                      <div class="frame-17">
+                        <div class="text-wrapper-7">{{ program.title }}</div>
+                      </div>
+                      <div class="component-7">
+                        <div class="text-wrapper-8">{{ program.category }}</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="text-wrapper-9">{{ program.intro }}</div>
+                </div>
+
+                {% if program.is_live_now %}
+                <div class="overlap-group-wrapper">
+                  <div class="overlap-group">
+                    <div class="rectangle-7"></div>
+                    <div class="text-wrapper-10">NÅ</div>
+                  </div>
+                </div>
+                {% endif %}
+
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+
+      <div class="Torsdager">
+        <div class="frame-12">
+          <div class="frame-13">
+            {% for program in sendeplan.4 %}
+            <div class="frame-14 {% if program.is_live_now %}bg-[#FFE4FB]{% endif %}">
+              <div class="frame-18">
+
+                {% if program.main_image %}
+                {% image program.main_image fill-400x400 class="image" %}
+                {% endif %}
+
+                <div class="frame-15">
+                  <div class="frame-16">
+                    <div class="frame-17">
+                      <div class="frame-14 {% if program.is_live_now %}bg-[#FFE4FB]{% endif %}">
+                        <div class="text-wrapper-4">
+                          {{ program.start_time }} - {{ program.end_time }}
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="frame-3">
+                      <div class="frame-17">
+                        <div class="text-wrapper-7">{{ program.title }}</div>
+                      </div>
+                      <div class="component-7">
+                        <div class="text-wrapper-8">{{ program.category }}</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="text-wrapper-9">{{ program.intro }}</div>
+                </div>
+
+                {% if program.is_live_now %}
+                <div class="overlap-group-wrapper">
+                  <div class="overlap-group">
+                    <div class="rectangle-7"></div>
+                    <div class="text-wrapper-10">NÅ</div>
+                  </div>
+                </div>
+                {% endif %}
+
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+      <div class="Fredager">
+        <div class="frame-12">
+          <div class="frame-13">
+            {% for program in sendeplan.5 %}
+            <div class="frame-14 {% if program.is_live_now %}bg-[#FFE4FB]{% endif %}">
+              <div class="frame-18">
+
+                {% if program.main_image %}
+                {% image program.main_image fill-400x400 class="image" %}
+                {% endif %}
+
+                <div class="frame-15">
+                  <div class="frame-16">
+                    <div class="frame-17">
+                      <div class="frame-14 {% if program.is_live_now %}bg-[#FFE4FB]{% endif %}">
+                        <div class="text-wrapper-4">
+                          {{ program.start_time }} - {{ program.end_time }}
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="frame-3">
+                      <div class="frame-17">
+                        <div class="text-wrapper-7">{{ program.title }}</div>
+                      </div>
+                      <div class="component-7">
+                        <div class="text-wrapper-8">{{ program.category }}</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="text-wrapper-9">{{ program.intro }}</div>
+                </div>
+
+                {% if program.is_live_now %}
+                <div class="overlap-group-wrapper">
+                  <div class="overlap-group">
+                    <div class="rectangle-7"></div>
+                    <div class="text-wrapper-10">NÅ</div>
+                  </div>
+                </div>
+                {% endif %}
+
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+
+      <div class="Lordager">
+        <div class="frame-12">
+          <div class="frame-13">
+            {% for program in sendeplan.6 %}
+            <div class="frame-14 {% if program.is_live_now %}bg-[#FFE4FB]{% endif %}">
+              <div class="frame-18">
+
+                {% if program.main_image %}
+                {% image program.main_image fill-400x400 class="image" %}
+                {% endif %}
+
+                <div class="frame-15">
+                  <div class="frame-16">
+                    <div class="frame-17">
+                      <div class="frame-14 {% if program.is_live_now %}bg-[#FFE4FB]{% endif %}">
+                        <div class="text-wrapper-4">
+                          {{ program.start_time }} - {{ program.end_time }}
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="frame-3">
+                      <div class="frame-17">
+                        <div class="text-wrapper-7">{{ program.title }}</div>
+                      </div>
+                      <div class="component-7">
+                        <div class="text-wrapper-8">{{ program.category }}</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="text-wrapper-9">{{ program.intro }}</div>
+                </div>
+
+                {% if program.is_live_now %}
+                <div class="overlap-group-wrapper">
+                  <div class="overlap-group">
+                    <div class="rectangle-7"></div>
+                    <div class="text-wrapper-10">NÅ</div>
+                  </div>
+                </div>
+                {% endif %}
+
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+      <div class="Sondager">
+        <div class="frame-12">
+          <div class="frame-13">
+            {% for program in sendeplan.7 %}
+            <div class="frame-14 {% if program.is_live_now %}bg-[#FFE4FB]{% endif %}">
+              <div class="frame-18">
+
+                {% if program.main_image %}
+                {% image program.main_image fill-400x400 class="image" %}
+                {% endif %}
+
+                <div class="frame-15">
+                  <div class="frame-16">
+                    <div class="frame-17">
+                      <div class="frame-14 {% if program.is_live_now %}bg-[#FFE4FB]{% endif %}">
+                        <div class="text-wrapper-4">
+                          {{ program.start_time }} - {{ program.end_time }}
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="frame-3">
+                      <div class="frame-17">
+                        <div class="text-wrapper-7">{{ program.title }}</div>
+                      </div>
+                      <div class="component-7">
+                        <div class="text-wrapper-8">{{ program.category }}</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="text-wrapper-9">{{ program.intro }}</div>
+                </div>
+
+                {% if program.is_live_now %}
+                <div class="overlap-group-wrapper">
+                  <div class="overlap-group">
+                    <div class="rectangle-7"></div>
+                    <div class="text-wrapper-10">NÅ</div>
+                  </div>
+                </div>
+                {% endif %}
+
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+
+
+
+
+
     </div>
   </div>
-</div>
+  <!-- Toggle html code when vis som uke oversikt er clicked-->
+  <div class="schedule-shell frame-123">
+    <div class="scrollbar-top" id="hBar">
+      <div class="spacer" id="hSpace"></div>
+    </div>
+
+    <!-- Content wrapper (the only scroller for this) -->
+
+    <div class="content-wrap" id="wrap">
+      <div class="schedule-content-wrapper" style="min-width: 1200px;">
+        <div class="max-w-10xl mx-auto">
+          <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+            <div class="flex">
+              <!-- Time Column -->
+              <div class="time-table">
+                <table class="border-collapse">
+                  <thead>
+                    <tr>
+                      <th class="border border-t-transparent p-2  text-left font-semibold w-16">Tid</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for time in time_slots %}
+                    <tr class="">
+                      <td class="border time-cell">{{ time }}</td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+
+              <!-- Schedule Content -->
+              <div class="flex flex-row gap-0 overflow-x-auto flex-1">
+                <!-- Monday -->
+                <table class="border-collapse min-w-32 relative z-10">
+                  <thead>
+                    <tr class="">
+                      <th class="border border-t-transparent p-2 text-center font-semibold">Mandag</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for time in time_slots %}
+                    <tr class="">
+                      {% with day_programs=sendeplan|dict_get:"1" %}
+                      {% for program in day_programs %}
+                      {% if program.start_time == time %}
+                      <td
+                        class="border border-grey schedule-cell {% if forloop.counter0|divisibleby:2 %}bg-white{% else %}bg-[#FCCFD1]{% endif %}"
+                        rowspan="{{ program.rowspan }}">
+                        <strong>{{ program.title }}</strong><br>
+                        <span class="text-xs">{{ program.start_time }} - {{ program.end_time }}</span>
+                      </td>
+                      {% endif %}
+                      {% endfor %}
+                      {% if not day_programs or not program.start_time == time %}
+                      <td class="border-transparent schedule-cell"></td>
+                      {% endif %}
+                      {% endwith %}
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+
+                <!-- Tuesday -->
+                <table class="border-collapse min-w-32 relative z-20 -ml-1.5">
+                  <thead>
+                    <tr class="">
+                      <th class="border border-t-transparent p-2 text-center font-semibold">Tirsdag</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for time in time_slots %}
+                    <tr class="">
+                      {% with day_programs=sendeplan|dict_get:"2" %}
+                      {% for program in day_programs %}
+                      {% if program.start_time == time %}
+                      <td
+                        class="border border-gray-300 schedule-cell {% if forloop.counter0|divisibleby:2 %}bg-white{% else %}bg-[#FFE8E8]{% endif %}"
+                        rowspan="{{ program.rowspan }}">
+                        <strong>{{ program.title }}</strong><br>
+                        <span class="text-xs">{{ program.start_time }} - {{ program.end_time }}</span>
+                      </td>
+                      {% endif %}
+                      {% endfor %}
+                      {% if not day_programs or not program.start_time == time %}
+                      <td class="border-transparent schedule-cell"></td>
+                      {% endif %}
+                      {% endwith %}
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+
+                <!-- Wednesday -->
+                <table class="border-collapse min-w-32 relative z-30 -ml-1.5">
+                  <thead>
+                    <tr class="">
+                      <th class="border border-t-transparent p-2 text-center font-semibold">Onsdag</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for time in time_slots %}
+                    <tr class="">
+                      {% with day_programs=sendeplan|dict_get:"3" %}
+                      {% for program in day_programs %}
+                      {% if program.start_time == time %}
+                      <td
+                        class="border border-gray-300 schedule-cell {% if forloop.counter0|divisibleby:2 %}bg-white{% else %}bg-[#FCCFD1]{% endif %}"
+                        rowspan="{{ program.rowspan }}">
+                        <strong class="">{{ program.title }}</strong><br>
+                        <span class="text-xs">{{ program.start_time }} - {{ program.end_time }}</span>
+                      </td>
+                      {% endif %}
+                      {% endfor %}
+                      {% if not day_programs or not program.start_time == time %}
+                      <td class="border-transparent schedule-cell"></td>
+                      {% endif %}
+                      {% endwith %}
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+
+                <!-- Thursday -->
+                <table class="border-collapse min-w-32 relative z-40 -ml-1.5">
+                  <thead>
+                    <tr class="">
+                      <th class="border border-t-transparent p-2 text-center font-semibold">Torsdag</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for time in time_slots %}
+                    <tr class="">
+                      {% with day_programs=sendeplan|dict_get:"4" %}
+                      {% for program in day_programs %}
+                      {% if program.start_time == time %}
+                      <td
+                        class="border border-gray-300 schedule-cell {% if forloop.counter0|divisibleby:2 %}bg-white{% else %}bg-[#FFE8E8]{% endif %}"
+                        rowspan="{{ program.rowspan }}">
+                        <strong>{{ program.title }}</strong><br>
+                        <span class="text-xs">{{ program.start_time }} - {{ program.end_time }}</span>
+                      </td>
+                      {% endif %}
+                      {% endfor %}
+                      {% if not day_programs or not program.start_time == time %}
+                      <td class="border-transparent schedule-cell"></td>
+                      {% endif %}
+                      {% endwith %}
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+
+                <!-- Friday -->
+                <table class="border-collapse min-w-32 relative z-50 -ml-1.5">
+                  <thead>
+                    <tr class="">
+                      <th class="border border-t-transparent p-2 text-center font-semibold">Fredag</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for time in time_slots %}
+                    <tr class="">
+                      {% with day_programs=sendeplan|dict_get:"5" %}
+                      {% for program in day_programs %}
+                      {% if program.start_time == time %}
+                      <td
+                        class="border border-gray-300 schedule-cell {% if forloop.counter0|divisibleby:2 %}bg-white{% else %}bg-[#FCCFD1]{% endif %}"
+                        rowspan="{{ program.rowspan }}">
+                        <strong>{{ program.title }}</strong><br>
+                        <span class="text-xs">{{ program.start_time }} - {{ program.end_time }}</span>
+                      </td>
+                      {% endif %}
+                      {% endfor %}
+                      {% if not day_programs or not program.start_time == time %}
+                      <td class="border-transparent schedule-cell"></td>
+                      {% endif %}
+                      {% endwith %}
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+
+                <!-- Saturday -->
+                <table class="border-collapse min-w-32 relative z-60 -ml-1.5">
+                  <thead>
+                    <tr class="">
+                      <th class="border border-t-transparent p-2 text-center font-semibold">Lørdag</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for time in time_slots %}
+                    <tr class="">
+                      {% with day_programs=sendeplan|dict_get:"6" %}
+                      {% for program in day_programs %}
+                      {% if program.start_time == time %}
+                      <td
+                        class="border border-gray-300 schedule-cell {% if forloop.counter0|divisibleby:2 %}bg-white{% else %}bg-[#FFE8E8]{% endif %}"
+                        rowspan="{{ program.rowspan }}">
+                        <strong>{{ program.title }}</strong><br>
+                        <span class="text-xs">{{ program.start_time }} - {{ program.end_time }}</span>
+                      </td>
+                      {% endif %}
+                      {% endfor %}
+                      {% if not day_programs or not program.start_time == time %}
+                      <td class="border-transparent schedule-cell"></td>
+                      {% endif %}
+                      {% endwith %}
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+
+                <!-- Sunday -->
+                <table class="border-collapse min-w-32 relative z-70 -ml-1.5">
+                  <thead>
+                    <tr class="">
+                      <th class="border border-t-transparent p-2 text-center font-semibold">Søndag</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for time in time_slots %}
+                    <tr class="">
+                      {% with day_programs=sendeplan|dict_get:"7" %}
+                      {% for program in day_programs %}
+                      {% if program.start_time == time %}
+                      <td
+                        class="border border-gray-300 schedule-cell {% if forloop.counter0|divisibleby:2 %}bg-white{% else %}bg-[#FCCFD1]{% endif %}"
+                        rowspan="{{ program.rowspan }}">
+                        <strong>{{ program.title }}</strong><br>
+                        <span class="text-xs">{{ program.start_time }} - {{ program.end_time }}</span>
+                      </td>
+                      {% endif %}
+                      {% endfor %}
+                      {% if not day_programs or not program.start_time == time %}
+                      <td class="border-transparent schedule-cell"></td>
+                      {% endif %}
+                      {% endwith %}
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
 
         </div>
 
 
-        <!-- Right red scrollbar -->
-       
-    </div>
+     
+      </div>
     </div>
 
 </body>

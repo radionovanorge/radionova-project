@@ -167,7 +167,7 @@
       <a href="{{ post.url }}"
         class="col-span-1 sm:col-span-1 lg:col-span-3 bg-white overflow-hidden shadow-sm flex flex-col group">
         <div class="relative">
-          <div style="left: 0; width: 100%; height: 352px; position: relative;"><iframe src="https://open.spotify.com/embed/playlist/5Hqkssg2WuVi5lVnnoImNk?utm_source=generator" style="top: 0; left: 0; width: 100%; height: 100%; position: absolute; border: 0;" allowfullscreen allow="clipboard-write *; encrypted-media *; fullscreen *; picture-in-picture *;"></iframe></div>
+          <div style="left: 0; width: 100%; height: 392px; position: relative;"><iframe src="https://open.spotify.com/embed/playlist/5Hqkssg2WuVi5lVnnoImNk?utm_source=generator" style="top: 0; left: 0; width: 100%; height: 100%; position: absolute; border: 0;" allowfullscreen allow="clipboard-write *; encrypted-media *; fullscreen *; picture-in-picture *;"></iframe></div>
 
         </div>
         
@@ -176,48 +176,58 @@
       
       <!-- Third row: stacked small articles -->
       <div class="col-span-1 sm:col-span-1 lg:col-span-3 flex flex-col gap-8">
-        <a href="{{ post.url }}" class="bg-white overflow-hidden shadow-sm flex group">
-          <div class="w-1/2 relative">
-            {% for block in post.body %}
-            {% if block.block_type == 'main_image' %}
-            {% image block.value fill-300x200 as img %}
-            <img src="{{ img.url }}" alt="{{ post.title }}" class="h-full w-full object-cover">
-            {% endif %}
-            {% endfor %}
-            {% if post.typeArticle == "intervju" or post.typeArticle == "anmeldelse" %}
-            <div class="absolute bottom-3 left-0 translate-y-1/2">
-              <div class="interview-parallelogram-small text-white text-[10px] font-bold px-3 py-1">
-                {{ post.get_typeArticle_display }}
-              </div>
-            </div>
-            {% endif %}
-          </div>
-          <div class="flex flex-col justify-center p-4 w-2/3">
-            <h2 class="text-base font-bold text-gray-800 mb-2 group-hover:text-red-700">{{ post.title }}</h2>
-          </div>
-        </a>
+        <a href="{{ post.url }}" class="bg-white overflow-hidden shadow-sm group max-lg:flex-col lg:flex">
+  <div class="relative max-lg:w-full lg:w-1/2">
+    {% for block in post.body %}
+      {% if block.block_type == 'main_image' %}
+        {% image block.value fill-300x200 as img %}
+        <img src="{{ img.url }}" alt="{{ post.title }}"
+             class="w-full max-lg:h-48 lg:h-full object-cover">
+      {% endif %}
+    {% endfor %}
+
+    {% if post.typeArticle == "intervju" or post.typeArticle == "anmeldelse" %}
+      <div class="absolute bottom-3 left-0 translate-y-1/2">
+        <div class="interview-parallelogram-small text-white text-[10px] font-bold px-3 py-1">
+          {{ post.get_typeArticle_display }}
+        </div>
+      </div>
+    {% endif %}
+  </div>
+
+  <div class="flex flex-col justify-center p-4 max-lg:w-full lg:flex-1">
+    <h2 class="text-base font-bold text-gray-800 mb-2 group-hover:text-red-700">
+      {{ post.title }}
+    </h2>
+  </div>
+</a>
 
         {% elif forloop.counter == 6 %}
-        <a href="{{ post.url }}" class="bg-white overflow-hidden shadow-sm flex group">
-          <div class="w-1/2 relative">
-            {% for block in post.body %}
-            {% if block.block_type == 'main_image' %}
-            {% image block.value fill-300x200 as img %}
-            <img src="{{ img.url }}" alt="{{ post.title }}" class="h-full w-full object-cover">
-            {% endif %}
-            {% endfor %}
-            {% if post.typeArticle == "intervju" or post.typeArticle == "anmeldelse" %}
-            <div class="absolute bottom-3 left-0 translate-y-1/2">
-              <div class="interview-parallelogram-small text-white text-[10px] font-bold px-3 py-1">
-                {{ post.get_typeArticle_display }}
-              </div>
-            </div>
-            {% endif %}
-          </div>
-          <div class="flex flex-col justify-center p-4 w-2/3">
-            <h2 class="text-base font-bold text-gray-800 mb-2 group-hover:text-red-700">{{ post.title }}</h2>
-          </div>
-        </a>
+       <a href="{{ post.url }}" class="bg-white overflow-hidden shadow-sm group max-lg:flex-col lg:flex">
+  <div class="relative max-lg:w-full lg:w-1/2">
+    {% for block in post.body %}
+      {% if block.block_type == 'main_image' %}
+        {% image block.value fill-300x200 as img %}
+        <img src="{{ img.url }}" alt="{{ post.title }}"
+             class="w-full max-lg:h-48 lg:h-full object-cover">
+      {% endif %}
+    {% endfor %}
+
+    {% if post.typeArticle == "intervju" or post.typeArticle == "anmeldelse" %}
+      <div class="absolute bottom-3 left-0 translate-y-1/2">
+        <div class="interview-parallelogram-small text-white text-[10px] font-bold px-3 py-1">
+          {{ post.get_typeArticle_display }}
+        </div>
+      </div>
+    {% endif %}
+  </div>
+
+  <div class="flex flex-col justify-center p-4 max-lg:w-full lg:flex-1">
+    <h2 class="text-base font-bold text-gray-800 mb-2 group-hover:text-red-700">
+      {{ post.title }}
+    </h2>
+  </div>
+</a>
       </div> <!-- End stacked column -->
 
       {% elif forloop.counter >= 7 %}

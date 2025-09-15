@@ -12,13 +12,16 @@ const radioSel = 'input[type="radio"][name="program"], input[type="radio"][name=
 document.addEventListener('DOMContentLoaded', () => {
   const listEl = document.getElementById('articleList');
   if (!listEl) return;
-
+  const articles = Array.from(
+    listEl.querySelectorAll('[data-article]') // e.g. each card has data-article
+  ).length ? Array.from(listEl.querySelectorAll('[data-article]'))
+           : Array.from(listEl.children);
   const resultCountEl = document.querySelector('#resultCount');
   const sortEl = document.getElementById('sortSelect');
   const searchForm = document.getElementById('mainSearchForm');
   const searchInput = document.querySelector('input[name="q"]');
   const clearButton = document.getElementById('clearSearch');
-  const articles = Array.from(listEl.children);
+  const totalAll = resultCountEl ? Number(resultCountEl.dataset.total || 0) : 0;
 
   // Sort dropdown value is now set via template, no need to set via JS
 

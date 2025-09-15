@@ -24,7 +24,7 @@ document.querySelectorAll('.filter-checkbox').forEach(checkbox => {
         // Update the count of visible programs. 
         const nonvisibleCards = document.querySelectorAll('#programGrid > div[style="display: none;"]').length;
         const totalCards = document.querySelectorAll('#programGrid > div').length
-        const showcards = (totalCards - nonvisibleCards) / 2
+        const showcards = ((totalCards - nonvisibleCards) / 2)
         document.querySelector('#resultCount').textContent = `Viser ${showcards} treff`;
     });
     

@@ -159,8 +159,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const ifrm  = document.getElementById('sheet');
   const hBar  = document.getElementById('hBar');
   const hSpace= document.getElementById('hSpace');
-  const vBar  = document.getElementById('vBar');
-  const vSpace= document.getElementById('vSpace');
 
   
   
@@ -168,28 +166,24 @@ document.addEventListener('DOMContentLoaded', () => {
   function syncSizes(){
     // set spacer sizes to the wrapper's scroll sizes
     hSpace.style.width  = wrap.scrollWidth + 'px';
-    vSpace.style.height = wrap.scrollHeight + 'px';
 
     // auto-hide bars if no scroll needed
     const needH = wrap.scrollWidth  > wrap.clientWidth;
     const needV = wrap.scrollHeight > wrap.clientHeight;
     hBar.classList.toggle('hidden', !needH);
-    vBar.classList.toggle('hidden', !needV);
   }
 
   // top bar <-> wrapper (horizontal)
   hBar.addEventListener('scroll', () => { wrap.scrollLeft = hBar.scrollLeft; });
   wrap.addEventListener('scroll', () => {
     hBar.scrollLeft = wrap.scrollLeft;
-    vBar.scrollTop  = wrap.scrollTop;   // also keep vertical bar in sync
   });
 
   // right bar <-> wrapper (vertical)
-  vBar.addEventListener('scroll', () => { wrap.scrollTop = vBar.scrollTop; });
 
   // update when iframe loads (dimension known) + on resize
   window.addEventListener('load', syncSizes);
-  ifrm.addEventListener('load', syncSizes);
+  
   window.addEventListener('resize', syncSizes);
 
   // also observe wrapper for changes

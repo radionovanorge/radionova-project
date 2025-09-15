@@ -94,6 +94,9 @@ class HomePage(RoutablePageMixin, Page):
         blog_qs = blog_qs.filter(
             Q(title__icontains=search_query) | 
             Q(ingress__icontains=search_query) |
+            Q(forfatter__icontains=search_query) |                 # <-- author text field
+            Q(user__first_name__icontains=search_query) |          # <-- optional: Django User
+            Q(user__last_name__icontains=search_query)  |
             Q(search_description__icontains=search_query)
         )
         alista_qs = alista_qs.filter(
@@ -302,7 +305,10 @@ class ProgramPage(Page):
     
 
 
-    
+from wagtail import blocks
+from wagtail.images.blocks import ImageChooserBlock
+from wagtail.documents.blocks import DocumentChooserBlock
+from wagtail.embeds.blocks import EmbedBlock
 
 
 class BlogPage(Page): 
@@ -335,8 +341,15 @@ class BlogPage(Page):
     )
     body = StreamField(
         [
-            ("main_image", ImageChooserBlock()),
+            ("main_image", ImageChooserBlock(help_text="For forsiden")),
             ("image_with_description", ImageWithDescriptionBlock()),
+            ('quote', blocks.BlockQuoteBlock(label="Sitat")),
+            ('url', blocks.URLBlock(label="URL")),
+           
+            
+            
+            
+            ('page', blocks.PageChooserBlock(label="Side")),
             
 
             ("content", blocks.RichTextBlock()),
@@ -635,3 +648,122 @@ class Sendeplan(Page):
             context["current_live_text"] = "Direkte: Radio Nova"       
 
         return context
+#This is varslinger and other info put in text 
+class TextContent(models.Model):
+    title = models.CharField(max_length=255, default="Text Content")
+    content = models.TextField(
+        blank=True,
+        help_text="Enter your text content here"
+    )
+    
+    panels = [
+        FieldPanel('title'),
+        FieldPanel('content'),
+    ]
+    
+    def __str__(self):
+        return self.title
+    
+    class Meta:
+        verbose_name = "Text Content"
+        verbose_name_plural = "Text Content"
+from django.db import models
+from wagtail.admin.panels import FieldPanel
+from wagtail.fields import StreamField
+from wagtail import blocks
+from wagtail.snippets.models import register_snippet
+from wagtail.images.blocks import ImageChooserBlock
+
+@register_snippet
+class ManualCategory(models.Model):
+    name = models.CharField(max_length=255, unique=True)
+    order = models.IntegerField(default=0, help_text="Sorteringsrekkefølge")
+    
+    panels = [
+        FieldPanel('name'),
+        FieldPanel('order'),
+    ]
+    
+    def __str__(self):
+        return self.name
+    
+    class Meta:
+        verbose_name = "Manual Category"
+        verbose_name_plural = "Manual Categories"
+        ordering = ['order', 'name']
+
+@register_snippet  
+class Manual(models.Model):
+    title = models.CharField(max_length=255)
+    category = models.ForeignKey(
+        ManualCategory, 
+        on_delete=models.CASCADE, 
+        related_name='manuals'
+    )
+    description = models.TextField(
+        blank=True,
+        help_text="Kort beskrivelse av manualen"
+    )
+    
+    content = StreamField(
+        [
+            ('rich_text', blocks.RichTextBlock(label="Tekst")),
+            ('image', ImageChooserBlock(label="Bilde")),
+            ('quote', blocks.BlockQuoteBlock(label="Sitat")),
+            ('code', blocks.TextBlock(
+                label="Kode",
+                help_text="For kode eller kommandoer"
+            )),
+        ],
+        blank=True,
+        help_text="Hovedinnholdet i manualen"
+    )
+    order = models.IntegerField(default=0, help_text="Sorteringsrekkefølge innenfor kategori")
+    is_published = models.BooleanField(default=True, help_text="Synlig for brukere")
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    panels = [
+        FieldPanel('title'),
+        FieldPanel('category'),
+        FieldPanel('description'),
+        FieldPanel('content'),
+        FieldPanel('order'),
+        FieldPanel('is_published'),
+    ]
+    
+    def __str__(self):
+        return f"{self.category.name} - {self.title}"
+    
+    class Meta:
+        verbose_name = "Manual"
+        verbose_name_plural = "Manuals"
+        ordering = ['category__order', 'category__name', 'order', 'title']
+
+@register_snippet
+class BeskjedFraDagtid(models.Model):
+    title = models.CharField(max_length=255, verbose_name="Tittel")
+    
+
+  
+    text = StreamField(
+        [
+            ("text", blocks.RichTextBlock()),
+        ],
+        blank=True,
+        verbose_name="Tekstinnhold",
+        help_text="Innholdet som vises i panelet på dashbordet"
+    )
+    panels = [
+        FieldPanel("title"),
+        FieldPanel("text"),
+        
+    ]
+
+
+    class Meta:
+        verbose_name = "Beskjed fra dagtid"
+        verbose_name_plural = "Beskjed fra dagtid"
+
+    def __str__(self):
+        return self.title

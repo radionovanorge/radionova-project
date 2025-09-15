@@ -1,0 +1,319 @@
+{% extends "wagtailadmin/base.html" %}
+{% load wagtailadmin_tags %}
+
+{% block titletag %}{{ manual.title }}{% endblock %}
+
+{% block content %}
+    <header class="header">
+        <div class="row">
+            <div class="left">
+                <div class="col">
+                    <nav class="breadcrumb" aria-label="Breadcrumb">
+                        <a href="{% url 'manuals-index' %}">Manualer</a>
+                        <span aria-hidden="true">&gt;</span> 
+                        <span>{{ manual.category.name }}</span>
+                        <span aria-hidden="true">&gt;</span> 
+                        <span aria-current="page">{{ manual.title }}</span>
+                    </nav>
+                    <h1 class="header-title">{{ manual.title }}</h1>
+                    {% if not manual.is_published %}
+                        <span class="status-badge unpublished" role="status" aria-label="Status: Upublisert">Upublisert</span>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="right">
+                <div class="col" role="group" aria-label="Manual handlinger">
+                    <a href="{% url 'manual-detail' manual.id %}" class="button">Vis</a>
+                
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="nice-padding">
+        <div class="manual-meta" role="complementary" aria-labelledby="meta-heading">
+            <h2 id="meta-heading" class="sr-only">Manual informasjon</h2>
+            <div class="meta-item">
+                <strong>Kategori:</strong> {{ manual.category.name }}
+            </div>
+            {% if manual.description %}
+                <div class="meta-item">
+                    <strong>Beskrivelse:</strong> {{ manual.description }}
+                </div>
+            {% endif %}
+            <div class="meta-item">
+                <strong>Sist oppdatert:</strong> 
+                <time datetime="{{ manual.updated_at|date:'c' }}">{{ manual.updated_at|date:"d.m.Y H:i" }}</time>
+            </div>
+        </div>
+
+        <main class="manual-content" role="main" aria-labelledby="content-heading">
+            <h2 id="content-heading" class="sr-only">Manual innhold</h2>
+            {% if manual.content %}
+                {{ manual.content|safe }}
+            {% else %}
+                <p class="empty-content">Denne manualen har ikke noe innhold ennå.</p>
+            {% endif %}
+        </main>
+
+        <div class="manual-actions" role="group" aria-label="Manual handlinger">
+            <a href="{% url 'manuals-index' %}" class="button button-secondary">Tilbake til oversikt</a>
+            <a href="{% url 'manual-detail' manual.id %}" class="button">Vis</a>
+        
+        </div>
+    </div>
+
+    <style>
+        /* Screen reader only content */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        .breadcrumb {
+            margin-bottom: 10px;
+            color: var(--w-color-text-meta);
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        
+        .breadcrumb a {
+            color: var(--w-color-text-link-default);
+            text-decoration: underline;
+            text-decoration-thickness: 2px;
+            text-underline-offset: 2px;
+        }
+        
+        .breadcrumb a:hover,
+        .breadcrumb a:focus {
+            color: var(--w-color-text-link-hover);
+            text-decoration-thickness: 3px;
+        }
+
+        .breadcrumb a:focus {
+            outline: 3px solid var(--w-color-focus);
+            outline-offset: 2px;
+        }
+        
+        .status-badge {
+            display: inline-block;
+            margin-left: 10px;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        .status-badge.unpublished {
+            background: #e67e22;
+            color: white;
+            border: 2px solid #d35400;
+        }
+        
+        .manual-meta {
+            background: var(--w-color-surface-header);
+            padding: 24px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            border: 2px solid var(--w-color-border-field-default);
+        }
+        
+        .meta-item {
+            margin-bottom: 12px;
+            line-height: 1.6;
+            color: var(--w-color-text-context);
+        }
+        
+        .meta-item strong {
+            color: var(--w-color-text-link-default);
+            font-weight: 600;
+        }
+        
+        .meta-item:last-child {
+            margin-bottom: 0;
+        }
+        
+        .manual-content {
+            background: var(--w-color-surface-field);
+            padding: 32px;
+            border: 2px solid var(--w-color-border-field-default);
+            border-radius: 8px;
+            margin-bottom: 30px;
+            min-height: 200px;
+            color: var(--w-color-text-context);
+            line-height: 1.7;
+        }
+        
+        .manual-content h1, 
+        .manual-content h2, 
+        .manual-content h3,
+        .manual-content h4,
+        .manual-content h5,
+        .manual-content h6 {
+            color: var(--w-color-text-link-default);
+            margin-top: 32px;
+            margin-bottom: 16px;
+            line-height: 1.3;
+            font-weight: 600;
+        }
+        
+        .manual-content h1:first-child,
+        .manual-content h2:first-child,
+        .manual-content h3:first-child,
+        .manual-content h4:first-child,
+        .manual-content h5:first-child,
+        .manual-content h6:first-child {
+            margin-top: 0;
+        }
+        
+        .manual-content p {
+            line-height: 1.7;
+            margin-bottom: 16px;
+            color: var(--w-color-text-context);
+        }
+        
+        .manual-content ul,
+        .manual-content ol {
+            margin: 16px 0 16px 24px;
+            line-height: 1.7;
+        }
+        
+        .manual-content li {
+            margin-bottom: 8px;
+            line-height: 1.7;
+            color: var(--w-color-text-context);
+        }
+        
+        .manual-content a {
+            color: var(--w-color-text-link-default);
+            text-decoration: underline;
+            text-decoration-thickness: 2px;
+            text-underline-offset: 2px;
+        }
+
+        .manual-content a:hover,
+        .manual-content a:focus {
+            color: var(--w-color-text-link-hover);
+            text-decoration-thickness: 3px;
+        }
+
+        .manual-content a:focus {
+            outline: 3px solid var(--w-color-focus);
+            outline-offset: 2px;
+        }
+        
+        .manual-content blockquote,
+        .quote-block {
+            margin: 24px 0;
+            padding: 20px;
+            background-color: var(--w-color-surface-header);
+            border-left: 4px solid #C61A24;
+            font-style: italic;
+            border-radius: 4px;
+            color: var(--w-color-text-context);
+        }
+        
+        .code-block {
+            background: var(--w-color-surface-menus);
+            border: 2px solid var(--w-color-border-field-default);
+            border-radius: 6px;
+            padding: 20px;
+            margin: 24px 0;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 14px;
+            overflow-x: auto;
+            color: var(--w-color-text-context);
+            line-height: 1.5;
+        }
+        
+        .rich-text-block,
+        .image-block {
+            margin: 24px 0;
+        }
+        
+        .manual-image {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .manual-image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 6px;
+            border: 2px solid var(--w-color-border-field-default);
+        }
+        
+        .empty-content {
+            color: var(--w-color-text-placeholder);
+            font-style: italic;
+            text-align: center;
+            padding: 48px 24px;
+            font-size: 16px;
+        }
+        
+        .manual-actions {
+            padding-top: 24px;
+            border-top: 2px solid var(--w-color-border-furniture);
+        }
+        
+        .manual-actions .button {
+            margin-right: 12px;
+            margin-bottom: 8px;
+        }
+
+        /* Focus management for better accessibility */
+        .button:focus {
+            outline: 3px solid var(--w-color-focus);
+            outline-offset: 2px;
+        }
+
+        /* High contrast support */
+        @media (prefers-contrast: high) {
+            .manual-content {
+                border-width: 3px;
+            }
+            
+            .status-badge.unpublished {
+                border-width: 3px;
+            }
+            
+            .manual-meta {
+                border-width: 3px;
+            }
+        }
+
+        /* Reduced motion support */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                transition: none !important;
+                animation: none !important;
+            }
+        }
+
+        /* Mobile responsive improvements */
+        @media (max-width: 768px) {
+            .manual-content {
+                padding: 20px;
+            }
+            
+            .manual-meta {
+                padding: 16px;
+            }
+            
+            .manual-actions .button {
+                display: block;
+                width: 100%;
+                margin-bottom: 8px;
+                margin-right: 0;
+                text-align: center;
+            }
+        }
+    </style>
+{% endblock %}

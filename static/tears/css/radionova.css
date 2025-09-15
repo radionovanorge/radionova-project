@@ -239,10 +239,7 @@ body {
   gap: 1.5rem;
 }
 
-/* Space between radiospiller and content */
-.content-spacer {
-  height: 2rem;
-}
+
 
 /* Main content container */
 .main-container {

@@ -1,0 +1,354 @@
+{% extends "wagtailadmin/base.html" %}
+{% load wagtailadmin_tags %}
+
+{% block titletag %}Manualer{% endblock %}
+
+{% block content %}
+    <header class="header text-center mb-8">
+    <h1 class="header-title text-3xl font-bold">Manualer</h1>
+     <div class="nice-padding">
+    <!-- Alltid synlige knapper, uavhengig av kategorier -->
+   
+</header>
+
+
+   
+    <div class="nice-padding">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="messages" role="alert" aria-live="polite">
+                    <div class="message-wrapper">
+                        <div class="message success">{{ message }}</div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        {% if categories %}
+            {% for category in categories %}
+                <section class="category-section" aria-labelledby="category-{{ category.id }}-heading">
+                    <div class="category-header">
+                        <h2 id="category-{{ category.id }}-heading">{{ category.name }}</h2>
+                       
+                    </div>
+                    
+                    {% if category.manuals.all %}
+                        <div class="manual-grid" role="list" aria-label="Manualer i {{ category.name }}">
+                            {% for manual in category.manuals.all %}
+                                <article class="manual-card {% if not manual.is_published %}unpublished{% endif %}" 
+                                         role="listitem"
+                                         aria-labelledby="manual-{{ manual.id }}-title">
+                                    <div class="manual-content">
+                                        <h3 id="manual-{{ manual.id }}-title">
+                                            <a href="{% url 'wagtailsnippets_tears_manual:edit' manual.id %}">{{ manual.title }}</a>
+                                        </h3>
+                                        {% if manual.description %}
+                                            <p class="description">{{ manual.description|truncatechars:100 }}</p>
+                                        {% endif %}
+                                        {% if not manual.is_published %}
+                                            <span class="status-badge" role="status" aria-label="Status: Upublisert">Upublisert</span>
+                                        {% endif %}
+                                    </div>
+                                    <div class="manual-actions" role="group" aria-label="Handlinger for {{ manual.title }}">
+                                        <a href="{% url 'manual-detail' manual.id %}" 
+                                           class="button button-small"
+                                           aria-label="Vis {{ manual.title }}">Vis</a>
+                                       
+                                    </div>
+                                </article>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <p class="help-text">Ingen manualer i denne kategorien ennå.</p>
+                    {% endif %}
+                </section>
+            {% endfor %}
+        {% else %}
+            <div class="empty-state" role="main">
+                <h2>Ingen kategorier funnet</h2>
+                <p>Opprett din første kategori for å komme i gang med manualer.</p>
+               
+            </div>
+        {% endif %}
+    </div>
+
+    <style>
+        .header-title {
+    margin-top: 24px;
+    margin-bottom: 16px;
+    text-align: center;
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--w-color-text-link-default);
+}
+        .category-section {
+            margin-bottom: 48px;
+            padding: 24px;
+            
+            
+        }
+        
+        .category-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            padding-bottom: 12px;
+            border-bottom: 3px solid #C61A24;
+        }
+        
+        .category-header h2 {
+            margin: 0;
+            color: var(--w-color-text-link-default);
+            font-size: 24px;
+            font-weight: 600;
+            line-height: 1.3;
+        }
+        
+        .category-actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        
+        .manual-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 24px;
+        }
+        
+        .manual-card {
+            background: var(--w-color-surface-field);
+            padding: 24px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            position: relative;
+        }
+        
+        .manual-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px var(--w-color-box-shadow-md);
+            border-color: var(--w-color-border-field-hover);
+        }
+
+        .manual-card:focus-within {
+            outline: 3px solid var(--w-color-focus);
+            outline-offset: 2px;
+        }
+        
+        .manual-card.unpublished {
+            background: var(--w-color-surface-field);
+            border-color: #e67e22;
+            border-width: 2px;
+            border-style: dashed;
+        }
+
+        .manual-card.unpublished::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, transparent 40%, rgba(230, 126, 34, 0.1) 50%, transparent 60%);
+            border-radius: 8px;
+            z-index: -1;
+        }
+        
+        .manual-content h3 {
+            margin: 0 0 12px 0;
+            font-size: 18px;
+            line-height: 1.4;
+        }
+        
+        .manual-content h3 a {
+            text-decoration: none;
+            color: var(--w-color-text-link-default);
+            font-weight: 600;
+            display: block;
+            padding: 4px 0;
+        }
+        
+        .manual-content h3 a:hover,
+        .manual-content h3 a:focus {
+            text-decoration: underline;
+            color: var(--w-color-text-link-hover);
+            text-decoration-thickness: 2px;
+            text-underline-offset: 2px;
+        }
+
+        .manual-content h3 a:focus {
+            outline: 3px solid var(--w-color-focus);
+            outline-offset: 2px;
+            border-radius: 4px;
+        }
+        
+        .description {
+            color: var(--w-color-text-context);
+            margin: 12px 0;
+            line-height: 1.6;
+            font-size: 14px;
+        }
+        
+        .status-badge {
+            background: #e67e22;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+            border: 2px solid #d35400;
+            display: inline-block;
+            margin-top: 8px;
+        }
+        
+        .manual-actions {
+            margin-top: 18px;
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            padding-top: 16px;
+            border-top: 1px solid var(--w-color-border-furniture);
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 80px 24px;
+            color: var(--w-color-text-context);
+            background: var(--w-color-surface-field);
+            border-radius: 8px;
+            border: 2px solid var(--w-color-border-field-default);
+        }
+        
+        .empty-state h2 {
+            color: var(--w-color-text-link-default);
+            margin-bottom: 16px;
+            font-size: 24px;
+            font-weight: 600;
+        }
+
+        .empty-state p {
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 24px;
+        }
+        
+        .help-text {
+            color: var(--w-color-text-placeholder);
+            font-style: italic;
+            margin: 24px 0;
+            font-size: 16px;
+            line-height: 1.5;
+            text-align: center;
+            padding: 32px;
+            background: var(--w-color-surface-field-inactive);
+            border-radius: 6px;
+            border: 1px dashed var(--w-color-border-field-inactive);
+        }
+        
+        .button-small {
+            padding: 8px 12px;
+            font-size: 13px;
+            line-height: 1.4;
+            border-radius: 4px;
+        }
+
+        /* Focus management */
+        .button:focus,
+        .button-small:focus {
+            outline: 3px solid var(--w-color-focus);
+            outline-offset: 2px;
+        }
+
+        /* High contrast support */
+        @media (prefers-contrast: high) {
+            .manual-card {
+                border-width: 3px;
+            }
+            
+            .status-badge {
+                border-width: 3px;
+            }
+            
+            .category-section {
+                border-width: 3px;
+            }
+
+            .category-header {
+                border-bottom-width: 4px;
+            }
+        }
+
+        /* Reduced motion support */
+        @media (prefers-reduced-motion: reduce) {
+            .manual-card {
+                transition: none;
+            }
+            
+            .manual-card:hover {
+                transform: none;
+            }
+        }
+
+        /* Mobile responsive design */
+        @media (max-width: 768px) {
+            .category-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 16px;
+            }
+            
+            .category-actions {
+                width: 100%;
+                justify-content: flex-start;
+            }
+            
+            .manual-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+            
+            .category-section {
+                padding: 16px;
+                margin-bottom: 24px;
+            }
+            
+            .manual-card {
+                padding: 16px;
+            }
+            
+            .manual-actions {
+                flex-direction: column;
+            }
+            
+            .manual-actions .button-small {
+                width: 100%;
+                text-align: center;
+            }
+
+            .empty-state {
+                padding: 40px 16px;
+            }
+        }
+
+        /* Tablet responsive */
+        @media (max-width: 1024px) and (min-width: 769px) {
+            .manual-grid {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+                gap: 20px;
+            }
+        }
+
+        /* Print styles */
+        @media print {
+            .manual-card {
+                break-inside: avoid;
+                border: 2px solid #000;
+                margin-bottom: 20px;
+            }
+            
+            .category-header {
+                border-bottom: 3px solid #000;
+            }
+        }
+    </style>
+{% endblock %}

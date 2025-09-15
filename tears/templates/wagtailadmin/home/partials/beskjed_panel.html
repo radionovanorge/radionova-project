@@ -1,0 +1,12 @@
+{% load i18n wagtailadmin_tags %}
+
+{% if beskjed %}
+    {% panel id="beskjed-panel" heading=_("Beskjed fra Dagtid") classname="w-panel--dashboard" %}
+        <div class="nice-padding">
+            <h1>{{ beskjed.title }}</h1>
+            <div class="stream-content">
+                {{ beskjed.text }}
+            </div>
+        </div>
+    {% endpanel %}
+{% endif %}

@@ -97,7 +97,14 @@
         <p class="text-xs text-gray-500 -mt-6">{{ block.value.description }}</p>
       {% endif %}
       
-    {% endif %}
+   
+      {% elif block.value.quote %}
+      <blockquote class="border-l-4 border-gray-300 pl-4 italic text-lg leading-relaxed my-8">
+        {{ block.value.quote }}
+         </blockquote>
+          {% endif %}
+           
+    
   {% endfor %}
 </div>
   </div>
