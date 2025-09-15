@@ -699,7 +699,6 @@ class Manual(models.Model):
     content = StreamField(
         [
             ('rich_text', blocks.RichTextBlock(label="Tekst")),
-            ('image', ImageChooserBlock(label="Bilde")),
             ('quote', blocks.BlockQuoteBlock(label="Sitat")),
             ('code', blocks.TextBlock(
                 label="Kode",
