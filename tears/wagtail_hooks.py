@@ -153,7 +153,7 @@ def register_varsling_menu_item():
 from .models import BeskjedFraDagtid
 from wagtail.admin.ui.components import Component
 class BeskjedPanel(Component):
-    order = 50
+    order = 100
     template_name = "wagtailadmin/home/partials/beskjed_panel.html"
 
     def get_context_data(self, parent_context):
