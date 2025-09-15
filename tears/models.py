@@ -341,17 +341,8 @@ class BlogPage(Page):
     )
     body = StreamField(
         [
-            ("main_image", ImageChooserBlock(help_text="For forsiden")),
+            ("main_image", ImageChooserBlock()),
             ("image_with_description", ImageWithDescriptionBlock()),
-            ('quote', blocks.BlockQuoteBlock(label="Sitat")),
-            ('url', blocks.URLBlock(label="URL")),
-           
-            
-            
-            
-            ('page', blocks.PageChooserBlock(label="Side")),
-            
-
             ("content", blocks.RichTextBlock()),
         ],
         blank=True,
