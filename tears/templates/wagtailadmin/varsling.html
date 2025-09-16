@@ -5,12 +5,13 @@
 
 {% block content %}
 <main class="manual-content" role="main" aria-labelledby="content-heading">
-    <h1 id="content-heading" class="sr-only">Varsling</h1>
+    
 
     {% if contents %}
         {% for text_content in contents %}
             {% if text_content.content %}
                 <div class="stream-content">
+                    <h1 id="content-heading" class="sr-only">Varslingsrutiner</h1>
                     {{ text_content.content }}
                 </div>
             {% else %}

@@ -309,18 +309,28 @@ from wagtail import blocks
 from wagtail.images.blocks import ImageChooserBlock
 from wagtail.documents.blocks import DocumentChooserBlock
 from wagtail.embeds.blocks import EmbedBlock
-
+from django import forms
+from django.contrib.auth import get_user_model
 
 class BlogPage(Page): 
     page_description = "This is the blog page of the website and has the content at e.g. https://radionova.no/blog/2024/10/12/ny-blog."
     user = models.ForeignKey(User, on_delete=models.PROTECT)
     date = models.DateTimeField("Post time")
     forfatter = models.CharField("Forfatter", max_length=255, blank=True)
-    imageDecription = models.CharField("Bildetekst på hovedbilde:", max_length=255, blank=True, help_text="Bildetekst under første bildet")
+    imageDecription = models.CharField("Bildetekst på hovedbilde:", max_length=255, blank=True, help_text="Bildetekst under første bildet", )
     ingress = models.TextField("Ingress", max_length=500, blank=True, help_text="Kort ingress/underoverskrift under tittelen")
-    overtittel = models.CharField("Navn på det du andmelder/intervjuer.", max_length=500, blank=True, help_text=" F.eks. '[Navn på festival]' eller '[Navn på artist]'.")
+    overtittel = models.CharField("Navn på det du andmelder/intervjuer", max_length=500, blank=True, help_text=" F.eks. '[Navn på festival]' eller '[Navn på artist]'.")
     #this is for having nettsaker in programpages. makes it possible to show programs each nettsak they have made only
 
+    imageDecription_placeholder = forms.TextInput(
+        attrs = {
+            'placeholder': 'Bildetekst på hovedbilde (valgfritt)'
+        })
+    overtittel_placeholder = forms.TextInput(
+        attrs = {
+            'placeholder': '(valgfritt)'
+        })
+    
     program = models.ForeignKey(
         'tears.ProgramPage',
         null=True,
@@ -354,18 +364,30 @@ class BlogPage(Page):
         FieldPanel("typeArticle"),
         FieldPanel("forfatter"),
         FieldPanel("ingress"),
-        FieldPanel("overtittel"),
+        FieldPanel("overtittel", widget=overtittel_placeholder),
         FieldPanel("date"),
         FieldPanel("body"),
-        FieldPanel("imageDecription"),
+        FieldPanel("imageDecription", widget=imageDecription_placeholder),
     ]
     def save(self, *args, **kwargs):
+        # Auto-assign user if not set
+        if not self.user_id:
+           
+            User = get_user_model()
+            # Get the current user from the request context
+            # This requires passing the user during save
+            if hasattr(self, '_user'):
+                self.user = self._user
+            else:
+                # Fallback - you might want to set a default user or handle this differently
+                self.user = User.objects.filter(is_staff=True).first()
+        
         # Auto-assign program based on parent page
         if not self.program:
             parent = self.get_parent()
-            # Check if parent is a ProgramPage
             if parent and parent.__class__.__name__ == 'ProgramPage':
                 self.program = parent
+        
         super().save(*args, **kwargs)
     def related_posts(self):
         return BlogPage.objects.live().filter(program=self.program).exclude(id=self.id)[:3]
