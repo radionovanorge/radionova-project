@@ -36,7 +36,7 @@ def rename_snippets_menu_item(request, menu_items):
         if isinstance(item, SnippetsMenuItem):
             item.label = "Administrer innhold"
             
-
+#nettsak knapp for alle unntatt superuser
 @hooks.register("construct_main_menu")
 def add_custom_menu_item(request, menu_items):
     # get group of current user
@@ -61,6 +61,32 @@ def add_custom_menu_item(request, menu_items):
             order=0,
         )
         menu_items.append(custom_menu_item)
+#A-liste knapp bare for superuser
+@hooks.register("construct_main_menu")
+def add_custom_menu_item2(request, menu_items):
+    if request.user.is_superuser:
+        try:
+            default_site = Site.objects.get(is_default_site=True)
+            a_liste_page = (
+                default_site.root_page.get_children().filter(title="A-lista").first()
+            )
+            if not a_liste_page:
+                return
+
+            custom_menu_item = MenuItem(
+                label="Skriv en A-liste",
+                url=reverse(
+                    "wagtailadmin_pages:add",
+                    args=("tears", "alistapage", a_liste_page.id),
+                ),
+                classnames="custom-button",
+                icon_name="edit",
+                order=0,
+            )
+            menu_items.insert(0, custom_menu_item)
+        except Site.DoesNotExist:
+            pass
+
 
 
 @ hooks.register("construct_main_menu")
