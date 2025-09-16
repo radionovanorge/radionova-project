@@ -512,7 +512,7 @@ class Sendeplan(Page):
     def get_context(self, request):
         context = super().get_context(request)
 
-        programs = ProgramPage.objects.live().all()
+        programs = ProgramPage.objects.live().public().specific()
         sendeplan = {str(i): [] for i in range(1, 8)}  # 1=Mandag .. 7=Søndag
 
         current_time = localtime(now()).time()
@@ -600,6 +600,7 @@ class Sendeplan(Page):
                     time_slot_index = get_time_slot_index(start_time_str)
 
                     sendeplan[weekday].append({
+                        "page": program,
                         "title": program.title,
                         "start_time": start_time_str,
                         "end_time": end_time_str,

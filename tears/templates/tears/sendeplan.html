@@ -110,7 +110,7 @@
       <div class="frame-6 relative">
         <div class="flex gap-3">
           <!-- Aktiv tab (component-2) -->
-          <div class="component-2 inline-flex items-center rounded-sm border-2 border-[#4B0C1B] text-white px-4 py-2">
+          <button class="component-2 inline-flex items-center rounded-sm border-2 border-[#4B0C1B] text-white px-4 py-2">
             <!-- Bruk gjerne SVG-ikonet ditt her -->
             <svg class="w-5 h-5 mr-2 color_logo text-white" viewBox="0 0 20 20" fill="none">
               <rect x="3" y="4" width="14" height="12" rx="2" stroke="currentColor" stroke-width="1.7" />
@@ -122,10 +122,10 @@
             <!-- beholder dine wrappers -->
 
             <div class="text-wrapper-6">Vis som dagsliste</div>
-          </div>
+          </button>
 
           <!-- Inaktiv tab (component-4) -->
-          <div
+          <button
             class="component-4 inline-flex items-center rounded-md border-2 border-[#4B0C1B] bg-[#EBDDE1] text-[#4B0C1B] px-4 py-2">
             <svg class="w-5 h-5 mr-2 color_logo text-[#4B0C1B]" viewBox="0 0 20 20" fill="none">
               <rect x="3" y="3" width="3" height="14" rx="1" stroke="currentColor" stroke-width="1.7" />
@@ -139,7 +139,7 @@
               <div class="rectangle-6"></div>
             </div>
             <div class="text-wrapper-4">Vis som ukesoversikt</div>
-          </div>
+          </button>
         </div>
 
         <!-- underline under tabs -->
@@ -151,41 +151,41 @@
       <div class="frame-9 mt-10">
         <div class="frame-2">
           <div class="frame-10 flex flex-wrap gap-4">
-            <div
+            <button
               class="component-5 inline-block px-5 py-2 rounded-md border-2 border-[#4B0C1B] bg-[#F2E7EB] text-[#4B0C1B]"
               id="mandag">
               <div class="text-wrapper-4">Mandag</div>
-            </div>
-            <div
+          </button>
+            <button
               class="component-6 inline-block px-5 py-2 rounded-md border-2 border-[#4B0C1B] bg-[#F2E7EB] text-[#4B0C1B]"
               id="tirsdag">
               <div class="text-wrapper-4">Tirsdag</div>
-            </div>
-            <div
+          </button>
+            <button
               class="component-6 inline-block px-5 py-2 rounded-md border-2 border-[#4B0C1B] bg-[#F2E7EB] text-[#4B0C1B]"
               id="onsdag">
               <div class="text-wrapper-4">Onsdag</div>
-            </div>
-            <div
+            </button>
+            <button
               class="component-6 inline-block px-5 py-2 rounded-md border-2 border-[#4B0C1B] bg-[#F2E7EB] text-[#4B0C1B]"
               id="torsdag">
               <div class="text-wrapper-4">Torsdag</div>
-            </div>
-            <div
+          </button>
+            <button
               class="component-6 inline-block px-5 py-2 rounded-md border-2 border-[#4B0C1B] bg-[#F2E7EB] text-[#4B0C1B]"
               id="fredag">
               <div class="text-wrapper-4">Fredag</div>
-            </div>
-            <div
+          </button>
+            <button
               class="component-6 inline-block px-5 py-2 rounded-md border-2 border-[#4B0C1B] bg-[#F2E7EB] text-[#4B0C1B]"
               id="lordag">
               <div class="text-wrapper-4">Lørdag</div>
-            </div>
-            <div
+          </button>
+            <button
               class="component-6 inline-block px-5 py-2 rounded-md border-2 border-[#4B0C1B] bg-[#F2E7EB] text-[#4B0C1B]"
               id="sondag">
               <div class="text-wrapper-4">Søndag</div>
-            </div>
+          </button>
           </div>
         </div>
       </div>
@@ -197,7 +197,7 @@
         <div class="frame-12">
           <div class="frame-13">
             {% for program in sendeplan.1 %}
-            <div class="frame-14 {% if program.is_live_now %}bg-[#FFE4FB]{% endif %}">
+            <a href="{{ program.page.url }}" class="frame-14 {% if program.is_live_now %}bg-[#FFE4FB]{% endif %}">
               <div class="frame-18">
 
                 {% if program.main_image %}
@@ -216,6 +216,7 @@
 
                     <div class="frame-3">
                       <div class="frame-17">
+                        
                         <div class="text-wrapper-7">{{ program.title }}</div>
                       </div>
                       <div class="component-7">
@@ -238,7 +239,7 @@
 
 
               </div>
-            </div>
+            </a>
             {% endfor %}
           </div>
         </div>
@@ -247,7 +248,7 @@
         <div class="frame-12">
           <div class="frame-13">
             {% for program in sendeplan.2 %}
-            <div class="frame-14 {% if program.is_live_now %}bg-[#FFE4FB]{% endif %}">
+            <a href="{{ program.page.url }}" class="frame-14 {% if program.is_live_now %}bg-[#FFE4FB]{% endif %}">
               <div class="frame-18">
 
                 {% if program.main_image %}
@@ -287,7 +288,7 @@
                 {% endif %}
 
               </div>
-            </div>
+            </a>
             {% endfor %}
           </div>
         </div>
@@ -297,7 +298,7 @@
         <div class="frame-12">
           <div class="frame-13">
             {% for program in sendeplan.3 %}
-            <div class="frame-14 {% if program.is_live_now %}bg-[#FFE4FB]{% endif %}">
+            <a href="{{ program.page.url }}" class="frame-14 {% if program.is_live_now %}bg-[#FFE4FB]{% endif %}">
               <div class="frame-18">
 
                 {% if program.main_image %}
@@ -337,7 +338,7 @@
                 {% endif %}
 
               </div>
-            </div>
+            </a>
             {% endfor %}
           </div>
         </div>
@@ -347,7 +348,7 @@
         <div class="frame-12">
           <div class="frame-13">
             {% for program in sendeplan.4 %}
-            <div class="frame-14 {% if program.is_live_now %}bg-[#FFE4FB]{% endif %}">
+            <a href="{{ program.page.url }}" class="frame-14 {% if program.is_live_now %}bg-[#FFE4FB]{% endif %}">
               <div class="frame-18">
 
                 {% if program.main_image %}
@@ -387,7 +388,7 @@
                 {% endif %}
 
               </div>
-            </div>
+            </a>
             {% endfor %}
           </div>
         </div>
@@ -396,7 +397,7 @@
         <div class="frame-12">
           <div class="frame-13">
             {% for program in sendeplan.5 %}
-            <div class="frame-14 {% if program.is_live_now %}bg-[#FFE4FB]{% endif %}">
+            <a href="{{ program.page.url }}" class="frame-14 {% if program.is_live_now %}bg-[#FFE4FB]{% endif %}">
               <div class="frame-18">
 
                 {% if program.main_image %}
@@ -436,7 +437,7 @@
                 {% endif %}
 
               </div>
-            </div>
+            </a>
             {% endfor %}
           </div>
         </div>
@@ -446,7 +447,7 @@
         <div class="frame-12">
           <div class="frame-13">
             {% for program in sendeplan.6 %}
-            <div class="frame-14 {% if program.is_live_now %}bg-[#FFE4FB]{% endif %}">
+            <a href="{{ program.page.url }}" class="frame-14 {% if program.is_live_now %}bg-[#FFE4FB]{% endif %}">
               <div class="frame-18">
 
                 {% if program.main_image %}
@@ -486,7 +487,7 @@
                 {% endif %}
 
               </div>
-            </div>
+            </a>
             {% endfor %}
           </div>
         </div>
@@ -495,7 +496,7 @@
         <div class="frame-12">
           <div class="frame-13">
             {% for program in sendeplan.7 %}
-            <div class="frame-14 {% if program.is_live_now %}bg-[#FFE4FB]{% endif %}">
+            <a href="{{ program.page.url }}" class="frame-14 {% if program.is_live_now %}bg-[#FFE4FB]{% endif %}">
               <div class="frame-18">
 
                 {% if program.main_image %}
@@ -535,7 +536,7 @@
                 {% endif %}
 
               </div>
-            </div>
+            </a>
             {% endfor %}
           </div>
         </div>
