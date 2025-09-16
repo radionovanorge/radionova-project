@@ -40,7 +40,7 @@
                                          aria-labelledby="manual-{{ manual.id }}-title">
                                     <div class="manual-content">
                                         <h3 id="manual-{{ manual.id }}-title">
-                                            <a href="{% url 'wagtailsnippets_tears_manual:edit' manual.id %}">{{ manual.title }}</a>
+                                            <a href="{% url 'manual-detail' manual.id %}">{{ manual.title }}</a>
                                         </h3>
                                         {% if manual.description %}
                                             <p class="description">{{ manual.description|truncatechars:100 }}</p>

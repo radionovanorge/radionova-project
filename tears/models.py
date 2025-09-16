@@ -640,13 +640,19 @@ class Sendeplan(Page):
 
         return context
 #This is varslinger and other info put in text 
+from wagtail.snippets.models import register_snippet
+@register_snippet
 class TextContent(models.Model):
     title = models.CharField(max_length=255, default="Text Content")
-    content = models.TextField(
+    content = StreamField(
+        [
+            ('rich_text', blocks.RichTextBlock(label="Tekst")),
+            ('quote', blocks.BlockQuoteBlock(label="Sitat")),
+            
+        ],
         blank=True,
-        help_text="Enter your text content here"
+        help_text="Hovedinnholdet i manualen"
     )
-    
     panels = [
         FieldPanel('title'),
         FieldPanel('content'),
@@ -656,13 +662,15 @@ class TextContent(models.Model):
         return self.title
     
     class Meta:
-        verbose_name = "Text Content"
-        verbose_name_plural = "Text Content"
+        verbose_name = "Varsling"
+        verbose_name_plural = "Varsling"
+
+
 from django.db import models
 from wagtail.admin.panels import FieldPanel
 from wagtail.fields import StreamField
 from wagtail import blocks
-from wagtail.snippets.models import register_snippet
+
 from wagtail.images.blocks import ImageChooserBlock
 
 @register_snippet

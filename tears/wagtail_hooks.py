@@ -134,6 +134,7 @@ def varsling_index_view(request):
     contents = TextContent.objects.all()
     return render(request, 'wagtailadmin/varsling.html', {'contents': contents})
 
+
 @hooks.register('register_admin_urls')
 def register_varsling_urls():
     return [

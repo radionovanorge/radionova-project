@@ -244,7 +244,8 @@ WAGTAIL_SITE_NAME = 'Tears'
 EMAIL_BACKEND = 'django.core.mail.backends.dummy.EmailBackend'
 WAGTAILADMIN_NOTIFICATION_USE_EMAIL = False
 
-
+#so that we do not get update notifications in admin
+WAGTAIL_ENABLE_UPDATE_CHECK = False
 # Allowed file extensions for documents in the document library.
 # This can be omitted to allow all files, but note that this may present a security risk
 # if untrusted users are allowed to upload files -

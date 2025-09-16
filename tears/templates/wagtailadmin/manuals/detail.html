@@ -21,12 +21,7 @@
                     {% endif %}
                 </div>
             </div>
-            <div class="right">
-                <div class="col" role="group" aria-label="Manual handlinger">
-                    <a href="{% url 'manual-detail' manual.id %}" class="button">Vis</a>
-                
-                </div>
-            </div>
+            
         </div>
     </header>
 
@@ -58,7 +53,7 @@
 
         <div class="manual-actions" role="group" aria-label="Manual handlinger">
             <a href="{% url 'manuals-index' %}" class="button button-secondary">Tilbake til oversikt</a>
-            <a href="{% url 'manual-detail' manual.id %}" class="button">Vis</a>
+            
         
         </div>
     </div>
