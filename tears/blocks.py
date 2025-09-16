@@ -70,3 +70,22 @@ class ImageWithDescriptionBlock(blocks.StructBlock):
     class Meta:
         label = "Bilde med beskrivelse"
         icon = "image"
+
+class CenteredFlexBlock(blocks.StructBlock):
+    layout = blocks.ChoiceBlock(choices=[
+        ('image_left', "Image left / Text right"),
+        ('image_right', "Text left / Image right"),
+        ('text_both', "Text on both sides"),
+        ('image_both', "Image on both sides"),
+    ], default='image_left')
+
+    left_text = blocks.RichTextBlock(required=False)
+    right_text = blocks.RichTextBlock(required=False)
+
+    left_image = ImageChooserBlock(required=False)
+    right_image = ImageChooserBlock(required=False)
+
+    class Meta:
+        template = "components/centered_flex_block.html"
+        icon = "image"
+        label = "Centered Flexible Block"

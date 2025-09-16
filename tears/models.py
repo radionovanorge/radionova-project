@@ -311,6 +311,7 @@ from wagtail.documents.blocks import DocumentChooserBlock
 from wagtail.embeds.blocks import EmbedBlock
 from django import forms
 from django.contrib.auth import get_user_model
+from .blocks import CenteredFlexBlock  
 
 class BlogPage(Page): 
     page_description = "This is the blog page of the website and has the content at e.g. https://radionova.no/blog/2024/10/12/ny-blog."
@@ -354,6 +355,7 @@ class BlogPage(Page):
             ("main_image", ImageChooserBlock()),
             ("image_with_description", ImageWithDescriptionBlock()),
             ("content", blocks.RichTextBlock()),
+            ("flex_block", CenteredFlexBlock())
         ],
         blank=True,
     )
@@ -420,6 +422,7 @@ class DagTidPage(Page):
         [
             ("content", blocks.RichTextBlock()),
             ("main_image", ImageChooserBlock()),
+            ("flex_block", CenteredFlexBlock())
         ],
         blank=True,
         verbose_name="About Radio Nova"

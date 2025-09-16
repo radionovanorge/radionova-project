@@ -1,0 +1,22 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+
+<div class="flex justify-center items-center w-full py-10">
+  <div class="flex flex-col md:flex-row gap-8 max-w-5xl w-full items-center">
+    {% if self.layout == "image_left" %}
+      <div class="flex-1">{% image self.left_image fill-600x400 %}</div>
+      <div class="flex-1 prose">{{ self.right_text|richtext }}</div>
+
+    {% elif self.layout == "image_right" %}
+      <div class="flex-1 prose">{{ self.left_text|richtext }}</div>
+      <div class="flex-1">{% image self.right_image fill-600x400 %}</div>
+
+    {% elif self.layout == "text_both" %}
+      <div class="flex-1 prose">{{ self.left_text|richtext }}</div>
+      <div class="flex-1 prose">{{ self.right_text|richtext }}</div>
+
+    {% elif self.layout == "image_both" %}
+      <div class="flex-1">{% image self.left_image fill-600x400 %}</div>
+      <div class="flex-1">{% image self.right_image fill-600x400 %}</div>
+    {% endif %}
+  </div>
+</div>

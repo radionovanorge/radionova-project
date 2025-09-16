@@ -49,6 +49,8 @@
   {% for block in page.about_radio_nova %}
     {% if block.block_type == "content" %}
       {{ block.value|richtext }}
+    {% elif block.block_type == "flex_block" %}
+        {% include_block block %}
     {% else %}
       {{ block }}
     {% endif %}

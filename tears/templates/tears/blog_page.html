@@ -76,6 +76,7 @@
       {% if page.imageDecription %}
       <p class="text-xs text-gray-500 mt-2">{{ page.imageDecription }}</p>
       {% endif %}
+      
     </div>
   </div>
   <!-- Meta Info -->
@@ -97,6 +98,8 @@
         <p class="text-xs text-gray-500 -mt-6">{{ block.value.description }}</p>
       {% endif %}
       
+      {% elif block.block_type == "flex_block" %}
+        {% include_block block %}
    
       {% elif block.value.quote %}
       <blockquote class="border-l-4 border-gray-300 pl-4 italic text-lg leading-relaxed my-8">
