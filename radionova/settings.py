@@ -22,9 +22,7 @@ PROJECT_ROOT = BASE_DIR.parent
 
 
 # Load environment variables
-# 1) Root-level .env for local development
 load_dotenv(PROJECT_ROOT / '.env')
-# 2) Optional per-site overrides alongside settings
 load_dotenv(BASE_DIR / 'site.env')
 
 # Quick-start development settings - unsuitable for production
