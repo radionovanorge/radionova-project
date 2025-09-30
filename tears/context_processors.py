@@ -2,6 +2,7 @@ from django.utils.timezone import localtime, now
 from datetime import datetime
 from .models import ProgramPage
 
+
 def current_live_program(request):
     programs = ProgramPage.objects.live().all()
     current_time = localtime(now()).time()
@@ -21,5 +22,5 @@ def current_live_program(request):
                     if start <= current_time <= end:
                         text = f"Direkte: Radio Nova / {start_str}–{end_str}: {program.title}"
                         return {"current_live_text": text}
-    
+
     return {"current_live_text": None}

@@ -14,6 +14,7 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+
 from django.conf.urls.static import static
 from django.views.generic.base import RedirectView
 from django.conf import settings
@@ -26,14 +27,11 @@ from wagtail.documents import urls as wagtaildocs_urls
 
 urlpatterns = [
     # path('admin/', admin.site.urls),
-
-    path('admin/', include(wagtailadmin_urls)),
-    path('documents/', include(wagtaildocs_urls)),
-
+    path("admin/", include(wagtailadmin_urls)),
+    path("documents/", include(wagtaildocs_urls)),
     # Optional URL for including your own vanilla Django urls/views
     # re_path(r'', include('tears.urls')),
-
-    path('', include(wagtail_urls)),
+    path("", include(wagtail_urls)),
 ]
 
 
@@ -42,9 +40,13 @@ if settings.DEBUG:
 
     # tell gunicorn where static files are in dev mode
     urlpatterns += staticfiles_urlpatterns()
-    urlpatterns += static(settings.MEDIA_URL + 'images/',
-                          document_root=os.path.join(settings.MEDIA_ROOT, 'images'))
+    urlpatterns += static(
+        settings.MEDIA_URL + "images/",
+        document_root=os.path.join(settings.MEDIA_ROOT, "images"),
+    )
     urlpatterns += [
-        path('favicon.ico', RedirectView.as_view(
-            url=settings.STATIC_URL + 'myapp/images/favicon.ico'))      
+        path(
+            "favicon.ico",
+            RedirectView.as_view(url=settings.STATIC_URL + "myapp/images/favicon.ico"),
+        )
     ]
