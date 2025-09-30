@@ -11,6 +11,16 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="{% static 'tears/js/naavaerendeprogram.js' %}?v={% now 'U' %}"></script>
 
+    <style>
+    h1,
+     h2,
+     h3,
+     h4,
+     h5,
+     h6 {
+  color: #511120 !important;
+}
+    </style>
 </head>
 <header class="w-full bg-[#f7f4f4] p-10 mb-8">
     <div class="program-container px-4 py-8 max-w-4xl mx-auto">
@@ -179,11 +189,30 @@
 
 <!-- Spotifywidgets more info and nettsaker -->
 
-<section class="px-2 py-12 max-w-4xl mx-auto">
+<section class="max-w-3xl mx-auto px-4 prose prose-xl prose-img:rounded-lg prose-p:leading-relaxed">
     <div class="program-content">
         {% for block in page.description %}
-        {{ block.value|richtext }}
-        {% endfor %}
+    {% if block.block_type == "content" %}
+       
+  {{ block.value }}
+
+
+    {% elif block.block_type == "main_image" %}
+        {% image block.value fill-1200x600 class="rounded shadow-md w-full object-cover" %}
+
+    {% elif block.block_type == "image_with_description" %}
+        {% image block.value.image fill-1200x600 class="rounded shadow-md w-full object-cover" %}
+        {% if block.value.description %}
+            <p class="text-xs text-gray-500 -mt-6">{{ block.value.description }}</p>
+        {% endif %}
+
+    {% elif block.block_type == "flex_block" %}
+        {% include_block block %}
+
+    {% else %}
+        {{ block }}
+    {% endif %}
+{% endfor %}
     </div>
 
 

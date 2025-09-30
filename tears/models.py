@@ -22,6 +22,7 @@ from .blocks import CenteredFlexBlock
 from wagtail.admin.forms import WagtailAdminPageForm
 
 
+
 class HomePage(RoutablePageMixin, Page):
     page_description = "This is the homepage of the website and has the content at https://radionova.no. Don't edit this page unless you know what you are doing."
 
