@@ -222,6 +222,14 @@ class ProgrammerPage(Page):
   
 
 
+from wagtail import blocks
+from wagtail.images.blocks import ImageChooserBlock
+from wagtail.documents.blocks import DocumentChooserBlock
+from wagtail.embeds.blocks import EmbedBlock
+from django import forms
+from django.contrib.auth import get_user_model
+from .blocks import CenteredFlexBlock  
+
 class ProgramPage(Page):
     page_description = "This is the program page of the website and has the content at e.g. https://radionova.no/programmer/frokost."
     subpage_types = ['BlogPage']
@@ -279,8 +287,9 @@ class ProgramPage(Page):
 
     description = StreamField(
         [
-            ("main_image", ImageChooserBlock()),
+            ("image_with_description", ImageWithDescriptionBlock()),
             ("content", blocks.RichTextBlock()),
+            ("flex_block", CenteredFlexBlock())
         ],
         blank=True,
         use_json_field=True,
@@ -289,7 +298,6 @@ class ProgramPage(Page):
     content_panels = Page.content_panels + [
         FieldPanel("category"),
         FieldPanel("program"),
-        FieldPanel("main_image"),
         FieldPanel("intro"),
         FieldPanel("sendetider"),
         FieldPanel("instagram_link"),
@@ -305,13 +313,6 @@ class ProgramPage(Page):
     
 
 
-from wagtail import blocks
-from wagtail.images.blocks import ImageChooserBlock
-from wagtail.documents.blocks import DocumentChooserBlock
-from wagtail.embeds.blocks import EmbedBlock
-from django import forms
-from django.contrib.auth import get_user_model
-from .blocks import CenteredFlexBlock  
 
 class BlogPage(Page): 
     page_description = "This is the blog page of the website and has the content at e.g. https://radionova.no/blog/2024/10/12/ny-blog."
