@@ -4,26 +4,20 @@
 {% block titletag %}{{ manual.title }}{% endblock %}
 
 {% block content %}
-    <header class="header">
-        <div class="row">
-            <div class="left">
-                <div class="col">
-                    <nav class="breadcrumb" aria-label="Breadcrumb">
-                        <a href="{% url 'manuals-index' %}">Manualer</a>
-                        <span aria-hidden="true">&gt;</span> 
-                        <span>{{ manual.category.name }}</span>
-                        <span aria-hidden="true">&gt;</span> 
-                        <span aria-current="page">{{ manual.title }}</span>
-                    </nav>
-                    <h1 class="header-title">{{ manual.title }}</h1>
-                    {% if not manual.is_published %}
-                        <span class="status-badge unpublished" role="status" aria-label="Status: Upublisert">Upublisert</span>
-                    {% endif %}
-                </div>
-            </div>
-            
-        </div>
-    </header>
+    <header class="header" style="text-align:center; margin-bottom: 30px;">
+    <nav class="breadcrumb" aria-label="Breadcrumb" style="display:inline-block; font-size:14px; color:var(--w-color-text-meta); margin-bottom:10px;">
+        <a href="{% url 'manuals-index' %}" style="color:var(--w-color-text-link-default); text-decoration:underline;">Manualer</a>
+        <span aria-hidden="true">&gt;</span>
+        <span>{{ manual.category.name }}</span>
+        <span aria-hidden="true">&gt;</span>
+        <span aria-current="page">{{ manual.title }}</span>
+    </nav>
+    <h1 class="header-title" style="margin-top:8px; font-size:26px; font-weight:600;">{{ manual.title }}</h1>
+    {% if not manual.is_published %}
+        <span class="status-badge unpublished" role="status" aria-label="Status: Upublisert">Upublisert</span>
+    {% endif %}
+</header>
+
 
     <div class="nice-padding">
         <div class="manual-meta" role="complementary" aria-labelledby="meta-heading">

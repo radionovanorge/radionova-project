@@ -123,6 +123,14 @@ class HomePage(RoutablePageMixin, Page):
 
         for p in blog_qs:
             d = p.first_published_at or p.latest_revision_created_at
+            #main_img to nettsaker
+            main_img = None
+            if p.body:
+                for block in p.body:
+                    if block.block_type == "main_image":
+                        main_img = block.value
+                        break 
+           
             items.append(
                 {
                     "title": p.title,
@@ -140,11 +148,20 @@ class HomePage(RoutablePageMixin, Page):
                     else "",
                     "kategori": p.typeArticle.lower(),
                     "kind": "blog",
+                    "image": main_img,
                 }
             )
 
         for a in alista_qs:
             d = a.first_published_at
+            #main_img to nettasker
+            main_img = None
+            if a.content:
+             for block in a.content:
+                 if block.block_type == "main_image":
+                     main_img = block.value
+                     break
+            
             items.append(
                 {
                     "title": a.title,
@@ -162,6 +179,7 @@ class HomePage(RoutablePageMixin, Page):
                     else "",
                     "kategori": "a-lista",
                     "kind": "a-lista",
+                    "image": main_img,
                 }
             )
 
@@ -334,10 +352,12 @@ class ProgramPage(Page):
     )
 
     content_panels = Page.content_panels + [
+        FieldPanel("main_image"),
         FieldPanel("category"),
         FieldPanel("program"),
         FieldPanel("intro"),
         FieldPanel("sendetider"),
+        
         FieldPanel("instagram_link"),
         FieldPanel("facebook_link"),
         FieldPanel("tiktok_link"),
