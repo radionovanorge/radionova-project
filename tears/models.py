@@ -244,6 +244,7 @@ class ProgrammerPage(Page):
             ("Tema", "tema"),
             ("Tidligere programmer", "tidligere_programmer"),
         ]
+        
 
         # Group programs by category
         grouped_programs = {
@@ -255,6 +256,17 @@ class ProgrammerPage(Page):
         )
         context["grouped_programs"] = grouped_programs
         context["total_program_count"] = total_program_count
+        
+        q = request.GET.get("q", "").strip()
+        tema = request.GET.get("tema", "").strip()
+
+        # Filtrer programmer i get_context
+        for display_name, qs in grouped_programs.items():
+            if q:
+                qs = qs.filter(title__icontains=q)
+            if tema:
+                qs = qs.filter(category=tema)
+            grouped_programs[display_name] = qs
 
         return context
 

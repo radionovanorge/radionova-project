@@ -1,4 +1,3 @@
-console.log("Programmer page script loaded.");
 document.querySelectorAll('.filter-checkbox').forEach(checkbox => {
     checkbox.addEventListener('change', () => {
         console.log(`Checkbox ${checkbox.value} changed to ${checkbox.checked}`);
@@ -9,9 +8,11 @@ document.querySelectorAll('.filter-checkbox').forEach(checkbox => {
 
         const selectedCategory = document.querySelector('.filter-checkbox:checked')?.value || null;
 
-        const cards = document.querySelectorAll('#programGrid > div');
+        // Filter both grid and list views
+        const gridCards = document.querySelectorAll('.program-rutenett > div');
+        const listCards = document.querySelectorAll('.program-list > div');
 
-        cards.forEach(card => {
+        [...gridCards, ...listCards].forEach(card => {
             const cardCategory = card.getAttribute('data-category');
 
             if (!selectedCategory || cardCategory === selectedCategory) {
@@ -21,14 +22,13 @@ document.querySelectorAll('.filter-checkbox').forEach(checkbox => {
             }
         });
 
-        // Update the count of visible programs. 
-        const nonvisibleCards = document.querySelectorAll('#programGrid > div[style="display: none;"]').length;
-        const totalCards = document.querySelectorAll('#programGrid > div').length
-        const showcards = ((totalCards - nonvisibleCards) / 2)
-        document.querySelector('#resultCount').textContent = `Viser ${showcards} treff`;
+        // Update the count of visible programs
+        const activeContainer = showingGrid ? '.program-rutenett' : '.program-list';
+        const visibleCards = document.querySelectorAll(`${activeContainer} > div:not([style*="display: none"])`).length;
+        document.querySelector('#resultCount').textContent = `Viser ${visibleCards} treff`;
     });
-    
 });
+
 // vis som liste eller rutenett knapp
 const toggleBtn = document.getElementById("toggleViewBtn");
 const grid = document.querySelector(".program-rutenett");
@@ -40,38 +40,77 @@ toggleBtn.addEventListener("click", () => {
     showingGrid = !showingGrid;
 
     if (showingGrid) {
-        grid.style.display = "grid"; // Show grid
-        list.style.display = "none"; // Hide list
+        grid.style.display = "grid";
+        list.style.display = "none";
         toggleBtn.querySelector("span").textContent = "Vis som liste";
         document.getElementById('listIcon').classList.remove('hidden');
         document.getElementById('gridIcon').classList.add('hidden');
     } else {
-        grid.style.display = "none"; // Hide grid
-        list.style.display = "block"; // Show list
+        grid.style.display = "none";
+        list.style.display = "block";
         toggleBtn.querySelector("span").textContent = "Vis som rutenett";
         document.getElementById('gridIcon').classList.remove('hidden');
         document.getElementById('listIcon').classList.add('hidden');
     }
+
+    // Update count when toggling views
+    updateProgramCount();
 });
+
+// Function to update program count
+function updateProgramCount() {
+    const activeContainer = showingGrid ? '.program-rutenett' : '.program-list';
+    const visibleCards = document.querySelectorAll(`${activeContainer} > div:not([style*="display: none"])`).length;
+    document.querySelector('#resultCount').textContent = `Viser ${visibleCards} treff`;
+}
+
 // asc/desc sorting (locale-aware for nb)
-document.getElementById("sortSelect").addEventListener("change", function () {
-  const asc = this.value === "asc";
-  const container = showingGrid ? grid : list; // use your existing refs
-  if (!container) return;
+document.getElementById("sortSelect").addEventListener("change", function (e) {
+    e.preventDefault();
+    e.stopPropagation();
 
-  const collator = new Intl.Collator("nb", { sensitivity: "base", numeric: true });
-  const titleOf = el => (el.querySelector("h3")?.textContent || "").trim().toLowerCase();
+    const asc = this.value === "asc";
+    const container = showingGrid ? grid : list;
+    if (!container) return;
 
-  const cards = Array.from(container.querySelectorAll(":scope > div"));
+    const collator = new Intl.Collator("nb", { sensitivity: "base", numeric: true });
+    const titleOf = el => (el.querySelector("h3")?.textContent || "").trim();
 
-  cards.sort((a, b) => collator.compare(titleOf(a), titleOf(b)));
-  if (!asc) cards.reverse();
+    const cards = Array.from(container.querySelectorAll(":scope > div"));
+    cards.sort((a, b) => collator.compare(titleOf(a), titleOf(b)));
+    if (!asc) cards.reverse();
 
-  // reattach in new order
-  const frag = document.createDocumentFragment();
-  cards.forEach(c => frag.appendChild(c));
-  container.appendChild(frag);
+    const frag = document.createDocumentFragment();
+    cards.forEach(c => frag.appendChild(c));
+    container.appendChild(frag);
 
-  console.log(`Sorted programs ${asc ? "A–Å" : "Å–A"} in the ${showingGrid ? "grid" : "list"} view.`);
-  
+    console.log(`Sorted ${cards.length} programs in ${asc ? 'ascending' : 'descending'} order`);
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    const searchForm = document.getElementById('programSearchForm');
+    const searchInput = document.querySelector('input[name="q"]');
+    const clearButton = document.getElementById('clearSearch');
+    const sortSelect = document.getElementById('sortSelect');
+
+    // Show/hide clear button
+    function toggleClearButton() {
+        if (clearButton && searchInput) {
+            clearButton.style.display = searchInput.value.trim() ? 'block' : 'none';
+        }
+    }
+
+    if (searchInput && clearButton) {
+        searchInput.addEventListener('input', toggleClearButton);
+        toggleClearButton();
+
+        clearButton.addEventListener('click', () => {
+            searchInput.value = '';
+            toggleClearButton();
+            if (searchForm) searchForm.submit();
+        });
+    }
+
+    // Initial count
+    updateProgramCount();
 });
