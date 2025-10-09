@@ -2,19 +2,19 @@
 
 <!-- Navigation component -->
 <header class="bg-white py-4">
-    <div class="nav-container">
+    <div class="w-full max-w-[1440px] px-8 mx-auto flex items-center justify-between">
         <!-- Logo -->
         <a href="/" class="block">
-            <img src="{% static 'tears/images/radionova.png' %}" alt="Radio Nova" class="h-10">
+            <img src="{% static 'tears/images/radionova.png' %}" alt="Radio Nova" class="h-12">
         </a>
         
         <!-- Desktop Navigation -->
         <nav class="hidden md:flex space-x-3">
-            <a href="/sendeplan" class="top-nav-link {% if request.path == '/sendeplan' %}active{% endif %}">Sendeplan</a>
-            <a href="/a-lista" class="top-nav-link {% if request.path == '/a-lista' %}active{% endif %}">A-lista</a>
-            <a href="/programmer" class="top-nav-link {% if request.path == '/programmer' %}active{% endif %}">Programmer</a>
-            <a href="/nettsaker" class="top-nav-link {% if request.path == '/nettsaker' %}active{% endif %}">Nettsaker</a>
-            <a href="/om-oss" class="top-nav-link {% if request.path == '/om-oss' %}active{% endif %}">Om oss</a>
+            <a href="/sendeplan" class="top-nav-link text-[#6F1228] {% if request.path == '/sendeplan' %}active{% endif %}">Sendeplan</a>
+            <a href="/a-lista" class="top-nav-link text-[#6F1228] {% if request.path == '/a-lista' %}active{% endif %}">A-lista</a>
+            <a href="/programmer" class="top-nav-link text-[#6F1228] {% if request.path == '/programmer' %}active{% endif %}">Programmer</a>
+            <a href="/nettsaker" class="top-nav-link text-[#6F1228]{% if request.path == '/nettsaker' %}active{% endif %}">Nettsaker</a>
+            <a href="/om-oss" class="top-nav-link text-[#6F1228] {% if request.path == '/om-oss' %}active{% endif %}">Om oss</a>
         </nav>
         
         <!-- Mobile menu button -->
@@ -28,11 +28,11 @@
     <!-- Mobile menu (hidden by default) -->
     <div id="mobile-menu" class="hidden md:hidden border-t mt-4">
         <nav class="container mx-auto px-4 py-4 flex flex-col">
-            <a href="/sendeplan" class="text-black py-3 {% if request.path == '/sendeplan' %}font-bold{% endif %}">Sendeplan</a>
-            <a href="/a-lista" class="text-black py-3 {% if request.path == '/a-lista' %}font-bold{% endif %}">A-lista</a>
-            <a href="/programmer" class="text-black py-3 {% if request.path == '/programmer' %}font-bold{% endif %}">Programmer</a>
-            <a href="/nettsaker" class="text-black py-3 {% if request.path == '/artikler' %}font-bold{% endif %}">Nettsaker</a>
-            <a href="/om-oss" class="text-black py-3 {% if request.path == '/om-oss' %}font-bold{% endif %}">Om oss</a>
+            <a href="/sendeplan" class="text-[#6F1228] py-3 {% if request.path == '/sendeplan' %}font-bold{% endif %}">Sendeplan</a>
+            <a href="/a-lista" class="text-[#6F1228] py-3 {% if request.path == '/a-lista' %}font-bold{% endif %}">A-lista</a>
+            <a href="/programmer" class="text-[#6F1228] py-3 {% if request.path == '/programmer' %}font-bold{% endif %}">Programmer</a>
+            <a href="/nettsaker" class="text-[#6F1228] py-3 {% if request.path == '/artikler' %}font-bold{% endif %}">Nettsaker</a>
+            <a href="/om-oss" class="text-[#6F1228] py-3 {% if request.path == '/om-oss' %}font-bold{% endif %}">Om oss</a>
         </nav>
     </div>
 </header> 

@@ -22,10 +22,9 @@
 }
     </style>
 </head>
-<header class="w-full bg-[#f7f4f4] p-10 mb-8">
-    <div class="program-container px-4 py-8 max-w-4xl mx-auto">
-        <!-- Breadcrumb -->
-         <div class="text-sm text-gray-500 mb-4 mt-1">
+<header class="w-full p-10">
+     <!-- Breadcrumb -->
+    <div class="text-sm text-gray-500 mb-8 mt-1 max-w-5xl mx-auto">
     {% if self.get_ancestors|length > 1 %}
     <nav aria-label="Breadcrumb">
         <ul class="flex items-center space-x-2 flex-wrap">
@@ -50,8 +49,8 @@
     </nav>
     {% endif %}
 </div>
-
-        <!-- Flex Layout for Header Content -->
+    <div class="program-container px-4 py-2 max-w-5xl mx-auto">
+       
         <!-- Flex Layout for Header Content -->
         <div class="flex flex-col-reverse lg:flex-row lg:items-start gap-6">
             <!-- Left Column: Text and Info -->
@@ -120,59 +119,59 @@
 
                 <!-- Social Media Links -->
                 <div class="flex flex-wrap gap-6 text-sm text-gray-700 mt-4">
-                    {% if page.facebook_link %}
-                    <a href="{{ page.facebook_link }}" class="flex items-center space-x-2 hover:underline">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 320 512"
-                            class="w-5 h-5">
-                            <path
-                                d="M80 299.3V512H196V299.3h86.5l18-97.8H196V166.9c0-51.7 20.3-71.5 72.7-71.5c16.3 0 29.4 .4 37 1.2V7.9C291.4 4 256.4 0 236.2 0C129.3 0 80 50.5 80 159.4v42.1H14v97.8H80z" />
-                        </svg>
-                        <span>Facebook</span>
-                    </a>
-                    {% endif %}
+                 {% if page.facebook_link %}
+<a href="{{ page.facebook_link }}" class="flex items-center space-x-2 hover:underline text-[#6F1228]">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 320 512"
+        class="w-5 h-5">
+        <path
+            d="M80 299.3V512H196V299.3h86.5l18-97.8H196V166.9c0-51.7 20.3-71.5 72.7-71.5c16.3 0 29.4 .4 37 1.2V7.9C291.4 4 256.4 0 236.2 0C129.3 0 80 50.5 80 159.4v42.1H14v97.8H80z" />
+    </svg>
+    <span>Facebook</span>
+</a>
+{% endif %}
 
-                    {% if page.instagram_link %}
-                    <a href="{{ page.instagram_link }}" class="flex items-center space-x-2 hover:underline">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 170 170"
-                            class="w-5 h-5">
-                            <path d="M122.406,0H46.654C20.929,0,0,20.93,0,46.655v75.752c0,25.726,20.929,46.655,46.654,46.655h75.752
-      c25.727,0,46.656-20.93,46.656-46.655V46.655C169.063,20.93,148.133,0,122.406,0z M154.063,122.407
-      c0,17.455-14.201,31.655-31.656,31.655H46.654C29.2,154.063,15,139.862,15,122.407V46.655C15,29.201,29.2,15,46.654,15h75.752
-      c17.455,0,31.656,14.201,31.656,31.655V122.407z" />
-                            <path
-                                d="M84.531,40.97c-24.021,0-43.563,19.542-43.563,43.563c0,24.02,19.542,43.561,43.563,43.561s43.563-19.541,43.563-43.561
-      C128.094,60.512,108.552,40.97,84.531,40.97z M84.531,113.093c-15.749,0-28.563-12.812-28.563-28.561
-      c0-15.75,12.813-28.563,28.563-28.563s28.563,12.813,28.563,28.563C113.094,100.281,100.28,113.093,84.531,113.093z" />
-                            <path d="M129.921,28.251c-2.89,0-5.729,1.17-7.77,3.22c-2.051,2.04-3.23,4.88-3.23,7.78c0,2.891,1.18,5.73,3.23,7.78
-      c2.04,2.04,4.88,3.22,7.77,3.22c2.9,0,5.73-1.18,7.78-3.22c2.05-2.05,3.22-4.89,3.22-7.78c0-2.9-1.17-5.74-3.22-7.78
-      C135.661,29.421,132.821,28.251,129.921,28.251z" />
-                        </svg>
-                        <span>Instagram</span>
-                    </a>
-                    {% endif %}
+{% if page.instagram_link %}
+<a href="{{ page.instagram_link }}" class="flex items-center space-x-2 hover:underline text-[#6F1228]">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 170 170"
+        class="w-5 h-5">
+        <path d="M122.406,0H46.654C20.929,0,0,20.93,0,46.655v75.752c0,25.726,20.929,46.655,46.654,46.655h75.752
+  c25.727,0,46.656-20.93,46.656-46.655V46.655C169.063,20.93,148.133,0,122.406,0z M154.063,122.407
+  c0,17.455-14.201,31.655-31.656,31.655H46.654C29.2,154.063,15,139.862,15,122.407V46.655C15,29.201,29.2,15,46.654,15h75.752
+  c17.455,0,31.656,14.201,31.656,31.655V122.407z" />
+        <path
+            d="M84.531,40.97c-24.021,0-43.563,19.542-43.563,43.563c0,24.02,19.542,43.561,43.563,43.561s43.563-19.541,43.563-43.561
+  C128.094,60.512,108.552,40.97,84.531,40.97z M84.531,113.093c-15.749,0-28.563-12.812-28.563-28.561
+  c0-15.75,12.813-28.563,28.563-28.563s28.563,12.813,28.563,28.563C113.094,100.281,100.28,113.093,84.531,113.093z" />
+        <path d="M129.921,28.251c-2.89,0-5.729,1.17-7.77,3.22c-2.051,2.04-3.23,4.88-3.23,7.78c0,2.891,1.18,5.73,3.23,7.78
+  c2.04,2.04,4.88,3.22,7.77,3.22c2.9,0,5.73-1.18,7.78-3.22c2.05-2.05,3.22-4.89,3.22-7.78c0-2.9-1.17-5.74-3.22-7.78
+  C135.661,29.421,132.821,28.251,129.921,28.251z" />
+    </svg>
+    <span>Instagram</span>
+</a>
+{% endif %}
 
 
-                    {% if page.tiktok_link %}
-                    <a href="{{ page.tiktok_link }}" class="flex items-center space-x-2 hover:underline">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 448 512"
-                            class="w-5 h-5">
-                            <path
-                                d="M448 209.9a210.1 210.1 0 0 1 -122.8-39.3V349.4A162.6 162.6 0 1 1 185 188.3V278.2a74.6 74.6 0 1 0 52.2 71.2V0l88 0a121.2 121.2 0 0 0 1.9 22.2A122.2 122.2 0 0 0 381 102.4a121.4 121.4 0 0 0 67 20.1z" />
-                        </svg>
-                        <span>TikTok</span>
-                    </a>
-                    {% endif %}
+{% if page.tiktok_link %}
+<a href="{{ page.tiktok_link }}" class="flex items-center space-x-2 hover:underline text-[#6F1228]">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 448 512"
+        class="w-5 h-5">
+        <path
+            d="M448 209.9a210.1 210.1 0 0 1 -122.8-39.3V349.4A162.6 162.6 0 1 1 185 188.3V278.2a74.6 74.6 0 1 0 52.2 71.2V0l88 0a121.2 121.2 0 0 0 1.9 22.2A122.2 122.2 0 0 0 381 102.4a121.4 121.4 0 0 0 67 20.1z" />
+    </svg>
+    <span>TikTok</span>
+</a>
+{% endif %}
 
-                    {% if page.email_link %}
-                    <a href="mailto:{{ page.email_link }}" class="flex items-center space-x-2 hover:underline">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                            stroke="currentColor" class="w-5 h-5">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" />
-                        </svg>
-                        <span>E-post</span>
-                    </a>
-                    {% endif %}
+{% if page.email_link %}
+<a href="mailto:{{ page.email_link }}" class="flex items-center space-x-2 hover:underline text-[#6F1228]">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+        stroke="currentColor" class="w-5 h-5">
+        <path stroke-linecap="round" stroke-linejoin="round"
+            d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" />
+    </svg>
+    <span>E-post</span>
+</a>
+{% endif %}
                 </div>
 
             </div>
@@ -187,8 +186,11 @@
         </div>
 </header>
 
-<!-- Spotifywidgets more info and nettsaker -->
 
+<main class=" bg-[#f7f4f4]">
+   
+
+            
 <section class="max-w-3xl mx-auto px-4 prose prose-xl prose-img:rounded-lg prose-p:leading-relaxed">
     <div class="program-content">
         {% for block in page.description %}

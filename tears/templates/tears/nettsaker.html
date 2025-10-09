@@ -92,7 +92,7 @@
             
 
             <!-- Title Section -->
-            <h1 class="text-4xl font-bold text-black-800">Nettsaker</h1>
+             <h1 class="text-5xl font-bold text-black-800">Nettsaker</h1>
       
         
        
@@ -331,14 +331,14 @@
                     </div>
                     <div class="flex items-center space-x-2">
     <div class="flex items-center space-x-2 mr-10 lg:mr-0">
-    <div class="relative inline-flex items-stretch border-2 border-black-900 rounded-md overflow-hidden focus-within:ring-2 focus-within:ring-red-900 focus-within:ring-offset-4">
+    <div class="relative inline-flex items-stretch overflow-hidden">
         <select id="sortSelect" name="sort"
-            class="bg-transparent border-0 text-black-900 font-medium pl-2 pr-14 py-2 text-sm outline-none w-full cursor-pointer ml-2 text-red-900"
+            class="bg-white border-0 text-black-900 font-medium pl-2 pr-14 py-2 text-sm outline-none w-full cursor-pointer ml-2 text-red-900 border-2 border-red-900 hover:bg-gray-50 focus-within:ring-2 focus-within:ring-red-900 "
             aria-label="Sorter">
-            <option value="Ny" {% if sort == 'Ny' or not sort %}selected{% endif %}>Nyest først</option>
-            <option value="Gammel" {% if sort == 'Gammel' %}selected{% endif %}>Eldst først</option>
-            <option value="asc" {% if sort == 'asc' %}selected{% endif %}>A-Å</option>
-            <option value="desc" {% if sort == 'desc' %}selected{% endif %}>Å-A</option>
+            <option class="hover:bg-[#FFDCDC]" value="Ny" {% if sort == 'Ny' or not sort %}selected{% endif %}>Nyest først</option>
+            <option class="hover:bg-[#FFDCDC]" value="Gammel" {% if sort == 'Gammel' %}selected{% endif %}>Eldst først</option>
+            <option class="hover:bg-[#FFDCDC]" value="asc" {% if sort == 'asc' %}selected{% endif %}>A-Å</option>
+            <option class="hover:bg-[#FFDCDC]" value="desc" {% if sort == 'desc' %}selected{% endif %}>Å-A</option>
         </select>
 
        <div
@@ -404,7 +404,7 @@
 
     {% if page_obj.has_previous %}
       <a href="?page={{ page_obj.previous_page_number }}{% if querystring %}&{{ querystring }}{% endif %}"
-         class="border border-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-50">← Forrige</a>
+         class="border border-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-[#FFDCDC]">← Forrige</a>
     {% endif %}
 
     {% for i in page_obj.paginator.page_range %}
@@ -412,13 +412,13 @@
         <span class="bg-nova-dark-red text-white w-10 h-10 rounded font-medium flex items-center justify-center">{{ i }}</span>
       {% else %}
         <a href="?page={{ i }}{% if querystring %}&{{ querystring }}{% endif %}"
-           class="border border-gray-300 text-gray-700 w-10 h-10 rounded hover:bg-gray-50 flex items-center justify-center">{{ i }}</a>
+           class="border border-gray-300 text-gray-700 w-10 h-10 rounded hover:bg-[#FFDCDC] flex items-center justify-center">{{ i }}</a>
       {% endif %}
     {% endfor %}
 
     {% if page_obj.has_next %}
       <a href="?page={{ page_obj.next_page_number }}{% if querystring %}&{{ querystring }}{% endif %}"
-         class="border border-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-50">Neste →</a>
+         class="border border-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-[#FFDCDC]">Neste →</a>
     {% endif %}
 
   </nav>

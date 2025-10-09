@@ -89,3 +89,11 @@ class CenteredFlexBlock(blocks.StructBlock):
         template = "components/centered_flex_block.html"
         icon = "image"
         label = "Centered Flexible Block"
+
+class QuoteBlock(blocks.StructBlock):
+    quote = blocks.TextBlock(label="Sitat")
+    attribution = blocks.CharBlock(label="Navn", required=False, help_text="F.eks. '– Vilde Krohn'")
+
+    class Meta:
+        icon = "openquote"
+        label = "Sitat"

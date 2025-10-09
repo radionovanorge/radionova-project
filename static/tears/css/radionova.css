@@ -120,7 +120,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 2rem; /* Adds space between logo and nav links */
+  gap: 3rem; /* Adds space between logo and nav links */
 }
 
 /* Top navigation links */

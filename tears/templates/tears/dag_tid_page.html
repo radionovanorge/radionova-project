@@ -7,11 +7,9 @@
     <link href="{% static 'tears/css/about.css' %}" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<header class="w-full bg-[#f7f4f4] p-10 mb-8">
-    <div class="program-container px-4 py-8 max-w-4xl mx-auto">
-  
-      <!-- Breadcrumb -->
-       <div class="text-sm text-gray-500 mb-4 mt-1">
+<header class="w-full p-10">
+   <!-- Breadcrumb -->
+       <div class="text-sm text-gray-500 mb-4 mt-1 max-w-5xl mx-auto px-4">
     {% if self.get_ancestors|length > 1 %}
     <nav aria-label="Breadcrumb">
         <ul class="flex items-center space-x-2 flex-wrap">
@@ -36,6 +34,9 @@
     </nav>
     {% endif %}
 </div>
+    <div class="program-container px-4 py-2 max-w-4xl mx-auto">
+  
+     
   
       <!-- PAGE TITLE  -->
       <h1 class="text-4xl font-bold text-[#511120] mb-6">{{ self.title }}</h1>
@@ -43,9 +44,9 @@
     </div>
   </header>
   
-        
+<main class="bg-[#FFF7F7]">
 <!-- About Radio Nova   -->
-<div class="max-w-4xl mx-auto px-4 py-12 prose">
+<div class="max-w-4xl mx-auto px-4 py-12 prose ">
   {% for block in page.about_radio_nova %}
     {% if block.block_type == "content" %}
       {{ block.value|richtext }}
@@ -62,7 +63,7 @@
     <h2 class="text-2xl font-bold mb-8">Dagtid</h2>
     <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10">
       {% for block in page.ansatte %}
-        <div class="bg-white p-4 rounded-lg text-center flex flex-col items-center">
+        <div class=" p-4 rounded-lg text-center flex flex-col items-center">
           {% if block.value.image %}
             <div class="w-full h-auto aspect-square overflow-hidden mb-4">
               {% image block.value.image fill-400x400 class="object-cover w-full h-full" alt=block.value.name %}

@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Optional: force label colors (if your CSS doesn’t already cover it)
-    activeBtn.querySelectorAll('.text-wrapper-4, .text-wrapper-6').forEach(t => t.style.color = '#000');
+    activeBtn.querySelectorAll('.text-wrapper-4, .text-wrapper-6').forEach(t => t.style.color = '#fff');
     inactiveBtn.querySelectorAll('.text-wrapper-4, .text-wrapper-6').forEach(t => t.style.color = '#511120');
   }
 

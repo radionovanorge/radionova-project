@@ -52,12 +52,12 @@
 
 
 
-  <div id="hovedinnhold" class="min-h-screen bg-white">
+  <div id="hovedinnhold" class="min-h-screen bg-[#FBF9FA]">
     <!-- Content will be added here -->
  
 
   <!-- NETTSAKER -->
-  <main class="max-w-6xl mx-auto px-4 py-8 ">
+  <main class="max-w-5xl mx-auto px-4 py-8 ">
     <div class="grid grid-cols-1 lg:grid-cols-6 gap-6">
 
       {% for post in latest_posts %}
@@ -73,17 +73,17 @@
           <img src="{{ img.url }}" alt="{{ post.title }}" class="w-full h-80 object-cover">
           {% endif %}
           {% endfor %}
-          {% if post.typeArticle == "intervju" or post.typeArticle == "anmeldelse" %}
-          <div class="absolute bottom-0 left-2 translate-y-1/2">
-            <div class="interview-parallelogram text-white text-xs font-bold px-8 py-2">
-              {{ post.get_typeArticle_display }}
-            </div>
-          </div>
-          {% endif %}
+        <!--  {% if post.typeArticle == "intervju" or post.typeArticle == "anmeldelse" %}-->
+        <!--  <div class="absolute bottom-0 left-2 translate-y-1/2">-->
+        <!--    <div class="interview-parallelogram text-white text-xs font-bold px-8 py-2">-->
+        <!--      {{ post.get_typeArticle_display }}-->
+        <!--    </div>-->
+        <!--  </div>-->
+        <!--  {% endif %}-->
 
         </div> 
         <div class="p-4 flex flex-col flex-1">  
-          <h2 class="text-2xl font-bold text-gray-800 mb-2 group-hover:text-red-700">{{ post.title }}</h2>
+          <h2 class="font-inter text-[24px] leading-[1.5] text-[#6F1228] group-hover:text-red-700">{{ post.title }}</h2>
           <!-- dette her er tags <div class="flex flex-wrap gap-2 mt-2">
             {% if post.program and post.program.category %}
               {% with category_name=post.program.get_category_display %}
@@ -123,17 +123,17 @@
           <img src="{{ img.url }}" alt="{{ post.title }}" class="w-full h-80 object-cover">
           {% endif %}
           {% endfor %}
-          {% if post.typeArticle == "intervju" or post.typeArticle == "anmeldelse" %}
-          <div class="absolute bottom-0 left-2 translate-y-1/2">
-            <div class="interview-parallelogram text-white text-xs font-bold px-8 py-2">
-              {{ post.get_typeArticle_display }}
-            </div>
-          </div>
-          {% endif %}
+            <!--  {% if post.typeArticle == "intervju" or post.typeArticle == "anmeldelse" %}-->
+        <!--  <div class="absolute bottom-0 left-2 translate-y-1/2">-->
+        <!--    <div class="interview-parallelogram text-white text-xs font-bold px-8 py-2">-->
+        <!--      {{ post.get_typeArticle_display }}-->
+        <!--    </div>-->
+        <!--  </div>-->
+        <!--  {% endif %}-->
 
         </div>
         <div class="p-4 flex flex-col flex-1">
-          <h2 class="text-xl font-bold text-gray-800 mb-2 group-hover:text-red-700">{{ post.title }}</h2>
+          <h2 class="font-inter text-[24px] leading-[1.5] text-[#6F1228] group-hover:text-red-700">{{ post.title }}</h2>
         </div>
       </a>
 
@@ -148,17 +148,17 @@
           <img src="{{ img.url }}" alt="{{ post.title }}" class="w-full h-64 object-cover">
           {% endif %}
           {% endfor %}
-          {% if post.typeArticle == "intervju" or post.typeArticle == "anmeldelse" %}
-          <div class="absolute bottom-0 left-2 translate-y-1/2">
-            <div class="interview-parallelogram text-white text-xs font-bold px-8 py-2">
-              {{ post.get_typeArticle_display }}
-            </div>
-          </div>
-          {% endif %}
+            <!--  {% if post.typeArticle == "intervju" or post.typeArticle == "anmeldelse" %}-->
+        <!--  <div class="absolute bottom-0 left-2 translate-y-1/2">-->
+        <!--    <div class="interview-parallelogram text-white text-xs font-bold px-8 py-2">-->
+        <!--      {{ post.get_typeArticle_display }}-->
+        <!--    </div>-->
+        <!--  </div>-->
+        <!--  {% endif %}-->
 
         </div>
         <div class="p-4 flex flex-col flex-1">
-          <h2 class="text-lg font-bold text-gray-800 mb-2 group-hover:text-red-700">{{ post.title }}</h2>
+          <h2 class="font-inter text-[24px] leading-[1.5] text-[#6F1228] group-hover:text-red-700">{{ post.title }}</h2>
         </div>
       </a>
 
@@ -186,17 +186,18 @@
       {% endif %}
     {% endfor %}
 
-    {% if post.typeArticle == "intervju" or post.typeArticle == "anmeldelse" %}
-      <div class="absolute bottom-3 left-0 translate-y-1/2">
-        <div class="interview-parallelogram-small text-white text-[10px] font-bold px-3 py-1">
-          {{ post.get_typeArticle_display }}
-        </div>
-      </div>
-    {% endif %}
+    <!--{% if post.typeArticle == "intervju" or post.typeArticle == "anmeldelse" %}-->
+    <!--  <div class="absolute bottom-3 left-0 translate-y-1/2">-->
+    <!--    <div class="interview-parallelogram-small text-white text-[10px] font-bold px-3 py-1">-->
+    <!--      {{ post.get_typeArticle_display }}-->
+    <!--    </div>-->
+    <!--  </div>-->
+    <!--{% endif %}-->
+      
   </div>
 
   <div class="flex flex-col justify-center p-4 max-lg:w-full lg:flex-1">
-    <h2 class="text-base font-bold text-gray-800 mb-2 group-hover:text-red-700">
+    <h2 class="text-base font-inter leading-[1.5] text-[#6F1228] mb-2 group-hover:text-red-700">
       {{ post.title }}
     </h2>
   </div>
@@ -213,17 +214,17 @@
       {% endif %}
     {% endfor %}
 
-    {% if post.typeArticle == "intervju" or post.typeArticle == "anmeldelse" %}
-      <div class="absolute bottom-3 left-0 translate-y-1/2">
-        <div class="interview-parallelogram-small text-white text-[10px] font-bold px-3 py-1">
-          {{ post.get_typeArticle_display }}
-        </div>
-      </div>
-    {% endif %}
+   <!--  {% if post.typeArticle == "intervju" or post.typeArticle == "anmeldelse" %}-->
+        <!--  <div class="absolute bottom-0 left-2 translate-y-1/2">-->
+        <!--    <div class="interview-parallelogram text-white text-xs font-bold px-8 py-2">-->
+        <!--      {{ post.get_typeArticle_display }}-->
+        <!--    </div>-->
+        <!--  </div>-->
+        <!--  {% endif %}-->
   </div>
 
   <div class="flex flex-col justify-center p-4 max-lg:w-full lg:flex-1">
-    <h2 class="text-base font-bold text-gray-800 mb-2 group-hover:text-red-700">
+    <h2 class="text-base font-inter leading-[1.5] text-[#6F1228] group-hover:text-red-700">
       {{ post.title }}
     </h2>
   </div>
@@ -241,17 +242,17 @@
           <img src="{{ img.url }}" alt="{{ post.title }}" class="w-full h-64 object-cover">
           {% endif %}
           {% endfor %}
-          {% if post.typeArticle == "intervju" or post.typeArticle == "anmeldelse" %}
-          <div class="absolute bottom-0 left-2 translate-y-1/2">
-            <div class="interview-parallelogram text-white text-xs font-bold px-8 py-2">
-              {{ post.get_typeArticle_display }}
-            </div>
-          </div>
-          {% endif %}
+          <!--  {% if post.typeArticle == "intervju" or post.typeArticle == "anmeldelse" %}-->
+        <!--  <div class="absolute bottom-0 left-2 translate-y-1/2">-->
+        <!--    <div class="interview-parallelogram text-white text-xs font-bold px-8 py-2">-->
+        <!--      {{ post.get_typeArticle_display }}-->
+        <!--    </div>-->
+        <!--  </div>-->
+        <!--  {% endif %}-->
 
         </div>
         <div class="p-4 flex flex-col flex-1">
-          <h2 class="text-lg font-bold text-gray-800 mb-2 group-hover:text-red-700">{{ post.title }}</h2>
+          <h2 class="font-inter text-[24px] leading-[1.5] text-[#6F1228] group-hover:text-red-700">{{ post.title }}</h2>
         </div>
       </a>
       {% endif %}
@@ -260,128 +261,148 @@
     </div>
   
   </main>
-  <!-- A-lista seksjon -->
-<section class="bg-[#FBF9FA] py-10 px-4">
-  <div class="max-w-6xl mx-auto flex flex-col md:flex-row">
+<!-- A-lista seksjon -->
+<section class="bg-[#FBF9FA] py-4">
+  <div class="max-w-5xl mx-auto">
     
-    <!-- Vertikal strek -->
-    <div class="w-2 bg-[#511120] mr-4 rounded-sm"></div>
-
-    <!-- Innhold -->
-    <div class="flex-1">
-      <!-- Tittel -->
-      <h2 class="text-xl font-semibold text-[#511120] mb-6">Listemusikk</h2>
-
-      <!-- Grid med fleksible kort -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-        {% for item in latest_alister %}
-        <a href="{{ item.url }}" class="bg-[#511120] text-white group hover:bg-[#3b0a18] transition w-full flex flex-col justify-between">
-          <div class="p-4">
-            <h3 class="text-lg font-bold">A-LISTA</h3>
-            {% if item.dato %}
-              <p class="text-sm">Uke {{ item.dato|date:"W" }} – {{ item.dato|date:"W"|add:"1" }}</p>
-            {% endif %}
-          </div>
-          <div>
-            {% with image_found=False %}
-              {% for block in item.content %}
-                {% if block.block_type == "main_image" %}
-                  {% image block.value fill-600x338 as img %}
-                  <img src="{{ img.url }}" alt="{{ item.title }}" class="w-full h-48 object-cover" />
-          
-    
-                {% endif %}
-              {% endfor %}
-            
-            {% endwith %}
-          </div>
-        </a>
-        {% endfor %}
+    <!-- Rosa bakgrunnsboks med luft rundt innholdet -->
+    <div class="bg-[#FFDCDC] px-6 py-8">
+      
+      <!-- Tittel med venstre strek -->
+      <div class="flex items-start mb-6">
+        <div class="w-2 h-6 bg-[#511120] rounded-sm mr-4"></div>
+        <h2 class="text-xl font-bold text-[#511120] uppercase">Listemusikk</h2>
       </div>
 
-      <!-- Knapp -->
-      <div class="mt-4">
-        <a href="/nettsaker/?kategori=a-lista"
-   class="inline-flex items-center border-2 border-[#511120] text-[#511120] text-sm font-medium px-5 py-2 rounded-full hover:bg-[#511120] hover:text-white transition">
-  Se alle A-lister →
-</a>
+      <!-- Kort -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+        {% for item in latest_alister %}
+        <a href="{{ item.url }}" class="bg-white shadow-sm group transition duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-lg">
+
+          <!-- Topp-bar -->
+          <div class="bg-[#6F1228] text-white p-4 flex justify-between items-start h-[110px]">
+            <div>
+              <h3 class="text-base font-bold uppercase leading-snug">A-LISTA</h3>
+              {% if item.dato %}
+              <p class="mt-2 font-normal text-[16px] leading-[1.5]">Uke {{ item.dato|date:"W" }}–{{ item.dato|date:"W"|add:"1" }}</p>
+              {% endif %}
+            </div>
+            <div class="text-xl leading-none">→</div>
+          </div>
+
+          <!-- Bilde -->
+          <div>
+            {% for block in item.content %}
+              {% if block.block_type == "main_image" %}
+                {% image block.value fill-600x400 as img %}
+                <img src="{{ img.url }}" alt="{{ item.title }}" class="w-full h-60 object-cover" />
+              {% endif %}
+            {% endfor %}
+          </div>
+
+        </a>
+        {% endfor %}
       </div>
     </div>
   </div>
 </section>
-</div>
-<!-- Anmedelser bg-[#FBF9FA]-->
-<div class="py-1">
-  <div class="border-t-4 border-[#511120] py-5 max-w-6xl mx-auto px-6">
 
-    <!-- Tittel -->
-    <h2 class="text-base font-semibold text-[#511120] text-xl mb-3">Anmeldelser</h2>
+<!-- Anmeldelser -->
+<section class="bg-[#FBF9FA] py-4 px-4">
+  <div class="max-w-5xl mx-auto">
+    
+    <!-- Rosa boks med padding -->
+    <div class="bg-[#FFDCDC] px-6 py-8">
 
-    <!-- Kort -->
-    <div class="border-gray-400 p-3 grid grid-cols-1 md:grid-cols-3 gap-2 bg-gray-50">
-      {% for post in latest_reviews %}
-      <a href="{{ post.url }}" class="bg-white hover:bg-gray-100 p-3 flex items-center justify-between">
-        <div>
-          <p class="text-sm text-[#511120]">
-            {% if post.overtittel%}
-              {{ post.overtittel }}
-            {% else %}
-              Anmeldelse
-            {% endif %}
-          </p>
-          <p class="text-lg font-bold text-[#511120]">“{{ post.title }}”</p>
-        </div>
-        <span class="text-[#511120] text-xl">→</span>
-      </a>
-      {% endfor %}
-    </div>
-
-    <!-- Knapp -->
-    <div class="mt-4">
-      <a href="/nettsaker/?kategori=anmeldelse"
-   class="inline-flex items-center border-2 border-[#511120] text-[#511120] text-sm font-medium px-5 py-2 rounded-full hover:bg-[#511120] hover:text-white transition">
-  Se alle anmeldelser →
-</a>
-    </div>
-  </div>
-</div>
-
-<!-- Intervju bg-[#FBF9FA]-->
-<div class=" py-2">
-  <div class="border-t-4 border-b-4 border-[#511120] py-4 max-w-6xl mx-auto px-4">
-  <h2 class="text-base font-semibold text-[#511120] mb-3 text-xl">Intervjuer</h2>
-
-  <div class="border-gray-400 p-3 grid grid-cols-1 md:grid-cols-2 gap-2 bg-gray-50">
-    {% for post in latest_interviews %}
-    <a href="{{ post.url }}" class="bg-white hover:bg-gray-100 p-3 flex items-center justify-between">
-      <div>
-        <p class="text-sm text-[#511120]">
-          {% if post.overtittel %}{{ post.overtittel }}{% else %} Intervju {% endif %}
-        </p>
-        <p class="text-base font-bold text-[#511120]">{{ post.title }}</p>
+      <!-- Tittel med strek -->
+      <div class="flex items-start mb-6">
+        <div class="w-2 h-6 bg-[#511120] rounded-sm mr-4"></div>
+        <h2 class="text-xl font-bold text-[#511120] uppercase">Anmeldelser</h2>
       </div>
-      <span class="text-[#511120] text-xl">→</span>
-    </a>
-    {% endfor %}
-  </div>
 
-  
+      <!-- Kortgrid -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+        {% for post in latest_reviews %}
+        <a href="{{ post.url }}" class="bg-white shadow-sm group transition duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-lg">
 
-    <!-- Knapp -->
-    <div class="mt-4">
-      <a href="/nettsaker/?kategori=intervju"
-   class="inline-flex items-center border-2 border-[#511120] text-[#511120] text-sm font-medium px-5 py-2 rounded-full hover:bg-[#511120] hover:text-white transition">
-  Se alle intervjuer →
-</a>
+          <!-- Topp-bar -->
+          <div class="bg-[#6F1228] text-white p-4 flex justify-between items-start h-[110px]">
+            <div>
+              <p class="text-base font-bold uppercase leading-snug">
+                {% if post.overtittel %}
+                  {{ post.overtittel }}
+                {% else %}
+                  Anmeldelse
+                {% endif %}
+              </p>
+              <p class="mt-2 font-normal text-[16px] leading-[1.5]">“{{ post.title }}”</p>
+            </div>
+            <div class="text-xl leading-none">→</div>
+          </div>
+
+          <!-- Bilde -->
+          <div>
+            {% for block in post.body %}
+              {% if block.block_type == "main_image" %}
+                {% image block.value fill-600x400 as img %}
+                <img src="{{ img.url }}" alt="{{ post.title }}" class="w-full h-60 object-cover" />
+              {% endif %}
+            {% endfor %}
+          </div>
+
+        </a>
+        {% endfor %}
+      </div>
     </div>
+  </div>
+</section>
 
+<!-- Intervjuer -->
+<section class="bg-[#FBF9FA] py-4 px-4">
+  <div class="max-w-5xl mx-auto">
+    
+    <!-- Rosa bakgrunn med innvendig padding -->
+    <div class="bg-[#FFDCDC] px-6 py-8">
 
+      <!-- Tittel med strek -->
+      <div class="flex items-start mb-6">
+        <div class="w-2 h-6 bg-[#511120] rounded-sm mr-4"></div>
+        <h2 class="text-xl font-bold text-[#511120] uppercase">Intervjuer</h2>
+      </div>
 
+      <!-- Grid med kort -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-6">
+        {% for post in latest_interviews %}
+        <a href="{{ post.url }}" class="bg-white shadow-sm group transition duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-lg">
 
+          <!-- Toppbar -->
+          <div class="bg-[#6F1228] text-white p-4 flex justify-between items-start h-[110px]">
+            <div>
+              <p class="text-base font-bold uppercase leading-snug">
+                {% if post.overtittel %}{{ post.overtittel }}{% else %} Intervju {% endif %}
+              </p>
+              <p class="mt-2 font-normal text-[16px] leading-[1.5]">{{ post.title }}</p>
+            </div>
+            <div class="text-xl leading-none">→</div>
+          </div>
 
+          <!-- Bilde -->
+          <div>
+            {% for block in post.body %}
+              {% if block.block_type == "main_image" %}
+                {% image block.value fill-600x400 as img %}
+                <img src="{{ img.url }}" alt="{{ post.title }}" class="w-full h-60 object-cover" />
+              {% endif %}
+            {% endfor %}
+          </div>
 
+        </a>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
 
-</div>
 
 
 </body>

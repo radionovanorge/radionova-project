@@ -20,6 +20,7 @@ from django import forms
 from django.contrib.auth import get_user_model
 from .blocks import CenteredFlexBlock
 from wagtail.admin.forms import WagtailAdminPageForm
+from .blocks import Weekday, TimeChoices, ImageWithDescriptionBlock, CenteredFlexBlock, QuoteBlock
 
 
 
@@ -278,6 +279,7 @@ from wagtail.embeds.blocks import EmbedBlock
 from django import forms
 from django.contrib.auth import get_user_model
 from .blocks import CenteredFlexBlock  
+from .blocks import QuoteBlock
 
 class ProgramPage(Page):
     page_description = "This is the program page of the website and has the content at e.g. https://radionova.no/programmer/frokost."
@@ -441,6 +443,7 @@ class BlogPage(Page):
             ("image_with_description", ImageWithDescriptionBlock()),
             ("content", blocks.RichTextBlock()),
             ("flex_block", CenteredFlexBlock()),
+            ("quote", QuoteBlock()),
         ],
         blank=True,
     )

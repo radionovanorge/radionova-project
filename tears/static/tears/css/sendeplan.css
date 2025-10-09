@@ -8,7 +8,7 @@ body{
     width: 100%;
     align-items: left;
     position: relative;
-    background-color: #ffffff;
+
     cursor: default;
     user-select: none;
     
@@ -180,9 +180,9 @@ body{
   border-top:2px solid var(--burgundy);
   border-left:2px solid var(--burgundy);
   border-right:2px solid var(--burgundy);
-  border-bottom: 3px solid var(--white);
+  border-bottom: 3px solid var #FFF7F7;
   border-radius: 1px 1px 0 0;
-  background:var(--white); color:var(--black);
+  background:#511120; color:white;
   transition: background-color .15s ease, color .15s ease, border-color .15s ease;
 }
 .component-4{ /* inaktiv tab */
@@ -193,7 +193,7 @@ body{
   border-right:2px solid var(--burgundy);
   border-bottom: 1px solid var(--burgundy);
   border-radius: 1px 1px 0 0;
-  background:var(--pill-bg); color:var(--black);
+  background:white; color:var(--black);
   transition: background-color .15s ease, color .15s ease, border-color .15s ease;
 }
 
@@ -204,18 +204,18 @@ body{
 .component-5{ /* aktiv dag */
   display:inline-block; padding:.5rem 1.25rem;
   border-radius:.375rem; border:2px solid var(--burgundy);
-  background-color:var(--white); color:var(--burgundy);
+  background-color:#511120; color:var(--white);
   transition: background-color .15s ease, color .15s ease, border-color .15s ease;
 }
 .component-6{ /* inaktiv dag */
   display:inline-block; padding:.5rem 1.25rem;
   border-radius:.375rem; border:2px solid var(--burgundy);
-  background:var(--pill-bg); color:var(--burgundy);
+  background:white; color:black;
   transition: background-color .15s ease, color .15s ease, border-color .15s ease;
 }
 
 /* ---- Tekst wrappers (om du bruker dem for farge) ---- */
-.text-wrapper-6{ color: var(--black); }
+.text-wrapper-6{ color: white; }
 .text-wrapper-4{ color: var(--burgundy-alt); }
 
 /* Skjul dekorgruppe hvis den ikke skal påvirke layout */

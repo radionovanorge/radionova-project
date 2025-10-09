@@ -10,7 +10,34 @@
     <script src="https://cdn.tailwindcss.com"></script>
 
 </head>
-
+<header class="w-full p-4">
+ <!-- Breadcrumb -->
+       <div class="text-sm text-gray-500 mt-1 max-width-5xl mx-auto px-4">
+    {% if self.get_ancestors|length > 1 %}
+    <nav aria-label="Breadcrumb">
+        <ul class="flex items-center space-x-2 flex-wrap">
+            {% for p in self.get_ancestors %}
+            {% if not p.is_root %}
+            <li class="flex items-center {% if forloop.counter > 1 and forloop.counter < forloop.parentloop.counter0|add:'-1' %}hidden sm:flex{% endif %}">
+                <a href="{{ p.url }}" class="hover:text-red-600 transition-colors">{{ p.title }}</a>
+                <span class="mx-2 text-gray-400">→</span>
+            </li>
+            {% endif %}
+            {% endfor %}
+            <!-- Show ellipsis on small screens if there are hidden items -->
+            {% if self.get_ancestors|length > 3 %}
+            <li class="sm:hidden flex items-center">
+                <span class="text-gray-400">...</span>
+                <span class="mx-2 text-gray-400">→</span>
+            </li>
+            {% endif %}
+            <!-- Current Page -->
+            <li class="text-red-600 font-semibold">{{ self.title }}</li>
+        </ul>
+    </nav>
+    {% endif %}
+</div>
+</header>
 {% for block in page.content %}
     {% if block.block_type == 'main_image' %}
       <div class="relative h-80 md:h-[400px] overflow-hidden">
@@ -36,45 +63,20 @@
       </div>
     {% endif %}
   {% endfor %}
-<div class="bg-[#f7f4f4] w-full p-10 mb-8">
+<div class=" w-full p-10">
     <div class="max-w-4xl mx-auto px-4">
-      <!-- Breadcrumb -->
-       <div class="text-sm text-gray-500 mb-4 mt-1">
-    {% if self.get_ancestors|length > 1 %}
-    <nav aria-label="Breadcrumb">
-        <ul class="flex items-center space-x-2 flex-wrap">
-            {% for p in self.get_ancestors %}
-            {% if not p.is_root %}
-            <li class="flex items-center {% if forloop.counter > 1 and forloop.counter < forloop.parentloop.counter0|add:'-1' %}hidden sm:flex{% endif %}">
-                <a href="{{ p.url }}" class="hover:text-red-600 transition-colors">{{ p.title }}</a>
-                <span class="mx-2 text-gray-400">→</span>
-            </li>
-            {% endif %}
-            {% endfor %}
-            <!-- Show ellipsis on small screens if there are hidden items -->
-            {% if self.get_ancestors|length > 3 %}
-            <li class="sm:hidden flex items-center">
-                <span class="text-gray-400">...</span>
-                <span class="mx-2 text-gray-400">→</span>
-            </li>
-            {% endif %}
-            <!-- Current Page -->
-            <li class="text-red-600 font-semibold">{{ self.title }}</li>
-        </ul>
-    </nav>
-    {% endif %}
-</div>
+     
 
 
       <!-- Ingress -->
       <p class="text-lg text-gray-800 mb-8 leading-relaxed">{{ page.ingress }}</p>
     </div>
 </div>
-
+<main class="bg-[#fff6f7] py-4">
 
 <!-- Forfatter -->
 {% if page.forfatter %}
-  <div class="bg-white px-4 md:px-6 pb-6 max-w-3xl mx-auto">
+  <div class=" px-4 md:px-6 pb-6 max-w-3xl mx-auto">
     <p class="text-gray-500 text-sm"> <span class="font-medium text-black">{{ page.forfatter }}</span></p>
     <!--Page program url -->
       <p class="text-red-500 text-sm">
@@ -93,6 +95,7 @@
     {% endif %}
   {% endfor %}
 </div>
+</main>
 <!-- SPOTIFY SECTION -->
 <section class="bg-[#fff6f7] py-12 px-4">
   <div class="max-w-4xl mx-auto">

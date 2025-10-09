@@ -35,10 +35,9 @@
 </head>
 
 <body>
-  <div class="bg-[#f7f4f4] w-full p-10 mb-8">
-    <div class="max-w-4xl mx-auto px-4">
-      <!-- Breadcrumb -->
-       <div class="text-sm text-gray-500 mb-4 mt-1">
+  <div class=" w-full p-10 mb-8">
+     <!-- Breadcrumb -->
+       <div class="text-sm text-gray-500 mb-4 mt-1 max-w-5xl mx-auto px-4">
     {% if self.get_ancestors|length > 1 %}
     <nav aria-label="Breadcrumb">
         <ul class="flex items-center space-x-2 flex-wrap">
@@ -63,6 +62,8 @@
     </nav>
     {% endif %}
 </div>
+    <div class="max-w-4xl mx-auto px-4">
+     
 
       <!-- Page Title -->
       <h1 class="text-4xl font-bold text-[#511120] mb-6">{{ page.title }}</h1>
@@ -73,7 +74,7 @@
 
 
     <!-- Main Image -->
-    <div class="max-w-5xl mx-auto px-4 mb-4">
+    <div class="max-w-5xl mx-auto px-4 mb-2">
       {% for block in page.body %}
       {% if block.block_type == "main_image" %}
       {% image block.value fill-1200x600 class="rounded shadow-md w-full object-cover" %}
@@ -86,13 +87,14 @@
     </div>
   </div>
   <!-- Meta Info -->
-  <div class="max-w-4xl mx-auto px-4 text-sm text-gray-600 mb-12">
+  <main class=" bg-[#f7f4f4]">
+  <div class="max-w-4xl mx-auto px-4 text-sm text-gray-600 mb-12 py-8">
     <p>Publisert: {{ page.date }}</p>
     <p>Skrevet av {{ page.forfatter }} for <a class="text-[#511120] font-semibold" href="{{page.program.url}}">{{ page.program }}</a></p>
   </div>
 
   <!-- Article Content -->
- <div class="max-w-3xl mx-auto px-4 prose prose-xl prose-img:rounded-lg prose-p:leading-relaxed">
+ <div class="max-w-3xl mx-auto px-4 prose prose-xl prose-img:rounded-lg prose-p:leading-relaxed ">
   {% for block in page.body %}
     {% if block.block_type == "content" %}
       {{ block.value }}
@@ -107,11 +109,20 @@
       {% elif block.block_type == "flex_block" %}
         {% include_block block %}
    
-      {% elif block.value.quote %}
-      <blockquote class="border-l-4 border-gray-300 pl-4 italic text-lg leading-relaxed my-8">
-        {{ block.value.quote }}
-         </blockquote>
-          {% endif %}
+     {% elif block.block_type == "quote" %}
+<div class="my-8">
+    <div class="bg-[#FFDCDC] p-6">
+        <p class="text-lg leading-relaxed text-gray-900">
+            {{ block.value.quote }}
+        </p>
+      </div>
+    {% if block.value.attribution %}
+    <p class="mt-4 text-gray-700 text-base italic">
+       <p>- {{ block.value.attribution }}
+    </p>
+    {% endif %}
+</div>
+{% endif %}
            
     
   {% endfor %}

@@ -64,10 +64,9 @@
 <body>
 
 
-  <header class="w-full bg-[#f7f4f4] p-10 mb-8">
-    <div class="max-w-6xl mx-auto px-200">
-      <!-- Breadcrumb Navigation -->
-      <div class="text-sm text-gray-500 mb-4 mt-1">
+  <header class="w-full p-10">
+    <!-- Breadcrumb Navigation -->
+      <div class="text-sm text-gray-500 mb-10 mt-1 max-w-6xl mx-auto px-4">
         {% if self.get_ancestors|length > 1 %}
         <nav aria-label="Breadcrumb">
           <ul class="flex items-center space-x-2 flex-wrap">
@@ -93,24 +92,26 @@
         </nav>
         {% endif %}
       </div>
+    <div class="max-w-5xl mx-auto px-200">
+      
 
 
       <!-- Title Section -->
       <h1 class="sendeplan-heading"> Sendeplan </h1>
-      <h2 class="text-base font-semibold text-[#511120] mb-3 mt-3 ml-2 text-xl"> Radio Nova sender programmer
+      <h2 class="text-base font-normal text-[#511120] mt-3 ml-2 text-xl px-4 py-2"> Radio Nova sender programmer
         hverdager 06:00 til 00:00, og helger 09:00 til 00:00. </h2>
     </div>
   </header>
 
-
+<main class="bg-[#fff6f7] py-4 max-w-8xl mx-auto">
   <div class="desktop-sendeplan mb-2">
-    <div class="bg-white p-6 md:p-8">
+    <div class=" p-6 md:p-8">
 
       <!-- TABS: bruker dine klassenavn + Tailwind for utseende -->
       <div class="frame-6 relative">
         <div class="flex gap-3">
           <!-- Aktiv tab (component-2) -->
-          <button class="component-2 inline-flex items-center rounded-sm border-2 border-[#4B0C1B] text-white px-4 py-2">
+          <button class="component-2 inline-flex items-center rounded-sm border-2 border-[#4B0C1B] text-white px-4 py-2 hover:bg-[#FFDCDC]">
             <!-- Bruk gjerne SVG-ikonet ditt her -->
             <svg class="w-5 h-5 mr-2 color_logo text-white" viewBox="0 0 20 20" fill="none">
               <rect x="3" y="4" width="14" height="12" rx="2" stroke="currentColor" stroke-width="1.7" />
@@ -126,7 +127,7 @@
 
           <!-- Inaktiv tab (component-4) -->
           <button
-            class="component-4 inline-flex items-center rounded-md border-2 border-[#4B0C1B] bg-[#EBDDE1] text-[#4B0C1B] px-4 py-2">
+            class="component-4 inline-flex items-center rounded-md border-2 border-[#4B0C1B] bg-[#EBDDE1] text-[#4B0C1B] px-4 py-2 hover:bg-[#FFDCDC]">
             <svg class="w-5 h-5 mr-2 color_logo text-[#4B0C1B]" viewBox="0 0 20 20" fill="none">
               <rect x="3" y="3" width="3" height="14" rx="1" stroke="currentColor" stroke-width="1.7" />
               <rect x="8.5" y="3" width="3" height="14" rx="1" stroke="currentColor" stroke-width="1.7" />
@@ -152,37 +153,37 @@
         <div class="frame-2">
           <div class="frame-10 flex flex-wrap gap-4">
             <button
-              class="component-5 inline-block px-5 py-2 rounded-md border-2 border-[#4B0C1B] bg-[#F2E7EB] text-[#4B0C1B]"
+              class="component-5 inline-block px-5 py-2 rounded-md border-2 border-[#4B0C1B] bg-[#F2E7EB] text-[#4B0C1B] hover:bg-[#FFDCDC]"
               id="mandag">
               <div class="text-wrapper-4">Mandag</div>
           </button>
             <button
-              class="component-6 inline-block px-5 py-2 rounded-md border-2 border-[#4B0C1B] bg-[#F2E7EB] text-[#4B0C1B]"
+              class="component-6 inline-block px-5 py-2 rounded-md border-2 border-[#4B0C1B] bg-[#F2E7EB] text-[#4B0C1B] hover:bg-[#FFDCDC]"
               id="tirsdag">
               <div class="text-wrapper-4">Tirsdag</div>
           </button>
             <button
-              class="component-6 inline-block px-5 py-2 rounded-md border-2 border-[#4B0C1B] bg-[#F2E7EB] text-[#4B0C1B]"
+              class="component-6 inline-block px-5 py-2 rounded-md border-2 border-[#4B0C1B] bg-[#F2E7EB] text-[#4B0C1B] hover:bg-[#FFDCDC]"
               id="onsdag">
               <div class="text-wrapper-4">Onsdag</div>
             </button>
             <button
-              class="component-6 inline-block px-5 py-2 rounded-md border-2 border-[#4B0C1B] bg-[#F2E7EB] text-[#4B0C1B]"
+              class="component-6 inline-block px-5 py-2 rounded-md border-2 border-[#4B0C1B] bg-[#F2E7EB] text-[#4B0C1B] hover:bg-[#FFDCDC]"
               id="torsdag">
               <div class="text-wrapper-4">Torsdag</div>
           </button>
             <button
-              class="component-6 inline-block px-5 py-2 rounded-md border-2 border-[#4B0C1B] bg-[#F2E7EB] text-[#4B0C1B]"
+              class="component-6 inline-block px-5 py-2 rounded-md border-2 border-[#4B0C1B] bg-[#F2E7EB] text-[#4B0C1B] hover:bg-[#FFDCDC]"
               id="fredag">
               <div class="text-wrapper-4">Fredag</div>
           </button>
             <button
-              class="component-6 inline-block px-5 py-2 rounded-md border-2 border-[#4B0C1B] bg-[#F2E7EB] text-[#4B0C1B]"
+              class="component-6 inline-block px-5 py-2 rounded-md border-2 border-[#4B0C1B] bg-[#F2E7EB] text-[#4B0C1B] hover:bg-[#FFDCDC]"
               id="lordag">
               <div class="text-wrapper-4">Lørdag</div>
           </button>
             <button
-              class="component-6 inline-block px-5 py-2 rounded-md border-2 border-[#4B0C1B] bg-[#F2E7EB] text-[#4B0C1B]"
+              class="component-6 inline-block px-5 py-2 rounded-md border-2 border-[#4B0C1B] bg-[#F2E7EB] text-[#4B0C1B] hover:bg-[#FFDCDC]"
               id="sondag">
               <div class="text-wrapper-4">Søndag</div>
           </button>
@@ -559,7 +560,7 @@
     <div class="content-wrap" id="wrap">
       <div class="schedule-content-wrapper" style="min-width: 1200px;">
         <div class="max-w-10xl mx-auto">
-          <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+          <div class=" rounded-lg shadow-lg overflow-hidden">
             <div class="flex">
               <!-- Time Column -->
               <div class="time-table">

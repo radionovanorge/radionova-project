@@ -34,8 +34,8 @@
 
     <!-- Header Section -->
 
-    <header class="w-full p-10 mb-8">
-        <div class="max-w-6xl mx-auto px-200">
+    <header class="w-full p-10">
+        <div class="max-w-[1240px] mx-auto px-200">
             <!-- Breadcrumb Navigation -->
              <div class="text-sm text-gray-500 mb-4 mt-1">
     {% if self.get_ancestors|length > 1 %}
@@ -65,11 +65,11 @@
             
 
             <!-- Title Section -->
-            <h1 class="text-4xl font-bold text-black-800">Programoversikt</h1>
+            <h1 class="text-5xl font-bold text-black-800">Programmer</h1>
         </div>
     </header>
-<main class=" bg-[#f7f4f4]">
-    <div class="w-full max-w-[1440px] mx-auto px-4 lg:px-8 xl:px-12 2xl:px-20 flex flex-col lg:flex-row gap-8  py-8">
+<main class=" bg-[#FFF7F7]">
+    <div class="w-full max-w-[1440px] mx-auto px-4 lg:px-8 xl:px-12 2xl:px-20 flex flex-col lg:flex-row gap-8 py-8">
     <!-- Main Content Wrapper -->
     <div class="flex flex-col lg:flex-row gap-8 ">
 
@@ -224,9 +224,9 @@
         <span class="ml-2 text-red-900 font-medium">Vis som liste</span>
     </button>
                     <div
-                            class="relative inline-flex items-stretch  rounded-md overflow-hidden focus-within:ring-2 focus-within:ring-red-900 focus-within:ring-offset-4">
+                            class="relative inline-flex items-stretch overflow-hidden">
                    <select id="sortSelect"
-    class="bg-transparent border-0 text-black-900 font-medium pl-2 pr-14 py-2 text-sm outline-none w-full cursor-pointer ml-2 text-red-900"
+    class="bg-white border-0 text-black-900 font-medium pl-2 pr-14 py-2 text-sm outline-none w-full cursor-pointer ml-2 text-red-900 border-2 border-red-900 hover:bg-gray-50 focus-within:ring-2 focus-within:ring-red-900"
     aria-label="Sorter">
     <option value="asc">Programnavn A til Å</option>
     <option value="desc">Programnavn Å til A</option>
