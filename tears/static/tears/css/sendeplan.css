@@ -173,18 +173,28 @@ body{
 
 /* ---- Tabs (matches det du forventer at JS toggler) ---- */
 .component-2{ /* aktiv tab */
-  position: relative;
+    position: relative;
   z-index: 10;
-  display:inline-flex; align-items:center;
-  padding:.5rem 1rem; border-radius:.375rem;
-  border-top:2px solid var(--burgundy);
-  border-left:2px solid var(--burgundy);
-  border-right:2px solid var(--burgundy);
-  border-bottom: 3px solid var #FFF7F7;
+  display: inline-flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  border-top: 2px solid var(--burgundy);
+  border-left: 2px solid var(--burgundy);
+  border-right: 2px solid var(--burgundy);
+  border-bottom: 3px solid #FFF7F7;
   border-radius: 1px 1px 0 0;
-  background:#511120; color:white;
-  transition: background-color .15s ease, color .15s ease, border-color .15s ease;
+  background: #511120;
+  color: white;
+  
+
+  transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
 }
+
+.component-2:hover .text-wrapper-6 {
+  color: black;
+}
+
+
 .component-4{ /* inaktiv tab */
   display:inline-flex; align-items:center;
   padding:.5rem 1rem; border-radius:.375rem;
@@ -216,6 +226,7 @@ body{
 
 /* ---- Tekst wrappers (om du bruker dem for farge) ---- */
 .text-wrapper-6{ color: white; }
+
 .text-wrapper-4{ color: var(--burgundy-alt); }
 
 /* Skjul dekorgruppe hvis den ikke skal påvirke layout */

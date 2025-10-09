@@ -34,6 +34,13 @@ document.addEventListener('DOMContentLoaded', () => {
     // Optional: force label colors (if your CSS doesn’t already cover it)
     activeBtn.querySelectorAll('.text-wrapper-4, .text-wrapper-6').forEach(t => t.style.color = '#fff');
     inactiveBtn.querySelectorAll('.text-wrapper-4, .text-wrapper-6').forEach(t => t.style.color = '#511120');
+    //hover state color be black on active tab only when hovering
+    activeBtn.addEventListener('mouseenter', () => {
+      activeBtn.querySelectorAll('.text-wrapper-4, .text-wrapper-6').forEach(t => t.style.color = '#000');
+    });
+    activeBtn.addEventListener('mouseleave', () => {
+      activeBtn.querySelectorAll('.text-wrapper-4, .text-wrapper-6').forEach(t => t.style.color = '#fff');
+    }); 
   }
 
   function resetAllDays() {
@@ -75,6 +82,13 @@ document.addEventListener('DOMContentLoaded', () => {
     btn.classList.remove('bg-[#F2E7EB]');
     const child = btn.querySelector('.text-wrapper-4, .text-wrapper-6');
     if (child) { child.classList.remove('text-wrapper-4'); child.classList.add('text-wrapper-6'); }
+    //hover state color be black on active tab only when hovering
+    btn.addEventListener('mouseenter', () => {
+      btn.querySelectorAll('.text-wrapper-4, .text-wrapper-6').forEach(t => t.style.color = '#000');
+    });
+    btn.addEventListener('mouseleave', () => {
+      btn.querySelectorAll('.text-wrapper-4, .text-wrapper-6').forEach(t => t.style.color = '#fff');
+    });
   }
 
   // --- Initial state --------------------------------------------------------

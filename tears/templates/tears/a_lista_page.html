@@ -10,9 +10,9 @@
     <script src="https://cdn.tailwindcss.com"></script>
 
 </head>
-<header class="w-full p-4">
- <!-- Breadcrumb -->
-       <div class="text-sm text-gray-500 mt-1 max-width-5xl mx-auto px-4">
+<div class=" w-full p-10 mb-4">
+     <!-- Breadcrumb -->
+       <div class="text-sm text-gray-500 mb-4 mt-1 max-w-5xl mx-auto px-4">
     {% if self.get_ancestors|length > 1 %}
     <nav aria-label="Breadcrumb">
         <ul class="flex items-center space-x-2 flex-wrap">
@@ -37,55 +37,73 @@
     </nav>
     {% endif %}
 </div>
-</header>
-{% for block in page.content %}
-    {% if block.block_type == 'main_image' %}
-      <div class="relative h-80 md:h-[400px] overflow-hidden">
-
-        <!-- Blurred Background -->
-        <div class="absolute inset-0 w-full h-full z-0">
-          {% image block.value fill-1200x600 as bg_image %}
-          <img src="{{ bg_image.url }}"
-               alt="{{ page.title }}"
-               class="w-full h-full object-cover blur-lg scale-105 opacity-70" />
-        </div>
-
-        <!-- Foreground Image -->
-        <div class="relative z-10 flex items-center justify-center h-full">
-          {% image block.value fill-600x400 as fg_image %}
-          <img src="{{ fg_image.url }}"
-               alt="{{ page.title }}"
-               class="object-contain max-h-full rounded shadow-xl" />
-        </div>
-
-        
-
-      </div>
-    {% endif %}
-  {% endfor %}
-<div class=" w-full p-10">
     <div class="max-w-4xl mx-auto px-4">
      
 
+      <!-- Page Title -->
+      <h1 class="text-4xl font-bold text-[#511120] mb-6">{{ page.title }}</h1>
 
       <!-- Ingress -->
       <p class="text-lg text-gray-800 mb-8 leading-relaxed">{{ page.ingress }}</p>
     </div>
-</div>
-<main class="bg-[#fff6f7] py-4">
 
-<!-- Forfatter -->
-{% if page.forfatter %}
-  <div class=" px-4 md:px-6 pb-6 max-w-3xl mx-auto">
-    <p class="text-gray-500 text-sm"> <span class="font-medium text-black">{{ page.forfatter }}</span></p>
-    <!--Page program url -->
-      <p class="text-red-500 text-sm">
-        <a href="{{ page.program.url }}" class="text-red">{{ page.program.title }}</a>
-      </p>
-    
-    <p class="text-gray-800 text-sm"> <span class="font-medium text-black">{{ page.dato }}</span></p>
+
+    <!-- Main Image -->
+    <div class="max-w-5xl mx-auto px-4 mb-2">
+      {% for block in page.content %}
+      {% if block.block_type == "main_image" %}
+      {% image block.value fill-1200x600 class="rounded shadow-md w-full object-cover" %}
+      {% endif %}
+      {% endfor %}
+      {% if page.imageDecription %}
+      <p class="text-xs text-gray-500 mt-2">{{ page.imageDecription }}</p>
+      {% endif %}
+      
+    </div>
   </div>
+  <!-- Meta Info -->
+  <main class=" bg-[#FFF7F7]">
+  <div class="max-w-4xl mx-auto px-4 text-sm text-gray-600 mb-12 py-8">
+    <p>Publisert: {{ page.date }}</p>
+    <p>Skrevet av {{ page.forfatter }} for <a class="text-[#511120] font-semibold" href="{{page.program.url}}">{{ page.program }}</a></p>
+  </div>
+
+  <!-- Article Content -->
+ <div class="max-w-3xl mx-auto px-4 prose prose-xl prose-img:rounded-lg prose-p:leading-relaxed ">
+  {% for block in page.body %}
+    {% if block.block_type == "content" %}
+      {{ block.value }}
+      
+    {% elif block.block_type == "image_with_description" %}
+      {% image block.value.image fill-1200x600 class="rounded shadow-md w-full object-cover" %}
+      
+      {% if block.value.description %}
+        <p class="text-xs text-gray-500 -mt-6">{{ block.value.description }}</p>
+      {% endif %}
+      
+      {% elif block.block_type == "flex_block" %}
+        {% include_block block %}
+   
+     {% elif block.block_type == "quote" %}
+<div class="my-8">
+    <div class="bg-[#FFDCDC] p-6">
+        <p class="text-lg leading-relaxed text-gray-900">
+            {{ block.value.quote }}
+        </p>
+      </div>
+    {% if block.value.attribution %}
+    <p class="mt-4 text-gray-700 text-base italic">
+       <p>- {{ block.value.attribution }}
+    </p>
+    {% endif %}
+</div>
 {% endif %}
+           
+    
+  {% endfor %}
+</div>
+  </div>
+  <br><br>
 <!-- Spotify Embed Section -->
 <!-- Article Content -->
  <div class="max-w-2xl mx-auto px-4 prose prose-xl prose-img:rounded-lg prose-p:leading-relaxed">
@@ -113,7 +131,7 @@
   </div>
 </section>
 
-<section class="bg-[#f5f5f5] py-12 px-4">
+<section class="bg-[#FFF7F7] py-12 px-4">
   <div class="max-w-6xl mx-auto">
     <h2 class="text-xl font-semibold mb-6">Tidligere A-lister</h2>
 
