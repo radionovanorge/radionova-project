@@ -226,7 +226,7 @@ body{
 
 /* ---- Tekst wrappers (om du bruker dem for farge) ---- */
 .text-wrapper-6{ color: white; }
-
+.component-5:hover .text-wrapper-6{ color: black; }
 .text-wrapper-4{ color: var(--burgundy-alt); }
 
 /* Skjul dekorgruppe hvis den ikke skal påvirke layout */

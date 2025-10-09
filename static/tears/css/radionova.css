@@ -180,9 +180,8 @@ body {
 /* Radio player container */
 .radio-player-container {
   width: 100%;
-  max-width: var(--site-width);
-  margin: 0 auto;
-  padding: 0 var(--site-padding);
+  max-width: 1068px;
+  margin: 0 200px;
   display: flex;
   align-items: center;
   gap: 1rem;

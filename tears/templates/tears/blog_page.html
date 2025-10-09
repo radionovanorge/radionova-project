@@ -37,7 +37,7 @@
 <body>
   <div class=" w-full p-10 mb-8">
      <!-- Breadcrumb -->
-       <div class="text-sm text-gray-500 mb-4 mt-1 max-w-5xl mx-auto px-4">
+       <div class="text-sm text-gray-500 mb-4 mt-1 max-w-[1068px] mx-auto px-4">
     {% if self.get_ancestors|length > 1 %}
     <nav aria-label="Breadcrumb">
         <ul class="flex items-center space-x-2 flex-wrap">
@@ -62,7 +62,7 @@
     </nav>
     {% endif %}
 </div>
-    <div class="max-w-4xl mx-auto px-4">
+    <div class="max-w-[910px] mx-auto px-4">
      
 
       <!-- Page Title -->
@@ -74,7 +74,7 @@
 
 
     <!-- Main Image -->
-    <div class="max-w-5xl mx-auto px-4 mb-2">
+    <div class="max-w-[910px] mx-auto px-4 mb-2">
       {% for block in page.body %}
       {% if block.block_type == "main_image" %}
       {% image block.value fill-1200x600 class="rounded shadow-md w-full object-cover" %}
@@ -88,13 +88,13 @@
   </div>
   <!-- Meta Info -->
   <main class=" bg-[#FFF7F7]">
-  <div class="max-w-4xl mx-auto px-4 text-sm text-gray-600 mb-12 py-8">
+  <div class="max-w-[910px] mx-auto px-4 text-sm text-gray-600 mb-12 py-8">
     <p>Publisert: {{ page.date }}</p>
     <p>Skrevet av {{ page.forfatter }} for <a class="text-[#511120] font-semibold" href="{{page.program.url}}">{{ page.program }}</a></p>
   </div>
 
   <!-- Article Content -->
- <div class="max-w-3xl mx-auto px-4 prose prose-xl prose-img:rounded-lg prose-p:leading-relaxed ">
+ <div class="max-w-[910px] mx-auto px-4 prose prose-xl prose-img:rounded-lg prose-p:leading-relaxed ">
   {% for block in page.body %}
     {% if block.block_type == "content" %}
       {{ block.value }}
