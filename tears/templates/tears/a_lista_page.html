@@ -52,7 +52,7 @@
     <div class="max-w-[910px] mx-auto px-4 mb-2">
       {% for block in page.content %}
       {% if block.block_type == "main_image" %}
-      {% image block.value fill-1200x600 class="rounded shadow-md w-full object-cover" %}
+      {% image block.value fill-910x500 class="rounded shadow-md w-full object-cover" %}
       {% endif %}
       {% endfor %}
       {% if page.imageDecription %}
@@ -63,7 +63,7 @@
   </div>
   <!-- Meta Info -->
   <main class=" bg-[#FFF7F7]">
-  <div class="max-w-[910px] mx-auto px-4 text-sm text-gray-600 mb-12 py-8">
+  <div class="max-w-[910px] mx-auto px-4 text-sm text-gray-600 mb-2 py-8">
     <p>Publisert: {{ page.date }}</p>
     <p>Skrevet av {{ page.forfatter }} for <a class="text-[#511120] font-semibold" href="{{page.program.url}}">{{ page.program }}</a></p>
   </div>

@@ -249,7 +249,7 @@ class ProgrammerPage(Page):
 
         # Group programs by category
         grouped_programs = {
-            display_name: ProgramPage.objects.live().filter(category=category)
+            display_name: ProgramPage.objects.live().filter(category=category, include_in_overview=True)
             for display_name, category in categories
         }
         total_program_count = sum(
@@ -307,6 +307,11 @@ class ProgramPage(Page):
         on_delete=models.SET_NULL,
         related_name="+",
         verbose_name="Hovedbilde",
+    )
+    include_in_overview = models.BooleanField(
+        "Inkluder i programoversikt?",
+        default=True,
+        help_text="Fjern haken for å skjule dette programmet fra programoversikten"
     )
 
     intro = models.CharField("Introduksjon", max_length=255, blank=True)
@@ -371,7 +376,7 @@ class ProgramPage(Page):
         FieldPanel("program"),
         FieldPanel("intro"),
         FieldPanel("sendetider"),
-        
+        FieldPanel("include_in_overview"),
         FieldPanel("instagram_link"),
         FieldPanel("facebook_link"),
         FieldPanel("tiktok_link"),
