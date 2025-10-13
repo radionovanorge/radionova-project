@@ -264,7 +264,7 @@
                         {% image program.main_image fill-150x150 as img %}
                         <img src="{{ img.url }}" alt="{{ program.title }}" class="w-full mb-2">
                         {% endif %}
-                        <h3 class="font-semibold mb-1">{{ program.title }}</h3>
+                        <h3 class="font-semibold mb-1 break-words max-w-full">{{ program.title }}</h3>
 
                         <!-- Assign category colors based on the category_name -->
                         {% if category_name == 'Aktualitet' %}

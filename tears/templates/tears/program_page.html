@@ -49,7 +49,7 @@
     </nav>
     {% endif %}
 </div>
-    <div class="program-container px-4 max-w-5xl mx-auto">
+    <div class="program-container px-4 max-w-[950px] mx-auto">
        
         <!-- Flex Layout for Header Content -->
         <div class="flex flex-col-reverse lg:flex-row lg:items-start gap-6">
@@ -192,7 +192,7 @@
 <main class="bg-[#FFF7F7]">
     <!-- Program Description Content -->
             
-<section class="max-w-[910px] mx-auto px-4 prose prose-xl prose-img:rounded-lg prose-p:leading-relaxed">
+<section class="max-w-[950px] mx-auto px-4 prose prose-xl prose-img:rounded-lg prose-p:leading-relaxed">
     <div class="program-content">
         {% for block in page.description %}
     {% if block.block_type == "content" %}
@@ -223,7 +223,7 @@
 <!-- Nettsaker only the program has written-->
 {% with blog_posts=page.blog_posts.live %}
 {% if blog_posts %}
-<div class=" mx-auto px-6 mt-16 bg-[#f7f4f4] py-12">
+<div class="mx-auto px-6 mt-16 py-12">
     <h2 class="text-3xl font-bold text-[#511120] mb-6 text-center">Mer fra {{ page.title }}</h2>
     <div class="grid grid-cols-1 sm:grid-cols-3 gap-8">
         {% for post in blog_posts|slice:":3" %}

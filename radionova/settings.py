@@ -37,7 +37,7 @@ if not SECRET_KEY:
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['radionova.azurewebsites.net',
+ALLOWED_HOSTS = ['radionova.azurewebsites.net', 'radionova.no',
                  'localhost1', 'localhost', '127.0.0.1', ]
 
 
@@ -152,6 +152,7 @@ AUTH_PASSWORD_VALIDATORS = [
 CSRF_TRUSTED_ORIGINS = [
     'https://radionova.azurewebsites.net',
     'https://novafest.radinova.azurewebsites.net',
+    'https://radionova.no',
 ]
 
 
