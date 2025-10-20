@@ -57,12 +57,12 @@ class HomePage(RoutablePageMixin, Page):
         context["latest_interviews"] = (
             BlogPage.objects.live()
             .filter(typeArticle="intervju")
-            .order_by("-first_published_at")[:4]
+            .order_by("-first_published_at")[:3]
         )
         context["latest_reviews"] = (
             BlogPage.objects.live()
             .filter(typeArticle="anmeldelse")
-            .order_by("-first_published_at")[:4]
+            .order_by("-first_published_at")[:3]
         )
         context["programs"] = ProgramPage.objects.live().order_by("?")
         context["dagtid_list"] = self.get_dagtid()

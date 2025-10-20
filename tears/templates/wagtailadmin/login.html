@@ -69,6 +69,12 @@
          .login {
     background: var(--w-color-grey-800);
     color: var(--w-color-text-label);}
+     
+         /* Hide the forgotten password link since it does not work for now */
+         a[href*="password-reset"],
+         a[href*="password_reset"] {
+             display: none !important;
+         }
         
     </style>
 {% endblock %}

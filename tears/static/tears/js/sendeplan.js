@@ -17,31 +17,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // --- Helpers --------------------------------------------------------------
   function setTabsActive(activeBtn, inactiveBtn) {
-    // switch active/inactive tab shells
-    activeBtn.classList.remove('component-4');  activeBtn.classList.add('component-2');
-    inactiveBtn.classList.remove('component-2'); inactiveBtn.classList.add('component-4');
+  activeBtn.classList.remove('component-4');  
+  activeBtn.classList.add('component-2');
+  inactiveBtn.classList.remove('component-2'); 
+  inactiveBtn.classList.add('component-4');
 
-    // SVG icon colors (must have .color_logo and use currentColor)
-    activeBtn.querySelectorAll('.color_logo').forEach(svg => {
-      svg.classList.add('text-white');
-      svg.classList.remove('text-[#511120]', 'text-[#4B0C1B]');
-    });
-    inactiveBtn.querySelectorAll('.color_logo').forEach(svg => {
-      svg.classList.remove('text-white');
-      svg.classList.add('text-[#4B0C1B]'); // burgundy
-    });
-
-    // Optional: force label colors (if your CSS doesn’t already cover it)
-    activeBtn.querySelectorAll('.text-wrapper-4, .text-wrapper-6').forEach(t => t.style.color = '#fff');
-    inactiveBtn.querySelectorAll('.text-wrapper-4, .text-wrapper-6').forEach(t => t.style.color = '#511120');
-    //hover state color be black on active tab only when hovering
-    activeBtn.addEventListener('mouseenter', () => {
-      activeBtn.querySelectorAll('.text-wrapper-4, .text-wrapper-6').forEach(t => t.style.color = '#000');
-    });
-    activeBtn.addEventListener('mouseleave', () => {
-      activeBtn.querySelectorAll('.text-wrapper-4, .text-wrapper-6').forEach(t => t.style.color = '#fff');
-    }); 
-  }
+  // Only change SVG colors, not text
+  activeBtn.querySelectorAll('.color_logo').forEach(svg => {
+    svg.classList.add('text-white');
+    svg.classList.remove('text-[#511120]', 'text-[#4B0C1B]');
+  });
+  inactiveBtn.querySelectorAll('.color_logo').forEach(svg => {
+    svg.classList.remove('text-white');
+    svg.classList.add('text-[#4B0C1B]');
+  });
+  
+  // Keep text color consistent
+  activeBtn.querySelectorAll('.text-wrapper-4, .text-wrapper-6').forEach(t => t.style.color = '#ffffff');
+  inactiveBtn.querySelectorAll('.text-wrapper-4, .text-wrapper-6').forEach(t => t.style.color = '#511120');
+}
 
   function resetAllDays() {
     dagKnappene.forEach(k => {
