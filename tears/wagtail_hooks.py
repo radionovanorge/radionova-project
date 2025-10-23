@@ -195,3 +195,20 @@ class BeskjedPanel(Component):
 @hooks.register("construct_homepage_panels")
 def add_beskjed_panel(request, panels):
     panels.append(BeskjedPanel())
+
+# Reservasjonsmeny knapp
+
+
+
+class ExternalMenuItem(MenuItem):
+    def render_html(self, request):
+        return f'<a href="{self.url}" class="icon icon-{self.icon_name}" target="_blank" rel="noopener noreferrer">{self.label}</a>'
+
+@hooks.register("register_admin_menu_item")
+def register_reservasjon_menu_item():
+    return ExternalMenuItem(
+        "Reservasjon",
+        "http://reservasjon.radionova.no/day.php?year=2025&month=10&day=23&area=3&room=63",
+        icon_name="calendar-alt",
+        order=501,
+    )

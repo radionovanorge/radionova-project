@@ -302,7 +302,7 @@
         <div class="frame-12">
           <div class="frame-13">
             {% for program in sendeplan.3 %}
-            <a href="{{ program.page.url }}" class="frame-14 {% if program.is_live_now %}bg-[#FFE4FB]{% endif %}">
+            <a href="{{ program.page.url }}" class="frame-14 {% if program.is_live_now %}bg-[#511120] text-white ml-4{% endif %}">
               <div class="frame-18">
 
                 {% if program.main_image %}
@@ -312,7 +312,7 @@
                 <div class="frame-15">
                   <div class="frame-16">
                     <div class="frame-17">
-                      <div class="frame-14 {% if program.is_live_now %}bg-[#FFE4FB]{% endif %}">
+                      <div class="frame-14 {% if program.is_live_now %}bg-[#511120] text-white{% endif %}">
                         <div class="text-wrapper-4">
                           {{ program.start_time }} - {{ program.end_time }}
                         </div>
