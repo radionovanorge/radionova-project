@@ -223,12 +223,12 @@
 <!-- Nettsaker only the program has written-->
 {% with blog_posts=page.blog_posts.live %}
 {% if blog_posts %}
-<div class="mx-auto px-6 mt-16 py-12">
-    <h2 class="text-3xl font-bold text-[#511120] mb-6 text-center">Mer fra {{ page.title }}</h2>
+<div class="mx-auto px-6 mt-16 py-12 max-w-[1060px]">
+    <h2 class="text-xl font-bold text-[#511120] mb-6">Mer fra {{ page.title }}</h2>
     <div class="grid grid-cols-1 sm:grid-cols-3 gap-8">
         {% for post in blog_posts|slice:":3" %}
         <a href="{{ post.url }}"
-            class="group block rounded-lg shadow-md overflow-hidden transition-transform transform hover:scale-105">
+            class="group block overflow-hidden transition-transform transform hover:scale-105">
             {% for block in post.body %}
             {% if block.block_type == "main_image" %}
             {% image block.value fill-600x400 as img %}
