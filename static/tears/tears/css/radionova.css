@@ -178,15 +178,6 @@ body {
 }
 
 /* Radio player container */
-.radio-player-container {
-  width: 100%;
-  max-width: var(--site-width);
-  margin: 0 auto;
-  padding: 0 var(--site-padding);
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
 
 /* Footer */
 .footer-section {
@@ -198,7 +189,7 @@ body {
 
 .footer-container {
   width: 100%;
-  max-width: var(--site-width);
+  max-width: 1050px;
   margin: 0 auto;
   padding: 0 var(--site-padding);
   display: flex;

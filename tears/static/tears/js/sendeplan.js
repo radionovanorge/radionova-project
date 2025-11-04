@@ -138,6 +138,7 @@ document.addEventListener('DOMContentLoaded', () => {
   ukedager.style.pointerEvents = 'none';
     setTabsActive(ukeKnapp, dagsKnapp);
   });
+  
 
   // --- (Optional) utility for table-based schedule -------------------------
   // If you still use the addProgram helper elsewhere, keep it available:
