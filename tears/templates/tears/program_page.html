@@ -221,6 +221,7 @@
 
 </section>
 <!-- Nettsaker only the program has written-->
+{% if page.pk %}
 {% with blog_posts=page.blog_posts.live %}
 {% if blog_posts %}
 <div class="mx-auto px-6 mt-16 py-12 max-w-[950px]">
@@ -251,7 +252,7 @@
     </div>
     {% endif %}
     {% endwith %}
-
+{% endif %}
 </div>
 
 </main>
