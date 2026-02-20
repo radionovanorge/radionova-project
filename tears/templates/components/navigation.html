@@ -10,6 +10,8 @@
         
         <!-- Desktop Navigation -->
         <nav class="hidden md:flex space-x-3">
+            <a href="https://www.novafest.no/?utm_source=radionova&utm_medium=topbar&utm_campaign=novafest" target="_blank" rel="noopener noreferrer" title="Åpner i ny fane" class="inline-flex items-center rounded-md border border-[#F7B22A] bg-[#1B1B1B] px-3 py-1.5 text-sm font-semibold text-[#F7B22A] transition hover:bg-[#F7B22A] hover:text-[#1B1B1B] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#F7B22A] focus-visible:outline-offset-2"><img src="https://www.novafest.no/favicon.ico?favicon.7408ce0d.ico" alt="" aria-hidden="true" class="mr-1 h-4 w-4">NovaFest 2026</a>
+            <a href="https://radio-nova.myspreadshop.no/" target="_blank" rel="noopener noreferrer" title="Åpner i ny fane" class="top-nav-link ml-2 text-[#6F1228]">Merch</a>
             <a href="/sendeplan" class="top-nav-link text-[#6F1228] {% if request.path == '/sendeplan' %}active{% endif %}">Sendeplan</a>
             <a href="/a-lista" class="top-nav-link text-[#6F1228] {% if request.path == '/a-lista' %}active{% endif %}">A-lista</a>
             <a href="/programmer" class="top-nav-link text-[#6F1228] {% if request.path == '/programmer' %}active{% endif %}">Programmer</a>
@@ -25,9 +27,11 @@
         </button>
     </div>
     
-    <!-- Mobile menu (hidden by default) -->
-    <div id="mobile-menu" class="hidden md:hidden border-t mt-4">
-        <nav class="container mx-auto px-4 py-4 flex flex-col">
+        <!-- Mobile menu (hidden by default) -->
+        <div id="mobile-menu" class="hidden md:hidden border-t mt-4">
+            <nav class="container mx-auto px-4 py-4 flex flex-col">
+            <a href="https://www.novafest.no/?utm_source=radionova&utm_medium=topbar&utm_campaign=novafest" target="_blank" rel="noopener noreferrer" title="Åpner i ny fane" class="inline-flex items-center rounded-md border border-[#F7B22A] bg-[#1B1B1B] px-3 py-2 text-sm font-semibold text-[#F7B22A] transition hover:bg-[#F7B22A] hover:text-[#1B1B1B] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#F7B22A] focus-visible:outline-offset-2"><img src="https://www.novafest.no/favicon.ico?favicon.7408ce0d.ico" alt="" aria-hidden="true" class="mr-1 h-4 w-4">NovaFest 2026</a>
+            <a href="https://radio-nova.myspreadshop.no/" target="_blank" rel="noopener noreferrer" title="Åpner i ny fane" class="text-[#6F1228] py-3">Merch</a>
             <a href="/sendeplan" class="text-[#6F1228] py-3 {% if request.path == '/sendeplan' %}font-bold{% endif %}">Sendeplan</a>
             <a href="/a-lista" class="text-[#6F1228] py-3 {% if request.path == '/a-lista' %}font-bold{% endif %}">A-lista</a>
             <a href="/programmer" class="text-[#6F1228] py-3 {% if request.path == '/programmer' %}font-bold{% endif %}">Programmer</a>
