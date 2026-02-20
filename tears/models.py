@@ -515,6 +515,74 @@ class FreeTextPage(Page):
         return super().serve(request)  # fallback if no child pages exist
 
 
+class BliMedPage(Page):
+    page_description = "Recruitment/application page for joining Radio Nova."
+    template = "tears/bli_med_page.html"
+    parent_page_types = ["HomePage"]
+    subpage_types = []
+
+    hero_title = models.CharField(max_length=150, default="Bli med i Radio Nova")
+    hero_intro = RichTextField(blank=True)
+    application_deadline = models.CharField(
+        max_length=120, blank=True, help_text="F.eks. 'Søknadsfrist: 15. mars'"
+    )
+    application_button_text = models.CharField(
+        max_length=60, blank=True, default="Søk nå"
+    )
+    application_url = models.URLField(blank=True)
+
+    about_title = models.CharField(max_length=120, blank=True, default="Hva gjør vi?")
+    about_body = RichTextField(blank=True)
+
+    roles_title = models.CharField(max_length=120, blank=True, default="Roller vi søker")
+    roles = StreamField(
+        [
+            (
+                "role",
+                blocks.StructBlock(
+                    [
+                        ("title", blocks.CharBlock(required=True)),
+                        ("description", blocks.TextBlock(required=False)),
+                    ]
+                ),
+            ),
+        ],
+        blank=True,
+        use_json_field=True,
+    )
+
+    faq_title = models.CharField(max_length=120, blank=True, default="Spørsmål og svar")
+    faq = StreamField(
+        [
+            (
+                "qa",
+                blocks.StructBlock(
+                    [
+                        ("question", blocks.CharBlock(required=True)),
+                        ("answer", blocks.RichTextBlock(required=True)),
+                    ]
+                ),
+            ),
+        ],
+        blank=True,
+        use_json_field=True,
+    )
+
+    content_panels = Page.content_panels + [
+        FieldPanel("hero_title"),
+        FieldPanel("hero_intro"),
+        FieldPanel("application_deadline"),
+        FieldPanel("application_button_text"),
+        FieldPanel("application_url"),
+        FieldPanel("about_title"),
+        FieldPanel("about_body"),
+        FieldPanel("roles_title"),
+        FieldPanel("roles"),
+        FieldPanel("faq_title"),
+        FieldPanel("faq"),
+    ]
+
+
 class DagTidPage(Page):
     page_description = (
         "This page is for configuring DagTid, About Radio Nova, and Omtaler i medier."

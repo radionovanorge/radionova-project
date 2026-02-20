@@ -1,0 +1,78 @@
+{% extends "tears/base.html" %}
+{% load wagtailcore_tags %}
+
+{% block content %}
+<section class="w-full max-w-[1064px] mx-auto px-6 py-12">
+    <div class="bg-white border border-[#E7E2E2] rounded-xl p-8">
+        <h1 class="text-4xl font-bold text-[#6F1228]">{{ page.hero_title }}</h1>
+
+        {% if page.hero_intro %}
+            <div class="prose max-w-none mt-4 text-[#3B1A22]">
+                {{ page.hero_intro|richtext }}
+            </div>
+        {% endif %}
+
+        {% if page.application_deadline %}
+            <p class="mt-6 text-sm font-semibold text-[#6F1228]">{{ page.application_deadline }}</p>
+        {% endif %}
+
+        {% if page.application_url %}
+            <a href="{{ page.application_url }}"
+               target="_blank"
+               rel="noopener noreferrer"
+               class="inline-block mt-4 rounded-md bg-[#6F1228] px-5 py-3 text-sm font-semibold text-white hover:bg-[#581021]">
+                {{ page.application_button_text|default:"Søk nå" }}
+            </a>
+        {% endif %}
+    </div>
+
+    {% if page.about_title or page.about_body %}
+        <div class="mt-10 bg-white border border-[#E7E2E2] rounded-xl p-8">
+            {% if page.about_title %}
+                <h2 class="text-2xl font-bold text-[#6F1228]">{{ page.about_title }}</h2>
+            {% endif %}
+            {% if page.about_body %}
+                <div class="prose max-w-none mt-4 text-[#3B1A22]">
+                    {{ page.about_body|richtext }}
+                </div>
+            {% endif %}
+        </div>
+    {% endif %}
+
+    {% if page.roles %}
+        <div class="mt-10">
+            <h2 class="text-2xl font-bold text-[#6F1228]">
+                {{ page.roles_title|default:"Roller vi søker" }}
+            </h2>
+            <div class="mt-4 grid gap-4 md:grid-cols-2">
+                {% for block in page.roles %}
+                    <article class="bg-[#F7EBEE] border border-[#E5CAD2] rounded-xl p-5">
+                        <h3 class="text-lg font-semibold text-[#5D0F23]">{{ block.value.title }}</h3>
+                        {% if block.value.description %}
+                            <p class="mt-2 text-sm text-[#3B1A22]">{{ block.value.description }}</p>
+                        {% endif %}
+                    </article>
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+
+    {% if page.faq %}
+        <div class="mt-10">
+            <h2 class="text-2xl font-bold text-[#6F1228]">
+                {{ page.faq_title|default:"Spørsmål og svar" }}
+            </h2>
+            <div class="mt-4 space-y-3">
+                {% for block in page.faq %}
+                    <details class="bg-white border border-[#E7E2E2] rounded-xl p-4">
+                        <summary class="cursor-pointer font-semibold text-[#5D0F23]">{{ block.value.question }}</summary>
+                        <div class="mt-3 text-[#3B1A22] prose max-w-none">
+                            {{ block.value.answer|richtext }}
+                        </div>
+                    </details>
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+</section>
+{% endblock %}
