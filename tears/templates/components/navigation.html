@@ -10,6 +10,7 @@
         
         <!-- Desktop Navigation -->
         <nav class="hidden md:flex space-x-3">
+            <a href="https://www.novafest.no/?utm_source=radionova&utm_medium=topbar&utm_campaign=novafest" target="_blank" rel="noopener noreferrer" title="Åpner i ny fane" style="display:inline-flex;align-items:center;gap:6px;border:1px solid #F7B22A;background:#1B1B1B;color:#F7B22A;border-radius:8px;padding:6px 12px;font-size:14px;font-weight:600;line-height:1;text-decoration:none;" onmouseover="this.style.backgroundColor='#F7B22A';this.style.color='#1B1B1B';" onmouseout="this.style.backgroundColor='#1B1B1B';this.style.color='#F7B22A';"><img src="https://www.novafest.no/favicon.ico?favicon.7408ce0d.ico" alt="" aria-hidden="true" width="16" height="16" style="display:block;flex:0 0 auto;">NovaFest 2026</a>
             <a href="/sendeplan" class="top-nav-link text-[#6F1228] {% if request.path == '/sendeplan' %}active{% endif %}">Sendeplan</a>
             <a href="/a-lista" class="top-nav-link text-[#6F1228] {% if request.path == '/a-lista' %}active{% endif %}">A-lista</a>
             <a href="/programmer" class="top-nav-link text-[#6F1228] {% if request.path == '/programmer' %}active{% endif %}">Programmer</a>
@@ -28,6 +29,7 @@
     <!-- Mobile menu (hidden by default) -->
     <div id="mobile-menu" class="hidden md:hidden border-t mt-4">
         <nav class="container mx-auto px-4 py-4 flex flex-col">
+            <a href="https://www.novafest.no/?utm_source=radionova&utm_medium=topbar&utm_campaign=novafest" target="_blank" rel="noopener noreferrer" title="Åpner i ny fane" style="display:inline-flex;align-items:center;gap:6px;border:1px solid #F7B22A;background:#1B1B1B;color:#F7B22A;border-radius:8px;padding:8px 12px;font-size:14px;font-weight:600;line-height:1;text-decoration:none;" onmouseover="this.style.backgroundColor='#F7B22A';this.style.color='#1B1B1B';" onmouseout="this.style.backgroundColor='#1B1B1B';this.style.color='#F7B22A';"><img src="https://www.novafest.no/favicon.ico?favicon.7408ce0d.ico" alt="" aria-hidden="true" width="16" height="16" style="display:block;flex:0 0 auto;">NovaFest 2026</a>
             <a href="/sendeplan" class="text-[#6F1228] py-3 {% if request.path == '/sendeplan' %}font-bold{% endif %}">Sendeplan</a>
             <a href="/a-lista" class="text-[#6F1228] py-3 {% if request.path == '/a-lista' %}font-bold{% endif %}">A-lista</a>
             <a href="/programmer" class="text-[#6F1228] py-3 {% if request.path == '/programmer' %}font-bold{% endif %}">Programmer</a>
