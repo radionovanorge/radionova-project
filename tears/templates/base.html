@@ -5,9 +5,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Radio Nova - {% block title %}Studentradioen i Oslo og Akershus{% endblock %}</title>
+    <meta name="theme-color" content="#0f172a">
+    <link rel="canonical" href="https://radionova.no{% if request.path %}{{ request.path }}{% endif %}">
+    <meta property="og:site_name" content="Radio Nova">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://radionova.no{% if request.path %}{{ request.path }}{% endif %}">
+    <meta property="og:image" content="https://radionova.no/static/tears/images/web-app-manifest-512x512.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://radionova.no/static/tears/images/web-app-manifest-512x512.png">
+    <link rel="icon" type="image/svg+xml" href="{% static 'tears/images/favicon.svg' %}">
+    <link rel="icon" type="image/png" sizes="96x96" href="{% static 'tears/images/favicon-96x96.png' %}">
+    <link rel="shortcut icon" href="{% static 'tears/images/favicon.ico' %}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'tears/images/apple-touch-icon.png' %}">
+    <link rel="manifest" href="{% static 'tears/images/site.webmanifest' %}">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Radio Nova",
+      "url": "https://radionova.no",
+      "logo": "https://radionova.no/static/tears/images/web-app-manifest-512x512.png"
+    }
+    </script>
     <link href="{% static 'tears/css/radionova.css' %}" rel="stylesheet">
     <link href="{% static 'tears/css/tailwind.css' %}" rel="stylesheet">
-    <link rel="icon" href="{% static 'tears/images/favicon.ico' %}">
     {% block extra_css %}{% endblock %}
 </head>
 <body class="bg-white text-gray-900">
