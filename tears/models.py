@@ -285,6 +285,11 @@ class ProgramPage(Page):
     page_description = "This is the program page of the website and has the content at e.g. https://radionova.no/programmer/frokost."
     subpage_types = ["BlogPage"]
 
+    transistor_embed_url = models.URLField(
+        blank=True,
+        help_text="Lim inn Transistor embed-URL, f.eks. https://share.transistor.fm/e/frokost/playlist"
+    )
+
     CATEGORY_CHOICES = [
         ("aktualitet", "Aktualitet"),
         ("humor_underholdning", "Humor & underholdning"),
@@ -382,6 +387,7 @@ class ProgramPage(Page):
         FieldPanel("tiktok_link"),
         FieldPanel("email_link"),
         FieldPanel("description"),
+        FieldPanel("transistor_embed_url"),
     ]
 
 
