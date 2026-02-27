@@ -13,6 +13,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='programpage',
             name='transistor_embed_url',
-            field=models.URLField(blank=True, help_text='Lim inn Transistor embed-URL, f.eks. https://share.transistor.fm/e/frokost/playlist'),
+            field=models.URLField(blank=True, help_text='Lim inn embed-lenken fra Transistor, f.eks. https://share.transistor.fm/e/frokost/playlist'),
         ),
     ]

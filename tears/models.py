@@ -287,7 +287,7 @@ class ProgramPage(Page):
 
     transistor_embed_url = models.URLField(
         blank=True,
-        help_text="Lim inn Transistor embed-URL, f.eks. https://share.transistor.fm/e/frokost/playlist"
+        help_text="Lim inn embed-lenken fra Transistor, f.eks. https://share.transistor.fm/e/frokost/playlist"
     )
 
     CATEGORY_CHOICES = [
@@ -387,7 +387,7 @@ class ProgramPage(Page):
         FieldPanel("tiktok_link"),
         FieldPanel("email_link"),
         FieldPanel("description"),
-        FieldPanel("transistor_embed_url"),
+        FieldPanel("transistor_embed_url", heading="Podkastspiller (Transistor URL)"),
     ]
 
 
