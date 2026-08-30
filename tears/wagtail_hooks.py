@@ -50,9 +50,14 @@ def add_custom_menu_item(request, menu_items):
         programmer_page = (
             default_site.root_page.get_children().filter(title="Programmer").first()
         )
-        create_new_page_id = (
-            programmer_page.get_children().filter(title=group.name).first().id
-        )
+        if not programmer_page:
+            return
+
+        group_page = programmer_page.get_children().filter(title=group.name).first()
+        if not group_page:
+            return
+
+        create_new_page_id = group_page.id
 
         custom_menu_item = MenuItem(
             label="Write an article",
@@ -208,7 +213,7 @@ class ExternalMenuItem(MenuItem):
 def register_reservasjon_menu_item():
     return ExternalMenuItem(
         "Reservasjon",
-        "http://reservasjon.radionova.no/day.php?year=2025&month=10&day=23&area=3&room=63",
+        "http://reservasjon.radionova.no/day.php?area=3&room=63",
         icon_name="calendar-alt",
         order=501,
     )
