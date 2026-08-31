@@ -138,7 +138,7 @@ def manuals_index_view(request):
 
 def manual_detail_view(request, manual_id):
     """Vis en spesifikk manual"""
-    manual = Manual.objects.get(id=manual_id)
+    manual = get_object_or_404(Manual, id=manual_id)
     return render(request, "wagtailadmin/manuals/detail.html", {"manual": manual})
 
 
