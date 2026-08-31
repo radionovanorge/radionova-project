@@ -90,8 +90,12 @@
   <main class=" bg-[#FFF7F7]">
   <div class="max-w-[910px] mx-auto px-4 text-sm text-gray-600 mb-2 py-8">
     <p>Publisert: {{ page.date }}</p>
-    <p>Skrevet av {{ page.forfatter }} for <a class="text-[#511120] font-semibold" href="{{page.program.url}}">{{ page.program }}</a></p>
-  </div>
+    <p>
+      Skrevet av {{ page.forfatter }}
+      {% if page.program %}
+        for <a class="text-[#511120] font-semibold" href="{{ page.program.url }}">{{ page.program }}</a>
+      {% endif %}
+    </p>
 
   <!-- Article Content -->
  <div class="max-w-[910px] mx-auto px-4 prose prose-xl prose-img:rounded-lg prose-p:leading-relaxed ">
