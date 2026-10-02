@@ -213,7 +213,7 @@ class ExternalMenuItem(MenuItem):
 def register_reservasjon_menu_item():
     return ExternalMenuItem(
         "Reservasjon",
-        "http://reservasjon.radionova.no/day.php?area=3&room=63",
+        "https://reservasjon.radionova.no/day.php?area=3&room=63",
         icon_name="calendar-alt",
         order=501,
     )
