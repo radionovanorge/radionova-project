@@ -526,6 +526,24 @@ class DagTidPage(Page):
         "This page is for configuring DagTid, About Radio Nova, and Omtaler i medier."
     )
 
+    employee_block = blocks.StructBlock(
+        [
+            (
+                "name",
+                blocks.CharBlock(required=True, help_text="Employee full name"),
+            ),
+            (
+                "role",
+                blocks.CharBlock(required=True, help_text="Their role/title"),
+            ),
+            (
+                "email",
+                blocks.CharBlock(required=False, help_text="Their email address"),
+            ),
+            ("image", ImageChooserBlock(required=False)),
+        ]
+    )
+
     # Free text for 'About Radio Nova' (top part)
     about_radio_nova = StreamField(
         [
@@ -540,35 +558,26 @@ class DagTidPage(Page):
     # Repeating Employees
     ansatte = StreamField(
         [
-            (
-                "ansatt",
-                blocks.StructBlock(
-                    [
-                        (
-                            "name",
-                            blocks.CharBlock(
-                                required=True, help_text="Employee full name"
-                            ),
-                        ),
-                        (
-                            "role",
-                            blocks.CharBlock(
-                                required=True, help_text="Their role/title"
-                            ),
-                        ),
-                        (
-                            "email",
-                            blocks.CharBlock(
-                                required=False, help_text="Their email address"
-                            ),
-                        ),
-                        ("image", ImageChooserBlock(required=False)),
-                    ]
-                ),
-            ),
+            ("ansatt", employee_block),
         ],
         blank=True,
-        verbose_name="Ansatte (Employees)",
+        verbose_name="Dagtid",
+    )
+
+    tillitsvalgt = StreamField(
+        [
+            ("ansatt", employee_block),
+        ],
+        blank=True,
+        verbose_name="Tillitsvalgt",
+    )
+
+    studentsamfunnet = StreamField(
+        [
+            ("ansatt", employee_block),
+        ],
+        blank=True,
+        verbose_name="Studentsamfunnet",
     )
 
     # Repeating Media Mentions
@@ -594,6 +603,8 @@ class DagTidPage(Page):
     content_panels = Page.content_panels + [
         FieldPanel("about_radio_nova"),
         FieldPanel("ansatte"),
+        FieldPanel("studentsamfunnet"),
+        FieldPanel("tillitsvalgt"),
         FieldPanel("omtaler_i_medier"),
     ]
 
