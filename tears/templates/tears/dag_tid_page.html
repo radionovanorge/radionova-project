@@ -62,7 +62,6 @@
 
 <!-- Ansatte Section -->
 <div class="max-w-[910px] mx-auto px-4 py-12">
-    {% if page.ansatte %}
     <h2 class="text-2xl font-bold mb-8">Dagtid</h2>
     <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10">
       {% for block in page.ansatte %}
@@ -87,62 +86,6 @@
         </div>
       {% endfor %}
     </div>
-    {% endif %}
-
-    {% if page.studentsamfunnet %}
-    <h2 class="text-2xl font-bold mb-8">Styret</h2>
-    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10">
-      {% for block in page.studentsamfunnet %}
-        <div class=" p-4 rounded-lg text-center flex flex-col items-center">
-          {% if block.value.image %}
-            <div class="w-full h-auto aspect-square overflow-hidden mb-4">
-              {% image block.value.image fill-400x400 class="object-cover w-full h-full" alt=block.value.name %}
-            </div>
-          {% endif %}
-          <h3 class="text-lg font-semibold mb-1">{{ block.value.name }}</h3>
-          <h4 class="text-sm text-gray-500 mb-2">{{ block.value.email }}</h4>
-  
-          <!-- Role as green tag -->
-          <span class="inline-block text-sm text-[#511120] border border-[#511120] bg-green-100 px-4 py-1 rounded-full">
-            {{ block.value.role }}
-          </span>
-  <!-- 
-          {# Commented out email for now #}
-          {# {% if block.value.email %}
-           <p class="text-sm text-blue-600 mt-1">{{ block.value.email }}</p>
-          {% endif %} #}-->
-        </div>
-      {% endfor %}
-    </div>
-
-    {% endif %}
-
-    {% if page.tillitsvalgt %}
-    <h2 class="text-2xl font-bold mb-8">Tillitsvalgt</h2>
-    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10">
-      {% for block in page.tillitsvalgt %}
-        <div class=" p-4 rounded-lg text-center flex flex-col items-center">
-          {% if block.value.image %}
-            <div class="w-full h-auto aspect-square overflow-hidden mb-4">
-              {% image block.value.image fill-400x400 class="object-cover w-full h-full" alt=block.value.name %}
-            </div>
-          {% endif %}
-          <h3 class="text-lg font-semibold mb-1">{{ block.value.name }}</h3>
-          <h4 class="text-sm text-gray-500 mb-2">{{ block.value.email }}</h4>
-  
-          <!-- Role as green tag -->
-          <span class="inline-block text-sm text-[#511120] border border-[#511120] bg-green-100 px-4 py-1 rounded-full">
-            {{ block.value.role }}
-          </span>
-  <!-- 
-          {# Commented out email for now #}
-          {# {% if block.value.email %}
-           <p class="text-sm text-blue-600 mt-1">{{ block.value.email }}</p>
-          {% endif %} #}-->
-        </div>
-      {% endfor %}
-    </div>
-    {% endif %}
   </div>
 
 <!-- Omtaler i andre medier Section -->
