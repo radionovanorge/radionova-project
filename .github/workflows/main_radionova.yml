@@ -22,18 +22,11 @@ jobs:
         with:
           python-version: '3.10'
 
-      - name: Create and start virtual environment
-        run: |
-          python -m venv venv
-          source venv/bin/activate
-      
-      - name: Install dependencies
-        run: pip install -r requirements.txt
-        
-      # Optional: Add step to run tests here (PyTest, Django test suites, etc.)
+      - name: Test deployment packaging and startup diagnostics
+        run: python -m unittest discover -s tests -v
 
-      - name: Zip artifact for deployment
-        run: zip release.zip ./* -r
+      - name: Package tracked application files
+        run: python scripts/build_deploy_package.py release.zip
 
       - name: Upload artifact for deployment jobs
         uses: actions/upload-artifact@v4
@@ -41,7 +34,6 @@ jobs:
           name: python-app
           path: |
             release.zip
-            !venv/
 
   deploy:
     runs-on: ubuntu-latest
@@ -49,7 +41,7 @@ jobs:
     environment:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
-    
+
     steps:
       - name: Download artifact from build job
         uses: actions/download-artifact@v4
@@ -84,25 +76,12 @@ jobs:
           AZURE_STORAGE_ACCOUNT_KEY: ${{ secrets.AZURE_STORAGE_ACCOUNT_KEY }}
           AZURE_STORAGE_CONTAINER: ${{ secrets.AZURE_STORAGE_CONTAINER }}
 
-      - name: Collect static files
-        run: |
-          python manage.py collectstatic --noinput -v 2
-        env:
-          DBNAME: ${{ secrets.DBNAME }}
-          DBHOST: ${{ secrets.DBHOST }}
-          DBUSER: ${{ secrets.DBUSER }}
-          DBPASS: ${{ secrets.DBPASS }}
-          DBPORT: ${{ secrets.DBPORT }}
-          SECRET_KEY: ${{ secrets.SECRET_KEY }}
-          WEBSITE_HOSTNAME: radionova.azurewebsites.net
-          AZURE_STORAGE_ACCOUNT_NAME: ${{ secrets.AZURE_STORAGE_ACCOUNT_NAME }}
-          AZURE_STORAGE_ACCOUNT_KEY: ${{ secrets.AZURE_STORAGE_ACCOUNT_KEY }}
-          AZURE_STORAGE_CONTAINER: ${{ secrets.AZURE_STORAGE_CONTAINER }}
-
+      # Oryx runs collectstatic once using the App Service settings.
       - name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v3
         id: deploy-to-webapp
         with:
           app-name: 'radionova'
           slot-name: 'Production'
+          package: release.zip
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_E8FE74A9E7BD44E883BB96DC99377965 }}
