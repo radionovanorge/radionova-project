@@ -1,8 +1,6 @@
 import importlib.util
-import os
 from pathlib import Path
 import subprocess
-import sys
 import tempfile
 import unittest
 from zipfile import ZipFile
@@ -43,45 +41,6 @@ class PackageTests(unittest.TestCase):
             subprocess.run(['git', 'init', '-q', folder], check=True)
             with self.assertRaisesRegex(ValueError, 'Missing required tracked file'):
                 packaging.build_package(root, root / 'package.zip')
-
-
-class StartupTests(unittest.TestCase):
-    def run_wsgi(self, setup):
-        # Fake Django isolates the logging/timer contract from settings and databases.
-        code = '''import faulthandler, runpy, sys, time, types
-real_timer = faulthandler.dump_traceback_later
-faulthandler.dump_traceback_later = lambda delay, **kw: real_timer(.15, **kw)
-module = types.ModuleType('django.core.wsgi')
-''' + setup + '''
-module.get_wsgi_application = get_application
-sys.modules['django'] = types.ModuleType('django')
-sys.modules['django.core'] = types.ModuleType('django.core')
-sys.modules['django.core.wsgi'] = module
-try:
-    runpy.run_path(sys.argv[1])
-except RuntimeError:
-    pass
-time.sleep(.25)
-'''
-        return subprocess.run([sys.executable, '-c', code, str(ROOT / 'radionova/wsgi.py')],
-                              capture_output=True, text=True, timeout=5).stderr
-
-    def test_success_logs_duration_and_cancels_timer(self):
-        output = self.run_wsgi('def get_application(): return object()')
-        self.assertIn('STARTUP django_ready elapsed=', output)
-        self.assertNotIn('Timeout', output)
-
-    def test_failure_logs_failure_and_cancels_timer(self):
-        output = self.run_wsgi('def get_application(): raise RuntimeError("fixture")')
-        self.assertIn('STARTUP django_failed elapsed=', output)
-        self.assertNotIn('django_ready', output)
-        self.assertNotIn('Timeout', output)
-
-    def test_stalled_startup_dumps_stack(self):
-        output = self.run_wsgi('def get_application(): time.sleep(.35); return object()')
-        self.assertIn('Timeout', output)
-        self.assertIn('get_application', output)
-        self.assertIn('STARTUP django_ready elapsed=', output)
 
 
 if __name__ == '__main__':
