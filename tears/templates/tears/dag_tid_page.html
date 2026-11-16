@@ -66,17 +66,17 @@
     <h2 class="text-2xl font-bold mb-8">Dagtid</h2>
     <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10">
       {% for block in page.ansatte %}
-        <div class=" p-4 rounded-lg text-center flex flex-col items-center">
-          {% if block.value.image %}
-            <div class="w-full h-auto aspect-square overflow-hidden mb-4">
-              {% image block.value.image fill-400x400 class="object-cover w-full h-full" alt=block.value.name %}
-            </div>
-          {% endif %}
-          <h3 class="text-lg font-semibold mb-1">{{ block.value.name }}</h3>
-          <h4 class="text-sm text-gray-500 mb-2">{{ block.value.email }}</h4>
+        <div class="p-4 rounded-lg text-center grid grid-cols-1 row-span-4 justify-items-center gap-y-2 min-w-0" style="grid-template-rows: subgrid;">
+          <div class="relative w-full aspect-square overflow-hidden self-start min-w-0">
+            {% if block.value.image %}
+              {% image block.value.image fill-400x400 class="absolute inset-0 object-cover w-full h-full block" alt=block.value.name %}
+            {% endif %}
+          </div>
+          <h3 class="text-lg font-semibold pt-2">{{ block.value.name }}</h3>
+          <h4 class="text-sm text-gray-500 break-words min-w-0 w-full">{{ block.value.email }}</h4>
   
           <!-- Role as green tag -->
-          <span class="inline-block text-sm text-[#511120] border border-[#511120] bg-green-100 px-4 py-1 rounded-full">
+          <span class="self-start inline-block text-sm text-[#511120] border border-[#511120] bg-green-100 px-4 py-1 rounded-full">
             {{ block.value.role }}
           </span>
   <!-- 
@@ -93,17 +93,17 @@
     <h2 class="text-2xl font-bold mb-8">Styret</h2>
     <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10">
       {% for block in page.studentsamfunnet %}
-        <div class=" p-4 rounded-lg text-center flex flex-col items-center">
-          {% if block.value.image %}
-            <div class="w-full h-auto aspect-square overflow-hidden mb-4">
-              {% image block.value.image fill-400x400 class="object-cover w-full h-full" alt=block.value.name %}
-            </div>
-          {% endif %}
-          <h3 class="text-lg font-semibold mb-1">{{ block.value.name }}</h3>
-          <h4 class="text-sm text-gray-500 mb-2">{{ block.value.email }}</h4>
+        <div class="p-4 rounded-lg text-center grid grid-cols-1 row-span-4 justify-items-center gap-y-2 min-w-0" style="grid-template-rows: subgrid;">
+          <div class="relative w-full aspect-square overflow-hidden self-start min-w-0">
+            {% if block.value.image %}
+              {% image block.value.image fill-400x400 class="absolute inset-0 object-cover w-full h-full block" alt=block.value.name %}
+            {% endif %}
+          </div>
+          <h3 class="text-lg font-semibold pt-2">{{ block.value.name }}</h3>
+          <h4 class="text-sm text-gray-500 break-words min-w-0 w-full">{{ block.value.email }}</h4>
   
           <!-- Role as green tag -->
-          <span class="inline-block text-sm text-[#511120] border border-[#511120] bg-green-100 px-4 py-1 rounded-full">
+          <span class="self-start inline-block text-sm text-[#511120] border border-[#511120] bg-green-100 px-4 py-1 rounded-full">
             {{ block.value.role }}
           </span>
   <!-- 
@@ -121,17 +121,17 @@
     <h2 class="text-2xl font-bold mb-8">Tillitsvalgt</h2>
     <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10">
       {% for block in page.tillitsvalgt %}
-        <div class=" p-4 rounded-lg text-center flex flex-col items-center">
-          {% if block.value.image %}
-            <div class="w-full h-auto aspect-square overflow-hidden mb-4">
-              {% image block.value.image fill-400x400 class="object-cover w-full h-full" alt=block.value.name %}
-            </div>
-          {% endif %}
-          <h3 class="text-lg font-semibold mb-1">{{ block.value.name }}</h3>
-          <h4 class="text-sm text-gray-500 mb-2">{{ block.value.email }}</h4>
+        <div class="p-4 rounded-lg text-center grid grid-cols-1 row-span-4 justify-items-center gap-y-2 min-w-0" style="grid-template-rows: subgrid;">
+          <div class="relative w-full aspect-square overflow-hidden self-start min-w-0">
+            {% if block.value.image %}
+              {% image block.value.image fill-400x400 class="absolute inset-0 object-cover w-full h-full block" alt=block.value.name %}
+            {% endif %}
+          </div>
+          <h3 class="text-lg font-semibold pt-2">{{ block.value.name }}</h3>
+          <h4 class="text-sm text-gray-500 break-words min-w-0 w-full">{{ block.value.email }}</h4>
   
           <!-- Role as green tag -->
-          <span class="inline-block text-sm text-[#511120] border border-[#511120] bg-green-100 px-4 py-1 rounded-full">
+          <span class="self-start inline-block text-sm text-[#511120] border border-[#511120] bg-green-100 px-4 py-1 rounded-full">
             {{ block.value.role }}
           </span>
   <!-- 
