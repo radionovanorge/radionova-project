@@ -64,7 +64,7 @@
 <div class="max-w-[910px] mx-auto px-4 py-12">
     {% if page.ansatte %}
     <h2 class="text-2xl font-bold mb-8">Dagtid</h2>
-    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
       {% for block in page.ansatte %}
         <div class="p-4 rounded-lg text-center grid grid-cols-1 row-span-4 justify-items-center gap-y-2 min-w-0" style="grid-template-rows: subgrid;">
           <div class="relative w-full aspect-square overflow-hidden self-start min-w-0">
@@ -90,8 +90,8 @@
     {% endif %}
 
     {% if page.studentsamfunnet %}
-    <h2 class="text-2xl font-bold mb-8">Styret</h2>
-    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10">
+    <h2 class="text-2xl font-bold mb-8{% if page.ansatte %} mt-12{% endif %}">Styret</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
       {% for block in page.studentsamfunnet %}
         <div class="p-4 rounded-lg text-center grid grid-cols-1 row-span-4 justify-items-center gap-y-2 min-w-0" style="grid-template-rows: subgrid;">
           <div class="relative w-full aspect-square overflow-hidden self-start min-w-0">
@@ -118,8 +118,8 @@
     {% endif %}
 
     {% if page.tillitsvalgt %}
-    <h2 class="text-2xl font-bold mb-8">Tillitsvalgt</h2>
-    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10">
+    <h2 class="text-2xl font-bold mb-8{% if page.ansatte or page.studentsamfunnet %} mt-12{% endif %}">Tillitsvalgt</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
       {% for block in page.tillitsvalgt %}
         <div class="p-4 rounded-lg text-center grid grid-cols-1 row-span-4 justify-items-center gap-y-2 min-w-0" style="grid-template-rows: subgrid;">
           <div class="relative w-full aspect-square overflow-hidden self-start min-w-0">
