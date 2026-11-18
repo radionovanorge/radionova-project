@@ -9,7 +9,7 @@
 </head>
 <header class="w-full p-10">
    <!-- Breadcrumb -->
-      <div class="text-sm text-gray-500 mb-4 mt-1 max-w-[910px] mx-auto">
+      <div class="text-sm text-gray-500 mb-4 mt-1 max-w-[1060px] mx-auto">
     {% if self.get_ancestors|length > 1 %}
     <nav aria-label="Breadcrumb">
         <ul class="flex items-center space-x-2 flex-wrap">
@@ -34,7 +34,7 @@
     </nav>
     {% endif %}
 </div>
-    <div class="w-full max-w-[910px] mx-auto mt-10 ">
+    <div class="w-full max-w-[1060px] mx-auto mt-10 ">
             
 
             <!-- Title Section -->
@@ -48,7 +48,7 @@
   
 <main class="bg-[#FFF7F7]">
 <!-- About Radio Nova   -->
-<div class="max-w-[910px] mx-auto px-4 py-12 prose ">
+<div class="max-w-[1060px] mx-auto px-4 py-12 prose ">
   {% for block in page.about_radio_nova %}
     {% if block.block_type == "content" %}
       {{ block.value|richtext }}
@@ -61,57 +61,21 @@
 </div>
 
 <!-- Ansatte Section -->
-<div class="max-w-[910px] mx-auto px-4 py-12">
+<div class="max-w-[1060px] mx-auto px-4 py-12">
     {% if page.ansatte %}
     <h2 class="text-2xl font-bold mb-8">Dagtid</h2>
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-2">
       {% for block in page.ansatte %}
-        <div class="p-4 rounded-lg text-center grid grid-cols-1 row-span-4 justify-items-center gap-y-2 min-w-0" style="grid-template-rows: subgrid;">
-          <div class="relative w-full aspect-square overflow-hidden self-start min-w-0">
-            {% if block.value.image %}
-              {% image block.value.image fill-400x400 class="absolute inset-0 object-cover w-full h-full block" alt=block.value.name %}
-            {% endif %}
-          </div>
-          <h3 class="text-lg font-semibold pt-2">{{ block.value.name }}</h3>
-          <h4 class="text-sm text-gray-500 break-words min-w-0 w-full">{{ block.value.email }}</h4>
-  
-          <!-- Role as green tag -->
-          <span class="self-start inline-block text-sm text-[#511120] border border-[#511120] bg-green-100 px-4 py-1 rounded-full">
-            {{ block.value.role }}
-          </span>
-  <!-- 
-          {# Commented out email for now #}
-          {# {% if block.value.email %}
-           <p class="text-sm text-blue-600 mt-1">{{ block.value.email }}</p>
-          {% endif %} #}-->
-        </div>
+        {% include "components/person_card.html" with person=block.value only %}
       {% endfor %}
     </div>
     {% endif %}
 
     {% if page.studentsamfunnet %}
     <h2 class="text-2xl font-bold mb-8{% if page.ansatte %} mt-12{% endif %}">Styret</h2>
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-2">
       {% for block in page.studentsamfunnet %}
-        <div class="p-4 rounded-lg text-center grid grid-cols-1 row-span-4 justify-items-center gap-y-2 min-w-0" style="grid-template-rows: subgrid;">
-          <div class="relative w-full aspect-square overflow-hidden self-start min-w-0">
-            {% if block.value.image %}
-              {% image block.value.image fill-400x400 class="absolute inset-0 object-cover w-full h-full block" alt=block.value.name %}
-            {% endif %}
-          </div>
-          <h3 class="text-lg font-semibold pt-2">{{ block.value.name }}</h3>
-          <h4 class="text-sm text-gray-500 break-words min-w-0 w-full">{{ block.value.email }}</h4>
-  
-          <!-- Role as green tag -->
-          <span class="self-start inline-block text-sm text-[#511120] border border-[#511120] bg-green-100 px-4 py-1 rounded-full">
-            {{ block.value.role }}
-          </span>
-  <!-- 
-          {# Commented out email for now #}
-          {# {% if block.value.email %}
-           <p class="text-sm text-blue-600 mt-1">{{ block.value.email }}</p>
-          {% endif %} #}-->
-        </div>
+        {% include "components/person_card.html" with person=block.value only %}
       {% endfor %}
     </div>
 
@@ -119,27 +83,9 @@
 
     {% if page.tillitsvalgt %}
     <h2 class="text-2xl font-bold mb-8{% if page.ansatte or page.studentsamfunnet %} mt-12{% endif %}">Tillitsvalgt</h2>
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-2">
       {% for block in page.tillitsvalgt %}
-        <div class="p-4 rounded-lg text-center grid grid-cols-1 row-span-4 justify-items-center gap-y-2 min-w-0" style="grid-template-rows: subgrid;">
-          <div class="relative w-full aspect-square overflow-hidden self-start min-w-0">
-            {% if block.value.image %}
-              {% image block.value.image fill-400x400 class="absolute inset-0 object-cover w-full h-full block" alt=block.value.name %}
-            {% endif %}
-          </div>
-          <h3 class="text-lg font-semibold pt-2">{{ block.value.name }}</h3>
-          <h4 class="text-sm text-gray-500 break-words min-w-0 w-full">{{ block.value.email }}</h4>
-  
-          <!-- Role as green tag -->
-          <span class="self-start inline-block text-sm text-[#511120] border border-[#511120] bg-green-100 px-4 py-1 rounded-full">
-            {{ block.value.role }}
-          </span>
-  <!-- 
-          {# Commented out email for now #}
-          {# {% if block.value.email %}
-           <p class="text-sm text-blue-600 mt-1">{{ block.value.email }}</p>
-          {% endif %} #}-->
-        </div>
+        {% include "components/person_card.html" with person=block.value only %}
       {% endfor %}
     </div>
     {% endif %}
