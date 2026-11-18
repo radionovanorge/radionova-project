@@ -1,8 +1,8 @@
 {% comment %}
-Felles personkort for Dagtid, Styret og Tillitsvalgt. Tar imot «person» med
-navn (name), rolle (role), e-post (email) og bilde (image). Viser bilde, navn,
-rolleetikett og klikkbar e-post. Hvert kort spenner over fire felles rader
-i rutenettet, slik at innholdet flukter mellom kortene.
+Shared person card for Dagtid, Styret and Tillitsvalgt. Expects a "person"
+with name, role, email and image fields. Displays a photo, name, role badge
+and email link. Each card spans four shared grid rows to align its content
+with the other cards.
 {% endcomment %}
 {% load wagtailimages_tags %}
 <div class="py-4 rounded-lg text-center grid grid-cols-1 row-span-4 justify-items-stretch gap-y-2 min-w-0 w-full max-w-[280px] mx-auto sm:max-w-none" style="grid-template-rows: subgrid;">
